@@ -1,22 +1,35 @@
-import axios from 'axios'
+import primitiveAxios from 'axios';
+import { environmentManager } from '@tanstack/react-query';
 
-export const api = axios.create({
-  baseURL: '/api',
-  headers: {
-    'Content-Type': 'application/json',
-  },
-})
+const isServer = environmentManager.isServer();
 
-api.interceptors.response.use(
-  (response) => response,
-  (error) => {
-    const serverError = error.response?.data
-    if (serverError && serverError.status) {
-      return Promise.reject(serverError)
+export const axios = primitiveAxios.create({
+  baseURL: process.env.NEXT_PUBLIC_API_URL!,
+  withCredentials: true, // Equivalent to credentials: 'include' for the client
+});
+
+// Interceptor to handle Server-Side header forwarding
+axios.interceptors.request.use(async (config) => {
+  if (isServer) {
+    try {
+      // Lazy import prevents 'next/headers' from being bundled for the client
+      const { headers } = await import('next/headers');
+      const requestHeaders = await headers();
+      const cookie = requestHeaders.get('cookie');
+
+      if (cookie) {
+        config.headers.Cookie = cookie;
+      }
+    } catch (error) {
+      console.warn("Failed to attach server-side headers", error);
     }
-    return Promise.reject({
-      status: 'error',
-      message: error.message || 'An unexpected network error occurred.',
-    })
   }
-)
+
+  return config;
+});
+
+export const axiosPublic = primitiveAxios.create({
+  baseURL: process.env.NEXT_PUBLIC_API_URL!,
+  withCredentials: false, // No credentials for public instance
+});
+

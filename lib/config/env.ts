@@ -1,15 +1,16 @@
 import { z } from 'zod'
 
 const envSchema = z.object({
-  DATABASE_URL: z.string().url(),
-  BETTER_AUTH_SECRET: z.string().min(1),
-  BETTER_AUTH_URL: z.string().url(),
+  DATABASE_URL: z.url().optional(),
+  BETTER_AUTH_SECRET: z.string().optional(),
+  BETTER_AUTH_URL: z.url().default("http://localhost:3000"),
   RESEND_API_KEY: z.string().optional(),
   EMAIL_FROM: z.string().optional(),
   AWS_REGION: z.string().optional(),
   AWS_ACCESS_KEY_ID: z.string().optional(),
   AWS_SECRET_ACCESS_KEY: z.string().optional(),
   AWS_SES_SENDER: z.string().optional(),
+  NEXT_PUBLIC_APP_URL: z.url().default("http://localhost:3000")
 })
 
 export const env = typeof window === 'undefined' ? envSchema.parse({
@@ -22,4 +23,5 @@ export const env = typeof window === 'undefined' ? envSchema.parse({
   AWS_ACCESS_KEY_ID: process.env.AWS_ACCESS_KEY_ID,
   AWS_SECRET_ACCESS_KEY: process.env.AWS_SECRET_ACCESS_KEY,
   AWS_SES_SENDER: process.env.AWS_SES_SENDER,
+  NEXT_PUBLIC_APP_URL: process.env.NEXT_PUBLIC_APP_URL
 }) : {} as z.infer<typeof envSchema>

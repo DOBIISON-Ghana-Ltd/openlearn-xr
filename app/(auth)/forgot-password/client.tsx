@@ -1,114 +1,145 @@
-'use client'
+"use client";
 
-import * as React from 'react'
-import { useForm, FormProvider } from 'react-hook-form'
-import { zodResolver } from '@hookform/resolvers/zod'
-import Link from 'next/link'
-import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from '@/components/ui/card'
-import { Button } from '@/components/ui/button'
-import { FormField } from '@/components/forms/form-field'
-import { forgotPasswordSchema, ForgotPasswordInput } from '@/features/auth/schema/auth.schema'
-import { authClient } from '@/adapters/auth/client'
+import { useState } from "react";
+import Link from "next/link";
+import { useController, useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useRouter } from "next/navigation";
+import ZUser from "@/data/modules/user/user.schema";
+import { nuqs } from "@/lib/utils/nuqs";
+import useApi from "@/data/hooks/use-api";
+import { ROUTES } from "@/lib/constants/routes";
+import { toastManager } from "@/components/ui/toast";
+import { Button } from "@/components/ui/button";
+import { Tabs, TabsContent } from "@/components/ui/tabs";
+import TextBlock from "@/components/auth/form-blocks/text-block";
+import { InputOTP, InputOTPGroup, InputOTPSlot } from "@/components/ui/input-otp";
+import { Infer } from "@/data/types.base";
+import { LoaderIcon } from "lucide-react";
 
-export function ForgotPasswordClient() {
-  const [errorMsg, setErrorMsg] = React.useState<string | null>(null)
-  const [success, setSuccess] = React.useState(false)
-  const [loading, setLoading] = React.useState(false)
+const ZSendForm = ZUser.PublicUserSendOtp.shape.body;
+const ZCheckForm = ZUser.PublicUserCheckOtp.shape.body;
 
-  const methods = useForm<ForgotPasswordInput>({
-    resolver: zodResolver(forgotPasswordSchema),
-    defaultValues: {
-      email: '',
-    },
-  })
+type ISendForm = Infer["PublicUserSendOtp"]["body"];
+type ICheckForm = Infer["PublicUserCheckOtp"]["body"];
 
-  const onSubmit = async (data: ForgotPasswordInput) => {
-    setErrorMsg(null)
-    setLoading(true)
-    try {
-      await authClient.forgetPassword({
-        email: data.email,
-        redirectTo: `${window.location.origin}/reset-password`,
-        fetchOptions: {
-          onError: (ctx) => {
-            setErrorMsg(ctx.error.message || 'An error occurred. Please try again.')
-            setLoading(false)
-          },
-          onSuccess: () => {
-            setSuccess(true)
-            setLoading(false)
-          },
-        },
-      })
-    } catch (err) {
-      setErrorMsg('An unexpected error occurred. Please try again.')
-      setLoading(false)
-    }
-  }
+export default function ClientPage() {
+  const router = useRouter();
+  const [params] = nuqs.getStates("forgotPassword");
+  const [tab, setTab] = useState("send");
+  const { mutate: sendOtp, isPending: IPSendOtp } = useApi.mutate("public:user:send-otp");
+  const { mutate: checkOtp, isPending: IPCheckOtp } = useApi.mutate("public:user:check-otp");
 
-  if (success) {
-    return (
-      <Card className="w-full">
-        <CardHeader>
-          <CardTitle>Reset link sent</CardTitle>
-          <CardDescription>
-            We've sent a password reset link to your email address if it exists in our system. Please check your inbox.
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="flex flex-col gap-4 text-center">
-          <p className="text-sm text-muted-foreground">
-            The link is valid for a limited time.
-          </p>
-        </CardContent>
-        <CardFooter className="flex justify-center border-t border-border pt-4">
-          <Link href="/login" className="font-semibold text-primary hover:underline">
-            Back to Sign In
-          </Link>
-        </CardFooter>
-      </Card>
-    )
-  }
+  const loginUrl = nuqs.getUrl("login", { redirect: params.redirect }, ROUTES.LOGIN);
+
+  const sendForm = useForm<ISendForm>({
+    resolver: zodResolver(ZSendForm),
+    defaultValues: { email: "", type: "forget-password" },
+  });
+
+  const checkForm = useForm<ICheckForm>({
+    resolver: zodResolver(ZCheckForm),
+    defaultValues: { email: "", type: "forget-password", otp: "" },
+  });
+
+  const otpControl = useController({ control: checkForm.control, name: "otp" });
+
+  const onSendSubmit = (data: ISendForm) => {
+    sendOtp(data, {
+      onSuccess: () => {
+        checkForm.reset({ email: data.email, type: "forget-password", otp: "" });
+        setTab("verify");
+        toastManager.add({
+          title: "Verification code sent! Please check your email.",
+          type: "success"
+        });
+      },
+      onError: (err) => {
+        toastManager.add({
+          title: "Failed to send verification code. Please try again.",
+          type: "error"
+        });
+      }
+    });
+  };
+
+  const onCheckSubmit = (data: ICheckForm) => {
+    checkOtp(data, {
+      onSuccess: () => {
+        const url = nuqs.getUrl("resetPassword", {
+          email: data.email,
+          otp: data.otp,
+          redirect: params.redirect,
+        }, ROUTES.RESET_PASSWORD);
+        router.push(url);
+      },
+      onError: (err) => {
+        toastManager.add({
+          title: "Failed to verify code. Please try again.",
+          type: "error"
+        });
+      }
+    });
+  };
 
   return (
-    <Card className="w-full">
-      <CardHeader>
-        <CardTitle>Forgot password?</CardTitle>
-        <CardDescription>
-          Enter your email address and we'll send you a link to reset your password.
-        </CardDescription>
-      </CardHeader>
-      <CardContent>
-        <FormProvider {...methods}>
-          <form onSubmit={methods.handleSubmit(onSubmit)} className="flex flex-col gap-4">
-            {errorMsg && (
-              <div className="rounded-lg bg-destructive/10 p-3 text-sm text-destructive-foreground">
-                {errorMsg}
-              </div>
-            )}
+    <Tabs value={tab} onValueChange={setTab}>
+      {/* Send OTP tab */}
+      <TabsContent value="send" className="space-y-6">
+        <h1 className="text-xl font-medium tracking-tight text-center">Reset Your Password</h1>
 
-            <FormField
-              name="email"
-              label="Email Address"
-              type="email"
-              placeholder="you@example.com"
-              required
-            />
+        <form onSubmit={sendForm.handleSubmit(onSendSubmit)} className="space-y-3">
+          <TextBlock control={sendForm.control} name="email" type="email" placeholder="Enter your email" autoComplete="email" />
 
-            <Button type="submit" loading={loading} className="w-full mt-2">
-              Send Reset Link
-            </Button>
-          </form>
-        </FormProvider>
-      </CardContent>
-      <CardFooter className="flex flex-col items-center justify-center border-t border-border pt-4">
-        <p className="text-sm text-muted-foreground">
-          Remember your password?{' '}
-          <Link href="/login" className="font-semibold text-primary hover:underline">
-            Sign in
+          <Button type="submit" className="w-full" disabled={IPSendOtp}>
+            {IPSendOtp ? <LoaderIcon className="animate-spin size-2.5" /> : "Send Verification Code"}
+          </Button>
+        </form>
+
+        <p className="text-center text-sm text-muted-foreground">
+          Remember your password?{" "}
+          <Link href={loginUrl} className="underline underline-offset-4 text-primary hover:text-primary/80 font-medium transition-colors">
+            Login
           </Link>
         </p>
-      </CardFooter>
-    </Card>
-  )
+      </TabsContent>
+
+      {/* Verify OTP tab */}
+      <TabsContent value="verify" className="space-y-6">
+        <h1 className="text-xl font-medium tracking-tight text-center">Verify Your Code</h1>
+
+        <div className="flex flex-col items-center space-y-4">
+          <InputOTP
+            maxLength={6}
+            value={otpControl.field.value}
+            onChange={(value) => otpControl.field.onChange(value)}
+            containerClassName="w-full justify-between"
+          >
+            {Array.from({ length: 6 }).map((_, i) => (
+              <InputOTPGroup key={i} className="*:data-[slot=input-otp-slot]:w-12 *:data-[slot=input-otp-slot]:h-12 *:data-[slot=input-otp-slot]:text-lg">
+                <InputOTPSlot index={i} />
+              </InputOTPGroup>
+            ))}
+          </InputOTP>
+
+          <Button
+            className="w-full"
+            disabled={IPCheckOtp}
+            onClick={checkForm.handleSubmit(onCheckSubmit)}
+          >
+            {IPCheckOtp ? <LoaderIcon className="animate-spin size-2.5" /> : "Verify Code"}
+          </Button>
+
+          <Button
+            type="button"
+            onClick={() => sendForm.handleSubmit(onSendSubmit)()}
+            disabled={IPSendOtp}
+            variant={"link"}
+          >
+            {IPSendOtp ? <LoaderIcon className="animate-spin size-2.5" /> : "Resend code"}
+          </Button>
+        </div>
+      </TabsContent>
+    </Tabs>
+  );
 }
-export default ForgotPasswordClient

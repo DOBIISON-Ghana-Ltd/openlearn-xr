@@ -1,115 +1,104 @@
-'use client'
+"use client";
 
-import * as React from 'react'
-import { useForm, FormProvider } from 'react-hook-form'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { useRouter, useSearchParams } from 'next/navigation'
-import Link from 'next/link'
-import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from '@/components/ui/card'
-import { Button } from '@/components/ui/button'
-import { FormField } from '@/components/forms/form-field'
-import { loginSchema, LoginInput } from '@/features/auth/schema/auth.schema'
-import { signIn } from '@/adapters/auth/client'
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import ZUser from "@/data/modules/user/user.schema";
+import { Button } from "@/components/ui/button";
+import TextBlock from "@/components/auth/form-blocks/text-block";
+import PasswordBlock from "@/components/auth/form-blocks/password-block";
+import GoogleAuthButton from "@/components/auth/google-oauth-button";
+import { Infer } from "@/data/types.base";
+import { nuqs } from "@/lib/utils/nuqs";
+import useApi from "@/data/hooks/use-api";
+import { ROUTES } from "@/lib/constants/routes";
+import { toastManager } from "@/components/ui/toast";
+import { LoaderIcon } from "lucide-react";
 
-export function LoginClient() {
-  const router = useRouter()
-  const searchParams = useSearchParams()
-  const [errorMsg, setErrorMsg] = React.useState<string | null>(null)
-  const [loading, setLoading] = React.useState(false)
+const ZForm = ZUser.PublicUserLogin.shape.body;
+type IForm = Infer["PublicUserLogin"]["body"];
 
-  const callbackUrl = searchParams.get('callbackUrl') || '/app'
+export default function ClientPage() {
+  const [params] = nuqs.getStates("login");
+  const router = useRouter();
+  const { mutate: login, isPending } = useApi.mutate("public:user:login");
 
-  const methods = useForm<LoginInput>({
-    resolver: zodResolver(loginSchema),
-    defaultValues: {
-      email: '',
-      password: '',
-    },
-  })
+  const { handleSubmit, control, getValues } = useForm<IForm>({
+    resolver: zodResolver(ZForm),
+    defaultValues: { email: "", password: "" },
+  });
 
-  const onSubmit = async (data: LoginInput) => {
-    setErrorMsg(null)
-    setLoading(true)
-    try {
-      await signIn.email({
-        email: data.email,
-        password: data.password,
-        callbackURL: callbackUrl,
-        fetchOptions: {
-          onError: (ctx) => {
-            setErrorMsg(ctx.error.message || 'Invalid email or password')
-            setLoading(false)
-          },
-          onSuccess: () => {
-            router.push(callbackUrl)
-            router.refresh()
-          },
-        },
-      })
-    } catch (err) {
-      setErrorMsg('An unexpected error occurred. Please try again.')
-      setLoading(false)
-    }
-  }
+  const registerUrl = nuqs.getUrl("register", { redirect: params.redirect }, ROUTES.REGISTER);
+  const forgotPasswordUrl = nuqs.getUrl("forgotPassword", { redirect: params.redirect }, ROUTES.FORGOT_PASSWORD);
+
+  const onSubmit = (data: IForm) => {
+    login({ ...data, redirect: params.redirect }, {
+      onSuccess: () => {
+        toastManager.add({
+          title: "Login successful! Redirecting...",
+          type: "success"
+        });
+      },
+      onError: (err) => {
+        const msg = err.message?.toLowerCase() ?? "";
+        if (msg.includes("verif") || msg.includes("not_verified")) {
+          router.push(`${ROUTES.VERIFY_EMAIL}?email=${encodeURIComponent(getValues("email"))}`);
+        }
+        //if login error show sonner toast invalid password
+        if (msg.includes("password")) {
+          toastManager.add({
+            title: "Invalid email or password. Please try again.",
+            type: "error"
+          });
+        }
+      },
+    });
+  };
 
   return (
-    <Card className="w-full">
-      <CardHeader>
-        <CardTitle>Welcome back</CardTitle>
-        <CardDescription>
-          Sign in to your OpenLearn account to continue
-        </CardDescription>
-      </CardHeader>
-      <CardContent>
-        <FormProvider {...methods}>
-          <form onSubmit={methods.handleSubmit(onSubmit)} className="flex flex-col gap-4">
-            {errorMsg && (
-              <div className="rounded-lg bg-destructive/10 p-3 text-sm text-destructive-foreground">
-                {errorMsg}
-              </div>
-            )}
+    <div className="space-y-6">
+      <h1 className="text-center text-xl font-medium tracking-tight">Login</h1>
 
-            <FormField
-              name="email"
-              label="Email Address"
-              type="email"
-              placeholder="you@example.com"
-              required
-            />
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-3">
+        <TextBlock control={control} name="email" type="email" placeholder="Enter your email" autoComplete="email" />
+        <PasswordBlock control={control} name="password" placeholder="Enter your password" autoComplete="current-password" />
 
-            <div className="flex flex-col gap-1.5">
-              <FormField
-                name="password"
-                label="Password"
-                type="password"
-                placeholder="••••••••"
-                required
-              />
-              <div className="text-right">
-                <Link
-                  href="/forgot-password"
-                  className="text-xs font-medium text-primary hover:underline"
-                >
-                  Forgot password?
-                </Link>
-              </div>
-            </div>
-
-            <Button type="submit" loading={loading} className="w-full mt-2">
-              Sign In
-            </Button>
-          </form>
-        </FormProvider>
-      </CardContent>
-      <CardFooter className="flex flex-col items-center justify-center border-t border-border pt-4">
-        <p className="text-sm text-muted-foreground">
-          Don't have an account?{' '}
-          <Link href="/register" className="font-semibold text-primary hover:underline">
-            Sign up
+        {/* Forgot password */}
+        <div className="flex justify-end">
+          <Link
+            href={forgotPasswordUrl}
+            className="underline text-sm text-muted-foreground hover:text-muted-foreground/80 transition-colors"
+          >
+            Forgot password?
           </Link>
-        </p>
-      </CardFooter>
-    </Card>
-  )
+        </div>
+
+        {/* Submit */}
+        <Button type="submit" className="w-full" disabled={isPending}>
+          {isPending ? <LoaderIcon className="animate-spin size-2.5" /> : "Login"}
+        </Button>
+      </form>
+
+      {/* Divider */}
+      <div className="relative">
+        <div className="absolute inset-0 flex items-center">
+          <div className="w-full border-t border-border" />
+        </div>
+        <div className="relative flex justify-center text-sm">
+          <span className="bg-background px-2 text-muted-foreground">Or continue with</span>
+        </div>
+      </div>
+
+      <GoogleAuthButton />
+
+      {/* Sign up link */}
+      <p className="text-center text-sm text-muted-foreground">
+        Don&apos;t have an account?{" "}
+        <Link href={registerUrl} className="underline text-primary hover:text-primary/80 font-medium transition-colors">
+          Register
+        </Link>
+      </p>
+    </div>
+  );
 }
-export default LoginClient

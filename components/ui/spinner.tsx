@@ -1,6 +1,6 @@
 import { Loader2Icon } from "lucide-react";
 import type React from "react";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/utils/cn";
 
 export function Spinner({
   className,
@@ -15,3 +15,4 @@ export function Spinner({
     />
   );
 }
+

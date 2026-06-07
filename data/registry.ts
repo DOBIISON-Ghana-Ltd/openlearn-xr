@@ -1,14 +1,14 @@
-import { QueryConfig, MutationConfig } from './types.base'
+import userModule from './modules/user/user.api';
+import mediaModule from './modules/media/media.api';
 
-export const API_REGISTRY = {
-  sessions: {
-    list: {
-      url: '/sessions',
-      method: 'GET',
-    } as QueryConfig<any>,
-    create: {
-      url: '/sessions',
-      method: 'POST',
-    } as MutationConfig<any, any>,
-  },
-} as const
+export const apiRegistry = {
+  ...userModule,
+  ...mediaModule
+} as const;
+
+export type ApiRegistry = typeof apiRegistry;
+
+// Helper type to filter only Query keys for prefetching
+export type QueryKeys = {
+  [K in keyof ApiRegistry]: ApiRegistry[K] extends { type: 'query' } ? K : never;
+}[keyof ApiRegistry];

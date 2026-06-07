@@ -2,7 +2,7 @@
 
 import { Field as FieldPrimitive } from "@base-ui/react/field";
 import type React from "react";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/utils/cn";
 
 export function Field({
   className,
@@ -78,3 +78,4 @@ export const FieldValidity: typeof FieldPrimitive.Validity =
   FieldPrimitive.Validity;
 
 export { FieldPrimitive };
+

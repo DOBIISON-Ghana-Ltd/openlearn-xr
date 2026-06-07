@@ -1,45 +1,47 @@
-import { useQuery, useMutation, UseQueryOptions, UseMutationOptions } from '@tanstack/react-query'
-import { fetcher } from '../fetcher'
-import { QueryConfig, MutationConfig } from '../types.base'
+"use client";
 
-export function useApiQuery<TResponse, TParams = undefined>(
-  config: QueryConfig<TResponse, TParams>,
-  params?: TParams,
-  options?: Omit<UseQueryOptions<TResponse, Error>, 'queryKey' | 'queryFn'>
-) {
-  const url = typeof config.url === 'function' ? config.url(params as TParams) : config.url
+import { 
+  useQuery, 
+  useMutation
+} from '@tanstack/react-query';
+import { apiRegistry, ApiRegistry } from '@/data/registry';
+import { ApiError } from '@/data/fetcher';
 
-  return useQuery<TResponse, Error>({
-    queryKey: [url, params],
-    queryFn: () =>
-      fetcher<any>({
-        config: {
-          url,
-          method: config.method || 'GET',
-          params: config.method === 'GET' ? params : undefined,
-        },
-        schema: config.schema,
-      }),
-    ...options,
-  })
-}
+type QueryKeys = {
+  [K in keyof ApiRegistry]: ApiRegistry[K] extends { type: 'query' } ? K : never
+}[keyof ApiRegistry];
 
-export function useApiMutation<TResponse, TBody = undefined, TParams = undefined>(
-  config: MutationConfig<TResponse, TBody, TParams>,
-  options?: UseMutationOptions<TResponse, Error, { body: TBody; params?: TParams }>
-) {
-  return useMutation<TResponse, Error, { body: TBody; params?: TParams }>({
-    mutationFn: ({ body, params }) => {
-      const url = typeof config.url === 'function' ? config.url(params as TParams) : config.url
-      return fetcher<any>({
-        config: {
-          url,
-          method: config.method,
-          data: body,
-        },
-        schema: config.schema,
-      })
-    },
-    ...options,
-  })
-}
+type MutationKeys = {
+  [K in keyof ApiRegistry]: ApiRegistry[K] extends { type: 'mutation' } ? K : never
+}[keyof ApiRegistry];
+
+export default {
+  // 1. Query
+  query: <K extends QueryKeys>(
+    key: K,
+    vars?: Parameters<ApiRegistry[K]['queryFn']>[0],
+    enabled: boolean = true
+  ) => {
+    type TData = Awaited<ReturnType<ApiRegistry[K]['queryFn']>>;
+
+    const config = apiRegistry[key] as any;
+    return useQuery<TData, ApiError>({
+      queryKey: config.queryKey(vars),
+      queryFn: () => config.queryFn(vars),
+      ...config.options,
+      enabled
+    });
+  },
+
+  // 2. Mutation
+  mutate: <K extends MutationKeys>(key: K) => {
+    type TData = Awaited<ReturnType<ApiRegistry[K]['mutationFn']>>;
+    type TVars = Parameters<ApiRegistry[K]['mutationFn']>[0];
+
+    const config = apiRegistry[key] as any;
+    return useMutation<TData, ApiError, TVars>({
+      mutationFn: config.mutationFn,
+      ...config.options,
+    });
+  }
+};

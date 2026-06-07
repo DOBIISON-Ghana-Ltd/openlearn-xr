@@ -2,7 +2,7 @@
 
 import { Slider as SliderPrimitive } from "@base-ui/react/slider";
 import * as React from "react";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/utils/cn";
 
 export function Slider({
   className,
@@ -74,3 +74,4 @@ export function SliderValue({
 }
 
 export { SliderPrimitive };
+

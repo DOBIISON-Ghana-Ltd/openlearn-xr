@@ -10,15 +10,19 @@ export class ResendEmailAdapter implements EmailAdapter {
     this.defaultFrom = config.defaultFrom
   }
 
+  async initialize(): Promise<boolean> {
+    return true
+  }
+
   async sendEmail(options: SendEmailOptions): Promise<EmailResult> {
     try {
-      const { to, subject, html, react, from } = options
+      const { to, subject, html, text, from } = options
       const { data, error } = await this.resend.emails.send({
         from: from || this.defaultFrom,
         to: [to],
         subject,
-        html: html || undefined,
-        react: react || undefined,
+        html,
+        text: text || undefined,
       })
 
       if (error) {

@@ -1,41 +1,32 @@
 import type { Metadata } from "next";
 import { Geist_Mono, Inter } from "next/font/google";
+import { cn } from "@/lib/utils/cn";
 import "./globals.css";
-import { cn } from "@/lib/utils";
-import { CookieConsentBanner } from "@/components/ui/cookie-consent-banner";
-import { AnalyticsProvider } from "@/adapters/analytics/provider";
-import { QueryProvider } from "@/components/providers/query-provider";
+import Providers from "@/components/common/providers";
 
-const interHeading = Inter({subsets:['latin'],variable:'--font-heading'});
-const inter = Inter({subsets:['latin'],variable:'--font-sans'});
-
-const geistMono = Geist_Mono({
-  variable: "--font-mono",
-  subsets: ["latin"],
-});
+const interHeading = Inter({ subsets: ['latin'], variable: '--font-heading' });
+const inter = Inter({ subsets: ['latin'], variable: '--font-sans' });
+const geistMono = Geist_Mono({ subsets: ["latin"], variable: "--font-mono" });
 
 export const metadata: Metadata = {
-  title: "OpenLearn - Interactive 3D Science Labs",
+  title: {
+    default: "OpenLearn - Interactive 3D Science Labs",
+    template: "%s | OpenLearn",
+  },
   description: "Experience virtual physics, chemistry, and biology experiments directly in your web browser.",
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html
       lang="en"
+      suppressHydrationWarning
       className={cn("h-full", "antialiased", "font-sans", inter.variable, interHeading.variable, geistMono.variable)}
     >
       <body className="min-h-full flex flex-col">
-        <QueryProvider>
-          <AnalyticsProvider>
-            {children}
-            <CookieConsentBanner />
-          </AnalyticsProvider>
-        </QueryProvider>
+        <Providers>
+          {children}
+        </Providers>
       </body>
     </html>
   );

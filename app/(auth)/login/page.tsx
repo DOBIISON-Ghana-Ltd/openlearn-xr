@@ -1,16 +1,13 @@
-import * as React from 'react'
-import { Metadata } from 'next'
-import { LoginClient } from './client'
+import type { Metadata } from "next";
+import { connection } from 'next/server';
+import ClientPage from "./client";
 
 export const metadata: Metadata = {
-  title: 'Sign In | OpenLearn',
-  description: 'Sign in to your OpenLearn account to access your labs and dashboard.',
+  title: 'Login | OpenLearn',
+  description: 'Login to your OpenLearn account to access your labs and dashboard.',
 }
 
-export default function LoginPage() {
-  return (
-    <React.Suspense fallback={<div className="text-center p-4">Loading form...</div>}>
-      <LoginClient />
-    </React.Suspense>
-  )
+export default async function Page() {
+  await connection();
+  return <ClientPage />;
 }

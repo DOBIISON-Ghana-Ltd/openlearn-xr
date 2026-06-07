@@ -1,13 +1,30 @@
-import { z } from 'zod'
+import { UseQueryOptions, UseMutationOptions } from '@tanstack/react-query';
+import Base from "./schema.base";
+import ZMedia from "./modules/media/media.schema";
+import ZUser from "./modules/user/user.schema";
+import { z } from "zod";
 
-export interface QueryConfig<TResponse, TParams = undefined> {
-  url: string | ((params: TParams) => string)
-  method?: 'GET'
-  schema?: z.ZodType<TResponse>
-}
+// UTILITY TYPES
+type InferAll<T extends Record<string, z.ZodType>> = {
+  [K in keyof T]: z.infer<T[K]>
+};
 
-export interface MutationConfig<TResponse, TBody = undefined, TParams = undefined> {
-  url: string | ((params: TParams) => string)
-  method: 'POST' | 'PUT' | 'PATCH' | 'DELETE'
-  schema?: z.ZodType<TResponse>
-}
+export type QueryConfig<TData = any, TVars = any> = {
+  type: 'query';
+  queryKey: (vars: TVars) => unknown[];
+  queryFn: (vars: TVars) => Promise<TData>;
+  options?: Omit<UseQueryOptions<TData, Error, TData>, 'queryKey' | 'queryFn'>;
+};
+
+export type MutationConfig<TData = any, TVars = any> = {
+  type: 'mutation';
+  mutationFn: (vars: TVars) => Promise<TData>;
+  options?: Omit<UseMutationOptions<TData, Error, TVars>, 'mutationFn'>;
+};
+
+export type ApiConfig = QueryConfig | MutationConfig;
+
+export type Infer = 
+  InferAll<typeof Base> &
+  InferAll<typeof ZMedia> &
+  InferAll<typeof ZUser>;

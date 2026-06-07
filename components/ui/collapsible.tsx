@@ -2,7 +2,7 @@
 
 import { Collapsible as CollapsiblePrimitive } from "@base-ui/react/collapsible";
 import type React from "react";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/utils/cn";
 
 export function Collapsible({
   ...props
@@ -40,3 +40,4 @@ export function CollapsiblePanel({
 }
 
 export { CollapsiblePrimitive, CollapsiblePanel as CollapsibleContent };
+

@@ -1,11 +1,11 @@
+import { Footer } from '@/components/layout/marketing/footer'
+import Header from '@/components/layout/marketing/header'
 import * as React from 'react'
-import { MarketingNav } from '@/components/layout/marketing-nav'
-import { Footer } from '@/components/layout/footer'
 
 export default function MarketingLayout({ children }: { children: React.ReactNode }) {
   return (
     <div className="flex min-h-screen flex-col">
-      <MarketingNav />
+      <Header />
       <main className="flex-1">{children}</main>
       <Footer />
     </div>

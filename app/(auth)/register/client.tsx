@@ -1,143 +1,112 @@
-'use client'
+"use client";
 
-import * as React from 'react'
-import { useForm, FormProvider } from 'react-hook-form'
-import { zodResolver } from '@hookform/resolvers/zod'
-import Link from 'next/link'
-import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from '@/components/ui/card'
-import { Button } from '@/components/ui/button'
-import { FormField } from '@/components/forms/form-field'
-import { registerSchema, RegisterInput } from '@/features/auth/schema/auth.schema'
-import { signUp } from '@/adapters/auth/client'
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Button } from "@/components/ui/button";
+import { Infer } from "@/data/types.base";
+import ZUser from "@/data/modules/user/user.schema";
+import { nuqs } from "@/lib/utils/nuqs";
+import useApi from "@/data/hooks/use-api";
+import { ROUTES } from "@/lib/constants/routes";
+import { toastManager } from "@/components/ui/toast";
+import TextBlock from "@/components/auth/form-blocks/text-block";
+import PasswordBlock from "@/components/auth/form-blocks/password-block";
+import CheckBlock from "@/components/auth/form-blocks/check-block";
+import { LoaderIcon } from "lucide-react";
+import GoogleAuthButton from "@/components/auth/google-oauth-button";
 
-export function RegisterClient() {
-  const [errorMsg, setErrorMsg] = React.useState<string | null>(null)
-  const [success, setSuccess] = React.useState(false)
-  const [loading, setLoading] = React.useState(false)
+const ZForm = ZUser.PublicUserRegister.shape.body;
+type IForm = Infer["PublicUserRegister"]["body"];
 
-  const methods = useForm<RegisterInput>({
-    resolver: zodResolver(registerSchema),
+export default function ClientPage() {
+  const [params] = nuqs.getStates("register");
+  const router = useRouter();
+  const { mutate, isPending } = useApi.mutate("public:user:register");
+  const loginUrl = nuqs.getUrl("login", { redirect: params.redirect }, ROUTES.LOGIN);
+
+  const { handleSubmit, control } = useForm<IForm>({
+    resolver: zodResolver(ZForm),
     defaultValues: {
-      name: '',
-      email: '',
-      password: '',
-      confirmPassword: '',
+      name: "",
+      email: "",
+      password: "",
+      confirmPassword: "",
+      agreeToTerms: false,
     },
-  })
+  });
 
-  const onSubmit = async (data: RegisterInput) => {
-    setErrorMsg(null)
-    setLoading(true)
-    try {
-      await signUp.email({
-        email: data.email,
-        password: data.password,
-        name: data.name,
-        callbackURL: '/app',
-        fetchOptions: {
-          onError: (ctx) => {
-            setErrorMsg(ctx.error.message || 'An error occurred during sign up')
-            setLoading(false)
-          },
-          onSuccess: () => {
-            setSuccess(true)
-            setLoading(false)
-          },
-        },
-      })
-    } catch (err) {
-      setErrorMsg('An unexpected error occurred. Please try again.')
-      setLoading(false)
-    }
-  }
-
-  if (success) {
-    return (
-      <Card className="w-full">
-        <CardHeader>
-          <CardTitle>Verify your email</CardTitle>
-          <CardDescription>
-            We've sent a verification link to your email address. Please click the link to activate your account.
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="flex flex-col gap-4 text-center">
-          <p className="text-sm text-muted-foreground">
-            Once verified, you will be able to sign in and set up your profile.
-          </p>
-        </CardContent>
-        <CardFooter className="flex justify-center border-t border-border pt-4">
-          <Link href="/login" className="font-semibold text-primary hover:underline">
-            Back to Sign In
-          </Link>
-        </CardFooter>
-      </Card>
-    )
-  }
+  const onSubmit = (data: IForm) => {
+    mutate(data, {
+      onSuccess: () => {
+        const url = nuqs.getUrl(
+          "verifyEmail",
+          { email: data.email, redirect: params.redirect },
+          ROUTES.VERIFY_EMAIL
+        );
+        router.push(url);
+      },
+      onError: (err) => {
+        toastManager.add({
+          title: "Registration failed. Please try again.",
+          type: "error"
+        });
+      }
+    });
+  };
 
   return (
-    <Card className="w-full">
-      <CardHeader>
-        <CardTitle>Create an account</CardTitle>
-        <CardDescription>
-          Get started with OpenLearn science labs
-        </CardDescription>
-      </CardHeader>
-      <CardContent>
-        <FormProvider {...methods}>
-          <form onSubmit={methods.handleSubmit(onSubmit)} className="flex flex-col gap-4">
-            {errorMsg && (
-              <div className="rounded-lg bg-destructive/10 p-3 text-sm text-destructive-foreground">
-                {errorMsg}
-              </div>
-            )}
+    <div className="space-y-6">
+      <h1 className="text-center text-xl font-medium tracking-tight">Create Account</h1>
+      <form className="space-y-3" onSubmit={handleSubmit(onSubmit)}>
+        <TextBlock control={control} name="name" placeholder="Enter your full name" autoComplete="name" />
+        <TextBlock control={control} name="email" type="email" placeholder="Enter your email" autoComplete="email" />
+        <PasswordBlock control={control} name="password" placeholder="Enter your password" autoComplete="new-password" />
+        <PasswordBlock control={control} name="confirmPassword" placeholder="Confirm your password" autoComplete="new-password" />
 
-            <FormField
-              name="name"
-              label="Full Name"
-              type="text"
-              placeholder="Alice Smith"
-              required
-            />
+        <CheckBlock
+          control={control}
+          name="agreeToTerms"
+          label={
+            <>
+              I agree to the{" "}
+              <Link href={ROUTES.LEGAL.TERMS} className="underline text-muted-foreground hover:text-muted-foreground/80 transition-colors">
+                Terms and Conditions
+              </Link>{" "}
+              and{" "}
+              <Link href={ROUTES.LEGAL.PRIVACY} className="underline text-muted-foreground hover:text-muted-foreground/80 transition-colors">
+                Privacy Policy
+              </Link>
+            </>
+          }
+        />
 
-            <FormField
-              name="email"
-              label="Email Address"
-              type="email"
-              placeholder="you@example.com"
-              required
-            />
+        {/* Submit */}
+        <Button type="submit" className="w-full" disabled={isPending}>
+          {isPending ? <LoaderIcon className="animate-spin size-2.5" /> : "Create Account"}
+        </Button>
 
-            <FormField
-              name="password"
-              label="Password"
-              type="password"
-              placeholder="••••••••"
-              required
-            />
+        {/* Divider */}
+        <div className="relative">
+          <div className="absolute inset-0 flex items-center">
+            <div className="w-full border-t border-border" />
+          </div>
+          <div className="relative flex justify-center text-sm">
+            <span className="bg-background px-2 text-muted-foreground">Or continue with</span>
+          </div>
+        </div>
 
-            <FormField
-              name="confirmPassword"
-              label="Confirm Password"
-              type="password"
-              placeholder="••••••••"
-              required
-            />
+        <GoogleAuthButton />
 
-            <Button type="submit" loading={loading} className="w-full mt-2">
-              Create Account
-            </Button>
-          </form>
-        </FormProvider>
-      </CardContent>
-      <CardFooter className="flex flex-col items-center justify-center border-t border-border pt-4">
-        <p className="text-sm text-muted-foreground">
-          Already have an account?{' '}
-          <Link href="/login" className="font-semibold text-primary hover:underline">
+        {/* Sign in link */}
+        <p className="text-center text-sm text-muted-foreground">
+          Already have an account?{" "}
+          <Link href={loginUrl} className="underline text-primary hover:text-primary/80 font-medium transition-colors">
             Sign in
           </Link>
         </p>
-      </CardFooter>
-    </Card>
-  )
+      </form>
+    </div>
+  );
 }
-export default RegisterClient

@@ -2,7 +2,7 @@
 
 import { CheckboxGroup as CheckboxGroupPrimitive } from "@base-ui/react/checkbox-group";
 import type React from "react";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/utils/cn";
 
 export function CheckboxGroup({
   className,
@@ -17,3 +17,4 @@ export function CheckboxGroup({
 }
 
 export { CheckboxGroupPrimitive };
+

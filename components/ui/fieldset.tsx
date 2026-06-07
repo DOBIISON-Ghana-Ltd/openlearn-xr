@@ -2,7 +2,7 @@
 
 import { Fieldset as FieldsetPrimitive } from "@base-ui/react/fieldset";
 import type React from "react";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/utils/cn";
 
 export function Fieldset({
   className,
@@ -30,3 +30,4 @@ export function FieldsetLegend({
 }
 
 export { FieldsetPrimitive };
+

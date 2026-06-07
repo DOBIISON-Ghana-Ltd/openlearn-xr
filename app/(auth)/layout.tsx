@@ -1,16 +1,22 @@
-import * as React from 'react'
+import { ROUTES } from '@/lib/constants/routes'
+import Image from 'next/image'
 import Link from 'next/link'
+import React from 'react'
 
-export default function AuthLayout({ children }: { children: React.ReactNode }) {
+export default function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center bg-linear-to-br from-emerald-50 via-neutral-50 to-emerald-100/50 p-4 dark:from-neutral-950 dark:via-neutral-900 dark:to-neutral-950">
-      <div className="w-full max-w-md">
-        <div className="mb-8 text-center">
-          <Link href="/" className="inline-flex items-center gap-2 text-2xl font-bold tracking-tight text-primary transition-opacity hover:opacity-85">
-            <span className="flex size-8 items-center justify-center rounded-lg bg-primary text-primary-foreground font-black">
-              O
-            </span>
-            OpenLearn
+    <div className="min-h-dvh px-4 pb-6">
+      <div className="w-full max-w-sm mx-auto space-y-20">
+        <div className="flex justify-center py-6">
+          <Link href={ROUTES.HOME}>
+            <Image 
+              src="/brand/logo-full.png" 
+              alt="Openlearn" 
+              width={140} 
+              height={38}
+              className="w-32 object-contain"
+              priority
+            />
           </Link>
         </div>
         {children}

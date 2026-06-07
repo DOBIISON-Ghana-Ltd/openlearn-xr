@@ -1,10 +1,8 @@
-import { ReactElement } from 'react'
-
 export interface SendEmailOptions {
   to: string
   subject: string
-  react?: ReactElement
-  html?: string
+  html: string
+  text?: string
   from?: string
 }
 
@@ -15,5 +13,6 @@ export interface EmailResult {
 }
 
 export interface EmailAdapter {
+  initialize?: () => Promise<boolean>
   sendEmail(options: SendEmailOptions): Promise<EmailResult>
 }
