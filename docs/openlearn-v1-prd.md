@@ -1,7 +1,7 @@
 # PRD: OpenLearn V1
 
-> Status: COMPLETE
-> Last updated: 2026-06-03
+> Status: LIVING — aligned with codebase implementation patterns (updated 2026-06-07)
+> Last updated: 2026-06-07
 
 ## Table of Contents
 - [Problem Statement](#problem-statement)
@@ -74,6 +74,16 @@ Secondary schools in Ghana often lack science labs due to equipment and material
 - Student joins session anonymously, explores lab, answers checkpoints, sees results.
 - Authenticated user plays a module directly, earns points/badges.
 
+## Current Implementation Status
+
+As of June 7, 2026, the codebase has been initialized with manual structure adjustments:
+- **Auth & Identity:** Setup complete with Better Auth, custom user roles (user, editor, admin), signup, Google OAuth, and email OTP verification.
+- **Onboarding:** A 3-step client-side onboarding flow is scaffolded, awaiting server-side completion logic integration.
+- **Landing & Legal:** Main marketing landing page, privacy, cookie consent banner, terms, and cookies info pages are structured.
+- **Admin Panel:** Core user/module dashboards and statistics are scaffolded, using role-based routing gates.
+- **App Shell & Layouts:** Routes are gated using a custom cookie-cache proxy middleware (`proxy.ts`). Global app shells are referenced but require final integration/linking.
+- **Data Layer:** Strong types, route/key factories, custom axios wrappers, and `useApi` react-query hooks are ready and integrated.
+
 ## Implementation Plan
-- Batch 1 (Pilot): User management and auth, onboarding, landing/legal pages, admin basics, analytics instrumentation, placeholder app UI.
-- Batch 2: Core app features replace placeholders, including sessions, module play, checkpoints, and leaderboard flows.
+- **Batch 1 (Pilot - Substantially Complete):** Authenticated user management, role-based access control, onboarding framework, legal compliance, and initial admin/marketing pages.
+- **Batch 2 (Pending):** Core educational app flows — integrate active Zustand play/onboarding/editor stores, complete 3D R3F lab play canvas components, implement checkpoints, real-time leaderboard sessions via polling, and replace the placeholder app shells.

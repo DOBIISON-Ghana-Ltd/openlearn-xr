@@ -30,6 +30,9 @@ const parsers = {
   verifyCache: {
     redirect: parseAsString.withDefault('')
   },
+  onboarding: {
+    redirect: parseAsString.withDefault(''),
+  },
   page: paginationPage
 } as const
 

@@ -1,10 +1,11 @@
 import primitiveAxios from 'axios';
 import { environmentManager } from '@tanstack/react-query';
+import { env } from '@/lib/config/env';
 
 const isServer = environmentManager.isServer();
 
 export const axios = primitiveAxios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_URL!,
+  baseURL: env.NEXT_PUBLIC_API_URL!,
   withCredentials: true, // Equivalent to credentials: 'include' for the client
 });
 
@@ -29,7 +30,7 @@ axios.interceptors.request.use(async (config) => {
 });
 
 export const axiosPublic = primitiveAxios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_URL!,
+  baseURL: env.NEXT_PUBLIC_API_URL!,
   withCredentials: false, // No credentials for public instance
 });
 

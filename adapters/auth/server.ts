@@ -5,6 +5,7 @@ import emailService from '@/adapters/email'
 import prisma from '@/adapters/db/client'
 import { ac, admin as adminRole, editor, user } from './permissions'
 import { nextCookies } from 'better-auth/next-js'
+import { env } from '@/lib/config/env'
 
 export const auth = betterAuth({
   database: prismaAdapter(prisma, { provider: 'postgresql' }),
@@ -25,8 +26,8 @@ export const auth = betterAuth({
   },
   socialProviders: {
     google: {
-      clientId: process.env.GOOGLE_CLIENT_ID!,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
+      clientId: env.GOOGLE_CLIENT_ID!,
+      clientSecret: env.GOOGLE_CLIENT_SECRET!,
     }
   },
   user: {

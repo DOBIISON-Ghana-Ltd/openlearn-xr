@@ -61,6 +61,17 @@ const publicDeleteMe = {
   }
 } satisfies MutationConfig;
 
+const publicPatchOnboarding = {
+  type: 'mutation',
+  mutationFn: async (body: Infer["PublicUserPatchOnboarding"]["body"]) => {
+    const data = await fetcher(
+      () => axios.patch(R["public:user:patch:onboarding"](), body),
+      ZUser.PublicUserPatchOnboarding.shape.res
+    );
+    return data;
+  }
+} satisfies MutationConfig;
+
 const publicRegister = {
   type: 'mutation',
   mutationFn: async (body: Infer["PublicUserRegister"]["body"]) => {
@@ -188,6 +199,7 @@ export default {
   "public:user:get:me": publicGetMe,
   "public:user:patch:me": publicPatchMe,
   "public:user:delete:me": publicDeleteMe,
+  "public:user:patch:onboarding": publicPatchOnboarding,
   "public:user:register": publicRegister,
   "public:user:login": publicLogin,
   "public:user:logout": publicLogout,

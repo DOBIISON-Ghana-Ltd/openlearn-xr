@@ -4,16 +4,17 @@ import { RejectUpload, route, type Router } from '@better-upload/server';
 import { toRouteHandler } from '@better-upload/server/adapters/next';
 import { aws } from '@better-upload/server/clients';
 import { headers } from 'next/headers';
+import { env } from '@/lib/config/env';
 
 const s3 = aws({
-  accessKeyId: process.env.AWS_ACCESS_KEY_ID!,
-  secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY!,
-  region: process.env.AWS_REGION!,
+  accessKeyId: env.AWS_ACCESS_KEY_ID!,
+  secretAccessKey: env.AWS_SECRET_ACCESS_KEY!,
+  region: env.AWS_REGION!,
 });
 
 const router: Router = {
   client: s3,
-  bucketName: process.env.S3_BUCKET_NAME!,
+  bucketName: env.S3_BUCKET_NAME!,
   routes: {
     image: route({
       fileTypes: ['image/*'],

@@ -4,6 +4,8 @@ import templates, { type ITemplatePropsMap } from './templates'
 import { EmailAdapter } from './types'
 import { ResendEmailAdapter } from './resend-adapter'
 import { SesEmailAdapter } from './ses-adapter'
+import { ConsoleEmailAdapter } from './console-adapter'
+import { env } from '@/lib/config/env'
 
 export * from './types'
 export * from './resend-adapter'
@@ -17,22 +19,27 @@ function createTypedElement<P extends {}>(Component: FC<P>, props: P) {
 }
 
 export function createEmailAdapter(): EmailAdapter {
-  const provider = process.env.EMAIL_PROVIDER || 'resend'
-  const defaultFrom = process.env.EMAIL_FROM || 'OpenLearn <noreply@openlearn.app>'
+  const provider = env.EMAIL_PROVIDER
+  const defaultFrom = env.EMAIL_FROM
 
-  if (provider === 'ses') {
+  if (provider === 'ses' && env.AWS_ACCESS_KEY_ID) {
     return new SesEmailAdapter({
-      region: process.env.AWS_REGION || 'us-east-1',
-      accessKeyId: process.env.AWS_ACCESS_KEY_ID || '',
-      secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY || '',
+      region: env.AWS_REGION,
+      accessKeyId: env.AWS_ACCESS_KEY_ID,
+      secretAccessKey: env.AWS_SECRET_ACCESS_KEY || '',
       defaultFrom,
     })
   }
 
-  return new ResendEmailAdapter({
-    apiKey: process.env.RESEND_API_KEY || '',
-    defaultFrom,
-  })
+  if (provider === 'resend' && env.RESEND_API_KEY) {
+    return new ResendEmailAdapter({
+      apiKey: env.RESEND_API_KEY,
+      defaultFrom,
+    })
+  }
+
+  // Fallback to console for local dev without keys
+  return new ConsoleEmailAdapter(defaultFrom)
 }
 
 class EmailService {
@@ -78,7 +85,7 @@ class EmailService {
     sender?: string
   }) {
     const { template, props, recipient, sender, subject } = options
-    const isDev = process.env.NODE_ENV !== 'production'
+    const isDev = env.NODE_ENV !== 'production'
 
     if (!this.initialized) {
       await this.initialize()
@@ -92,7 +99,7 @@ class EmailService {
     const htmlContent = await render(createTypedElement(Component, props))
     const textContent = toPlainText(htmlContent)
 
-    const devRecipient = process.env.EMAIL_DEV_TO
+    const devRecipient = env.EMAIL_DEV_TO
     const to = isDev && devRecipient ? devRecipient : recipient
 
     const info = await this.adapter.sendEmail({

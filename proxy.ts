@@ -1,6 +1,7 @@
 // proxy.ts
 import { NextRequest, NextResponse, ProxyConfig } from "next/server";
 import { getCookieCache, getSessionCookie } from "better-auth/cookies";
+import { env } from "@/lib/config/env";
 
 export async function proxy(request: NextRequest) {
   const { pathname, search } = request.nextUrl;
@@ -8,9 +9,10 @@ export async function proxy(request: NextRequest) {
   let cache = null;
   try {
     cache = await getCookieCache(request, {
-      secret: process.env.BETTER_AUTH_SECRET,
+      secret: env.BETTER_AUTH_SECRET,
     });
   } catch {}
+  console.log({cache})
 
   const hasAuth = Boolean(cache);
   const isAuthPage = [

@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { ZAccount, ZApi, ZMediaFile, ZUser } from "@/data/schema.base";
+import { ZOnboardingMetadata } from "@/store/onboarding/schema";
 
 const ZOtpType = z.enum(["email-verification", "sign-in", "forget-password"]);
 const ZOtp = z.string().length(6, "OTP must be 6 digits");
@@ -7,11 +8,11 @@ const ZOtp = z.string().length(6, "OTP must be 6 digits");
 const PublicUserGetMe = ZApi({
   res: ZUser.pick({
     id: true,
-    email: true,
     name: true,
+    role: true,
+    email: true,
     image: true,
     avatarId: true,
-    role: true,
     onboarded: true,
     createdAt: true
   })
@@ -88,6 +89,10 @@ const PublicUserResetPassword = ZApi({
 
 const PublicUserDeleteMe = ZApi({});
 
+const PublicUserPatchOnboarding = ZApi({
+  body: ZOnboardingMetadata
+});
+
 const AdminUserGetAll = ZApi({
   res: ZUser.pick({
     id: true,
@@ -104,6 +109,7 @@ const schema = {
   PublicUserSendOtp,
   PublicUserResetPassword,
   PublicUserDeleteMe,
+  PublicUserPatchOnboarding,
   AdminUserGetAll
 };
 

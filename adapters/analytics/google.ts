@@ -1,6 +1,7 @@
 import Cookies from 'js-cookie'
+import { env } from '@/lib/config/env'
 
-export const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID
+export const GA_MEASUREMENT_ID = env.NEXT_PUBLIC_GA_MEASUREMENT_ID
 
 export function trackGAEvent(event: string, properties?: Record<string, any>) {
   if (typeof window === 'undefined') return

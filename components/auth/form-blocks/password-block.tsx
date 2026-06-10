@@ -39,6 +39,7 @@ export default function PasswordBlock<T extends FieldValues>(props: Props<T>) {
         <InputGroupAddon align="inline-end">
           <Button
             size="icon-xs"
+            variant="ghost"
             aria-label={visible ? "Hide password" : "Show password"}
             onClick={() => setVisible((v) => !v)}
             tabIndex={-1}

@@ -10,11 +10,11 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         <div className="flex justify-center py-6">
           <Link href={ROUTES.HOME}>
             <Image 
-              src="/brand/logo-full.png" 
+              src="/brand/logo-light.png" 
               alt="Openlearn" 
               width={140} 
               height={38}
-              className="w-32 object-contain"
+              className="w-10 object-contain"
               priority
             />
           </Link>

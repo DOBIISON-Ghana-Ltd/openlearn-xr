@@ -2,6 +2,7 @@ import { apiRegistry } from '@/data/registry';
 import { uploadFile as uploadFilePrimitive } from '@better-upload/client';
 import { Infer } from '@/data/types.base';
 import slugify from '@sindresorhus/slugify';
+import { env } from '../config/env';
 
 type IUploadFile = {
   file: File;
@@ -10,7 +11,7 @@ export const uploadFile = async (props: IUploadFile): Promise<Awaited<ReturnType
   return await uploadFilePrimitive({
     file: props.file,
     route: 'image',
-    api: process.env.NEXT_PUBLIC_STORAGE_URL || "http://localhost:5000/upload",
+    api: env.NEXT_PUBLIC_STORAGE_URL,
     metadata: {
       key: props.key,
       msc: props.msc
@@ -87,7 +88,7 @@ export async function handleFileUpload(params: IHandleFileUpload) {
 export const getImageUrl = (key: string) => {
   if (key === "") return null;
   
-  let prefix = process.env.NEXT_PUBLIC_IMAGE_URL!
+  let prefix = env.NEXT_PUBLIC_IMAGE_URL || "/uploads"
   // remove trailing slash if exists
   if (prefix.endsWith('/')) {
     prefix = prefix.slice(0, -1);

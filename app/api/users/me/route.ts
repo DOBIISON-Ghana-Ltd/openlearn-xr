@@ -8,8 +8,9 @@ export const GET = secureApiRoute(async (req, ctx, user) => {
     role: user.role,
     email: user.email,
     image: user.image,
+    avatarId: user.avatarId,
     onboarded: user.onboarded,
-    metadata: user.metadata
+    createdAt: user.createdAt
   });
 });
 
