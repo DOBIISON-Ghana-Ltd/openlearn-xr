@@ -1,5 +1,5 @@
 import type * as React from "react";
-import { cn } from "@/lib/utils/cn";
+import { cn } from "@/lib/utils";
 
 export function Frame({
   className,
@@ -85,4 +85,3 @@ export function FrameFooter({
     />
   );
 }
-

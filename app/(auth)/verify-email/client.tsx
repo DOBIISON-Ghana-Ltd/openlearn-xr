@@ -85,7 +85,7 @@ export default function ClientPage() {
         </InputOTP>
 
         <Button className="w-full" disabled={IPVerify} onClick={handleSubmit(onSubmit)}>
-          {IPVerify ? <LoaderIcon className="animate-spin size-2.5" /> : "Verify Email"}
+          {IPVerify ? <LoaderIcon className="animate-spin size-4" /> : "Verify Email"}
         </Button>
 
         <Button type="button" onClick={handleResend} disabled={IPResend} variant="link">

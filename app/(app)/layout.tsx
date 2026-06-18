@@ -1,15 +1,13 @@
-import { prefetchApi } from '@/data/hooks/use-prefetch-api';
-import { getQueryClient } from '@/lib/utils/get-query-client';
-import { dehydrate, HydrationBoundary } from '@tanstack/react-query';
+import { Footer } from '@/components/app/footer'
+import Header from '@/components/app/header'
+import * as React from 'react'
 
-export default async function Layout({ children }: { children: React.ReactNode }) {
-
-  const queryClient = getQueryClient();
-  await prefetchApi(queryClient, 'public:user:get:me');
-
+export default function MarketingLayout({ children }: { children: React.ReactNode }) {
   return (
-    <HydrationBoundary state={dehydrate(queryClient)}>
-      {children}
-    </HydrationBoundary>
+    <div className="flex min-h-screen flex-col">
+      <Header />
+      <main className="flex-1">{children}</main>
+      <Footer />
+    </div>
   )
 }

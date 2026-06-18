@@ -69,7 +69,7 @@ export default function ClientPage() {
         <PasswordBlock control={control} name="confirmPassword" placeholder="Confirm new password" autoComplete="new-password" />
 
         <Button type="submit" className="w-full" disabled={isPending}>
-          {isPending ? <LoaderIcon className="animate-spin size-2.5" /> : "Reset Password"}
+          {isPending ? <LoaderIcon className="animate-spin size-4" /> : "Reset Password"}
         </Button>
       </form>
 

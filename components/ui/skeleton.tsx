@@ -1,5 +1,5 @@
 import type React from "react";
-import { cn } from "@/lib/utils/cn";
+import { cn } from "@/lib/utils";
 
 export function Skeleton({
   className,
@@ -16,4 +16,3 @@ export function Skeleton({
     />
   );
 }
-

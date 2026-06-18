@@ -3,7 +3,7 @@
 import { mergeProps } from "@base-ui/react/merge-props";
 import { useRender } from "@base-ui/react/use-render";
 import type React from "react";
-import { cn } from "@/lib/utils/cn";
+import { cn } from "@/lib/utils";
 
 export function Card({
   className,
@@ -251,4 +251,3 @@ export function CardFooter({
 }
 
 export { CardPanel as CardContent };
-

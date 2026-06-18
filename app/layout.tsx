@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono, Inter } from "next/font/google";
 import { cn } from "@/lib/utils/cn";
 import "./globals.css";
 import Providers from "@/components/common/providers";
 
-const fontSans = Geist({ variable: "--font-sans", subsets: ["latin"] });
-const fontHeading = Geist({ variable: "--font-heading", subsets: ["latin"], weight: "600" });
-const fontMono = Geist_Mono({ variable: "--font-mono", subsets: ["latin"] });
+const inter = Inter({ subsets: ['latin'], variable: '--font-sans' });
+const interHeading = Inter({ subsets: ['latin'], variable: '--font-heading' });
+const geistMono = Geist_Mono({ subsets: ['latin'], variable: '--font-mono' });
 
 export const metadata: Metadata = {
   title: {
@@ -21,14 +21,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
     <html
       lang="en"
       suppressHydrationWarning
-      className={cn(
-        "h-full",
-        "antialiased",
-        "font-sans",
-        fontSans.variable,
-        fontHeading.variable,
-        fontMono.variable
-      )}
+      className={cn("h-full", "antialiased", "font-sans", inter.variable, interHeading.variable, geistMono.variable)}
     >
       <body className="relative">
         <div className="isolate relative flex min-h-svh flex-col">

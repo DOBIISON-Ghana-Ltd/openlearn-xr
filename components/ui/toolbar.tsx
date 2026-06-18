@@ -2,7 +2,7 @@
 
 import { Toolbar as ToolbarPrimitive } from "@base-ui/react/toolbar";
 import type React from "react";
-import { cn } from "@/lib/utils/cn";
+import { cn } from "@/lib/utils";
 
 export function Toolbar({
   className,
@@ -89,4 +89,3 @@ export function ToolbarSeparator({
 }
 
 export { ToolbarPrimitive };
-

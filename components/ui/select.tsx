@@ -10,7 +10,7 @@ import {
   ChevronUpIcon,
 } from "lucide-react";
 import type * as React from "react";
-import { cn } from "@/lib/utils/cn";
+import { cn } from "@/lib/utils";
 
 export const Select: typeof SelectPrimitive.Root = SelectPrimitive.Root;
 
@@ -255,4 +255,3 @@ export function SelectGroupLabel(
 }
 
 export { SelectPrimitive, SelectPopup as SelectContent };
-

@@ -2,7 +2,7 @@
 
 import { Tooltip as TooltipPrimitive } from "@base-ui/react/tooltip";
 import type React from "react";
-import { cn } from "@/lib/utils/cn";
+import { cn } from "@/lib/utils";
 
 export const TooltipCreateHandle: typeof TooltipPrimitive.createHandle =
   TooltipPrimitive.createHandle;
@@ -65,4 +65,3 @@ export function TooltipPopup({
 }
 
 export { TooltipPrimitive, TooltipPopup as TooltipContent };
-

@@ -1,6 +1,16 @@
 export const ROUTES = {
   // MARKETING ROUTES
   HOME: '/',
+  LIBRARY: {
+    ROOT: '/library',
+    ONE: (id: string) => `/library/${id}`
+  },
+
+  MODULES: '/modules',
+
+  LICENSING: '/licensing',
+  CONTACT: '/contact',
+  PLAY: (mode: string, id?: string) => `/play/${mode}/${id}`,
   LEGAL: {
     TERMS: '/legal/terms',
     PRIVACY: '/legal/privacy',
@@ -17,19 +27,17 @@ export const ROUTES = {
 
   // APP ROUTES
   APP: {
-    DASHBOARD: '/app',
-    MODULES: '/app/modules',
-    SESSIONS: '/app/sessions',
-    COMMUNITY: '/app/community',
-    HISTORY: '/app/history',
-    PLAY: (type: string, id: string) => `/play/${type}/${id}`,
+    DASHBOARD: '/me',
+    MODULES: '/me/modules',
+    SESSIONS: '/me/sessions',
+    COMMUNITY: '/me/community',
   },
 
   // ADMIN ROUTES
   ADMIN: {
     DASHBOARD: '/admin',
+    ANALYTICS: '/admin/analytics',
     MODULES: '/admin/modules',
     USERS: '/admin/users',
-    ANALYTICS: '/admin/analytics',
   },
-} as const ;
+} as const;

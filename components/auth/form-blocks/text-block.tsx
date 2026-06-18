@@ -19,14 +19,14 @@ export default function TextBlock<T extends FieldValues>(props: Props<T>) {
   });
 
   return (
-    <Field data-invalid={!!fieldState.error || undefined} className="gap-1.5">
+    <Field data-invalid={fieldState.error ? "true" : undefined} className="gap-1.5">
       <Input
         id={props.name}
         ref={field.ref}
         type={props.type}
         placeholder={props.placeholder}
         autoComplete={props.autoComplete}
-        aria-invalid={!!fieldState.error}
+        aria-invalid={fieldState.error ? "true" : undefined}
         onBlur={field.onBlur}
         onChange={field.onChange}
         value={field.value}

@@ -11,8 +11,7 @@ export async function proxy(request: NextRequest) {
     cache = await getCookieCache(request, {
       secret: env.BETTER_AUTH_SECRET,
     });
-  } catch {}
-  console.log({cache})
+  } catch { }
 
   const hasAuth = Boolean(cache);
   const isAuthPage = [
@@ -24,10 +23,10 @@ export async function proxy(request: NextRequest) {
   ].includes(pathname);
   const isOnboarding = pathname.startsWith("/onboarding");
   const isVerifyPage = pathname.startsWith("/verify");
-  const isAppRoute = pathname.startsWith("/app");
+  const isMeRoute = pathname.startsWith("/me");
   const isAdminRoute = pathname.startsWith("/admin");
   const isIndexPage = pathname === "/";
-  const isProtectedRoute = isAppRoute || isAdminRoute || isOnboarding;
+  const isProtectedRoute = isMeRoute || isAdminRoute || isOnboarding;
   const isOnboarded = Boolean(cache?.user?.onboarded);
 
   if (!hasAuth && sessionCookie && !isVerifyPage) {
@@ -37,7 +36,7 @@ export async function proxy(request: NextRequest) {
   }
 
   if (hasAuth && (isAuthPage || isVerifyPage || isIndexPage)) {
-    return NextResponse.redirect(new URL("/app", request.url));
+    return NextResponse.redirect(new URL("/modules", request.url));
   }
 
   if (!hasAuth && isProtectedRoute) {
@@ -46,14 +45,14 @@ export async function proxy(request: NextRequest) {
     return NextResponse.redirect(loginUrl);
   }
 
-  if (hasAuth && (isAppRoute || isAdminRoute) && !isOnboarded) {
+  if (hasAuth && (isMeRoute || isAdminRoute) && !isOnboarded) {
     const onboardingUrl = new URL("/onboarding", request.url);
     onboardingUrl.searchParams.set("redirect", pathname + search);
     return NextResponse.redirect(onboardingUrl);
   }
 
   if (hasAuth && isOnboarding && isOnboarded) {
-    return NextResponse.redirect(new URL("/app", request.url));
+    return NextResponse.redirect(new URL("/modules", request.url));
   }
 
   if (hasAuth && isAdminRoute) {
@@ -72,7 +71,7 @@ export async function proxy(request: NextRequest) {
 export const config: ProxyConfig = {
   matcher: [
     "/",
-    "/app/:path*",
+    "/me/:path*",
     "/admin/:path*",
 
     // Auth routes

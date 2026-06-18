@@ -33,6 +33,10 @@ const parsers = {
   onboarding: {
     redirect: parseAsString.withDefault(''),
   },
+  modules: {
+    q:    parseAsString.withDefault(''),
+    page: parseAsString.withDefault('1'),
+  },
   page: paginationPage
 } as const
 

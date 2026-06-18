@@ -92,7 +92,7 @@ export default function ClientPage() {
           <TextBlock control={sendForm.control} name="email" type="email" placeholder="Enter your email" autoComplete="email" />
 
           <Button type="submit" className="w-full" disabled={IPSendOtp}>
-            {IPSendOtp ? <LoaderIcon className="animate-spin size-2.5" /> : "Send Verification Code"}
+            {IPSendOtp ? <LoaderIcon className="animate-spin size-4" /> : "Send Verification Code"}
           </Button>
         </form>
 

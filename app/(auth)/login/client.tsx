@@ -62,7 +62,7 @@ export default function ClientPage() {
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-3">
         <TextBlock control={control} name="email" type="email" placeholder="Enter your email" autoComplete="email" />
-        <PasswordBlock control={control} name="password" placeholder="Enter your password" autoComplete="current-password" />
+        <PasswordBlock control={control} name="password" placeholder="Enter your password" autoComplete="new-password" />
 
         {/* Forgot password */}
         <div className="flex justify-end">
@@ -76,7 +76,7 @@ export default function ClientPage() {
 
         {/* Submit */}
         <Button type="submit" className="w-full" disabled={isPending}>
-          {isPending ? <LoaderIcon className="animate-spin size-2.5" /> : "Login"}
+          {isPending ? <LoaderIcon className="animate-spin size-4" /> : "Login"}
         </Button>
       </form>
 

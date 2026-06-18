@@ -84,7 +84,7 @@ export default function ClientPage() {
 
         {/* Submit */}
         <Button type="submit" className="w-full" disabled={isPending}>
-          {isPending ? <LoaderIcon className="animate-spin size-2.5" /> : "Create Account"}
+          {isPending ? <LoaderIcon className="animate-spin size-4" /> : "Create Account"}
         </Button>
 
         {/* Divider */}

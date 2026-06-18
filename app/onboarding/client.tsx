@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation'
 import { useForm, Controller } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { ZOnboardingMetadata, IOnboardingMetadata, IOnboardingRole } from '@/store/onboarding/schema'
-import { useOnboardingStore, OnboardingTab } from '@/store/onboarding/store'
+import { useOnboardingStore } from '@/store/onboarding/store'
 import { Tabs, TabsPanel } from '@/components/ui/tabs'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -14,8 +14,9 @@ import useApi from '@/data/hooks/use-api'
 import { nuqs } from '@/lib/utils/nuqs'
 import { ROUTES } from '@/lib/constants/routes'
 import { toastManager } from '@/components/ui/toast'
-import { LoaderIcon, GraduationCap, BookOpen, Compass, ArrowRight, Check, Atom, FlaskConical, Dna, ChevronLeftIcon } from 'lucide-react'
+import { LoaderIcon, GraduationCap, BookOpen, Compass, Check, Atom, FlaskConical, Dna, ChevronLeftIcon } from 'lucide-react'
 import { cn } from '@/lib/utils/cn'
+import { authClient } from '@/adapters/auth/client'
 
 type IForm = IOnboardingMetadata;
 
@@ -69,7 +70,7 @@ export default function ClientPage() {
   const { currentTab, setTab, updateMetadata, clearStore } = useOnboardingStore();
   const [mounted, setMounted] = useState(false);
 
-  const { handleSubmit, control, trigger, getValues, watch, formState: { errors }, reset } = useForm<IForm>({
+  const { handleSubmit, control, trigger, watch, formState: { errors }, reset } = useForm<IForm>({
     resolver: zodResolver(ZOnboardingMetadata),
     defaultValues: {
       role: undefined,
@@ -125,13 +126,14 @@ export default function ClientPage() {
 
   const onSubmit = (data: IForm) => {
     completeOnboarding(data, {
-      onSuccess: () => {
-        clearStore();
+      onSuccess: async () => {
         toastManager.add({
           title: "Welcome to OpenLearn! Setup completed.",
           type: "success"
         });
+        await authClient.getSession();
         router.push(params.redirect || ROUTES.APP.DASHBOARD);
+        clearStore();
       },
       onError: (err) => {
         toastManager.add({
@@ -144,17 +146,17 @@ export default function ClientPage() {
 
   if (!mounted) {
     return (
-    <div className="w-full min-h-[calc(100vh-80px)] flex flex-col justify-center items-center py-12">
-      <div className="text-center mb-10 max-w-2xl px-4">
-        <LoaderIcon className="animate-spin text-primary size-8" />
+      <div className="w-full min-h-[calc(100vh-80px)] flex flex-col justify-center items-center py-12">
+        <div className="text-center mb-10 max-w-2xl px-4">
+          <LoaderIcon className="animate-spin size-5" />
+        </div>
       </div>
-    </div>
     );
   }
 
   return (
     <div className="w-full max-w-2xl mx-auto space-y-12 py-10 px-4 min-h-[85vh] flex flex-col justify-center">
-      
+
       {/* Minimal Header with Progress */}
       <div className="flex flex-col items-center space-y-4 w-full max-w-md mx-auto">
         <div className="flex justify-between items-center w-full text-xs text-muted-foreground font-medium select-none h-4">
@@ -175,8 +177,8 @@ export default function ClientPage() {
           </span>
         </div>
         <div className="h-1 w-full bg-muted rounded-full overflow-hidden">
-          <div 
-            className="h-full bg-primary transition-all duration-300 rounded-full" 
+          <div
+            className="h-full bg-primary transition-all duration-300 rounded-full"
             style={{ width: currentTab === 'role' ? '33.33%' : currentTab === 'school' ? '66.66%' : '100%' }}
           />
         </div>
@@ -185,7 +187,7 @@ export default function ClientPage() {
       <form onSubmit={(e) => e.preventDefault()} className="flex-1 flex flex-col justify-between py-4">
         <Tabs value={currentTab} className="flex-1 flex flex-col justify-between">
           <div className="flex-1 flex flex-col justify-center">
-            
+
             {/* Step 1: Role Selection */}
             <TabsPanel value="role" className="space-y-8 focus:outline-none w-full animate-in fade-in duration-200">
               <div className="space-y-2 text-center">
@@ -354,36 +356,36 @@ export default function ClientPage() {
                 )}
               />
             </TabsPanel>
-            
+
           </div>
 
-            {/* Bottom Centered Nav Action */}
-            <div className="flex justify-center pt-8 mt-6">
-              {currentTab !== 'interests' ? (
-                <Button
-                  type="button"
-                  onClick={handleNext}
-                  className="w-full sm:w-100 h-14 rounded-xl bg-primary text-primary-foreground hover:bg-primary/95 transition-all text-lg font-medium flex items-center justify-center gap-2 cursor-pointer shadow-sm"
-                >
-                  Continue
-                </Button>
-              ) : (
-                <Button
-                  type="button"
-                  disabled={isPending}
-                  onClick={handleSubmit(onSubmit)}
-                  className="w-full sm:w-100 h-14 rounded-xl bg-primary text-primary-foreground hover:bg-primary/95 transition-all text-lg font-medium flex items-center justify-center gap-2 cursor-pointer disabled:opacity-70 shadow-sm"
-                >
-                  {isPending ? (
-                    <LoaderIcon className="animate-spin size-6" />
-                  ) : (
-                    <>
-                      Complete Setup
-                    </>
-                  )}
-                </Button>
-              )}
-            </div>
+          {/* Bottom Centered Nav Action */}
+          <div className="flex justify-center pt-8 mt-6">
+            {currentTab !== 'interests' ? (
+              <Button
+                type="button"
+                onClick={handleNext}
+                className="w-full sm:w-100 h-14 rounded-xl bg-primary text-primary-foreground hover:bg-primary/95 transition-all text-lg font-medium flex items-center justify-center gap-2 cursor-pointer shadow-sm"
+              >
+                Continue
+              </Button>
+            ) : (
+              <Button
+                type="button"
+                disabled={isPending}
+                onClick={handleSubmit(onSubmit)}
+                className="w-full sm:w-100 h-14 rounded-xl bg-primary text-primary-foreground hover:bg-primary/95 transition-all text-lg font-medium flex items-center justify-center gap-2 cursor-pointer disabled:opacity-70 shadow-sm"
+              >
+                {isPending ? (
+                  <LoaderIcon className="animate-spin size-4" />
+                ) : (
+                  <>
+                    Complete Setup
+                  </>
+                )}
+              </Button>
+            )}
+          </div>
         </Tabs>
       </form>
     </div>

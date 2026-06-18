@@ -22,7 +22,7 @@ export default function PasswordBlock<T extends FieldValues>(props: Props<T>) {
   });
 
   return (
-    <Field data-invalid={!!fieldState.error || undefined} className="gap-1.5">
+    <Field data-invalid={fieldState.error ? "true" : undefined} className="gap-1.5">
       <InputGroup>
         <InputGroupInput
           id={props.name}
@@ -30,7 +30,7 @@ export default function PasswordBlock<T extends FieldValues>(props: Props<T>) {
           type={visible ? "text" : "password"}
           placeholder={props.placeholder}
           autoComplete={props.autoComplete}
-          aria-invalid={!!fieldState.error}
+          aria-invalid={fieldState.error ? "true" : undefined}
           onBlur={field.onBlur}
           onChange={field.onChange}
           value={field.value}
