@@ -9,3 +9,6 @@ This version has breaking changes — APIs, conventions, and file structure may 
 
 # Git Commit Rules
 - Use the following conventional commit structure: `feat: msg`, `msc: msg`, `refactor: msg`, `fix: msg`, etc.
+
+# Project Structure Rules
+- **Keep the Root Clutter-Free**: Since this project uses a `src` directory, ALL application-related code (such as `utils`, `lib`, `components`, `hooks`, etc.) MUST be placed inside the `src/` directory. Do not create these folders in the root directory.
