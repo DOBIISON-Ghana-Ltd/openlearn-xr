@@ -1,7 +1,6 @@
 import * as React from 'react'
 import { Metadata } from 'next'
 import { MyPlaysClient } from './client'
-import { AppShell } from '@/components/layout/app-shell'
 
 export const metadata: Metadata = {
   title: 'My Plays | OpenLearn',
@@ -9,9 +8,5 @@ export const metadata: Metadata = {
 }
 
 export default function MyPlaysPage() {
-  return (
-    <AppShell title="My Plays">
-      <MyPlaysClient />
-    </AppShell>
-  )
+  return <MyPlaysClient />
 }

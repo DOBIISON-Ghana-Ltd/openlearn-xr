@@ -28,9 +28,10 @@ export const ROUTES = {
   // APP ROUTES
   APP: {
     DASHBOARD: '/me',
-    MODULES: '/me/modules',
+    MY_PLAYS: '/me/my-plays',
+    EDITOR: '/me/editor',
     SESSIONS: '/me/sessions',
-    COMMUNITY: '/me/community',
+    LICENSE: '/me/license',
   },
 
   // ADMIN ROUTES

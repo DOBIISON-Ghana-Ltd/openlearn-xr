@@ -10,6 +10,10 @@ const ROUTES = {
 
   // MEDIA
   "public:media:post:one": () => `/api/media`,
+
+  // ORGANIZATIONS
+  "public:org:get:subscription": ({ orgId }: { orgId: string }) => `/api/org/${orgId}/subscription`,
+  "public:org:post:create": () => `/api/org`,
 } as const;
 
 export default ROUTES;

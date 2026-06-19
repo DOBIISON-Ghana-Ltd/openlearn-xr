@@ -1,9 +1,11 @@
 import userModule from './modules/user/user.api';
 import mediaModule from './modules/media/media.api';
+import orgModule from './modules/org/org.api';
 
 export const apiRegistry = {
   ...userModule,
-  ...mediaModule
+  ...mediaModule,
+  ...orgModule
 } as const;
 
 export type ApiRegistry = typeof apiRegistry;

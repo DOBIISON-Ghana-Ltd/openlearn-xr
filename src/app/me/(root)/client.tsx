@@ -13,33 +13,26 @@ export default function ClientPage() {
   const userName = data?.name || "User";
 
   return (
-    <div className="flex flex-col h-full overflow-hidden bg-background">
-      {/* Top Navigation Breadcrumb */}
-      <div className="flex items-center px-6 h-14 shrink-0 text-sm font-medium text-muted-foreground gap-2">
-        <button className="hover:text-foreground transition-colors">&lt;</button>
-        <button className="hover:text-foreground transition-colors">&gt;</button>
-        <span className="text-foreground ml-2">Dashboard</span>
-      </div>
-
+    <div className="flex flex-col overflow-hidden">
       <ScrollArea className="flex-1">
-        <div className="flex flex-col px-6 pb-12">
-          
+        <div className="flex flex-col pb-12">
+
           {/* Welcome Banner */}
-          <div className="relative w-full rounded-2xl bg-linear-to-r from-emerald-500 to-emerald-600 p-8 text-white shadow-md dark:from-emerald-950 dark:to-emerald-900 mt-2 mb-8 overflow-hidden">
+          <div className="relative w-full rounded-2xl bg-linear-to-r from-emerald-500 to-emerald-600 p-8 text-white shadow-md dark:from-emerald-950 dark:to-emerald-900 mb-8 overflow-hidden">
             {/* Decorative background elements */}
             <div className="absolute right-0 top-0 opacity-10 translate-x-1/3 -translate-y-1/4">
               <Atom className="size-64" />
             </div>
-            
+
             <div className="relative z-10">
               <h2 className="text-3xl font-bold">Welcome, {userName}!</h2>
               <p className="mt-2 text-emerald-50 text-base max-w-xl">
                 Ready to explore interactive 3D science simulations?
               </p>
               <div className="mt-8 flex flex-wrap gap-3">
-                <Link href="/me/modules">
+                <Link href="/me/editor">
                   <Button className="bg-white border-white text-emerald-700 hover:bg-emerald-50 h-10 px-6">
-                    Explore Labs
+                    Open Module Editor
                     <ArrowRightIcon className="size-4 ml-2" />
                   </Button>
                 </Link>
