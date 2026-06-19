@@ -1,6 +1,6 @@
 import { betterAuth } from 'better-auth'
 import { prismaAdapter } from 'better-auth/adapters/prisma'
-import { admin, emailOTP } from 'better-auth/plugins'
+import { admin, emailOTP, organization } from 'better-auth/plugins'
 import emailService from '@/adapters/email'
 import prisma from '@/adapters/db/client'
 import { ac, admin as adminRole, editor, user } from './permissions'
@@ -32,12 +32,12 @@ export const auth = betterAuth({
   },
   user: {
     additionalFields: {
-      onboarded: { 
-        type: 'boolean', 
+      onboarded: {
+        type: 'boolean',
         defaultValue: false,
         input: false
       },
-      avatarId: {
+      avatar: {
         type: "string",
         required: false,
         defaultValue: null,
@@ -62,6 +62,7 @@ export const auth = betterAuth({
       defaultRole: 'user',
       adminRoles: ['admin'],
     }),
+    organization(),
     emailOTP({
       overrideDefaultEmailVerification: true,
       sendVerificationOnSignUp: true,

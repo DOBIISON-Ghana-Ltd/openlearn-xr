@@ -7,11 +7,15 @@ generator client {
   output   = "../generated/prisma"
 }
 
+// ==========================================
+// BETTER AUTH CORE
+// ==========================================
+
 model User {
   id            String    @id @default(cuid())
   name          String
-  role          String?   @default("user")
-  avatarId      String?   @unique
+  role          String?   @default("user") // "user" | "editor" | "admin"
+  avatar        String? // static avatar name from choice
   email         String    @unique
   emailVerified Boolean   @default(false)
   image         String?
@@ -21,38 +25,52 @@ model User {
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
 
-  onboarded     Boolean   @default(false)
-  metadata      Json?
+  onboarded Boolean @default(false)
+  metadata  Json?
 
+  // Gamification aggregate
+  xp            Int      @default(0)
+  currentStreak Int      @default(0)
+  longestStreak Int      @default(0)
+  badges        String[] @default([]) // e.g., ["Molecule Master", "Speed Runner"]
+
+  // Better Auth Relations
   sessions    Session[]
   accounts    Account[]
-  media       Media[]      @relation("Uploader")
-  avatar      Media?       @relation("UserAvatar", fields: [avatarId], references: [id], onDelete: SetNull)
+  memberships Member[]
+
+  // App Relations
+  media            Media[]           @relation("Uploader")
+  moduleProgress   ModuleProgress[]
+  hostedSessions   LiveSession[]     @relation("SessionHost")
+  sessionPlays     SessionPlayer[]
+  gamificationLogs GamificationLog[]
+  editorChats      EditorChat[]
 
   @@index([email])
   @@map("user")
 }
 
-
 model Session {
-  id            String    @id @default(cuid())
-  expiresAt     DateTime
-  token         String    @unique
-  ipAddress     String?
-  userAgent     String?
-  userId        String
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
-  impersonatedBy String?
+  id                   String   @id @default(cuid())
+  expiresAt            DateTime
+  token                String   @unique
+  ipAddress            String?
+  userAgent            String?
+  userId               String
+  createdAt            DateTime @default(now())
+  updatedAt            DateTime @updatedAt
+  impersonatedBy       String?
+  activeOrganizationId String?
 
-  user          User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([userId])
   @@map("session")
 }
 
 model Account {
-  id            String    @id @default(cuid())
+  id                    String    @id @default(cuid())
   accountId             String
   providerId            String
   userId                String
@@ -73,33 +91,380 @@ model Account {
 }
 
 model Verification {
-  id            String    @id @default(cuid())
-  identifier    String
-  value         String
-  expiresAt     DateTime
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
+  id         String   @id @default(cuid())
+  identifier String
+  value      String
+  expiresAt  DateTime
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
 
   @@index([identifier])
   @@map("verification")
 }
 
-model Media {
-  id         String   @id @default(cuid())
-  uploaderId String
-  folder     String // avatar
-  status     String   @default("active") // active, deleted
-  key        String   @unique // uploads/123.png — unique S3 object key
-  fileName   String // original file name
-  mimeType   String // image/png, image/jpeg.
-  width      Int
-  height     Int
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
+model Invitation {
+  id             String   @id @default(cuid())
+  organizationId String
+  email          String
+  role           String?
+  status         String   @default("pending") // "pending" | "accepted" | "rejected" | "canceled"
+  expiresAt      DateTime
+  inviterId      String
+  createdAt      DateTime @default(now())
 
-  uploader      User      @relation("Uploader", fields: [uploaderId], references: [id], onDelete: Cascade)
-  userAvatar    User?     @relation("UserAvatar")
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  @@index([organizationId])
+  @@index([email])
+  @@map("invitation")
+}
+
+// ==========================================
+// ORGANIZATION & MEMBERSHIP (Better Auth org plugin)
+// ==========================================
+
+model Organization {
+  id        String   @id @default(cuid())
+  name      String
+  slug      String   @unique
+  logo      String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  members      Member[]
+  invitations  Invitation[]
+  subscription Subscription?
+  sessions     LiveSession[]
+
+  @@map("organization")
+}
+
+model Member {
+  id             String   @id @default(cuid())
+  userId         String
+  organizationId String
+  role           String // "owner" | "admin" | "editor" | "teacher" | "member"
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  user         User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, organizationId])
+  @@index([userId])
+  @@index([organizationId])
+  @@map("member")
+}
+
+// ==========================================
+// SAAS & LICENSING LAYER
+// ==========================================
+
+model Subscription {
+  id               String    @id @default(cuid())
+  organizationId   String    @unique // Every org has exactly one subscription
+  tier             String    @default("FREE") // "FREE" | "PRO" | "DEPARTMENT" | "ENTERPRISE" | "UNLIMITED"
+  status           String    @default("ACTIVE") // "ACTIVE" | "PAST_DUE" | "CANCELED" | "TRIALING"
+  seats            Int       @default(1)
+  isUnlimited      Boolean   @default(false) // true for self-hosted orgs (bypass all seat/feature checks)
+  stripeCustomerId String?
+  stripeSubId      String?
+  currentPeriodEnd DateTime?
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
+
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  @@map("subscription")
+}
+
+// ==========================================
+// EDITOR SUITE — MEDIA & COLLECTIONS
+// ==========================================
+
+model Media {
+  id           String   @id @default(cuid())
+  uploaderId   String
+  collectionId String? // Null until assigned to a collection
+  folder       String // e.g. "avatar", "documents"
+  status       String   @default("active") // "active" | "deleted" | "uploading" | "processing" | "ready" | "failed"
+  key          String   @unique // Path/key in the configured storage adapter
+  fileName     String // original file name
+  mimeType     String
+  metadata     Json? // Optional JSON for variable metadata (e.g. { sizeBytes, width, height })
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  uploader   User        @relation("Uploader", fields: [uploaderId], references: [id], onDelete: Cascade)
+  collection Collection? @relation(fields: [collectionId], references: [id], onDelete: SetNull)
 
   @@index([uploaderId])
+  @@index([collectionId])
+  @@index([status])
   @@map("media")
+}
+
+model Collection {
+  id           String   @id @default(cuid())
+  name         String // "SHS Physics Book One"
+  slug         String   @unique
+  description  String?
+  coverMediaId String? // Optional cover image reference (storageKey or Media ID)
+  parsedIndex  Json? // AI-generated JSON: topics, subtopics, lab locations, page refs
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  media   Media[]
+  modules Module[]
+
+  @@map("collection")
+}
+
+// ==========================================
+// EDITOR SUITE — AI CHAT HISTORY
+// ==========================================
+
+model EditorChat {
+  id              String   @id @default(cuid())
+  moduleVersionId String   @unique // One chat thread per module version
+  userId          String // The editor who owns this thread
+  messages        Json // [{role: "user"|"assistant"|"system", content: "..."}]
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  moduleVersion ModuleVersion @relation(fields: [moduleVersionId], references: [id], onDelete: Cascade)
+  user          User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@map("editor_chat")
+}
+
+// ==========================================
+// MODULE LAYER
+// ==========================================
+
+model Module {
+  id                 String   @id @default(cuid())
+  collectionId       String // Which collection/book this module is drawn from
+  title              String
+  slug               String   @unique
+  description        String
+  thumbnail          String? // storageKey reference
+  orderIndex         Int // Controls "Book Mode" linear unlock ordering
+  publishedVersionId String?  @unique // FK to the currently live ModuleVersion
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+
+  collection       Collection       @relation(fields: [collectionId], references: [id])
+  versions         ModuleVersion[]  @relation("ModuleVersions")
+  publishedVersion ModuleVersion?   @relation("PublishedVersion", fields: [publishedVersionId], references: [id], onDelete: SetNull)
+  progress         ModuleProgress[]
+
+  @@index([collectionId])
+  @@map("module")
+}
+
+model ModuleVersion {
+  id             String    @id @default(cuid())
+  moduleId       String
+  versionNumber  Int // Auto-incrementing per module (1, 2, 3 …)
+  branchedFromId String? // The version this was forked from (null for v1)
+  status         String    @default("DRAFT") // "DRAFT" | "PUBLISHED" | "ARCHIVED"
+  simulationData Json // AI-generated 3D scene/lab config JSON
+  changeNote     String? // Optional editor note describing what changed
+  createdById    String // Editor who created this version
+  publishedAt    DateTime?
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+
+  module         Module             @relation("ModuleVersions", fields: [moduleId], references: [id], onDelete: Cascade)
+  branchedFrom   ModuleVersion?     @relation("VersionBranch", fields: [branchedFromId], references: [id])
+  branches       ModuleVersion[]    @relation("VersionBranch")
+  publishedFor   Module?            @relation("PublishedVersion") // back-relation for Module.publishedVersionId
+  checkpoints    ModuleCheckpoint[]
+  editorChat     EditorChat?
+  sessions       LiveSession[]
+  moduleProgress ModuleProgress[]
+
+  @@unique([moduleId, versionNumber])
+  @@index([moduleId])
+  @@index([status])
+  @@map("module_version")
+}
+
+model ModuleCheckpoint {
+  id              String   @id @default(cuid())
+  moduleVersionId String
+  orderIndex      Int // Position in the lab flow
+  question        String
+  options         Json // [{label: "A", text: "...", isCorrect: true}]
+  points          Int      @default(10)
+  triggerAt       String? // e.g., "step_3" — when in the sim this fires
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  moduleVersion      ModuleVersion       @relation(fields: [moduleVersionId], references: [id], onDelete: Cascade)
+  sessionCheckpoints SessionCheckpoint[]
+
+  @@index([moduleVersionId])
+  @@map("module_checkpoint")
+}
+
+// ==========================================
+// SIMULATION SUITE — GAMIFICATION & PROGRESS
+// ==========================================
+
+model ModuleProgress {
+  id                  String    @id @default(cuid())
+  userId              String
+  moduleId            String
+  lastPlayedVersionId String? // The specific version last played — for XP dilution calculations
+  isUnlocked          Boolean   @default(false)
+  isCompleted         Boolean   @default(false)
+  highScore           Int       @default(0)
+  totalPlays          Int       @default(0) // Total number of times this module was played
+  lastPlayedAt        DateTime? // Timestamp of most recent play
+  playMode            String    @default("free") // "free" | "controlled"
+  completedAt         DateTime?
+  createdAt           DateTime  @default(now())
+  updatedAt           DateTime  @updatedAt
+
+  user              User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  module            Module         @relation(fields: [moduleId], references: [id], onDelete: Cascade)
+  lastPlayedVersion ModuleVersion? @relation(fields: [lastPlayedVersionId], references: [id], onDelete: SetNull)
+
+  @@unique([userId, moduleId])
+  @@index([userId])
+  @@index([isUnlocked])
+  @@map("module_progress")
+}
+
+model GamificationLog {
+  id        String   @id @default(cuid())
+  userId    String
+  action    String // "XP_EARNED" | "XP_DEDUCTED" | "STREAK_INCREMENT" | "STREAK_RESET" | "BADGE_AWARDED"
+  delta     Int      @default(0) // XP change (+/-), 0 for badges
+  meta      Json? // e.g., {badge: "Molecule Master"} or {moduleId: "..."}
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([action])
+  @@map("gamification_log")
+}
+
+// ==========================================
+// SESSION SUITE — LIVE SESSIONS
+// ==========================================
+
+model LiveSession {
+  id              String    @id @default(cuid())
+  hostId          String // The licensed teacher/org member
+  organizationId  String? // Nullable for solo-teacher self-hosted use
+  moduleVersionId String // The exact published version being played in this session
+  joinCode        String    @unique // e.g. "A5F9B"
+  name            String? // Optional human name for the session
+  status          String    @default("STAGING") // "STAGING" | "WAITING" | "ACTIVE" | "COMPLETED" | "CANCELLED"
+  config          Json? // Pre-play config: time limits, anonymous allowed, etc.
+  startedAt       DateTime?
+  endedAt         DateTime?
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  host               User                @relation("SessionHost", fields: [hostId], references: [id], onDelete: Cascade)
+  organization       Organization?       @relation(fields: [organizationId], references: [id])
+  moduleVersion      ModuleVersion       @relation(fields: [moduleVersionId], references: [id])
+  players            SessionPlayer[]
+  sessionCheckpoints SessionCheckpoint[]
+  analytics          SessionAnalytic[]
+
+  @@index([hostId])
+  @@index([joinCode])
+  @@index([status])
+  @@map("live_session")
+}
+
+model SessionCheckpoint {
+  id           String   @id @default(cuid())
+  sessionId    String
+  checkpointId String
+  isEnabled    Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  session    LiveSession      @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  checkpoint ModuleCheckpoint @relation(fields: [checkpointId], references: [id], onDelete: Cascade)
+
+  @@unique([sessionId, checkpointId])
+  @@index([sessionId])
+  @@map("session_checkpoint")
+}
+
+model SessionPlayer {
+  id             String    @id @default(cuid())
+  sessionId      String
+  userId         String? // Null for anonymous players
+  anonymousName  String? // "Student_042" — generated for anonymous players
+  score          Int       @default(0)
+  completionRate Float     @default(0.0) // 0.0–1.0 percentage of lab completed
+  joinedAt       DateTime  @default(now())
+  completedAt    DateTime?
+
+  session   LiveSession       @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  user      User?             @relation(fields: [userId], references: [id], onDelete: SetNull)
+  analytics SessionAnalytic[]
+
+  @@index([sessionId])
+  @@index([userId])
+  @@map("session_player")
+}
+
+model SessionAnalytic {
+  id         String   @id @default(cuid())
+  sessionId  String
+  playerId   String
+  event      String // e.g., "checkpoint_answered", "step_completed", "idle"
+  payload    Json? // Event-specific data
+  recordedAt DateTime @default(now())
+
+  session LiveSession   @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  player  SessionPlayer @relation(fields: [playerId], references: [id], onDelete: Cascade)
+
+  @@index([sessionId])
+  @@index([playerId])
+  @@index([event])
+  @@map("session_analytic")
+}
+
+// ==========================================
+// ADMIN SUITE — GLOBAL SETTINGS & LOGS
+// ==========================================
+
+model AppSetting {
+  id          String   @id @default(cuid())
+  key         String   @unique // e.g., "ENABLE_GAMIFICATION", "ENABLE_SIGNUPS", "THEME_PRIMARY_COLOR"
+  value       String // Stored as string; app layer casts to correct type
+  description String?
+  updatedById String? // Last admin who changed it
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("app_setting")
+}
+
+model EmailLog {
+  id        String    @id @default(cuid())
+  to        String
+  subject   String
+  template  String? // Template identifier e.g., "verification", "invite"
+  status    String    @default("QUEUED") // "QUEUED" | "SENT" | "FAILED" | "BOUNCED"
+  errorMsg  String? // Provider error message on failure
+  sentAt    DateTime?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
+  @@index([to])
+  @@index([status])
+  @@map("email_log")
 }

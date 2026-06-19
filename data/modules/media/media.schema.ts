@@ -1,4 +1,4 @@
-import { ZApi, ZMedia, ZUser } from "@/data/schema.base";
+import { ZApi, ZMedia } from "@/data/schema.base";
 import { z } from "zod";
 
 const PublicMediaPostOne = ZApi({
@@ -7,8 +7,9 @@ const PublicMediaPostOne = ZApi({
     key: true,
     fileName: true,
     mimeType: true,
-    width: true,
-    height: true
+  }).extend({
+    width: z.number().int().optional(),
+    height: z.number().int().optional(),
   }),
   res: ZMedia.pick({
     id: true,

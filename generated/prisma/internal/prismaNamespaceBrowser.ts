@@ -55,7 +55,24 @@ export const ModelName = {
   Session: 'Session',
   Account: 'Account',
   Verification: 'Verification',
-  Media: 'Media'
+  Invitation: 'Invitation',
+  Organization: 'Organization',
+  Member: 'Member',
+  Subscription: 'Subscription',
+  Media: 'Media',
+  Collection: 'Collection',
+  EditorChat: 'EditorChat',
+  Module: 'Module',
+  ModuleVersion: 'ModuleVersion',
+  ModuleCheckpoint: 'ModuleCheckpoint',
+  ModuleProgress: 'ModuleProgress',
+  GamificationLog: 'GamificationLog',
+  LiveSession: 'LiveSession',
+  SessionCheckpoint: 'SessionCheckpoint',
+  SessionPlayer: 'SessionPlayer',
+  SessionAnalytic: 'SessionAnalytic',
+  AppSetting: 'AppSetting',
+  EmailLog: 'EmailLog'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -78,7 +95,7 @@ export const UserScalarFieldEnum = {
   id: 'id',
   name: 'name',
   role: 'role',
-  avatarId: 'avatarId',
+  avatar: 'avatar',
   email: 'email',
   emailVerified: 'emailVerified',
   image: 'image',
@@ -88,7 +105,11 @@ export const UserScalarFieldEnum = {
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   onboarded: 'onboarded',
-  metadata: 'metadata'
+  metadata: 'metadata',
+  xp: 'xp',
+  currentStreak: 'currentStreak',
+  longestStreak: 'longestStreak',
+  badges: 'badges'
 } as const
 
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
@@ -103,7 +124,8 @@ export const SessionScalarFieldEnum = {
   userId: 'userId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
-  impersonatedBy: 'impersonatedBy'
+  impersonatedBy: 'impersonatedBy',
+  activeOrganizationId: 'activeOrganizationId'
 } as const
 
 export type SessionScalarFieldEnum = (typeof SessionScalarFieldEnum)[keyof typeof SessionScalarFieldEnum]
@@ -140,21 +162,265 @@ export const VerificationScalarFieldEnum = {
 export type VerificationScalarFieldEnum = (typeof VerificationScalarFieldEnum)[keyof typeof VerificationScalarFieldEnum]
 
 
+export const InvitationScalarFieldEnum = {
+  id: 'id',
+  organizationId: 'organizationId',
+  email: 'email',
+  role: 'role',
+  status: 'status',
+  expiresAt: 'expiresAt',
+  inviterId: 'inviterId',
+  createdAt: 'createdAt'
+} as const
+
+export type InvitationScalarFieldEnum = (typeof InvitationScalarFieldEnum)[keyof typeof InvitationScalarFieldEnum]
+
+
+export const OrganizationScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  slug: 'slug',
+  logo: 'logo',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type OrganizationScalarFieldEnum = (typeof OrganizationScalarFieldEnum)[keyof typeof OrganizationScalarFieldEnum]
+
+
+export const MemberScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  organizationId: 'organizationId',
+  role: 'role',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type MemberScalarFieldEnum = (typeof MemberScalarFieldEnum)[keyof typeof MemberScalarFieldEnum]
+
+
+export const SubscriptionScalarFieldEnum = {
+  id: 'id',
+  organizationId: 'organizationId',
+  tier: 'tier',
+  status: 'status',
+  seats: 'seats',
+  isUnlimited: 'isUnlimited',
+  stripeCustomerId: 'stripeCustomerId',
+  stripeSubId: 'stripeSubId',
+  currentPeriodEnd: 'currentPeriodEnd',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type SubscriptionScalarFieldEnum = (typeof SubscriptionScalarFieldEnum)[keyof typeof SubscriptionScalarFieldEnum]
+
+
 export const MediaScalarFieldEnum = {
   id: 'id',
   uploaderId: 'uploaderId',
+  collectionId: 'collectionId',
   folder: 'folder',
   status: 'status',
   key: 'key',
   fileName: 'fileName',
   mimeType: 'mimeType',
-  width: 'width',
-  height: 'height',
+  metadata: 'metadata',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
 
 export type MediaScalarFieldEnum = (typeof MediaScalarFieldEnum)[keyof typeof MediaScalarFieldEnum]
+
+
+export const CollectionScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  slug: 'slug',
+  description: 'description',
+  coverMediaId: 'coverMediaId',
+  parsedIndex: 'parsedIndex',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type CollectionScalarFieldEnum = (typeof CollectionScalarFieldEnum)[keyof typeof CollectionScalarFieldEnum]
+
+
+export const EditorChatScalarFieldEnum = {
+  id: 'id',
+  moduleVersionId: 'moduleVersionId',
+  userId: 'userId',
+  messages: 'messages',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type EditorChatScalarFieldEnum = (typeof EditorChatScalarFieldEnum)[keyof typeof EditorChatScalarFieldEnum]
+
+
+export const ModuleScalarFieldEnum = {
+  id: 'id',
+  collectionId: 'collectionId',
+  title: 'title',
+  slug: 'slug',
+  description: 'description',
+  thumbnail: 'thumbnail',
+  orderIndex: 'orderIndex',
+  publishedVersionId: 'publishedVersionId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ModuleScalarFieldEnum = (typeof ModuleScalarFieldEnum)[keyof typeof ModuleScalarFieldEnum]
+
+
+export const ModuleVersionScalarFieldEnum = {
+  id: 'id',
+  moduleId: 'moduleId',
+  versionNumber: 'versionNumber',
+  branchedFromId: 'branchedFromId',
+  status: 'status',
+  simulationData: 'simulationData',
+  changeNote: 'changeNote',
+  createdById: 'createdById',
+  publishedAt: 'publishedAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ModuleVersionScalarFieldEnum = (typeof ModuleVersionScalarFieldEnum)[keyof typeof ModuleVersionScalarFieldEnum]
+
+
+export const ModuleCheckpointScalarFieldEnum = {
+  id: 'id',
+  moduleVersionId: 'moduleVersionId',
+  orderIndex: 'orderIndex',
+  question: 'question',
+  options: 'options',
+  points: 'points',
+  triggerAt: 'triggerAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ModuleCheckpointScalarFieldEnum = (typeof ModuleCheckpointScalarFieldEnum)[keyof typeof ModuleCheckpointScalarFieldEnum]
+
+
+export const ModuleProgressScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  moduleId: 'moduleId',
+  lastPlayedVersionId: 'lastPlayedVersionId',
+  isUnlocked: 'isUnlocked',
+  isCompleted: 'isCompleted',
+  highScore: 'highScore',
+  totalPlays: 'totalPlays',
+  lastPlayedAt: 'lastPlayedAt',
+  playMode: 'playMode',
+  completedAt: 'completedAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ModuleProgressScalarFieldEnum = (typeof ModuleProgressScalarFieldEnum)[keyof typeof ModuleProgressScalarFieldEnum]
+
+
+export const GamificationLogScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  action: 'action',
+  delta: 'delta',
+  meta: 'meta',
+  createdAt: 'createdAt'
+} as const
+
+export type GamificationLogScalarFieldEnum = (typeof GamificationLogScalarFieldEnum)[keyof typeof GamificationLogScalarFieldEnum]
+
+
+export const LiveSessionScalarFieldEnum = {
+  id: 'id',
+  hostId: 'hostId',
+  organizationId: 'organizationId',
+  moduleVersionId: 'moduleVersionId',
+  joinCode: 'joinCode',
+  name: 'name',
+  status: 'status',
+  config: 'config',
+  startedAt: 'startedAt',
+  endedAt: 'endedAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type LiveSessionScalarFieldEnum = (typeof LiveSessionScalarFieldEnum)[keyof typeof LiveSessionScalarFieldEnum]
+
+
+export const SessionCheckpointScalarFieldEnum = {
+  id: 'id',
+  sessionId: 'sessionId',
+  checkpointId: 'checkpointId',
+  isEnabled: 'isEnabled',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type SessionCheckpointScalarFieldEnum = (typeof SessionCheckpointScalarFieldEnum)[keyof typeof SessionCheckpointScalarFieldEnum]
+
+
+export const SessionPlayerScalarFieldEnum = {
+  id: 'id',
+  sessionId: 'sessionId',
+  userId: 'userId',
+  anonymousName: 'anonymousName',
+  score: 'score',
+  completionRate: 'completionRate',
+  joinedAt: 'joinedAt',
+  completedAt: 'completedAt'
+} as const
+
+export type SessionPlayerScalarFieldEnum = (typeof SessionPlayerScalarFieldEnum)[keyof typeof SessionPlayerScalarFieldEnum]
+
+
+export const SessionAnalyticScalarFieldEnum = {
+  id: 'id',
+  sessionId: 'sessionId',
+  playerId: 'playerId',
+  event: 'event',
+  payload: 'payload',
+  recordedAt: 'recordedAt'
+} as const
+
+export type SessionAnalyticScalarFieldEnum = (typeof SessionAnalyticScalarFieldEnum)[keyof typeof SessionAnalyticScalarFieldEnum]
+
+
+export const AppSettingScalarFieldEnum = {
+  id: 'id',
+  key: 'key',
+  value: 'value',
+  description: 'description',
+  updatedById: 'updatedById',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type AppSettingScalarFieldEnum = (typeof AppSettingScalarFieldEnum)[keyof typeof AppSettingScalarFieldEnum]
+
+
+export const EmailLogScalarFieldEnum = {
+  id: 'id',
+  to: 'to',
+  subject: 'subject',
+  template: 'template',
+  status: 'status',
+  errorMsg: 'errorMsg',
+  sentAt: 'sentAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type EmailLogScalarFieldEnum = (typeof EmailLogScalarFieldEnum)[keyof typeof EmailLogScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -171,6 +437,13 @@ export const NullableJsonNullValueInput = {
 } as const
 
 export type NullableJsonNullValueInput = (typeof NullableJsonNullValueInput)[keyof typeof NullableJsonNullValueInput]
+
+
+export const JsonNullValueInput = {
+  JsonNull: JsonNull
+} as const
+
+export type JsonNullValueInput = (typeof JsonNullValueInput)[keyof typeof JsonNullValueInput]
 
 
 export const QueryMode = {

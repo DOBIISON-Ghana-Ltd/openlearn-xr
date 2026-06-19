@@ -12,8 +12,9 @@ export const POST = secureApiRoute(async (req, ctx , user) => {
       key: body.key,
       fileName: body.fileName,
       mimeType: body.mimeType,
-      width: body.width,
-      height: body.height,
+      metadata: (body.width || body.height)
+        ? { width: body.width, height: body.height }
+        : undefined,
       uploaderId: user.id,
     },
     select: {

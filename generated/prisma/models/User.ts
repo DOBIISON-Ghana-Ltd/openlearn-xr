@@ -20,15 +20,29 @@ export type UserModel = runtime.Types.Result.DefaultSelection<Prisma.$UserPayloa
 
 export type AggregateUser = {
   _count: UserCountAggregateOutputType | null
+  _avg: UserAvgAggregateOutputType | null
+  _sum: UserSumAggregateOutputType | null
   _min: UserMinAggregateOutputType | null
   _max: UserMaxAggregateOutputType | null
+}
+
+export type UserAvgAggregateOutputType = {
+  xp: number | null
+  currentStreak: number | null
+  longestStreak: number | null
+}
+
+export type UserSumAggregateOutputType = {
+  xp: number | null
+  currentStreak: number | null
+  longestStreak: number | null
 }
 
 export type UserMinAggregateOutputType = {
   id: string | null
   name: string | null
   role: string | null
-  avatarId: string | null
+  avatar: string | null
   email: string | null
   emailVerified: boolean | null
   image: string | null
@@ -38,13 +52,16 @@ export type UserMinAggregateOutputType = {
   createdAt: Date | null
   updatedAt: Date | null
   onboarded: boolean | null
+  xp: number | null
+  currentStreak: number | null
+  longestStreak: number | null
 }
 
 export type UserMaxAggregateOutputType = {
   id: string | null
   name: string | null
   role: string | null
-  avatarId: string | null
+  avatar: string | null
   email: string | null
   emailVerified: boolean | null
   image: string | null
@@ -54,13 +71,16 @@ export type UserMaxAggregateOutputType = {
   createdAt: Date | null
   updatedAt: Date | null
   onboarded: boolean | null
+  xp: number | null
+  currentStreak: number | null
+  longestStreak: number | null
 }
 
 export type UserCountAggregateOutputType = {
   id: number
   name: number
   role: number
-  avatarId: number
+  avatar: number
   email: number
   emailVerified: number
   image: number
@@ -71,15 +91,31 @@ export type UserCountAggregateOutputType = {
   updatedAt: number
   onboarded: number
   metadata: number
+  xp: number
+  currentStreak: number
+  longestStreak: number
+  badges: number
   _all: number
 }
 
+
+export type UserAvgAggregateInputType = {
+  xp?: true
+  currentStreak?: true
+  longestStreak?: true
+}
+
+export type UserSumAggregateInputType = {
+  xp?: true
+  currentStreak?: true
+  longestStreak?: true
+}
 
 export type UserMinAggregateInputType = {
   id?: true
   name?: true
   role?: true
-  avatarId?: true
+  avatar?: true
   email?: true
   emailVerified?: true
   image?: true
@@ -89,13 +125,16 @@ export type UserMinAggregateInputType = {
   createdAt?: true
   updatedAt?: true
   onboarded?: true
+  xp?: true
+  currentStreak?: true
+  longestStreak?: true
 }
 
 export type UserMaxAggregateInputType = {
   id?: true
   name?: true
   role?: true
-  avatarId?: true
+  avatar?: true
   email?: true
   emailVerified?: true
   image?: true
@@ -105,13 +144,16 @@ export type UserMaxAggregateInputType = {
   createdAt?: true
   updatedAt?: true
   onboarded?: true
+  xp?: true
+  currentStreak?: true
+  longestStreak?: true
 }
 
 export type UserCountAggregateInputType = {
   id?: true
   name?: true
   role?: true
-  avatarId?: true
+  avatar?: true
   email?: true
   emailVerified?: true
   image?: true
@@ -122,6 +164,10 @@ export type UserCountAggregateInputType = {
   updatedAt?: true
   onboarded?: true
   metadata?: true
+  xp?: true
+  currentStreak?: true
+  longestStreak?: true
+  badges?: true
   _all?: true
 }
 
@@ -163,6 +209,18 @@ export type UserAggregateArgs<ExtArgs extends runtime.Types.Extensions.InternalA
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
    * 
+   * Select which fields to average
+  **/
+  _avg?: UserAvgAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
+   * Select which fields to sum
+  **/
+  _sum?: UserSumAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
    * Select which fields to find the minimum value
   **/
   _min?: UserMinAggregateInputType
@@ -193,6 +251,8 @@ export type UserGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalArg
   take?: number
   skip?: number
   _count?: UserCountAggregateInputType | true
+  _avg?: UserAvgAggregateInputType
+  _sum?: UserSumAggregateInputType
   _min?: UserMinAggregateInputType
   _max?: UserMaxAggregateInputType
 }
@@ -201,7 +261,7 @@ export type UserGroupByOutputType = {
   id: string
   name: string
   role: string | null
-  avatarId: string | null
+  avatar: string | null
   email: string
   emailVerified: boolean
   image: string | null
@@ -212,7 +272,13 @@ export type UserGroupByOutputType = {
   updatedAt: Date
   onboarded: boolean
   metadata: runtime.JsonValue | null
+  xp: number
+  currentStreak: number
+  longestStreak: number
+  badges: string[]
   _count: UserCountAggregateOutputType | null
+  _avg: UserAvgAggregateOutputType | null
+  _sum: UserSumAggregateOutputType | null
   _min: UserMinAggregateOutputType | null
   _max: UserMaxAggregateOutputType | null
 }
@@ -239,7 +305,7 @@ export type UserWhereInput = {
   id?: Prisma.StringFilter<"User"> | string
   name?: Prisma.StringFilter<"User"> | string
   role?: Prisma.StringNullableFilter<"User"> | string | null
-  avatarId?: Prisma.StringNullableFilter<"User"> | string | null
+  avatar?: Prisma.StringNullableFilter<"User"> | string | null
   email?: Prisma.StringFilter<"User"> | string
   emailVerified?: Prisma.BoolFilter<"User"> | boolean
   image?: Prisma.StringNullableFilter<"User"> | string | null
@@ -250,17 +316,26 @@ export type UserWhereInput = {
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
   onboarded?: Prisma.BoolFilter<"User"> | boolean
   metadata?: Prisma.JsonNullableFilter<"User">
+  xp?: Prisma.IntFilter<"User"> | number
+  currentStreak?: Prisma.IntFilter<"User"> | number
+  longestStreak?: Prisma.IntFilter<"User"> | number
+  badges?: Prisma.StringNullableListFilter<"User">
   sessions?: Prisma.SessionListRelationFilter
   accounts?: Prisma.AccountListRelationFilter
+  memberships?: Prisma.MemberListRelationFilter
   media?: Prisma.MediaListRelationFilter
-  avatar?: Prisma.XOR<Prisma.MediaNullableScalarRelationFilter, Prisma.MediaWhereInput> | null
+  moduleProgress?: Prisma.ModuleProgressListRelationFilter
+  hostedSessions?: Prisma.LiveSessionListRelationFilter
+  sessionPlays?: Prisma.SessionPlayerListRelationFilter
+  gamificationLogs?: Prisma.GamificationLogListRelationFilter
+  editorChats?: Prisma.EditorChatListRelationFilter
 }
 
 export type UserOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   role?: Prisma.SortOrderInput | Prisma.SortOrder
-  avatarId?: Prisma.SortOrderInput | Prisma.SortOrder
+  avatar?: Prisma.SortOrderInput | Prisma.SortOrder
   email?: Prisma.SortOrder
   emailVerified?: Prisma.SortOrder
   image?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -271,21 +346,30 @@ export type UserOrderByWithRelationInput = {
   updatedAt?: Prisma.SortOrder
   onboarded?: Prisma.SortOrder
   metadata?: Prisma.SortOrderInput | Prisma.SortOrder
+  xp?: Prisma.SortOrder
+  currentStreak?: Prisma.SortOrder
+  longestStreak?: Prisma.SortOrder
+  badges?: Prisma.SortOrder
   sessions?: Prisma.SessionOrderByRelationAggregateInput
   accounts?: Prisma.AccountOrderByRelationAggregateInput
+  memberships?: Prisma.MemberOrderByRelationAggregateInput
   media?: Prisma.MediaOrderByRelationAggregateInput
-  avatar?: Prisma.MediaOrderByWithRelationInput
+  moduleProgress?: Prisma.ModuleProgressOrderByRelationAggregateInput
+  hostedSessions?: Prisma.LiveSessionOrderByRelationAggregateInput
+  sessionPlays?: Prisma.SessionPlayerOrderByRelationAggregateInput
+  gamificationLogs?: Prisma.GamificationLogOrderByRelationAggregateInput
+  editorChats?: Prisma.EditorChatOrderByRelationAggregateInput
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
   id?: string
-  avatarId?: string
   email?: string
   AND?: Prisma.UserWhereInput | Prisma.UserWhereInput[]
   OR?: Prisma.UserWhereInput[]
   NOT?: Prisma.UserWhereInput | Prisma.UserWhereInput[]
   name?: Prisma.StringFilter<"User"> | string
   role?: Prisma.StringNullableFilter<"User"> | string | null
+  avatar?: Prisma.StringNullableFilter<"User"> | string | null
   emailVerified?: Prisma.BoolFilter<"User"> | boolean
   image?: Prisma.StringNullableFilter<"User"> | string | null
   banned?: Prisma.BoolNullableFilter<"User"> | boolean | null
@@ -295,17 +379,26 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
   onboarded?: Prisma.BoolFilter<"User"> | boolean
   metadata?: Prisma.JsonNullableFilter<"User">
+  xp?: Prisma.IntFilter<"User"> | number
+  currentStreak?: Prisma.IntFilter<"User"> | number
+  longestStreak?: Prisma.IntFilter<"User"> | number
+  badges?: Prisma.StringNullableListFilter<"User">
   sessions?: Prisma.SessionListRelationFilter
   accounts?: Prisma.AccountListRelationFilter
+  memberships?: Prisma.MemberListRelationFilter
   media?: Prisma.MediaListRelationFilter
-  avatar?: Prisma.XOR<Prisma.MediaNullableScalarRelationFilter, Prisma.MediaWhereInput> | null
-}, "id" | "avatarId" | "email">
+  moduleProgress?: Prisma.ModuleProgressListRelationFilter
+  hostedSessions?: Prisma.LiveSessionListRelationFilter
+  sessionPlays?: Prisma.SessionPlayerListRelationFilter
+  gamificationLogs?: Prisma.GamificationLogListRelationFilter
+  editorChats?: Prisma.EditorChatListRelationFilter
+}, "id" | "email">
 
 export type UserOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   role?: Prisma.SortOrderInput | Prisma.SortOrder
-  avatarId?: Prisma.SortOrderInput | Prisma.SortOrder
+  avatar?: Prisma.SortOrderInput | Prisma.SortOrder
   email?: Prisma.SortOrder
   emailVerified?: Prisma.SortOrder
   image?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -316,9 +409,15 @@ export type UserOrderByWithAggregationInput = {
   updatedAt?: Prisma.SortOrder
   onboarded?: Prisma.SortOrder
   metadata?: Prisma.SortOrderInput | Prisma.SortOrder
+  xp?: Prisma.SortOrder
+  currentStreak?: Prisma.SortOrder
+  longestStreak?: Prisma.SortOrder
+  badges?: Prisma.SortOrder
   _count?: Prisma.UserCountOrderByAggregateInput
+  _avg?: Prisma.UserAvgOrderByAggregateInput
   _max?: Prisma.UserMaxOrderByAggregateInput
   _min?: Prisma.UserMinOrderByAggregateInput
+  _sum?: Prisma.UserSumOrderByAggregateInput
 }
 
 export type UserScalarWhereWithAggregatesInput = {
@@ -328,7 +427,7 @@ export type UserScalarWhereWithAggregatesInput = {
   id?: Prisma.StringWithAggregatesFilter<"User"> | string
   name?: Prisma.StringWithAggregatesFilter<"User"> | string
   role?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
-  avatarId?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
+  avatar?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   email?: Prisma.StringWithAggregatesFilter<"User"> | string
   emailVerified?: Prisma.BoolWithAggregatesFilter<"User"> | boolean
   image?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
@@ -339,12 +438,17 @@ export type UserScalarWhereWithAggregatesInput = {
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
   onboarded?: Prisma.BoolWithAggregatesFilter<"User"> | boolean
   metadata?: Prisma.JsonNullableWithAggregatesFilter<"User">
+  xp?: Prisma.IntWithAggregatesFilter<"User"> | number
+  currentStreak?: Prisma.IntWithAggregatesFilter<"User"> | number
+  longestStreak?: Prisma.IntWithAggregatesFilter<"User"> | number
+  badges?: Prisma.StringNullableListFilter<"User">
 }
 
 export type UserCreateInput = {
   id?: string
   name: string
   role?: string | null
+  avatar?: string | null
   email: string
   emailVerified?: boolean
   image?: string | null
@@ -355,17 +459,26 @@ export type UserCreateInput = {
   updatedAt?: Date | string
   onboarded?: boolean
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  xp?: number
+  currentStreak?: number
+  longestStreak?: number
+  badges?: Prisma.UserCreatebadgesInput | string[]
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
+  memberships?: Prisma.MemberCreateNestedManyWithoutUserInput
   media?: Prisma.MediaCreateNestedManyWithoutUploaderInput
-  avatar?: Prisma.MediaCreateNestedOneWithoutUserAvatarInput
+  moduleProgress?: Prisma.ModuleProgressCreateNestedManyWithoutUserInput
+  hostedSessions?: Prisma.LiveSessionCreateNestedManyWithoutHostInput
+  sessionPlays?: Prisma.SessionPlayerCreateNestedManyWithoutUserInput
+  gamificationLogs?: Prisma.GamificationLogCreateNestedManyWithoutUserInput
+  editorChats?: Prisma.EditorChatCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateInput = {
   id?: string
   name: string
   role?: string | null
-  avatarId?: string | null
+  avatar?: string | null
   email: string
   emailVerified?: boolean
   image?: string | null
@@ -376,15 +489,26 @@ export type UserUncheckedCreateInput = {
   updatedAt?: Date | string
   onboarded?: boolean
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  xp?: number
+  currentStreak?: number
+  longestStreak?: number
+  badges?: Prisma.UserCreatebadgesInput | string[]
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
+  memberships?: Prisma.MemberUncheckedCreateNestedManyWithoutUserInput
   media?: Prisma.MediaUncheckedCreateNestedManyWithoutUploaderInput
+  moduleProgress?: Prisma.ModuleProgressUncheckedCreateNestedManyWithoutUserInput
+  hostedSessions?: Prisma.LiveSessionUncheckedCreateNestedManyWithoutHostInput
+  sessionPlays?: Prisma.SessionPlayerUncheckedCreateNestedManyWithoutUserInput
+  gamificationLogs?: Prisma.GamificationLogUncheckedCreateNestedManyWithoutUserInput
+  editorChats?: Prisma.EditorChatUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.StringFieldUpdateOperationsInput | string
   emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -395,17 +519,26 @@ export type UserUpdateInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   onboarded?: Prisma.BoolFieldUpdateOperationsInput | boolean
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  xp?: Prisma.IntFieldUpdateOperationsInput | number
+  currentStreak?: Prisma.IntFieldUpdateOperationsInput | number
+  longestStreak?: Prisma.IntFieldUpdateOperationsInput | number
+  badges?: Prisma.UserUpdatebadgesInput | string[]
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
+  memberships?: Prisma.MemberUpdateManyWithoutUserNestedInput
   media?: Prisma.MediaUpdateManyWithoutUploaderNestedInput
-  avatar?: Prisma.MediaUpdateOneWithoutUserAvatarNestedInput
+  moduleProgress?: Prisma.ModuleProgressUpdateManyWithoutUserNestedInput
+  hostedSessions?: Prisma.LiveSessionUpdateManyWithoutHostNestedInput
+  sessionPlays?: Prisma.SessionPlayerUpdateManyWithoutUserNestedInput
+  gamificationLogs?: Prisma.GamificationLogUpdateManyWithoutUserNestedInput
+  editorChats?: Prisma.EditorChatUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  avatarId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.StringFieldUpdateOperationsInput | string
   emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -416,16 +549,26 @@ export type UserUncheckedUpdateInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   onboarded?: Prisma.BoolFieldUpdateOperationsInput | boolean
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  xp?: Prisma.IntFieldUpdateOperationsInput | number
+  currentStreak?: Prisma.IntFieldUpdateOperationsInput | number
+  longestStreak?: Prisma.IntFieldUpdateOperationsInput | number
+  badges?: Prisma.UserUpdatebadgesInput | string[]
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
+  memberships?: Prisma.MemberUncheckedUpdateManyWithoutUserNestedInput
   media?: Prisma.MediaUncheckedUpdateManyWithoutUploaderNestedInput
+  moduleProgress?: Prisma.ModuleProgressUncheckedUpdateManyWithoutUserNestedInput
+  hostedSessions?: Prisma.LiveSessionUncheckedUpdateManyWithoutHostNestedInput
+  sessionPlays?: Prisma.SessionPlayerUncheckedUpdateManyWithoutUserNestedInput
+  gamificationLogs?: Prisma.GamificationLogUncheckedUpdateManyWithoutUserNestedInput
+  editorChats?: Prisma.EditorChatUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateManyInput = {
   id?: string
   name: string
   role?: string | null
-  avatarId?: string | null
+  avatar?: string | null
   email: string
   emailVerified?: boolean
   image?: string | null
@@ -436,12 +579,17 @@ export type UserCreateManyInput = {
   updatedAt?: Date | string
   onboarded?: boolean
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  xp?: number
+  currentStreak?: number
+  longestStreak?: number
+  badges?: Prisma.UserCreatebadgesInput | string[]
 }
 
 export type UserUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.StringFieldUpdateOperationsInput | string
   emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -452,13 +600,17 @@ export type UserUpdateManyMutationInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   onboarded?: Prisma.BoolFieldUpdateOperationsInput | boolean
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  xp?: Prisma.IntFieldUpdateOperationsInput | number
+  currentStreak?: Prisma.IntFieldUpdateOperationsInput | number
+  longestStreak?: Prisma.IntFieldUpdateOperationsInput | number
+  badges?: Prisma.UserUpdatebadgesInput | string[]
 }
 
 export type UserUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  avatarId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.StringFieldUpdateOperationsInput | string
   emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -469,13 +621,25 @@ export type UserUncheckedUpdateManyInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   onboarded?: Prisma.BoolFieldUpdateOperationsInput | boolean
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  xp?: Prisma.IntFieldUpdateOperationsInput | number
+  currentStreak?: Prisma.IntFieldUpdateOperationsInput | number
+  longestStreak?: Prisma.IntFieldUpdateOperationsInput | number
+  badges?: Prisma.UserUpdatebadgesInput | string[]
+}
+
+export type StringNullableListFilter<$PrismaModel = never> = {
+  equals?: string[] | Prisma.ListStringFieldRefInput<$PrismaModel> | null
+  has?: string | Prisma.StringFieldRefInput<$PrismaModel> | null
+  hasEvery?: string[] | Prisma.ListStringFieldRefInput<$PrismaModel>
+  hasSome?: string[] | Prisma.ListStringFieldRefInput<$PrismaModel>
+  isEmpty?: boolean
 }
 
 export type UserCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   role?: Prisma.SortOrder
-  avatarId?: Prisma.SortOrder
+  avatar?: Prisma.SortOrder
   email?: Prisma.SortOrder
   emailVerified?: Prisma.SortOrder
   image?: Prisma.SortOrder
@@ -486,13 +650,23 @@ export type UserCountOrderByAggregateInput = {
   updatedAt?: Prisma.SortOrder
   onboarded?: Prisma.SortOrder
   metadata?: Prisma.SortOrder
+  xp?: Prisma.SortOrder
+  currentStreak?: Prisma.SortOrder
+  longestStreak?: Prisma.SortOrder
+  badges?: Prisma.SortOrder
+}
+
+export type UserAvgOrderByAggregateInput = {
+  xp?: Prisma.SortOrder
+  currentStreak?: Prisma.SortOrder
+  longestStreak?: Prisma.SortOrder
 }
 
 export type UserMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   role?: Prisma.SortOrder
-  avatarId?: Prisma.SortOrder
+  avatar?: Prisma.SortOrder
   email?: Prisma.SortOrder
   emailVerified?: Prisma.SortOrder
   image?: Prisma.SortOrder
@@ -502,13 +676,16 @@ export type UserMaxOrderByAggregateInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   onboarded?: Prisma.SortOrder
+  xp?: Prisma.SortOrder
+  currentStreak?: Prisma.SortOrder
+  longestStreak?: Prisma.SortOrder
 }
 
 export type UserMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   role?: Prisma.SortOrder
-  avatarId?: Prisma.SortOrder
+  avatar?: Prisma.SortOrder
   email?: Prisma.SortOrder
   emailVerified?: Prisma.SortOrder
   image?: Prisma.SortOrder
@@ -518,6 +695,15 @@ export type UserMinOrderByAggregateInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   onboarded?: Prisma.SortOrder
+  xp?: Prisma.SortOrder
+  currentStreak?: Prisma.SortOrder
+  longestStreak?: Prisma.SortOrder
+}
+
+export type UserSumOrderByAggregateInput = {
+  xp?: Prisma.SortOrder
+  currentStreak?: Prisma.SortOrder
+  longestStreak?: Prisma.SortOrder
 }
 
 export type UserScalarRelationFilter = {
@@ -528,6 +714,10 @@ export type UserScalarRelationFilter = {
 export type UserNullableScalarRelationFilter = {
   is?: Prisma.UserWhereInput | null
   isNot?: Prisma.UserWhereInput | null
+}
+
+export type UserCreatebadgesInput = {
+  set: string[]
 }
 
 export type StringFieldUpdateOperationsInput = {
@@ -552,6 +742,19 @@ export type NullableDateTimeFieldUpdateOperationsInput = {
 
 export type DateTimeFieldUpdateOperationsInput = {
   set?: Date | string
+}
+
+export type IntFieldUpdateOperationsInput = {
+  set?: number
+  increment?: number
+  decrement?: number
+  multiply?: number
+  divide?: number
+}
+
+export type UserUpdatebadgesInput = {
+  set?: string[]
+  push?: string | string[]
 }
 
 export type UserCreateNestedOneWithoutSessionsInput = {
@@ -582,21 +785,23 @@ export type UserUpdateOneRequiredWithoutAccountsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutAccountsInput, Prisma.UserUpdateWithoutAccountsInput>, Prisma.UserUncheckedUpdateWithoutAccountsInput>
 }
 
+export type UserCreateNestedOneWithoutMembershipsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutMembershipsInput, Prisma.UserUncheckedCreateWithoutMembershipsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutMembershipsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutMembershipsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutMembershipsInput, Prisma.UserUncheckedCreateWithoutMembershipsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutMembershipsInput
+  upsert?: Prisma.UserUpsertWithoutMembershipsInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutMembershipsInput, Prisma.UserUpdateWithoutMembershipsInput>, Prisma.UserUncheckedUpdateWithoutMembershipsInput>
+}
+
 export type UserCreateNestedOneWithoutMediaInput = {
   create?: Prisma.XOR<Prisma.UserCreateWithoutMediaInput, Prisma.UserUncheckedCreateWithoutMediaInput>
   connectOrCreate?: Prisma.UserCreateOrConnectWithoutMediaInput
-  connect?: Prisma.UserWhereUniqueInput
-}
-
-export type UserCreateNestedOneWithoutAvatarInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutAvatarInput, Prisma.UserUncheckedCreateWithoutAvatarInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutAvatarInput
-  connect?: Prisma.UserWhereUniqueInput
-}
-
-export type UserUncheckedCreateNestedOneWithoutAvatarInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutAvatarInput, Prisma.UserUncheckedCreateWithoutAvatarInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutAvatarInput
   connect?: Prisma.UserWhereUniqueInput
 }
 
@@ -608,30 +813,83 @@ export type UserUpdateOneRequiredWithoutMediaNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutMediaInput, Prisma.UserUpdateWithoutMediaInput>, Prisma.UserUncheckedUpdateWithoutMediaInput>
 }
 
-export type UserUpdateOneWithoutAvatarNestedInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutAvatarInput, Prisma.UserUncheckedCreateWithoutAvatarInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutAvatarInput
-  upsert?: Prisma.UserUpsertWithoutAvatarInput
-  disconnect?: Prisma.UserWhereInput | boolean
-  delete?: Prisma.UserWhereInput | boolean
+export type UserCreateNestedOneWithoutEditorChatsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutEditorChatsInput, Prisma.UserUncheckedCreateWithoutEditorChatsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutEditorChatsInput
   connect?: Prisma.UserWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutAvatarInput, Prisma.UserUpdateWithoutAvatarInput>, Prisma.UserUncheckedUpdateWithoutAvatarInput>
 }
 
-export type UserUncheckedUpdateOneWithoutAvatarNestedInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutAvatarInput, Prisma.UserUncheckedCreateWithoutAvatarInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutAvatarInput
-  upsert?: Prisma.UserUpsertWithoutAvatarInput
+export type UserUpdateOneRequiredWithoutEditorChatsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutEditorChatsInput, Prisma.UserUncheckedCreateWithoutEditorChatsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutEditorChatsInput
+  upsert?: Prisma.UserUpsertWithoutEditorChatsInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutEditorChatsInput, Prisma.UserUpdateWithoutEditorChatsInput>, Prisma.UserUncheckedUpdateWithoutEditorChatsInput>
+}
+
+export type UserCreateNestedOneWithoutModuleProgressInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutModuleProgressInput, Prisma.UserUncheckedCreateWithoutModuleProgressInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutModuleProgressInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutModuleProgressNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutModuleProgressInput, Prisma.UserUncheckedCreateWithoutModuleProgressInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutModuleProgressInput
+  upsert?: Prisma.UserUpsertWithoutModuleProgressInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutModuleProgressInput, Prisma.UserUpdateWithoutModuleProgressInput>, Prisma.UserUncheckedUpdateWithoutModuleProgressInput>
+}
+
+export type UserCreateNestedOneWithoutGamificationLogsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutGamificationLogsInput, Prisma.UserUncheckedCreateWithoutGamificationLogsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutGamificationLogsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutGamificationLogsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutGamificationLogsInput, Prisma.UserUncheckedCreateWithoutGamificationLogsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutGamificationLogsInput
+  upsert?: Prisma.UserUpsertWithoutGamificationLogsInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutGamificationLogsInput, Prisma.UserUpdateWithoutGamificationLogsInput>, Prisma.UserUncheckedUpdateWithoutGamificationLogsInput>
+}
+
+export type UserCreateNestedOneWithoutHostedSessionsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutHostedSessionsInput, Prisma.UserUncheckedCreateWithoutHostedSessionsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutHostedSessionsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutHostedSessionsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutHostedSessionsInput, Prisma.UserUncheckedCreateWithoutHostedSessionsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutHostedSessionsInput
+  upsert?: Prisma.UserUpsertWithoutHostedSessionsInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutHostedSessionsInput, Prisma.UserUpdateWithoutHostedSessionsInput>, Prisma.UserUncheckedUpdateWithoutHostedSessionsInput>
+}
+
+export type UserCreateNestedOneWithoutSessionPlaysInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutSessionPlaysInput, Prisma.UserUncheckedCreateWithoutSessionPlaysInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutSessionPlaysInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneWithoutSessionPlaysNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutSessionPlaysInput, Prisma.UserUncheckedCreateWithoutSessionPlaysInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutSessionPlaysInput
+  upsert?: Prisma.UserUpsertWithoutSessionPlaysInput
   disconnect?: Prisma.UserWhereInput | boolean
   delete?: Prisma.UserWhereInput | boolean
   connect?: Prisma.UserWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutAvatarInput, Prisma.UserUpdateWithoutAvatarInput>, Prisma.UserUncheckedUpdateWithoutAvatarInput>
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutSessionPlaysInput, Prisma.UserUpdateWithoutSessionPlaysInput>, Prisma.UserUncheckedUpdateWithoutSessionPlaysInput>
 }
 
 export type UserCreateWithoutSessionsInput = {
   id?: string
   name: string
   role?: string | null
+  avatar?: string | null
   email: string
   emailVerified?: boolean
   image?: string | null
@@ -642,16 +900,25 @@ export type UserCreateWithoutSessionsInput = {
   updatedAt?: Date | string
   onboarded?: boolean
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  xp?: number
+  currentStreak?: number
+  longestStreak?: number
+  badges?: Prisma.UserCreatebadgesInput | string[]
   accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
+  memberships?: Prisma.MemberCreateNestedManyWithoutUserInput
   media?: Prisma.MediaCreateNestedManyWithoutUploaderInput
-  avatar?: Prisma.MediaCreateNestedOneWithoutUserAvatarInput
+  moduleProgress?: Prisma.ModuleProgressCreateNestedManyWithoutUserInput
+  hostedSessions?: Prisma.LiveSessionCreateNestedManyWithoutHostInput
+  sessionPlays?: Prisma.SessionPlayerCreateNestedManyWithoutUserInput
+  gamificationLogs?: Prisma.GamificationLogCreateNestedManyWithoutUserInput
+  editorChats?: Prisma.EditorChatCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutSessionsInput = {
   id?: string
   name: string
   role?: string | null
-  avatarId?: string | null
+  avatar?: string | null
   email: string
   emailVerified?: boolean
   image?: string | null
@@ -662,8 +929,18 @@ export type UserUncheckedCreateWithoutSessionsInput = {
   updatedAt?: Date | string
   onboarded?: boolean
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  xp?: number
+  currentStreak?: number
+  longestStreak?: number
+  badges?: Prisma.UserCreatebadgesInput | string[]
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
+  memberships?: Prisma.MemberUncheckedCreateNestedManyWithoutUserInput
   media?: Prisma.MediaUncheckedCreateNestedManyWithoutUploaderInput
+  moduleProgress?: Prisma.ModuleProgressUncheckedCreateNestedManyWithoutUserInput
+  hostedSessions?: Prisma.LiveSessionUncheckedCreateNestedManyWithoutHostInput
+  sessionPlays?: Prisma.SessionPlayerUncheckedCreateNestedManyWithoutUserInput
+  gamificationLogs?: Prisma.GamificationLogUncheckedCreateNestedManyWithoutUserInput
+  editorChats?: Prisma.EditorChatUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutSessionsInput = {
@@ -686,6 +963,7 @@ export type UserUpdateWithoutSessionsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.StringFieldUpdateOperationsInput | string
   emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -696,16 +974,25 @@ export type UserUpdateWithoutSessionsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   onboarded?: Prisma.BoolFieldUpdateOperationsInput | boolean
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  xp?: Prisma.IntFieldUpdateOperationsInput | number
+  currentStreak?: Prisma.IntFieldUpdateOperationsInput | number
+  longestStreak?: Prisma.IntFieldUpdateOperationsInput | number
+  badges?: Prisma.UserUpdatebadgesInput | string[]
   accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
+  memberships?: Prisma.MemberUpdateManyWithoutUserNestedInput
   media?: Prisma.MediaUpdateManyWithoutUploaderNestedInput
-  avatar?: Prisma.MediaUpdateOneWithoutUserAvatarNestedInput
+  moduleProgress?: Prisma.ModuleProgressUpdateManyWithoutUserNestedInput
+  hostedSessions?: Prisma.LiveSessionUpdateManyWithoutHostNestedInput
+  sessionPlays?: Prisma.SessionPlayerUpdateManyWithoutUserNestedInput
+  gamificationLogs?: Prisma.GamificationLogUpdateManyWithoutUserNestedInput
+  editorChats?: Prisma.EditorChatUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutSessionsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  avatarId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.StringFieldUpdateOperationsInput | string
   emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -716,14 +1003,25 @@ export type UserUncheckedUpdateWithoutSessionsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   onboarded?: Prisma.BoolFieldUpdateOperationsInput | boolean
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  xp?: Prisma.IntFieldUpdateOperationsInput | number
+  currentStreak?: Prisma.IntFieldUpdateOperationsInput | number
+  longestStreak?: Prisma.IntFieldUpdateOperationsInput | number
+  badges?: Prisma.UserUpdatebadgesInput | string[]
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
+  memberships?: Prisma.MemberUncheckedUpdateManyWithoutUserNestedInput
   media?: Prisma.MediaUncheckedUpdateManyWithoutUploaderNestedInput
+  moduleProgress?: Prisma.ModuleProgressUncheckedUpdateManyWithoutUserNestedInput
+  hostedSessions?: Prisma.LiveSessionUncheckedUpdateManyWithoutHostNestedInput
+  sessionPlays?: Prisma.SessionPlayerUncheckedUpdateManyWithoutUserNestedInput
+  gamificationLogs?: Prisma.GamificationLogUncheckedUpdateManyWithoutUserNestedInput
+  editorChats?: Prisma.EditorChatUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutAccountsInput = {
   id?: string
   name: string
   role?: string | null
+  avatar?: string | null
   email: string
   emailVerified?: boolean
   image?: string | null
@@ -734,16 +1032,25 @@ export type UserCreateWithoutAccountsInput = {
   updatedAt?: Date | string
   onboarded?: boolean
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  xp?: number
+  currentStreak?: number
+  longestStreak?: number
+  badges?: Prisma.UserCreatebadgesInput | string[]
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
+  memberships?: Prisma.MemberCreateNestedManyWithoutUserInput
   media?: Prisma.MediaCreateNestedManyWithoutUploaderInput
-  avatar?: Prisma.MediaCreateNestedOneWithoutUserAvatarInput
+  moduleProgress?: Prisma.ModuleProgressCreateNestedManyWithoutUserInput
+  hostedSessions?: Prisma.LiveSessionCreateNestedManyWithoutHostInput
+  sessionPlays?: Prisma.SessionPlayerCreateNestedManyWithoutUserInput
+  gamificationLogs?: Prisma.GamificationLogCreateNestedManyWithoutUserInput
+  editorChats?: Prisma.EditorChatCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutAccountsInput = {
   id?: string
   name: string
   role?: string | null
-  avatarId?: string | null
+  avatar?: string | null
   email: string
   emailVerified?: boolean
   image?: string | null
@@ -754,8 +1061,18 @@ export type UserUncheckedCreateWithoutAccountsInput = {
   updatedAt?: Date | string
   onboarded?: boolean
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  xp?: number
+  currentStreak?: number
+  longestStreak?: number
+  badges?: Prisma.UserCreatebadgesInput | string[]
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
+  memberships?: Prisma.MemberUncheckedCreateNestedManyWithoutUserInput
   media?: Prisma.MediaUncheckedCreateNestedManyWithoutUploaderInput
+  moduleProgress?: Prisma.ModuleProgressUncheckedCreateNestedManyWithoutUserInput
+  hostedSessions?: Prisma.LiveSessionUncheckedCreateNestedManyWithoutHostInput
+  sessionPlays?: Prisma.SessionPlayerUncheckedCreateNestedManyWithoutUserInput
+  gamificationLogs?: Prisma.GamificationLogUncheckedCreateNestedManyWithoutUserInput
+  editorChats?: Prisma.EditorChatUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutAccountsInput = {
@@ -778,6 +1095,7 @@ export type UserUpdateWithoutAccountsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.StringFieldUpdateOperationsInput | string
   emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -788,16 +1106,25 @@ export type UserUpdateWithoutAccountsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   onboarded?: Prisma.BoolFieldUpdateOperationsInput | boolean
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  xp?: Prisma.IntFieldUpdateOperationsInput | number
+  currentStreak?: Prisma.IntFieldUpdateOperationsInput | number
+  longestStreak?: Prisma.IntFieldUpdateOperationsInput | number
+  badges?: Prisma.UserUpdatebadgesInput | string[]
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
+  memberships?: Prisma.MemberUpdateManyWithoutUserNestedInput
   media?: Prisma.MediaUpdateManyWithoutUploaderNestedInput
-  avatar?: Prisma.MediaUpdateOneWithoutUserAvatarNestedInput
+  moduleProgress?: Prisma.ModuleProgressUpdateManyWithoutUserNestedInput
+  hostedSessions?: Prisma.LiveSessionUpdateManyWithoutHostNestedInput
+  sessionPlays?: Prisma.SessionPlayerUpdateManyWithoutUserNestedInput
+  gamificationLogs?: Prisma.GamificationLogUpdateManyWithoutUserNestedInput
+  editorChats?: Prisma.EditorChatUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutAccountsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  avatarId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.StringFieldUpdateOperationsInput | string
   emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -808,14 +1135,157 @@ export type UserUncheckedUpdateWithoutAccountsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   onboarded?: Prisma.BoolFieldUpdateOperationsInput | boolean
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  xp?: Prisma.IntFieldUpdateOperationsInput | number
+  currentStreak?: Prisma.IntFieldUpdateOperationsInput | number
+  longestStreak?: Prisma.IntFieldUpdateOperationsInput | number
+  badges?: Prisma.UserUpdatebadgesInput | string[]
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
+  memberships?: Prisma.MemberUncheckedUpdateManyWithoutUserNestedInput
   media?: Prisma.MediaUncheckedUpdateManyWithoutUploaderNestedInput
+  moduleProgress?: Prisma.ModuleProgressUncheckedUpdateManyWithoutUserNestedInput
+  hostedSessions?: Prisma.LiveSessionUncheckedUpdateManyWithoutHostNestedInput
+  sessionPlays?: Prisma.SessionPlayerUncheckedUpdateManyWithoutUserNestedInput
+  gamificationLogs?: Prisma.GamificationLogUncheckedUpdateManyWithoutUserNestedInput
+  editorChats?: Prisma.EditorChatUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserCreateWithoutMembershipsInput = {
+  id?: string
+  name: string
+  role?: string | null
+  avatar?: string | null
+  email: string
+  emailVerified?: boolean
+  image?: string | null
+  banned?: boolean | null
+  banReason?: string | null
+  banExpires?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  onboarded?: boolean
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  xp?: number
+  currentStreak?: number
+  longestStreak?: number
+  badges?: Prisma.UserCreatebadgesInput | string[]
+  sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
+  accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
+  media?: Prisma.MediaCreateNestedManyWithoutUploaderInput
+  moduleProgress?: Prisma.ModuleProgressCreateNestedManyWithoutUserInput
+  hostedSessions?: Prisma.LiveSessionCreateNestedManyWithoutHostInput
+  sessionPlays?: Prisma.SessionPlayerCreateNestedManyWithoutUserInput
+  gamificationLogs?: Prisma.GamificationLogCreateNestedManyWithoutUserInput
+  editorChats?: Prisma.EditorChatCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutMembershipsInput = {
+  id?: string
+  name: string
+  role?: string | null
+  avatar?: string | null
+  email: string
+  emailVerified?: boolean
+  image?: string | null
+  banned?: boolean | null
+  banReason?: string | null
+  banExpires?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  onboarded?: boolean
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  xp?: number
+  currentStreak?: number
+  longestStreak?: number
+  badges?: Prisma.UserCreatebadgesInput | string[]
+  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
+  accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
+  media?: Prisma.MediaUncheckedCreateNestedManyWithoutUploaderInput
+  moduleProgress?: Prisma.ModuleProgressUncheckedCreateNestedManyWithoutUserInput
+  hostedSessions?: Prisma.LiveSessionUncheckedCreateNestedManyWithoutHostInput
+  sessionPlays?: Prisma.SessionPlayerUncheckedCreateNestedManyWithoutUserInput
+  gamificationLogs?: Prisma.GamificationLogUncheckedCreateNestedManyWithoutUserInput
+  editorChats?: Prisma.EditorChatUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutMembershipsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutMembershipsInput, Prisma.UserUncheckedCreateWithoutMembershipsInput>
+}
+
+export type UserUpsertWithoutMembershipsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutMembershipsInput, Prisma.UserUncheckedUpdateWithoutMembershipsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutMembershipsInput, Prisma.UserUncheckedCreateWithoutMembershipsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutMembershipsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutMembershipsInput, Prisma.UserUncheckedUpdateWithoutMembershipsInput>
+}
+
+export type UserUpdateWithoutMembershipsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  banned?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  banReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  banExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  onboarded?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  xp?: Prisma.IntFieldUpdateOperationsInput | number
+  currentStreak?: Prisma.IntFieldUpdateOperationsInput | number
+  longestStreak?: Prisma.IntFieldUpdateOperationsInput | number
+  badges?: Prisma.UserUpdatebadgesInput | string[]
+  sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
+  accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
+  media?: Prisma.MediaUpdateManyWithoutUploaderNestedInput
+  moduleProgress?: Prisma.ModuleProgressUpdateManyWithoutUserNestedInput
+  hostedSessions?: Prisma.LiveSessionUpdateManyWithoutHostNestedInput
+  sessionPlays?: Prisma.SessionPlayerUpdateManyWithoutUserNestedInput
+  gamificationLogs?: Prisma.GamificationLogUpdateManyWithoutUserNestedInput
+  editorChats?: Prisma.EditorChatUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutMembershipsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  banned?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  banReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  banExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  onboarded?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  xp?: Prisma.IntFieldUpdateOperationsInput | number
+  currentStreak?: Prisma.IntFieldUpdateOperationsInput | number
+  longestStreak?: Prisma.IntFieldUpdateOperationsInput | number
+  badges?: Prisma.UserUpdatebadgesInput | string[]
+  sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
+  accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
+  media?: Prisma.MediaUncheckedUpdateManyWithoutUploaderNestedInput
+  moduleProgress?: Prisma.ModuleProgressUncheckedUpdateManyWithoutUserNestedInput
+  hostedSessions?: Prisma.LiveSessionUncheckedUpdateManyWithoutHostNestedInput
+  sessionPlays?: Prisma.SessionPlayerUncheckedUpdateManyWithoutUserNestedInput
+  gamificationLogs?: Prisma.GamificationLogUncheckedUpdateManyWithoutUserNestedInput
+  editorChats?: Prisma.EditorChatUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutMediaInput = {
   id?: string
   name: string
   role?: string | null
+  avatar?: string | null
   email: string
   emailVerified?: boolean
   image?: string | null
@@ -826,16 +1296,25 @@ export type UserCreateWithoutMediaInput = {
   updatedAt?: Date | string
   onboarded?: boolean
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  xp?: number
+  currentStreak?: number
+  longestStreak?: number
+  badges?: Prisma.UserCreatebadgesInput | string[]
   sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
   accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
-  avatar?: Prisma.MediaCreateNestedOneWithoutUserAvatarInput
+  memberships?: Prisma.MemberCreateNestedManyWithoutUserInput
+  moduleProgress?: Prisma.ModuleProgressCreateNestedManyWithoutUserInput
+  hostedSessions?: Prisma.LiveSessionCreateNestedManyWithoutHostInput
+  sessionPlays?: Prisma.SessionPlayerCreateNestedManyWithoutUserInput
+  gamificationLogs?: Prisma.GamificationLogCreateNestedManyWithoutUserInput
+  editorChats?: Prisma.EditorChatCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutMediaInput = {
   id?: string
   name: string
   role?: string | null
-  avatarId?: string | null
+  avatar?: string | null
   email: string
   emailVerified?: boolean
   image?: string | null
@@ -846,56 +1325,23 @@ export type UserUncheckedCreateWithoutMediaInput = {
   updatedAt?: Date | string
   onboarded?: boolean
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  xp?: number
+  currentStreak?: number
+  longestStreak?: number
+  badges?: Prisma.UserCreatebadgesInput | string[]
   sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
+  memberships?: Prisma.MemberUncheckedCreateNestedManyWithoutUserInput
+  moduleProgress?: Prisma.ModuleProgressUncheckedCreateNestedManyWithoutUserInput
+  hostedSessions?: Prisma.LiveSessionUncheckedCreateNestedManyWithoutHostInput
+  sessionPlays?: Prisma.SessionPlayerUncheckedCreateNestedManyWithoutUserInput
+  gamificationLogs?: Prisma.GamificationLogUncheckedCreateNestedManyWithoutUserInput
+  editorChats?: Prisma.EditorChatUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutMediaInput = {
   where: Prisma.UserWhereUniqueInput
   create: Prisma.XOR<Prisma.UserCreateWithoutMediaInput, Prisma.UserUncheckedCreateWithoutMediaInput>
-}
-
-export type UserCreateWithoutAvatarInput = {
-  id?: string
-  name: string
-  role?: string | null
-  email: string
-  emailVerified?: boolean
-  image?: string | null
-  banned?: boolean | null
-  banReason?: string | null
-  banExpires?: Date | string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  onboarded?: boolean
-  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
-  accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
-  media?: Prisma.MediaCreateNestedManyWithoutUploaderInput
-}
-
-export type UserUncheckedCreateWithoutAvatarInput = {
-  id?: string
-  name: string
-  role?: string | null
-  email: string
-  emailVerified?: boolean
-  image?: string | null
-  banned?: boolean | null
-  banReason?: string | null
-  banExpires?: Date | string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  onboarded?: boolean
-  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
-  accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
-  media?: Prisma.MediaUncheckedCreateNestedManyWithoutUploaderInput
-}
-
-export type UserCreateOrConnectWithoutAvatarInput = {
-  where: Prisma.UserWhereUniqueInput
-  create: Prisma.XOR<Prisma.UserCreateWithoutAvatarInput, Prisma.UserUncheckedCreateWithoutAvatarInput>
 }
 
 export type UserUpsertWithoutMediaInput = {
@@ -913,6 +1359,7 @@ export type UserUpdateWithoutMediaInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.StringFieldUpdateOperationsInput | string
   emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -923,16 +1370,25 @@ export type UserUpdateWithoutMediaInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   onboarded?: Prisma.BoolFieldUpdateOperationsInput | boolean
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  xp?: Prisma.IntFieldUpdateOperationsInput | number
+  currentStreak?: Prisma.IntFieldUpdateOperationsInput | number
+  longestStreak?: Prisma.IntFieldUpdateOperationsInput | number
+  badges?: Prisma.UserUpdatebadgesInput | string[]
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
-  avatar?: Prisma.MediaUpdateOneWithoutUserAvatarNestedInput
+  memberships?: Prisma.MemberUpdateManyWithoutUserNestedInput
+  moduleProgress?: Prisma.ModuleProgressUpdateManyWithoutUserNestedInput
+  hostedSessions?: Prisma.LiveSessionUpdateManyWithoutHostNestedInput
+  sessionPlays?: Prisma.SessionPlayerUpdateManyWithoutUserNestedInput
+  gamificationLogs?: Prisma.GamificationLogUpdateManyWithoutUserNestedInput
+  editorChats?: Prisma.EditorChatUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutMediaInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  avatarId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.StringFieldUpdateOperationsInput | string
   emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -943,25 +1399,99 @@ export type UserUncheckedUpdateWithoutMediaInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   onboarded?: Prisma.BoolFieldUpdateOperationsInput | boolean
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  xp?: Prisma.IntFieldUpdateOperationsInput | number
+  currentStreak?: Prisma.IntFieldUpdateOperationsInput | number
+  longestStreak?: Prisma.IntFieldUpdateOperationsInput | number
+  badges?: Prisma.UserUpdatebadgesInput | string[]
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
+  memberships?: Prisma.MemberUncheckedUpdateManyWithoutUserNestedInput
+  moduleProgress?: Prisma.ModuleProgressUncheckedUpdateManyWithoutUserNestedInput
+  hostedSessions?: Prisma.LiveSessionUncheckedUpdateManyWithoutHostNestedInput
+  sessionPlays?: Prisma.SessionPlayerUncheckedUpdateManyWithoutUserNestedInput
+  gamificationLogs?: Prisma.GamificationLogUncheckedUpdateManyWithoutUserNestedInput
+  editorChats?: Prisma.EditorChatUncheckedUpdateManyWithoutUserNestedInput
 }
 
-export type UserUpsertWithoutAvatarInput = {
-  update: Prisma.XOR<Prisma.UserUpdateWithoutAvatarInput, Prisma.UserUncheckedUpdateWithoutAvatarInput>
-  create: Prisma.XOR<Prisma.UserCreateWithoutAvatarInput, Prisma.UserUncheckedCreateWithoutAvatarInput>
+export type UserCreateWithoutEditorChatsInput = {
+  id?: string
+  name: string
+  role?: string | null
+  avatar?: string | null
+  email: string
+  emailVerified?: boolean
+  image?: string | null
+  banned?: boolean | null
+  banReason?: string | null
+  banExpires?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  onboarded?: boolean
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  xp?: number
+  currentStreak?: number
+  longestStreak?: number
+  badges?: Prisma.UserCreatebadgesInput | string[]
+  sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
+  accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
+  memberships?: Prisma.MemberCreateNestedManyWithoutUserInput
+  media?: Prisma.MediaCreateNestedManyWithoutUploaderInput
+  moduleProgress?: Prisma.ModuleProgressCreateNestedManyWithoutUserInput
+  hostedSessions?: Prisma.LiveSessionCreateNestedManyWithoutHostInput
+  sessionPlays?: Prisma.SessionPlayerCreateNestedManyWithoutUserInput
+  gamificationLogs?: Prisma.GamificationLogCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutEditorChatsInput = {
+  id?: string
+  name: string
+  role?: string | null
+  avatar?: string | null
+  email: string
+  emailVerified?: boolean
+  image?: string | null
+  banned?: boolean | null
+  banReason?: string | null
+  banExpires?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  onboarded?: boolean
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  xp?: number
+  currentStreak?: number
+  longestStreak?: number
+  badges?: Prisma.UserCreatebadgesInput | string[]
+  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
+  accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
+  memberships?: Prisma.MemberUncheckedCreateNestedManyWithoutUserInput
+  media?: Prisma.MediaUncheckedCreateNestedManyWithoutUploaderInput
+  moduleProgress?: Prisma.ModuleProgressUncheckedCreateNestedManyWithoutUserInput
+  hostedSessions?: Prisma.LiveSessionUncheckedCreateNestedManyWithoutHostInput
+  sessionPlays?: Prisma.SessionPlayerUncheckedCreateNestedManyWithoutUserInput
+  gamificationLogs?: Prisma.GamificationLogUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutEditorChatsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutEditorChatsInput, Prisma.UserUncheckedCreateWithoutEditorChatsInput>
+}
+
+export type UserUpsertWithoutEditorChatsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutEditorChatsInput, Prisma.UserUncheckedUpdateWithoutEditorChatsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutEditorChatsInput, Prisma.UserUncheckedCreateWithoutEditorChatsInput>
   where?: Prisma.UserWhereInput
 }
 
-export type UserUpdateToOneWithWhereWithoutAvatarInput = {
+export type UserUpdateToOneWithWhereWithoutEditorChatsInput = {
   where?: Prisma.UserWhereInput
-  data: Prisma.XOR<Prisma.UserUpdateWithoutAvatarInput, Prisma.UserUncheckedUpdateWithoutAvatarInput>
+  data: Prisma.XOR<Prisma.UserUpdateWithoutEditorChatsInput, Prisma.UserUncheckedUpdateWithoutEditorChatsInput>
 }
 
-export type UserUpdateWithoutAvatarInput = {
+export type UserUpdateWithoutEditorChatsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.StringFieldUpdateOperationsInput | string
   emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -972,15 +1502,25 @@ export type UserUpdateWithoutAvatarInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   onboarded?: Prisma.BoolFieldUpdateOperationsInput | boolean
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  xp?: Prisma.IntFieldUpdateOperationsInput | number
+  currentStreak?: Prisma.IntFieldUpdateOperationsInput | number
+  longestStreak?: Prisma.IntFieldUpdateOperationsInput | number
+  badges?: Prisma.UserUpdatebadgesInput | string[]
   sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
   accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
+  memberships?: Prisma.MemberUpdateManyWithoutUserNestedInput
   media?: Prisma.MediaUpdateManyWithoutUploaderNestedInput
+  moduleProgress?: Prisma.ModuleProgressUpdateManyWithoutUserNestedInput
+  hostedSessions?: Prisma.LiveSessionUpdateManyWithoutHostNestedInput
+  sessionPlays?: Prisma.SessionPlayerUpdateManyWithoutUserNestedInput
+  gamificationLogs?: Prisma.GamificationLogUpdateManyWithoutUserNestedInput
 }
 
-export type UserUncheckedUpdateWithoutAvatarInput = {
+export type UserUncheckedUpdateWithoutEditorChatsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.StringFieldUpdateOperationsInput | string
   emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -991,9 +1531,546 @@ export type UserUncheckedUpdateWithoutAvatarInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   onboarded?: Prisma.BoolFieldUpdateOperationsInput | boolean
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  xp?: Prisma.IntFieldUpdateOperationsInput | number
+  currentStreak?: Prisma.IntFieldUpdateOperationsInput | number
+  longestStreak?: Prisma.IntFieldUpdateOperationsInput | number
+  badges?: Prisma.UserUpdatebadgesInput | string[]
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
+  memberships?: Prisma.MemberUncheckedUpdateManyWithoutUserNestedInput
   media?: Prisma.MediaUncheckedUpdateManyWithoutUploaderNestedInput
+  moduleProgress?: Prisma.ModuleProgressUncheckedUpdateManyWithoutUserNestedInput
+  hostedSessions?: Prisma.LiveSessionUncheckedUpdateManyWithoutHostNestedInput
+  sessionPlays?: Prisma.SessionPlayerUncheckedUpdateManyWithoutUserNestedInput
+  gamificationLogs?: Prisma.GamificationLogUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserCreateWithoutModuleProgressInput = {
+  id?: string
+  name: string
+  role?: string | null
+  avatar?: string | null
+  email: string
+  emailVerified?: boolean
+  image?: string | null
+  banned?: boolean | null
+  banReason?: string | null
+  banExpires?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  onboarded?: boolean
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  xp?: number
+  currentStreak?: number
+  longestStreak?: number
+  badges?: Prisma.UserCreatebadgesInput | string[]
+  sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
+  accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
+  memberships?: Prisma.MemberCreateNestedManyWithoutUserInput
+  media?: Prisma.MediaCreateNestedManyWithoutUploaderInput
+  hostedSessions?: Prisma.LiveSessionCreateNestedManyWithoutHostInput
+  sessionPlays?: Prisma.SessionPlayerCreateNestedManyWithoutUserInput
+  gamificationLogs?: Prisma.GamificationLogCreateNestedManyWithoutUserInput
+  editorChats?: Prisma.EditorChatCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutModuleProgressInput = {
+  id?: string
+  name: string
+  role?: string | null
+  avatar?: string | null
+  email: string
+  emailVerified?: boolean
+  image?: string | null
+  banned?: boolean | null
+  banReason?: string | null
+  banExpires?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  onboarded?: boolean
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  xp?: number
+  currentStreak?: number
+  longestStreak?: number
+  badges?: Prisma.UserCreatebadgesInput | string[]
+  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
+  accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
+  memberships?: Prisma.MemberUncheckedCreateNestedManyWithoutUserInput
+  media?: Prisma.MediaUncheckedCreateNestedManyWithoutUploaderInput
+  hostedSessions?: Prisma.LiveSessionUncheckedCreateNestedManyWithoutHostInput
+  sessionPlays?: Prisma.SessionPlayerUncheckedCreateNestedManyWithoutUserInput
+  gamificationLogs?: Prisma.GamificationLogUncheckedCreateNestedManyWithoutUserInput
+  editorChats?: Prisma.EditorChatUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutModuleProgressInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutModuleProgressInput, Prisma.UserUncheckedCreateWithoutModuleProgressInput>
+}
+
+export type UserUpsertWithoutModuleProgressInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutModuleProgressInput, Prisma.UserUncheckedUpdateWithoutModuleProgressInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutModuleProgressInput, Prisma.UserUncheckedCreateWithoutModuleProgressInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutModuleProgressInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutModuleProgressInput, Prisma.UserUncheckedUpdateWithoutModuleProgressInput>
+}
+
+export type UserUpdateWithoutModuleProgressInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  banned?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  banReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  banExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  onboarded?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  xp?: Prisma.IntFieldUpdateOperationsInput | number
+  currentStreak?: Prisma.IntFieldUpdateOperationsInput | number
+  longestStreak?: Prisma.IntFieldUpdateOperationsInput | number
+  badges?: Prisma.UserUpdatebadgesInput | string[]
+  sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
+  accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
+  memberships?: Prisma.MemberUpdateManyWithoutUserNestedInput
+  media?: Prisma.MediaUpdateManyWithoutUploaderNestedInput
+  hostedSessions?: Prisma.LiveSessionUpdateManyWithoutHostNestedInput
+  sessionPlays?: Prisma.SessionPlayerUpdateManyWithoutUserNestedInput
+  gamificationLogs?: Prisma.GamificationLogUpdateManyWithoutUserNestedInput
+  editorChats?: Prisma.EditorChatUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutModuleProgressInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  banned?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  banReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  banExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  onboarded?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  xp?: Prisma.IntFieldUpdateOperationsInput | number
+  currentStreak?: Prisma.IntFieldUpdateOperationsInput | number
+  longestStreak?: Prisma.IntFieldUpdateOperationsInput | number
+  badges?: Prisma.UserUpdatebadgesInput | string[]
+  sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
+  accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
+  memberships?: Prisma.MemberUncheckedUpdateManyWithoutUserNestedInput
+  media?: Prisma.MediaUncheckedUpdateManyWithoutUploaderNestedInput
+  hostedSessions?: Prisma.LiveSessionUncheckedUpdateManyWithoutHostNestedInput
+  sessionPlays?: Prisma.SessionPlayerUncheckedUpdateManyWithoutUserNestedInput
+  gamificationLogs?: Prisma.GamificationLogUncheckedUpdateManyWithoutUserNestedInput
+  editorChats?: Prisma.EditorChatUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserCreateWithoutGamificationLogsInput = {
+  id?: string
+  name: string
+  role?: string | null
+  avatar?: string | null
+  email: string
+  emailVerified?: boolean
+  image?: string | null
+  banned?: boolean | null
+  banReason?: string | null
+  banExpires?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  onboarded?: boolean
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  xp?: number
+  currentStreak?: number
+  longestStreak?: number
+  badges?: Prisma.UserCreatebadgesInput | string[]
+  sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
+  accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
+  memberships?: Prisma.MemberCreateNestedManyWithoutUserInput
+  media?: Prisma.MediaCreateNestedManyWithoutUploaderInput
+  moduleProgress?: Prisma.ModuleProgressCreateNestedManyWithoutUserInput
+  hostedSessions?: Prisma.LiveSessionCreateNestedManyWithoutHostInput
+  sessionPlays?: Prisma.SessionPlayerCreateNestedManyWithoutUserInput
+  editorChats?: Prisma.EditorChatCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutGamificationLogsInput = {
+  id?: string
+  name: string
+  role?: string | null
+  avatar?: string | null
+  email: string
+  emailVerified?: boolean
+  image?: string | null
+  banned?: boolean | null
+  banReason?: string | null
+  banExpires?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  onboarded?: boolean
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  xp?: number
+  currentStreak?: number
+  longestStreak?: number
+  badges?: Prisma.UserCreatebadgesInput | string[]
+  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
+  accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
+  memberships?: Prisma.MemberUncheckedCreateNestedManyWithoutUserInput
+  media?: Prisma.MediaUncheckedCreateNestedManyWithoutUploaderInput
+  moduleProgress?: Prisma.ModuleProgressUncheckedCreateNestedManyWithoutUserInput
+  hostedSessions?: Prisma.LiveSessionUncheckedCreateNestedManyWithoutHostInput
+  sessionPlays?: Prisma.SessionPlayerUncheckedCreateNestedManyWithoutUserInput
+  editorChats?: Prisma.EditorChatUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutGamificationLogsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutGamificationLogsInput, Prisma.UserUncheckedCreateWithoutGamificationLogsInput>
+}
+
+export type UserUpsertWithoutGamificationLogsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutGamificationLogsInput, Prisma.UserUncheckedUpdateWithoutGamificationLogsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutGamificationLogsInput, Prisma.UserUncheckedCreateWithoutGamificationLogsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutGamificationLogsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutGamificationLogsInput, Prisma.UserUncheckedUpdateWithoutGamificationLogsInput>
+}
+
+export type UserUpdateWithoutGamificationLogsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  banned?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  banReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  banExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  onboarded?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  xp?: Prisma.IntFieldUpdateOperationsInput | number
+  currentStreak?: Prisma.IntFieldUpdateOperationsInput | number
+  longestStreak?: Prisma.IntFieldUpdateOperationsInput | number
+  badges?: Prisma.UserUpdatebadgesInput | string[]
+  sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
+  accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
+  memberships?: Prisma.MemberUpdateManyWithoutUserNestedInput
+  media?: Prisma.MediaUpdateManyWithoutUploaderNestedInput
+  moduleProgress?: Prisma.ModuleProgressUpdateManyWithoutUserNestedInput
+  hostedSessions?: Prisma.LiveSessionUpdateManyWithoutHostNestedInput
+  sessionPlays?: Prisma.SessionPlayerUpdateManyWithoutUserNestedInput
+  editorChats?: Prisma.EditorChatUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutGamificationLogsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  banned?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  banReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  banExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  onboarded?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  xp?: Prisma.IntFieldUpdateOperationsInput | number
+  currentStreak?: Prisma.IntFieldUpdateOperationsInput | number
+  longestStreak?: Prisma.IntFieldUpdateOperationsInput | number
+  badges?: Prisma.UserUpdatebadgesInput | string[]
+  sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
+  accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
+  memberships?: Prisma.MemberUncheckedUpdateManyWithoutUserNestedInput
+  media?: Prisma.MediaUncheckedUpdateManyWithoutUploaderNestedInput
+  moduleProgress?: Prisma.ModuleProgressUncheckedUpdateManyWithoutUserNestedInput
+  hostedSessions?: Prisma.LiveSessionUncheckedUpdateManyWithoutHostNestedInput
+  sessionPlays?: Prisma.SessionPlayerUncheckedUpdateManyWithoutUserNestedInput
+  editorChats?: Prisma.EditorChatUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserCreateWithoutHostedSessionsInput = {
+  id?: string
+  name: string
+  role?: string | null
+  avatar?: string | null
+  email: string
+  emailVerified?: boolean
+  image?: string | null
+  banned?: boolean | null
+  banReason?: string | null
+  banExpires?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  onboarded?: boolean
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  xp?: number
+  currentStreak?: number
+  longestStreak?: number
+  badges?: Prisma.UserCreatebadgesInput | string[]
+  sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
+  accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
+  memberships?: Prisma.MemberCreateNestedManyWithoutUserInput
+  media?: Prisma.MediaCreateNestedManyWithoutUploaderInput
+  moduleProgress?: Prisma.ModuleProgressCreateNestedManyWithoutUserInput
+  sessionPlays?: Prisma.SessionPlayerCreateNestedManyWithoutUserInput
+  gamificationLogs?: Prisma.GamificationLogCreateNestedManyWithoutUserInput
+  editorChats?: Prisma.EditorChatCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutHostedSessionsInput = {
+  id?: string
+  name: string
+  role?: string | null
+  avatar?: string | null
+  email: string
+  emailVerified?: boolean
+  image?: string | null
+  banned?: boolean | null
+  banReason?: string | null
+  banExpires?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  onboarded?: boolean
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  xp?: number
+  currentStreak?: number
+  longestStreak?: number
+  badges?: Prisma.UserCreatebadgesInput | string[]
+  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
+  accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
+  memberships?: Prisma.MemberUncheckedCreateNestedManyWithoutUserInput
+  media?: Prisma.MediaUncheckedCreateNestedManyWithoutUploaderInput
+  moduleProgress?: Prisma.ModuleProgressUncheckedCreateNestedManyWithoutUserInput
+  sessionPlays?: Prisma.SessionPlayerUncheckedCreateNestedManyWithoutUserInput
+  gamificationLogs?: Prisma.GamificationLogUncheckedCreateNestedManyWithoutUserInput
+  editorChats?: Prisma.EditorChatUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutHostedSessionsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutHostedSessionsInput, Prisma.UserUncheckedCreateWithoutHostedSessionsInput>
+}
+
+export type UserUpsertWithoutHostedSessionsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutHostedSessionsInput, Prisma.UserUncheckedUpdateWithoutHostedSessionsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutHostedSessionsInput, Prisma.UserUncheckedCreateWithoutHostedSessionsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutHostedSessionsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutHostedSessionsInput, Prisma.UserUncheckedUpdateWithoutHostedSessionsInput>
+}
+
+export type UserUpdateWithoutHostedSessionsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  banned?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  banReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  banExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  onboarded?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  xp?: Prisma.IntFieldUpdateOperationsInput | number
+  currentStreak?: Prisma.IntFieldUpdateOperationsInput | number
+  longestStreak?: Prisma.IntFieldUpdateOperationsInput | number
+  badges?: Prisma.UserUpdatebadgesInput | string[]
+  sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
+  accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
+  memberships?: Prisma.MemberUpdateManyWithoutUserNestedInput
+  media?: Prisma.MediaUpdateManyWithoutUploaderNestedInput
+  moduleProgress?: Prisma.ModuleProgressUpdateManyWithoutUserNestedInput
+  sessionPlays?: Prisma.SessionPlayerUpdateManyWithoutUserNestedInput
+  gamificationLogs?: Prisma.GamificationLogUpdateManyWithoutUserNestedInput
+  editorChats?: Prisma.EditorChatUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutHostedSessionsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  banned?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  banReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  banExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  onboarded?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  xp?: Prisma.IntFieldUpdateOperationsInput | number
+  currentStreak?: Prisma.IntFieldUpdateOperationsInput | number
+  longestStreak?: Prisma.IntFieldUpdateOperationsInput | number
+  badges?: Prisma.UserUpdatebadgesInput | string[]
+  sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
+  accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
+  memberships?: Prisma.MemberUncheckedUpdateManyWithoutUserNestedInput
+  media?: Prisma.MediaUncheckedUpdateManyWithoutUploaderNestedInput
+  moduleProgress?: Prisma.ModuleProgressUncheckedUpdateManyWithoutUserNestedInput
+  sessionPlays?: Prisma.SessionPlayerUncheckedUpdateManyWithoutUserNestedInput
+  gamificationLogs?: Prisma.GamificationLogUncheckedUpdateManyWithoutUserNestedInput
+  editorChats?: Prisma.EditorChatUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserCreateWithoutSessionPlaysInput = {
+  id?: string
+  name: string
+  role?: string | null
+  avatar?: string | null
+  email: string
+  emailVerified?: boolean
+  image?: string | null
+  banned?: boolean | null
+  banReason?: string | null
+  banExpires?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  onboarded?: boolean
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  xp?: number
+  currentStreak?: number
+  longestStreak?: number
+  badges?: Prisma.UserCreatebadgesInput | string[]
+  sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
+  accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
+  memberships?: Prisma.MemberCreateNestedManyWithoutUserInput
+  media?: Prisma.MediaCreateNestedManyWithoutUploaderInput
+  moduleProgress?: Prisma.ModuleProgressCreateNestedManyWithoutUserInput
+  hostedSessions?: Prisma.LiveSessionCreateNestedManyWithoutHostInput
+  gamificationLogs?: Prisma.GamificationLogCreateNestedManyWithoutUserInput
+  editorChats?: Prisma.EditorChatCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutSessionPlaysInput = {
+  id?: string
+  name: string
+  role?: string | null
+  avatar?: string | null
+  email: string
+  emailVerified?: boolean
+  image?: string | null
+  banned?: boolean | null
+  banReason?: string | null
+  banExpires?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  onboarded?: boolean
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  xp?: number
+  currentStreak?: number
+  longestStreak?: number
+  badges?: Prisma.UserCreatebadgesInput | string[]
+  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
+  accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
+  memberships?: Prisma.MemberUncheckedCreateNestedManyWithoutUserInput
+  media?: Prisma.MediaUncheckedCreateNestedManyWithoutUploaderInput
+  moduleProgress?: Prisma.ModuleProgressUncheckedCreateNestedManyWithoutUserInput
+  hostedSessions?: Prisma.LiveSessionUncheckedCreateNestedManyWithoutHostInput
+  gamificationLogs?: Prisma.GamificationLogUncheckedCreateNestedManyWithoutUserInput
+  editorChats?: Prisma.EditorChatUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutSessionPlaysInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutSessionPlaysInput, Prisma.UserUncheckedCreateWithoutSessionPlaysInput>
+}
+
+export type UserUpsertWithoutSessionPlaysInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutSessionPlaysInput, Prisma.UserUncheckedUpdateWithoutSessionPlaysInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutSessionPlaysInput, Prisma.UserUncheckedCreateWithoutSessionPlaysInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutSessionPlaysInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutSessionPlaysInput, Prisma.UserUncheckedUpdateWithoutSessionPlaysInput>
+}
+
+export type UserUpdateWithoutSessionPlaysInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  banned?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  banReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  banExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  onboarded?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  xp?: Prisma.IntFieldUpdateOperationsInput | number
+  currentStreak?: Prisma.IntFieldUpdateOperationsInput | number
+  longestStreak?: Prisma.IntFieldUpdateOperationsInput | number
+  badges?: Prisma.UserUpdatebadgesInput | string[]
+  sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
+  accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
+  memberships?: Prisma.MemberUpdateManyWithoutUserNestedInput
+  media?: Prisma.MediaUpdateManyWithoutUploaderNestedInput
+  moduleProgress?: Prisma.ModuleProgressUpdateManyWithoutUserNestedInput
+  hostedSessions?: Prisma.LiveSessionUpdateManyWithoutHostNestedInput
+  gamificationLogs?: Prisma.GamificationLogUpdateManyWithoutUserNestedInput
+  editorChats?: Prisma.EditorChatUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutSessionPlaysInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  banned?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  banReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  banExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  onboarded?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  xp?: Prisma.IntFieldUpdateOperationsInput | number
+  currentStreak?: Prisma.IntFieldUpdateOperationsInput | number
+  longestStreak?: Prisma.IntFieldUpdateOperationsInput | number
+  badges?: Prisma.UserUpdatebadgesInput | string[]
+  sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
+  accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
+  memberships?: Prisma.MemberUncheckedUpdateManyWithoutUserNestedInput
+  media?: Prisma.MediaUncheckedUpdateManyWithoutUploaderNestedInput
+  moduleProgress?: Prisma.ModuleProgressUncheckedUpdateManyWithoutUserNestedInput
+  hostedSessions?: Prisma.LiveSessionUncheckedUpdateManyWithoutHostNestedInput
+  gamificationLogs?: Prisma.GamificationLogUncheckedUpdateManyWithoutUserNestedInput
+  editorChats?: Prisma.EditorChatUncheckedUpdateManyWithoutUserNestedInput
 }
 
 
@@ -1004,13 +2081,25 @@ export type UserUncheckedUpdateWithoutAvatarInput = {
 export type UserCountOutputType = {
   sessions: number
   accounts: number
+  memberships: number
   media: number
+  moduleProgress: number
+  hostedSessions: number
+  sessionPlays: number
+  gamificationLogs: number
+  editorChats: number
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   sessions?: boolean | UserCountOutputTypeCountSessionsArgs
   accounts?: boolean | UserCountOutputTypeCountAccountsArgs
+  memberships?: boolean | UserCountOutputTypeCountMembershipsArgs
   media?: boolean | UserCountOutputTypeCountMediaArgs
+  moduleProgress?: boolean | UserCountOutputTypeCountModuleProgressArgs
+  hostedSessions?: boolean | UserCountOutputTypeCountHostedSessionsArgs
+  sessionPlays?: boolean | UserCountOutputTypeCountSessionPlaysArgs
+  gamificationLogs?: boolean | UserCountOutputTypeCountGamificationLogsArgs
+  editorChats?: boolean | UserCountOutputTypeCountEditorChatsArgs
 }
 
 /**
@@ -1040,8 +2129,50 @@ export type UserCountOutputTypeCountAccountsArgs<ExtArgs extends runtime.Types.E
 /**
  * UserCountOutputType without action
  */
+export type UserCountOutputTypeCountMembershipsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.MemberWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
 export type UserCountOutputTypeCountMediaArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.MediaWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountModuleProgressArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ModuleProgressWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountHostedSessionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.LiveSessionWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountSessionPlaysArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.SessionPlayerWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountGamificationLogsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.GamificationLogWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountEditorChatsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.EditorChatWhereInput
 }
 
 
@@ -1049,7 +2180,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   id?: boolean
   name?: boolean
   role?: boolean
-  avatarId?: boolean
+  avatar?: boolean
   email?: boolean
   emailVerified?: boolean
   image?: boolean
@@ -1060,10 +2191,19 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   updatedAt?: boolean
   onboarded?: boolean
   metadata?: boolean
+  xp?: boolean
+  currentStreak?: boolean
+  longestStreak?: boolean
+  badges?: boolean
   sessions?: boolean | Prisma.User$sessionsArgs<ExtArgs>
   accounts?: boolean | Prisma.User$accountsArgs<ExtArgs>
+  memberships?: boolean | Prisma.User$membershipsArgs<ExtArgs>
   media?: boolean | Prisma.User$mediaArgs<ExtArgs>
-  avatar?: boolean | Prisma.User$avatarArgs<ExtArgs>
+  moduleProgress?: boolean | Prisma.User$moduleProgressArgs<ExtArgs>
+  hostedSessions?: boolean | Prisma.User$hostedSessionsArgs<ExtArgs>
+  sessionPlays?: boolean | Prisma.User$sessionPlaysArgs<ExtArgs>
+  gamificationLogs?: boolean | Prisma.User$gamificationLogsArgs<ExtArgs>
+  editorChats?: boolean | Prisma.User$editorChatsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -1071,7 +2211,7 @@ export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   id?: boolean
   name?: boolean
   role?: boolean
-  avatarId?: boolean
+  avatar?: boolean
   email?: boolean
   emailVerified?: boolean
   image?: boolean
@@ -1082,14 +2222,17 @@ export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   updatedAt?: boolean
   onboarded?: boolean
   metadata?: boolean
-  avatar?: boolean | Prisma.User$avatarArgs<ExtArgs>
+  xp?: boolean
+  currentStreak?: boolean
+  longestStreak?: boolean
+  badges?: boolean
 }, ExtArgs["result"]["user"]>
 
 export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   name?: boolean
   role?: boolean
-  avatarId?: boolean
+  avatar?: boolean
   email?: boolean
   emailVerified?: boolean
   image?: boolean
@@ -1100,14 +2243,17 @@ export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   updatedAt?: boolean
   onboarded?: boolean
   metadata?: boolean
-  avatar?: boolean | Prisma.User$avatarArgs<ExtArgs>
+  xp?: boolean
+  currentStreak?: boolean
+  longestStreak?: boolean
+  badges?: boolean
 }, ExtArgs["result"]["user"]>
 
 export type UserSelectScalar = {
   id?: boolean
   name?: boolean
   role?: boolean
-  avatarId?: boolean
+  avatar?: boolean
   email?: boolean
   emailVerified?: boolean
   image?: boolean
@@ -1118,36 +2264,46 @@ export type UserSelectScalar = {
   updatedAt?: boolean
   onboarded?: boolean
   metadata?: boolean
+  xp?: boolean
+  currentStreak?: boolean
+  longestStreak?: boolean
+  badges?: boolean
 }
 
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "role" | "avatarId" | "email" | "emailVerified" | "image" | "banned" | "banReason" | "banExpires" | "createdAt" | "updatedAt" | "onboarded" | "metadata", ExtArgs["result"]["user"]>
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "role" | "avatar" | "email" | "emailVerified" | "image" | "banned" | "banReason" | "banExpires" | "createdAt" | "updatedAt" | "onboarded" | "metadata" | "xp" | "currentStreak" | "longestStreak" | "badges", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   sessions?: boolean | Prisma.User$sessionsArgs<ExtArgs>
   accounts?: boolean | Prisma.User$accountsArgs<ExtArgs>
+  memberships?: boolean | Prisma.User$membershipsArgs<ExtArgs>
   media?: boolean | Prisma.User$mediaArgs<ExtArgs>
-  avatar?: boolean | Prisma.User$avatarArgs<ExtArgs>
+  moduleProgress?: boolean | Prisma.User$moduleProgressArgs<ExtArgs>
+  hostedSessions?: boolean | Prisma.User$hostedSessionsArgs<ExtArgs>
+  sessionPlays?: boolean | Prisma.User$sessionPlaysArgs<ExtArgs>
+  gamificationLogs?: boolean | Prisma.User$gamificationLogsArgs<ExtArgs>
+  editorChats?: boolean | Prisma.User$editorChatsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
-export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  avatar?: boolean | Prisma.User$avatarArgs<ExtArgs>
-}
-export type UserIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  avatar?: boolean | Prisma.User$avatarArgs<ExtArgs>
-}
+export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
+export type UserIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
 
 export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "User"
   objects: {
     sessions: Prisma.$SessionPayload<ExtArgs>[]
     accounts: Prisma.$AccountPayload<ExtArgs>[]
+    memberships: Prisma.$MemberPayload<ExtArgs>[]
     media: Prisma.$MediaPayload<ExtArgs>[]
-    avatar: Prisma.$MediaPayload<ExtArgs> | null
+    moduleProgress: Prisma.$ModuleProgressPayload<ExtArgs>[]
+    hostedSessions: Prisma.$LiveSessionPayload<ExtArgs>[]
+    sessionPlays: Prisma.$SessionPlayerPayload<ExtArgs>[]
+    gamificationLogs: Prisma.$GamificationLogPayload<ExtArgs>[]
+    editorChats: Prisma.$EditorChatPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     name: string
     role: string | null
-    avatarId: string | null
+    avatar: string | null
     email: string
     emailVerified: boolean
     image: string | null
@@ -1158,6 +2314,10 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     updatedAt: Date
     onboarded: boolean
     metadata: runtime.JsonValue | null
+    xp: number
+    currentStreak: number
+    longestStreak: number
+    badges: string[]
   }, ExtArgs["result"]["user"]>
   composites: {}
 }
@@ -1554,8 +2714,13 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   readonly [Symbol.toStringTag]: "PrismaPromise"
   sessions<T extends Prisma.User$sessionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$sessionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SessionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   accounts<T extends Prisma.User$accountsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$accountsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AccountPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  memberships<T extends Prisma.User$membershipsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$membershipsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MemberPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   media<T extends Prisma.User$mediaArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$mediaArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MediaPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  avatar<T extends Prisma.User$avatarArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$avatarArgs<ExtArgs>>): Prisma.Prisma__MediaClient<runtime.Types.Result.GetResult<Prisma.$MediaPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  moduleProgress<T extends Prisma.User$moduleProgressArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$moduleProgressArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ModuleProgressPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  hostedSessions<T extends Prisma.User$hostedSessionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$hostedSessionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LiveSessionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  sessionPlays<T extends Prisma.User$sessionPlaysArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$sessionPlaysArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SessionPlayerPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  gamificationLogs<T extends Prisma.User$gamificationLogsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$gamificationLogsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$GamificationLogPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  editorChats<T extends Prisma.User$editorChatsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$editorChatsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$EditorChatPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1588,7 +2753,7 @@ export interface UserFieldRefs {
   readonly id: Prisma.FieldRef<"User", 'String'>
   readonly name: Prisma.FieldRef<"User", 'String'>
   readonly role: Prisma.FieldRef<"User", 'String'>
-  readonly avatarId: Prisma.FieldRef<"User", 'String'>
+  readonly avatar: Prisma.FieldRef<"User", 'String'>
   readonly email: Prisma.FieldRef<"User", 'String'>
   readonly emailVerified: Prisma.FieldRef<"User", 'Boolean'>
   readonly image: Prisma.FieldRef<"User", 'String'>
@@ -1599,6 +2764,10 @@ export interface UserFieldRefs {
   readonly updatedAt: Prisma.FieldRef<"User", 'DateTime'>
   readonly onboarded: Prisma.FieldRef<"User", 'Boolean'>
   readonly metadata: Prisma.FieldRef<"User", 'Json'>
+  readonly xp: Prisma.FieldRef<"User", 'Int'>
+  readonly currentStreak: Prisma.FieldRef<"User", 'Int'>
+  readonly longestStreak: Prisma.FieldRef<"User", 'Int'>
+  readonly badges: Prisma.FieldRef<"User", 'String[]'>
 }
     
 
@@ -1853,10 +3022,6 @@ export type UserCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions
    */
   data: Prisma.UserCreateManyInput | Prisma.UserCreateManyInput[]
   skipDuplicates?: boolean
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.UserIncludeCreateManyAndReturn<ExtArgs> | null
 }
 
 /**
@@ -1927,10 +3092,6 @@ export type UserUpdateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions
    * Limit how many Users to update.
    */
   limit?: number
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.UserIncludeUpdateManyAndReturn<ExtArgs> | null
 }
 
 /**
@@ -2048,6 +3209,30 @@ export type User$accountsArgs<ExtArgs extends runtime.Types.Extensions.InternalA
 }
 
 /**
+ * User.memberships
+ */
+export type User$membershipsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Member
+   */
+  select?: Prisma.MemberSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Member
+   */
+  omit?: Prisma.MemberOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.MemberInclude<ExtArgs> | null
+  where?: Prisma.MemberWhereInput
+  orderBy?: Prisma.MemberOrderByWithRelationInput | Prisma.MemberOrderByWithRelationInput[]
+  cursor?: Prisma.MemberWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.MemberScalarFieldEnum | Prisma.MemberScalarFieldEnum[]
+}
+
+/**
  * User.media
  */
 export type User$mediaArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -2072,22 +3257,123 @@ export type User$mediaArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs
 }
 
 /**
- * User.avatar
+ * User.moduleProgress
  */
-export type User$avatarArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type User$moduleProgressArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the Media
+   * Select specific fields to fetch from the ModuleProgress
    */
-  select?: Prisma.MediaSelect<ExtArgs> | null
+  select?: Prisma.ModuleProgressSelect<ExtArgs> | null
   /**
-   * Omit specific fields from the Media
+   * Omit specific fields from the ModuleProgress
    */
-  omit?: Prisma.MediaOmit<ExtArgs> | null
+  omit?: Prisma.ModuleProgressOmit<ExtArgs> | null
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.MediaInclude<ExtArgs> | null
-  where?: Prisma.MediaWhereInput
+  include?: Prisma.ModuleProgressInclude<ExtArgs> | null
+  where?: Prisma.ModuleProgressWhereInput
+  orderBy?: Prisma.ModuleProgressOrderByWithRelationInput | Prisma.ModuleProgressOrderByWithRelationInput[]
+  cursor?: Prisma.ModuleProgressWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ModuleProgressScalarFieldEnum | Prisma.ModuleProgressScalarFieldEnum[]
+}
+
+/**
+ * User.hostedSessions
+ */
+export type User$hostedSessionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the LiveSession
+   */
+  select?: Prisma.LiveSessionSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the LiveSession
+   */
+  omit?: Prisma.LiveSessionOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.LiveSessionInclude<ExtArgs> | null
+  where?: Prisma.LiveSessionWhereInput
+  orderBy?: Prisma.LiveSessionOrderByWithRelationInput | Prisma.LiveSessionOrderByWithRelationInput[]
+  cursor?: Prisma.LiveSessionWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.LiveSessionScalarFieldEnum | Prisma.LiveSessionScalarFieldEnum[]
+}
+
+/**
+ * User.sessionPlays
+ */
+export type User$sessionPlaysArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the SessionPlayer
+   */
+  select?: Prisma.SessionPlayerSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the SessionPlayer
+   */
+  omit?: Prisma.SessionPlayerOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.SessionPlayerInclude<ExtArgs> | null
+  where?: Prisma.SessionPlayerWhereInput
+  orderBy?: Prisma.SessionPlayerOrderByWithRelationInput | Prisma.SessionPlayerOrderByWithRelationInput[]
+  cursor?: Prisma.SessionPlayerWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.SessionPlayerScalarFieldEnum | Prisma.SessionPlayerScalarFieldEnum[]
+}
+
+/**
+ * User.gamificationLogs
+ */
+export type User$gamificationLogsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the GamificationLog
+   */
+  select?: Prisma.GamificationLogSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the GamificationLog
+   */
+  omit?: Prisma.GamificationLogOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.GamificationLogInclude<ExtArgs> | null
+  where?: Prisma.GamificationLogWhereInput
+  orderBy?: Prisma.GamificationLogOrderByWithRelationInput | Prisma.GamificationLogOrderByWithRelationInput[]
+  cursor?: Prisma.GamificationLogWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.GamificationLogScalarFieldEnum | Prisma.GamificationLogScalarFieldEnum[]
+}
+
+/**
+ * User.editorChats
+ */
+export type User$editorChatsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the EditorChat
+   */
+  select?: Prisma.EditorChatSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the EditorChat
+   */
+  omit?: Prisma.EditorChatOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.EditorChatInclude<ExtArgs> | null
+  where?: Prisma.EditorChatWhereInput
+  orderBy?: Prisma.EditorChatOrderByWithRelationInput | Prisma.EditorChatOrderByWithRelationInput[]
+  cursor?: Prisma.EditorChatWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.EditorChatScalarFieldEnum | Prisma.EditorChatScalarFieldEnum[]
 }
 
 /**

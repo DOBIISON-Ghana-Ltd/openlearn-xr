@@ -38,7 +38,92 @@ export type Account = Prisma.AccountModel
  */
 export type Verification = Prisma.VerificationModel
 /**
+ * Model Invitation
+ * 
+ */
+export type Invitation = Prisma.InvitationModel
+/**
+ * Model Organization
+ * 
+ */
+export type Organization = Prisma.OrganizationModel
+/**
+ * Model Member
+ * 
+ */
+export type Member = Prisma.MemberModel
+/**
+ * Model Subscription
+ * 
+ */
+export type Subscription = Prisma.SubscriptionModel
+/**
  * Model Media
  * 
  */
 export type Media = Prisma.MediaModel
+/**
+ * Model Collection
+ * 
+ */
+export type Collection = Prisma.CollectionModel
+/**
+ * Model EditorChat
+ * 
+ */
+export type EditorChat = Prisma.EditorChatModel
+/**
+ * Model Module
+ * 
+ */
+export type Module = Prisma.ModuleModel
+/**
+ * Model ModuleVersion
+ * 
+ */
+export type ModuleVersion = Prisma.ModuleVersionModel
+/**
+ * Model ModuleCheckpoint
+ * 
+ */
+export type ModuleCheckpoint = Prisma.ModuleCheckpointModel
+/**
+ * Model ModuleProgress
+ * 
+ */
+export type ModuleProgress = Prisma.ModuleProgressModel
+/**
+ * Model GamificationLog
+ * 
+ */
+export type GamificationLog = Prisma.GamificationLogModel
+/**
+ * Model LiveSession
+ * 
+ */
+export type LiveSession = Prisma.LiveSessionModel
+/**
+ * Model SessionCheckpoint
+ * 
+ */
+export type SessionCheckpoint = Prisma.SessionCheckpointModel
+/**
+ * Model SessionPlayer
+ * 
+ */
+export type SessionPlayer = Prisma.SessionPlayerModel
+/**
+ * Model SessionAnalytic
+ * 
+ */
+export type SessionAnalytic = Prisma.SessionAnalyticModel
+/**
+ * Model AppSetting
+ * 
+ */
+export type AppSetting = Prisma.AppSettingModel
+/**
+ * Model EmailLog
+ * 
+ */
+export type EmailLog = Prisma.EmailLogModel

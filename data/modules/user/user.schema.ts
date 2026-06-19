@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { ZAccount, ZApi, ZMediaFile, ZUser } from "@/data/schema.base";
+import { ZAccount, ZApi, ZMediaFile, ZPassword, ZUser } from "@/data/schema.base";
 import { ZOnboardingMetadata } from "@/store/onboarding/schema";
 
 const ZOtpType = z.enum(["email-verification", "sign-in", "forget-password"]);
@@ -12,7 +12,7 @@ const PublicUserGetMe = ZApi({
     role: true,
     email: true,
     image: true,
-    avatarId: true,
+    avatar: true,
     onboarded: true,
     createdAt: true
   })
@@ -22,7 +22,7 @@ const PublicUserPatchMe = ZApi({
   body: ZUser.pick({
     name: true,
     image: true,
-    avatarId: true,
+    avatar: true,
   }).extend({
     file: ZMediaFile,
     deleteMedia: z.string().optional()
@@ -32,7 +32,7 @@ const PublicUserPatchMe = ZApi({
 const PublicUserLogin = ZApi({
   body: z.object({
     email: ZUser.shape.email,
-    password: ZAccount.shape.password,
+    password: ZPassword,
     redirect: z.string().optional()
   })
 });
@@ -41,8 +41,8 @@ const PublicUserRegister = ZApi({
   body: z.object({
     name: ZUser.shape.name,
     email: ZUser.shape.email,
-    password: ZAccount.shape.password,
-    confirmPassword: ZAccount.shape.password,
+    password: ZPassword,
+    confirmPassword: ZPassword,
     agreeToTerms: z.boolean()
   }).refine((data) => data.password === data.confirmPassword, {
     message: "Passwords don't match",
@@ -79,8 +79,8 @@ const PublicUserResetPassword = ZApi({
   body: z.object({
     email: ZUser.shape.email,
     otp: ZOtp,
-    newPassword: ZAccount.shape.password,
-    confirmPassword: ZAccount.shape.password
+    newPassword: ZPassword,
+    confirmPassword: ZPassword
   }).refine((data) => data.newPassword === data.confirmPassword, {
     message: "Passwords don't match",
     path: ["confirmPassword"]

@@ -37,7 +37,7 @@ const publicPatchMe = {
         throw new ApiError("File upload failed");
       }
 
-      finalBody.avatarId = uploadRes.id;
+      finalBody.avatar = uploadRes.id;
       finalBody.image = getImageUrl(uploadRes.key);
       finalBody.file = null;
     };
