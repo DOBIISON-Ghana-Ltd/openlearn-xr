@@ -4,10 +4,10 @@ import * as React from 'react'
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
-import { authClient } from '@/lib/auth-client'
 import useApi from '@/data/hooks/use-api'
 import { CreditCardIcon, SparklesIcon, CheckCircle2Icon } from 'lucide-react'
 import { Skeleton } from '@/components/ui/skeleton'
+import { authClient } from '@/adapters/auth/client'
 
 export function LicenseClient() {
   const { data: activeOrg, isPending: isOrgPending } = authClient.useActiveOrganization()
@@ -69,7 +69,7 @@ export function LicenseClient() {
                   {isSubscribed ? "Billed annually. Next billing date: Jan 1, 2027" : "Free basic access for individuals."}
                 </span>
               </div>
-              
+
               <ul className="mt-6 space-y-2">
                 <li className="flex items-center gap-2 text-sm">
                   <CheckCircle2Icon className="size-4 text-emerald-500" />

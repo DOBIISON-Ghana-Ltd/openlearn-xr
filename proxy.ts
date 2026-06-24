@@ -71,7 +71,9 @@ export async function proxy(request: NextRequest) {
 export const config: ProxyConfig = {
   matcher: [
     "/",
+    "/me",
     "/me/:path*",
+    "/admin",
     "/admin/:path*",
 
     // Auth routes
