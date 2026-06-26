@@ -29,8 +29,8 @@ export default function ClientPage() {
     defaultValues: { email: "", password: "" },
   });
 
-  const registerUrl = nuqs.getUrl("register", { redirect: params.redirect }, ROUTES.REGISTER);
-  const forgotPasswordUrl = nuqs.getUrl("forgotPassword", { redirect: params.redirect }, ROUTES.FORGOT_PASSWORD);
+  const registerUrl = nuqs.getUrl("register", { redirect: params.redirect }, ROUTES.AUTH.REGISTER);
+  const forgotPasswordUrl = nuqs.getUrl("forgotPassword", { redirect: params.redirect }, ROUTES.AUTH.FORGOT_PASSWORD);
 
   const onSubmit = (data: IForm) => {
     login({ ...data, redirect: params.redirect }, {
@@ -43,7 +43,7 @@ export default function ClientPage() {
       onError: (err) => {
         const msg = err.message?.toLowerCase() ?? "";
         if (msg.includes("verif") || msg.includes("not_verified")) {
-          router.push(`${ROUTES.VERIFY_EMAIL}?email=${encodeURIComponent(getValues("email"))}`);
+          router.push(`${ROUTES.AUTH.VERIFY_EMAIL}?email=${encodeURIComponent(getValues("email"))}`);
         }
         //if login error show sonner toast invalid password
         if (msg.includes("password")) {

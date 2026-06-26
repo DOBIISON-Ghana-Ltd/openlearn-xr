@@ -91,7 +91,7 @@ const publicLogin = {
     const { error } = await authClient.signIn.email({
       email: body.email,
       password: body.password,
-      callbackURL: body.redirect || ROUTES.APP.DASHBOARD
+      callbackURL: body.redirect || ROUTES.SIMS.DASHBOARD
     });
     if (error) throw new Error(error.message);
 

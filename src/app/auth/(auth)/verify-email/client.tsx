@@ -35,7 +35,7 @@ export default function ClientPage() {
   const onSubmit = (data: IForm) => {
     verifyOtp(data, {
       onSuccess: () => {
-        const url = nuqs.getUrl("login", { redirect: params.redirect }, ROUTES.LOGIN);
+        const url = nuqs.getUrl("login", { redirect: params.redirect }, ROUTES.AUTH.LOGIN);
         router.replace(url);
       },
       onError: (err) => {
@@ -61,7 +61,7 @@ export default function ClientPage() {
 
   useEffect(() => {
     if (!params.email) {
-      const url = nuqs.getUrl("login", { redirect: params.redirect }, ROUTES.LOGIN);
+      const url = nuqs.getUrl("login", { redirect: params.redirect }, ROUTES.AUTH.LOGIN);
       router.replace(url);
     }
   }, [params, router]);
@@ -95,7 +95,7 @@ export default function ClientPage() {
 
       <p className="text-center text-sm text-muted-foreground">
         Back to{" "}
-        <Link href={ROUTES.LOGIN} className="underline text-primary hover:text-primary/80 font-medium transition-colors">
+        <Link href={ROUTES.AUTH.LOGIN} className="underline text-primary hover:text-primary/80 font-medium transition-colors">
           Sign in
         </Link>
       </p>

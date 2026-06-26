@@ -1,6 +1,5 @@
 import Hero from './hero'
 import CurriculumModules from './curriculum-modules'
-import DPGStrategy from './dpg-strategy'
 import Pricing from './pricing'
 
 export const metadata = {
@@ -14,7 +13,6 @@ export default function LandingPage() {
     <div className="flex flex-col min-h-screen">
       <Hero />
       <CurriculumModules />
-      <DPGStrategy />
       <Pricing />
     </div>
   )

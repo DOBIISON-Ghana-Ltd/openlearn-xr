@@ -132,7 +132,7 @@ export default function ClientPage() {
           type: "success"
         });
         await authClient.getSession();
-        router.push(params.redirect || ROUTES.APP.DASHBOARD);
+        router.push(params.redirect || ROUTES.SIMS.DASHBOARD);
         clearStore();
       },
       onError: (err) => {

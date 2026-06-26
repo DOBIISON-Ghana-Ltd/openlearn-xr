@@ -24,7 +24,7 @@ export default function ClientPage() {
   const [params] = nuqs.getStates("register");
   const router = useRouter();
   const { mutate, isPending } = useApi.mutate("public:user:register");
-  const loginUrl = nuqs.getUrl("login", { redirect: params.redirect }, ROUTES.LOGIN);
+  const loginUrl = nuqs.getUrl("login", { redirect: params.redirect }, ROUTES.AUTH.LOGIN);
 
   const { handleSubmit, control } = useForm<IForm>({
     resolver: zodResolver(ZForm),
@@ -43,7 +43,7 @@ export default function ClientPage() {
         const url = nuqs.getUrl(
           "verifyEmail",
           { email: data.email, redirect: params.redirect },
-          ROUTES.VERIFY_EMAIL
+          ROUTES.AUTH.VERIFY_EMAIL
         );
         router.push(url);
       },

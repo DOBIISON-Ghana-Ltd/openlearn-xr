@@ -23,7 +23,7 @@ export default function ClientPage() {
   const [params] = nuqs.getStates("resetPassword");
   const { mutate: resetPassword, isPending } = useApi.mutate("public:user:reset-password");
 
-  const loginUrl = nuqs.getUrl("login", { redirect: params.redirect }, ROUTES.LOGIN);
+  const loginUrl = nuqs.getUrl("login", { redirect: params.redirect }, ROUTES.AUTH.LOGIN);
 
   const { handleSubmit, control } = useForm<IForm>({
     resolver: zodResolver(ZForm),
@@ -55,7 +55,7 @@ export default function ClientPage() {
 
   useEffect(() => {
     if (!params.email || !params.otp) {
-      const url = nuqs.getUrl("forgotPassword", { redirect: params.redirect }, ROUTES.FORGOT_PASSWORD);
+      const url = nuqs.getUrl("forgotPassword", { redirect: params.redirect }, ROUTES.AUTH.FORGOT_PASSWORD);
       router.replace(url);
     }
   }, [params, router]);

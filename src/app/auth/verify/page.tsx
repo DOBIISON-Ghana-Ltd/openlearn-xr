@@ -20,13 +20,13 @@ export default function Page() {
       if (session) {
         if (!active) return;
 
-        router.replace(state.redirect || ROUTES.APP.DASHBOARD);
+        router.replace(state.redirect || ROUTES.SIMS.DASHBOARD);
         router.refresh();
       } else {
         await authClient.signOut();
         if (!active) return;
 
-        const redirectUrl = nuqs.getUrl('login', { redirect: state.redirect }, ROUTES.LOGIN);
+        const redirectUrl = nuqs.getUrl('login', { redirect: state.redirect }, ROUTES.AUTH.LOGIN);
         router.replace(redirectUrl);
       }
     };

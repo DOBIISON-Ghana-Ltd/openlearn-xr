@@ -30,7 +30,7 @@ export default function ClientPage() {
   const { mutate: sendOtp, isPending: IPSendOtp } = useApi.mutate("public:user:send-otp");
   const { mutate: checkOtp, isPending: IPCheckOtp } = useApi.mutate("public:user:check-otp");
 
-  const loginUrl = nuqs.getUrl("login", { redirect: params.redirect }, ROUTES.LOGIN);
+  const loginUrl = nuqs.getUrl("login", { redirect: params.redirect }, ROUTES.AUTH.LOGIN);
 
   const sendForm = useForm<ISendForm>({
     resolver: zodResolver(ZSendForm),
@@ -70,7 +70,7 @@ export default function ClientPage() {
           email: data.email,
           otp: data.otp,
           redirect: params.redirect,
-        }, ROUTES.RESET_PASSWORD);
+        }, ROUTES.AUTH.RESET_PASSWORD);
         router.push(url);
       },
       onError: (err) => {
