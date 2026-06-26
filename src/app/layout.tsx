@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Inter } from "next/font/google";
+import { Geist, Geist_Mono, Inter, Google_Sans_Flex, Google_Sans_Code } from "next/font/google";
 import { cn } from "@/lib/utils/cn";
 import "./globals.css";
 import Providers from "@/components/common/providers";
 
-const inter = Inter({ subsets: ['latin'], variable: '--font-sans' });
-const interHeading = Inter({ subsets: ['latin'], variable: '--font-heading' });
-const geistMono = Geist_Mono({ subsets: ['latin'], variable: '--font-mono' });
+const sans = Google_Sans_Flex({ subsets: ['latin'], variable: '--font-sans', adjustFontFallback: false });
+const heading = Google_Sans_Flex({ subsets: ['latin'], variable: '--font-heading', adjustFontFallback: false });
+const mono = Geist_Mono({ subsets: ['latin'], variable: '--font-mono' });
 
 export const metadata: Metadata = {
   title: {
@@ -21,14 +21,14 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
     <html
       lang="en"
       suppressHydrationWarning
-      className={cn("h-full", "antialiased", "font-sans", inter.variable, interHeading.variable, geistMono.variable)}
+      className={cn("h-full", "antialiased", "font-sans", sans.variable, heading.variable, mono.variable)}
     >
       <body className="relative">
-        <div className="isolate relative flex min-h-svh flex-col">
-          <Providers>
+        <Providers>
+          <div className="isolate relative flex min-h-svh flex-col">
             {children}
-          </Providers>
-        </div>
+          </div>
+        </Providers>
       </body>
     </html>
   );

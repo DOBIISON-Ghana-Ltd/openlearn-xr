@@ -37,6 +37,9 @@ const parsers = {
     q:    parseAsString.withDefault(''),
     page: parseAsString.withDefault('1'),
   },
+  library: {
+    book: parseAsString.withDefault('')
+  },
   page: paginationPage
 } as const
 
@@ -75,7 +78,7 @@ export const nuqs = {
     route?: string
   ): string {
     return createSerializer(parsers[key])(
-      route || ROUTES.APP.DASHBOARD, 
+      route || ROUTES.SIMS.DASHBOARD, 
       data as any
     )
   },

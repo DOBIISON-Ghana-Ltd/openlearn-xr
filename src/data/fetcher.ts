@@ -37,7 +37,7 @@ async function fetcher<TData>(
 
     return safeRes.data;
   } catch (e: any) {
-    logger.error("API Wrapper Error:", e.message);
+    // logger.error("API Wrapper Error:", e.message);
     if (e instanceof ApiError) throw e;
 
     if (e instanceof z.ZodError) {

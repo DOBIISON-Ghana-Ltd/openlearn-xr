@@ -70,7 +70,7 @@ export const auth = betterAuth({
 
             if (owner) {
               const { default: slugify } = await import('@sindresorhus/slugify');
-              const orgName = `${owner.name}'s Organization`;
+              const orgName = `${owner.name}'s Org`;
               const baseSlug = slugify(orgName);
               const uniqueSlug = `${baseSlug}-${nanoid(6)}`;
 
@@ -101,7 +101,7 @@ export const auth = betterAuth({
         admin: adminRole,
       },
       defaultRole: 'user',
-      adminRoles: ['admin'],
+      adminRoles: ['admin']
     }),
     organization(),
     emailOTP({

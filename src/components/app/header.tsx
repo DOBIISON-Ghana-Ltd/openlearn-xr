@@ -8,8 +8,8 @@ import { ROUTES } from '@/lib/constants/routes'
 import { Button } from '@/components/ui/button'
 
 const NAV_LINKS = [
-  { label: 'Library', href: ROUTES.LIBRARY.ROOT },
-  { label: 'Modules', href: ROUTES.MODULES },
+  { label: 'Library', href: ROUTES.SIMS.LIBRARY.ROOT },
+  { label: 'Modules', href: ROUTES.SIMS.MODULES },
   { label: 'Licensing', href: ROUTES.LICENSING },
 ]
 
@@ -46,7 +46,7 @@ export default function Header() {
 
         {/* Right: CTA & Mobile Toggle */}
         <div className="flex items-center gap-4">
-          <Button render={<Link href={ROUTES.PLAY('session')} />} className="hidden sm:inline-flex rounded-full">
+          <Button render={<Link href={ROUTES.SIMS.PLAY('session')} />} className="hidden sm:inline-flex rounded-full">
             Play Session
           </Button>
 
@@ -76,7 +76,7 @@ export default function Header() {
             ))}
           </nav>
           <div className="pt-4 border-t">
-            <Button render={<Link href={ROUTES.PLAY('session')} />} className="w-full rounded-full" onClick={() => setIsMobileMenuOpen(false)}>
+            <Button render={<Link href={ROUTES.SIMS.PLAY('session')} />} className="w-full rounded-full" onClick={() => setIsMobileMenuOpen(false)}>
               Play Session
             </Button>
           </div>

@@ -1,16 +1,8 @@
 export const ROUTES = {
   // MARKETING ROUTES
   HOME: '/',
-  LIBRARY: {
-    ROOT: '/library',
-    ONE: (id: string) => `/library/${id}`
-  },
-
-  MODULES: '/modules',
-
   LICENSING: '/licensing',
   CONTACT: '/contact',
-  PLAY: (mode: string, id?: string) => `/play/${mode}/${id}`,
   LEGAL: {
     TERMS: '/legal/terms',
     PRIVACY: '/legal/privacy',
@@ -18,27 +10,42 @@ export const ROUTES = {
   },
 
   // AUTH ROUTES
-  LOGIN: '/login',
-  REGISTER: '/register',
-  FORGOT_PASSWORD: '/forgot-password',
-  RESET_PASSWORD: '/reset-password',
-  VERIFY_EMAIL: '/verify-email',
-  ONBOARDING: '/onboarding',
-
-  // APP ROUTES
-  APP: {
-    DASHBOARD: '/me',
-    MY_PLAYS: '/me/my-plays',
-    EDITOR: '/me/editor',
-    SESSIONS: '/me/sessions',
-    LICENSE: '/me/license',
+  AUTH: {
+    LOGIN: '/auth/login',
+    REGISTER: '/auth/register',
+    FORGOT_PASSWORD: '/auth/forgot-password',
+    RESET_PASSWORD: '/auth/reset-password',
+    VERIFY_EMAIL: '/auth/verify-email',
+    ONBOARDING: '/auth/onboarding',
   },
 
-  // ADMIN ROUTES
+  // SIMULATION SUITE (App Routes)
+  SIMS: {
+    DASHBOARD: '/app',
+    LIBRARY: {
+      ROOT: '/app/library',
+      ONE: (id: string) => `/app/library/${id}`
+    },
+    MODULES: '/app/modules',
+    PLAY: (mode: string, id?: string) => `/app/play/${mode}/${id}`,
+    JOIN: '/app/join',
+  },
+
+  // EDITOR SUITE
+  EDITOR: {
+    DASHBOARD: '/app/editor',
+  },
+
+  // SESSION SUITE
+  SESSION: {
+    DASHBOARD: '/app/session',
+  },
+
+  // ADMIN SUITE
   ADMIN: {
-    DASHBOARD: '/admin',
-    ANALYTICS: '/admin/analytics',
-    MODULES: '/admin/modules',
-    USERS: '/admin/users',
+    DASHBOARD: '/app/admin',
+    ANALYTICS: '/app/admin/analytics',
+    MODULES: '/app/admin/modules',
+    USERS: '/app/admin/users',
   },
 } as const;
