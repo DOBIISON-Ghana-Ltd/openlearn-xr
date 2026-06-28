@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Inter, Google_Sans_Flex, Google_Sans_Code } from "next/font/google";
+import localFont from 'next/font/local';
+import { Geist_Mono } from "next/font/google";
 import { cn } from "@/lib/utils/cn";
 import "./globals.css";
 import Providers from "@/components/common/providers";
 
-const sans = Google_Sans_Flex({ subsets: ['latin'], variable: '--font-sans', adjustFontFallback: false });
-const heading = Google_Sans_Flex({ subsets: ['latin'], variable: '--font-heading', adjustFontFallback: false });
+const sans = localFont({ src: './fonts/GoogleSansFlex.ttf', variable: '--font-sans' });
+const heading = localFont({ src: './fonts/GoogleSansFlex.ttf', variable: '--font-heading', weight: '700' });
 const mono = Geist_Mono({ subsets: ['latin'], variable: '--font-mono' });
 
 export const metadata: Metadata = {
