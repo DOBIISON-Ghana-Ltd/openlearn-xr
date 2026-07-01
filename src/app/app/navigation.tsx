@@ -14,7 +14,7 @@ const links = [
 export default function Navigation() {
   return (
     <aside className="sticky left-0 top-8 w-12 self-start h-[calc(100dvh-(--spacing(14)))] z-40 overflow-y-auto border-r bg-background flex flex-col justify-between">
-      <TooltipProvider>
+      <TooltipProvider delay={0}>
         <ul className="space-y-1">
           {links.map((link) => (
             <li key={link.label} className="w-full aspect-square">
@@ -29,13 +29,7 @@ export default function Navigation() {
         </ul>
         <div>
           <Tooltip>
-            <TooltipTrigger className="group w-full aspect-square flex-center">
-              <div className="size-7 rounded-full bg-red-400"></div>
-            </TooltipTrigger>
-            <TooltipPopup side="right">Organization</TooltipPopup>
-          </Tooltip>
-          <Tooltip>
-            <TooltipTrigger render={<Link href="/app/profile" />} className="group aspect-square flex-center">
+            <TooltipTrigger className="group aspect-square flex-center">
               <CircleUserRoundIcon strokeWidth={1.5} className="size-7 text-muted-foreground group-hover:text-foreground" />
             </TooltipTrigger>
             <TooltipPopup side="right">Profile</TooltipPopup>

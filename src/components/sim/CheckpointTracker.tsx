@@ -2,13 +2,116 @@
 
 import { cn } from '@/lib/utils/cn';
 import type { SimCheckpointDef } from '@/lib/constants/sims';
-import { useSimStore } from '@/store/play/store';
-import { CheckCircle2, Circle, XCircle } from 'lucide-react';
+import { useSimStore, type CheckpointState } from '@/store/play/store';
+import { CheckCircle2, ChevronLeftIcon, ChevronRightIcon, Circle, XCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+
+// ─────────────────────────────────────────────
+// Sub-component: Progress bar strip
+// ─────────────────────────────────────────────
+
+interface CheckpointProgressBarsProps {
+  checkpoints: SimCheckpointDef[];
+  checkpointStates: Record<string, CheckpointState>;
+}
+
+function CheckpointProgressBars({
+  checkpoints,
+  checkpointStates,
+}: CheckpointProgressBarsProps) {
+  return (
+    <div className="flex gap-px h-5">
+      {checkpoints.map((cp) => {
+        const state = checkpointStates[cp.id];
+        const isCompleted = state?.status === 'completed';
+        const isCorrect = state?.isCorrect;
+
+        const colorClass = isCompleted
+          ? isCorrect
+            ? 'bg-green-500'
+            : 'bg-red-500'
+          : 'bg-muted';
+
+        return (
+          <div key={cp.id} className={cn('w-1 h-4 rounded-full transition-colors', colorClass)} />
+        );
+      })}
+    </div>
+  );
+}
+
+// ─────────────────────────────────────────────
+// Sub-component: Single option button
+// ─────────────────────────────────────────────
+
+interface CheckpointOptionProps {
+  option: string;
+  isCompleted: boolean;
+  selectedAnswer: string | null;
+  correctAnswer: string;
+  onSelect: () => void;
+}
+
+function CheckpointOption({
+  option,
+  isCompleted,
+  selectedAnswer,
+  correctAnswer,
+  onSelect,
+}: CheckpointOptionProps) {
+  const isSelected = isCompleted && selectedAnswer === option;
+  const isCorrectOption = option === correctAnswer;
+
+  // Visual state resolution
+  let containerClass: string;
+  let iconEl: React.ReactNode;
+
+  if (isSelected && isCorrectOption) {
+    // Answered: correct
+    containerClass =
+      'border-green-500 bg-green-500/10 cursor-default';
+    iconEl = <CheckCircle2 className="size-3.5 shrink-0 text-green-500" />;
+  } else if (isSelected && !isCorrectOption) {
+    // Answered: wrong
+    containerClass =
+      'border-red-500 bg-red-500/10 cursor-default';
+    iconEl = <XCircle className="size-3.5 shrink-0 text-red-500" />;
+  } else if (isCompleted) {
+    // Completed but not this option — neutral/disabled
+    containerClass =
+      'border-border bg-muted/30 opacity-60 cursor-default';
+    iconEl = <Circle className="size-3.5 shrink-0 text-muted-foreground" />;
+  } else {
+    // Default: unanswered, interactive
+    containerClass =
+      'border-border bg-muted/50 hover:bg-muted hover:border-primary/40 transition-colors cursor-pointer';
+    iconEl = <Circle className="size-3.5 shrink-0 text-muted-foreground" />;
+  }
+
+  return (
+    <button
+      onClick={isCompleted ? undefined : onSelect}
+      disabled={isCompleted}
+      className={cn(
+        'w-full flex items-center gap-2 text-left text-xs-m px-3 py-2 rounded-none border',
+        containerClass
+      )}
+    >
+      {iconEl}
+      <span>{option}</span>
+    </button>
+  );
+}
+
+// ─────────────────────────────────────────────
+// Main export: CheckpointTracker
+// ─────────────────────────────────────────────
 
 interface CheckpointTrackerProps {
   checkpoints: SimCheckpointDef[];
 }
+
+const EMPTY_CHECKPOINTS: Record<string, CheckpointState> = {};
 
 export function CheckpointTracker({ checkpoints }: CheckpointTrackerProps) {
   const activeSessionId = useSimStore((s) => s.activeSessionId);
@@ -16,7 +119,7 @@ export function CheckpointTracker({ checkpoints }: CheckpointTrackerProps) {
     (s) => s.sessions[s.activeSessionId ?? '']?.activeCheckpointId
   );
   const checkpointStates = useSimStore(
-    (s) => s.sessions[s.activeSessionId ?? '']?.checkpoints ?? {}
+    (s) => s.sessions[s.activeSessionId ?? '']?.checkpoints ?? EMPTY_CHECKPOINTS
   );
   const setActiveCheckpoint = useSimStore((s) => s.setActiveCheckpoint);
   const submitCheckpoint = useSimStore((s) => s.submitCheckpoint);
@@ -36,101 +139,55 @@ export function CheckpointTracker({ checkpoints }: CheckpointTrackerProps) {
   const isCompleted = cpState?.status === 'completed';
 
   return (
-    <div className="flex flex-col h-full">
-      {/* Progress rail */}
-      <div className="flex items-center gap-1 px-4 pt-2 pb-2 border-b">
-        {checkpoints.map((cp, i) => {
-          const state = checkpointStates[cp.id];
-          const isActive = cp.id === activeCheckpointId;
-          return (
-            <button
-              key={cp.id}
-              onClick={() => setActiveCheckpoint(cp.id)}
-              title={cp.title}
-              className={cn(
-                'flex items-center justify-center w-6 h-6 rounded-full transition-all text-[10px] font-bold border',
-                isActive && 'ring-2 ring-primary ring-offset-1',
-                state?.status === 'completed' && state.isCorrect
-                  ? 'bg-green-500/20 border-green-500 text-green-600'
-                  : state?.status === 'completed' && !state.isCorrect
-                    ? 'bg-red-500/20 border-red-500 text-red-600'
-                    : 'bg-muted border-border text-muted-foreground'
-              )}
-            >
-              {state?.status === 'completed' ? (
-                state.isCorrect ? <CheckCircle2 className="w-3 h-3" /> : <XCircle className="w-3 h-3" />
-              ) : (
-                i + 1
-              )}
-            </button>
-          );
-        })}
-        <span className="ml-auto text-[10px] text-muted-foreground tabular-nums">
-          {Object.values(checkpointStates).filter((s) => s.status === 'completed').length}/{checkpoints.length}
-        </span>
-      </div>
-
-      {/* Active checkpoint card */}
-      <div className="flex-1 overflow-y-auto p-4 space-y-3">
-        <div>
-          <p className="text-[10px] uppercase tracking-widest text-muted-foreground font-medium">
-            Checkpoint {activeIndex + 1} · {activeCP.points} pts
-          </p>
-          <p className="text-sm font-semibold leading-snug mt-0.5">{activeCP.title}</p>
-          <p className="text-xs text-muted-foreground mt-1">{activeCP.description}</p>
+    <div className="h-full flex flex-col">
+      {/* Header: label + progress bars + nav */}
+      <div className="h-9 w-full flex items-center justify-between px-4">
+        <div className="flex-center gap-2">
+          <h4 className="text-xs-m text-muted-foreground font-medium uppercase">Checkpoints</h4>
+          <CheckpointProgressBars
+            checkpoints={checkpoints}
+            checkpointStates={checkpointStates}
+          />
         </div>
-
-        <p className="text-xs font-medium">{activeCP.question}</p>
-
-        {/* Answer options */}
-        {!isCompleted ? (
-          <div className="space-y-1.5">
-            {activeCP.options.map((opt) => (
-              <button
-                key={opt}
-                onClick={() => submitCheckpoint(activeCP.id, opt, opt === activeCP.correctAnswer)}
-                className="w-full text-left text-xs px-3 py-2 rounded-md border border-border bg-muted/50 hover:bg-muted hover:border-primary/40 transition-colors"
-              >
-                {opt}
-              </button>
-            ))}
-          </div>
-        ) : (
-          <div
-            className={cn(
-              'rounded-md px-3 py-2.5 text-xs font-medium border',
-              cpState.isCorrect
-                ? 'bg-green-500/10 border-green-500/30 text-green-700 dark:text-green-400'
-                : 'bg-red-500/10 border-red-500/30 text-red-700 dark:text-red-400'
-            )}
-          >
-            {cpState.isCorrect ? '✓ Correct!' : `✗ Incorrect. The answer is: ${activeCP.correctAnswer}`}
-          </div>
-        )}
-      </div>
-
-      {/* Navigation */}
-      <div className="flex gap-2 px-4 py-2 border-t">
-        {activeIndex > 0 && (
+        <div className="flex-center gap-2">
           <Button
             variant="outline"
-            size="sm"
-            className="text-xs h-7"
+            size="icon-xs"
+            className="rounded-full"
+            disabled={activeIndex <= 0}
             onClick={() => setActiveCheckpoint(checkpoints[activeIndex - 1].id)}
           >
-            Previous
+            <ChevronLeftIcon />
           </Button>
-        )}
-        {activeIndex < checkpoints.length - 1 && (
           <Button
             variant="outline"
-            size="sm"
-            className="text-xs h-7 ml-auto"
+            size="icon-xs"
+            className="rounded-full"
+            disabled={activeIndex >= checkpoints.length - 1}
             onClick={() => setActiveCheckpoint(checkpoints[activeIndex + 1].id)}
           >
-            Next
+            <ChevronRightIcon />
           </Button>
-        )}
+        </div>
+      </div>
+
+      {/* Body: question + options */}
+      <div className="flex-1 flex flex-col px-4 py-2 space-y-2">
+        <div className="flex-1 pt-4">
+          <p className="text-xl text-muted-foreground font-light">{activeCP.question}</p>
+        </div>
+        <div className="grid grid-cols-2 gap-2">
+          {activeCP.options.map((opt) => (
+            <CheckpointOption
+              key={opt}
+              option={opt}
+              isCompleted={isCompleted}
+              selectedAnswer={cpState?.selectedAnswer ?? null}
+              correctAnswer={activeCP.correctAnswer}
+              onSelect={() => submitCheckpoint(activeCP.id, opt, opt === activeCP.correctAnswer)}
+            />
+          ))}
+        </div>
       </div>
     </div>
   );

@@ -1,28 +1,57 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useParams } from 'next/navigation';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Button } from '@/components/ui/button';
-import { RotateCcw, AlertTriangle } from 'lucide-react';
-import { authClient } from '@/adapters/auth/client';
+import { RotateCcw, AlertTriangle, Loader2 } from 'lucide-react';
+import { useStableUserId } from '@/hooks/use-stable-user-id';
 import { MOCK_SIMS } from '@/lib/constants/sims';
 import { useSimStore } from '@/store/play/store';
 import { SimulationRenderer } from '@/components/sim/SimulationRenderer';
 import { DynamicControls } from '@/components/sim/control-blocks/DynamicControls';
 import { CheckpointTracker } from '@/components/sim/CheckpointTracker';
+import { SIM_LOADERS } from '@/components/sim/SimRegistry';
+import useApi from '@/data/hooks/use-api';
 
 export default function PlayPage() {
   const params = useParams();
   const id = params?.id as string;
-
-  const { data: session } = authClient.useSession();
-  const userId = session?.user?.id;
+  const { data } = useApi.query('public:user:get:me');
+  const userId = useStableUserId(data?.id ?? undefined);
 
   const initSession = useSimStore((s) => s.initSession);
-  const resetSession = useSimStore((s) => s.resetSession);
 
   const sim = MOCK_SIMS.find((s) => s.id === id);
+
+  const [SimComponent, setSimComponent] = useState<React.ComponentType<any> | null>(null);
+  const [isLoadingComponent, setIsLoadingComponent] = useState(true);
+
+  // Load the component
+  useEffect(() => {
+    if (!sim) {
+      setIsLoadingComponent(false);
+      return;
+    }
+    const loader = SIM_LOADERS[sim.componentKey];
+    if (loader) {
+      setIsLoadingComponent(true);
+      loader()
+        .then((mod) => {
+          setSimComponent(() => mod.default);
+        })
+        .catch((err) => {
+          console.error("Failed to load simulation component:", err);
+          setSimComponent(null);
+        })
+        .finally(() => {
+          setIsLoadingComponent(false);
+        });
+    } else {
+      setSimComponent(null);
+      setIsLoadingComponent(false);
+    }
+  }, [sim]);
 
   // Build initial control values map from sim definition
   const defaultControls = sim
@@ -38,12 +67,23 @@ export default function PlayPage() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userId, sim?.id]);
 
-  // ── Not Found ─────────────────────────────────────────────────────────────
-  if (!sim) {
+  // ── Full Page Loading ─────────────────────────────────────────────────────
+  if (isLoadingComponent || !userId) {
     return (
-      <div className="size-full flex flex-col items-center justify-center gap-3 text-muted-foreground">
-        <AlertTriangle className="w-8 h-8 text-yellow-500" />
-        <p className="text-sm font-medium">Simulation not found</p>
+      <div className="size-full flex flex-col items-center justify-center gap-3 text-muted-foreground bg-background">
+        <Loader2 className="w-8 h-8 animate-spin text-primary" />
+        <p className="text-sm font-medium">Loading simulation lab...</p>
+      </div>
+    );
+  }
+
+  // ── Full Page Not Found ───────────────────────────────────────────────────
+  if (!sim || !SimComponent) {
+    return (
+      <div className="size-full flex flex-col items-center justify-center gap-3 text-muted-foreground bg-background">
+        <AlertTriangle className="w-10 h-10 text-yellow-500" />
+        <p className="text-base font-medium">Simulation not found</p>
+        <p className="text-xs opacity-60">The requested simulation could not be loaded.</p>
         <p className="text-xs opacity-60">ID: <code>{id}</code></p>
       </div>
     );
@@ -56,50 +96,22 @@ export default function PlayPage() {
 
         {/* SIMULATION CANVAS */}
         <div className="flex-1 bg-muted overflow-hidden">
-          <SimulationRenderer componentKey={sim.componentKey} />
+          <SimulationRenderer camera={sim.camera}>
+            <SimComponent />
+          </SimulationRenderer>
         </div>
 
         {/* CHECKPOINTS + CONTROLS CONTAINER */}
-        <div className="w-full bg-background border-t shrink-0">
+        <div className="flex w-full h-56 bg-background border-t shrink-0">
 
-          {/* TOP BAR — actions strip */}
-          <div className="w-full h-9 flex items-center px-3 gap-2 border-b">
-            <span className="text-xs font-medium text-muted-foreground truncate">
-              {sim.title}
-            </span>
-            <div className="ml-auto flex items-center gap-1">
-              <Button
-                variant="ghost"
-                size="icon"
-                className="h-7 w-7"
-                title="Reset simulation"
-                onClick={() => resetSession(defaultControls, checkpointIds)}
-              >
-                <RotateCcw className="w-3.5 h-3.5" />
-              </Button>
-            </div>
+          {/* CHECKPOINTS */}
+          <div className="flex-1 border-r overflow-hidden">
+            <CheckpointTracker checkpoints={sim.checkpoints} />
           </div>
 
-          {/* BOTTOM PANELS */}
-          <div className="flex w-full h-52 border-t">
-
-            {/* CHECKPOINTS */}
-            <div className="flex-1 border-r overflow-hidden">
-              <CheckpointTracker checkpoints={sim.checkpoints} />
-            </div>
-
-            {/* CONTROLS */}
-            <div className="flex-1 overflow-hidden">
-              <ScrollArea className="h-full">
-                <div className="p-4">
-                  <p className="text-[10px] uppercase tracking-widest text-muted-foreground font-medium mb-3">
-                    Controls
-                  </p>
-                  <DynamicControls controls={sim.controls} />
-                </div>
-              </ScrollArea>
-            </div>
-
+          {/* CONTROLS */}
+          <div className="flex-1 overflow-hidden">
+            <DynamicControls controls={sim.controls} />
           </div>
         </div>
 

@@ -1,48 +1,41 @@
 'use client';
 
-import dynamic from 'next/dynamic';
-import { Loader2 } from 'lucide-react';
-
-// ── Sim Registry ──────────────────────────────────────────────────────────────
-// Add new sims here as they're built. Each is lazy-loaded only when needed.
-const SIM_MAP: Record<string, React.ComponentType> = {
-  PressureDepthSim: dynamic(() => import('./PressureDepthSim'), {
-    ssr: false,
-    loading: () => <SimLoader />,
-  }),
-};
-
-// ── Loader ───────────────────────────────────────────────────────────────────
-function SimLoader() {
-  return (
-    <div className="flex flex-col items-center justify-center size-full gap-3 text-muted-foreground">
-      <Loader2 className="w-8 h-8 animate-spin" />
-      <p className="text-sm">Loading simulation...</p>
-    </div>
-  );
-}
-
-// ── Not Found ────────────────────────────────────────────────────────────────
-function SimNotFound({ componentKey }: { componentKey: string }) {
-  return (
-    <div className="flex flex-col items-center justify-center size-full gap-2 text-muted-foreground">
-      <p className="text-sm font-medium">Simulation not found</p>
-      <p className="text-xs opacity-60">key: <code>{componentKey}</code></p>
-    </div>
-  );
-}
+import { Suspense } from 'react';
+import { Canvas } from '@react-three/fiber';
+import { OrbitControls } from '@react-three/drei';
+import * as THREE from 'three';
 
 // ── Exported Renderer ─────────────────────────────────────────────────────────
 interface SimulationRendererProps {
-  componentKey: string;
+  children: React.ReactNode;
+  camera?: any;
 }
 
-export function SimulationRenderer({ componentKey }: SimulationRendererProps) {
-  const SimComponent = SIM_MAP[componentKey];
-
-  if (!SimComponent) {
-    return <SimNotFound componentKey={componentKey} />;
-  }
-
-  return <SimComponent />;
+export function SimulationRenderer({ children, camera }: SimulationRendererProps) {
+  return (
+    <Canvas
+      camera={camera}
+      style={{ background: 'transparent' }}
+      shadows={{ type: THREE.PCFShadowMap }}
+    >
+      <Suspense fallback={null}>
+        <OrbitControls
+          enablePan={true}
+          enableZoom={true}
+          screenSpacePanning={false}
+          minDistance={3}
+          maxDistance={25}
+          maxPolarAngle={Math.PI / 2 - 0.1}
+          makeDefault
+        />
+        <color attach="background" args={['#f3f3f3']} />
+        {/* Soft, transparent floor plane to catch shadows without affecting the background color */}
+        <mesh position={[0, -0.02, 0]} rotation={[-Math.PI / 2, 0, 0]} receiveShadow>
+          <planeGeometry args={[200, 200]} />
+          <shadowMaterial transparent opacity={0.2} />
+        </mesh>
+        {children}
+      </Suspense>
+    </Canvas>
+  );
 }
