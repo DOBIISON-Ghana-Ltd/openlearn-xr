@@ -1,8 +1,11 @@
 import ZUser from "@/data/modules/user/user.schema";
 import { JSend } from "@/lib/utils/jsend";
 import { secureApiRoute } from "@/lib/utils/secure-api-route";
+import { getActiveOrgSubscription } from "@/lib/actions/get-active-org-subscription";
 
 export const GET = secureApiRoute(async (req, ctx, user, session) => {
+  const subscriptionTier = await getActiveOrgSubscription(session.activeOrganizationId);
+
   const res = ZUser.PublicUserGetMe.shape.res.parse({
     id: user.id,
     name: user.name,
@@ -12,9 +15,9 @@ export const GET = secureApiRoute(async (req, ctx, user, session) => {
     avatar: user.avatar,
     onboarded: user.onboarded,
     createdAt: user.createdAt.toISOString(),
-    activeOrganizationId: session.activeOrganizationId
+    activeOrganizationId: session.activeOrganizationId,
+    subscriptionTier
   });
-  console.log(user, session)
 
   return JSend.success(res);
 });

@@ -97,11 +97,6 @@ export async function proxy(request: NextRequest) {
       if (isEditorSuite && !roles.includes("admin") && !roles.includes("editor")) {
         return NextResponse.redirect(new URL("/not-found", request.url));
       }
-
-      if (isSessionSuite && subscriptionTier === "free") {
-        // Only non-free subscription tiers are allowed
-        return NextResponse.redirect(new URL("/not-found", request.url));
-      }
     }
   }
 

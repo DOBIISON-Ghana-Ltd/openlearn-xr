@@ -18,7 +18,8 @@ const PublicUserGetMe = ZApi({
   }).extend({
     ...ZSession.pick({
       activeOrganizationId: true
-    }).shape
+    }).shape,
+    subscriptionTier: z.string()
   })
 });
 

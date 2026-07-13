@@ -6,7 +6,7 @@ import prisma from '@/adapters/db/client'
 import { ac, admin as adminRole, editor, user } from './permissions'
 import { nextCookies } from 'better-auth/next-js'
 import { env } from '@/lib/config/env'
-import { provisionDefaultOrg } from './actions/provision-default-org'
+import { getInitialOrganization } from '@/lib/actions/get-initial-organization'
 
 export const auth = betterAuth({
   database: prismaAdapter(prisma, { provider: 'postgresql' }),
@@ -55,7 +55,15 @@ export const auth = betterAuth({
   databaseHooks: {
     session: {
       create: {
-        after: provisionDefaultOrg
+        before: async (session) => {
+          const orgId = await getInitialOrganization(session.userId);
+          return {
+            data: {
+              ...session,
+              activeOrganizationId: orgId,
+            },
+          };
+        }
       }
     }
   },
