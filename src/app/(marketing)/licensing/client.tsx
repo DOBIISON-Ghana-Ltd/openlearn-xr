@@ -298,7 +298,7 @@ export default function LicensingClient() {
       {/* ------------------------------------------------------------------ */}
       <section className="py-20 border-t border-border/50">
         <div className="mx-auto max-w-4xl px-6">
-          <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-emerald-600 to-emerald-800 px-8 py-16 text-center shadow-2xl">
+          <div className="relative overflow-hidden rounded-3xl bg-linear-to-br from-emerald-600 to-emerald-800 px-8 py-16 text-center shadow-2xl">
             {/* Decorative circles */}
             <div className="pointer-events-none absolute -top-12 -right-12 size-48 rounded-full bg-white/5" />
             <div className="pointer-events-none absolute -bottom-16 -left-16 size-64 rounded-full bg-white/5" />
@@ -322,7 +322,7 @@ export default function LicensingClient() {
                 <Button
                   render={<Link href={CONTACT_HREF} />}
                   variant="outline"
-                  className="h-11 px-8 rounded-full border-white/40 text-white hover:bg-white/10 hover:text-white"
+                  className="h-11 px-8 rounded-full border-white/40 text-emerald-700 hover:bg-white/10 hover:text-white"
                 >
                   Book a Demo
                 </Button>

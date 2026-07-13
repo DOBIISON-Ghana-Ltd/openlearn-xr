@@ -1,7 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { cookies } from 'next/headers'
+import { apiHandler } from '@/lib/utils/api-handler'
 
-export async function GET(request: NextRequest) {
+export const GET = apiHandler(async (request: NextRequest) => {
   // Option 1: Log from NextRequest
   console.log('--- COOKIES FROM NEXTREQUEST ---')
   console.log(request.cookies.getAll())
@@ -17,4 +18,4 @@ export async function GET(request: NextRequest) {
   response.cookies.delete('better-auth.session_data')
 
   return response
-}
+})

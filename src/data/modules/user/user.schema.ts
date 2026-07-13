@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { ZAccount, ZApi, ZMediaFile, ZPassword, ZUser } from "@/data/schema.base";
+import { ZAccount, ZApi, ZMediaFile, ZPassword, ZSession, ZUser } from "@/data/schema.base";
 import { ZOnboardingMetadata } from "@/store/onboarding/schema";
 
 const ZOtpType = z.enum(["email-verification", "sign-in", "forget-password"]);
@@ -15,6 +15,10 @@ const PublicUserGetMe = ZApi({
     avatar: true,
     onboarded: true,
     createdAt: true
+  }).extend({
+    ...ZSession.pick({
+      activeOrganizationId: true
+    }).shape
   })
 });
 

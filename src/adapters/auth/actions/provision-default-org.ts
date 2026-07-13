@@ -4,6 +4,8 @@ import { nanoid } from 'nanoid';
 export const provisionDefaultOrg = async (session: any) => {
   // Only provision a default org if the user doesn't already have one.
   // This fires after every successful sign-in, so the guard is essential.
+  console.log("Provisioning default org for user:", session.userId);
+  
   const existingMember = await prisma.member.findFirst({
     where: { userId: session.userId }
   });

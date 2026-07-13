@@ -1,8 +1,9 @@
+import ZUser from "@/data/modules/user/user.schema";
 import { JSend } from "@/lib/utils/jsend";
 import { secureApiRoute } from "@/lib/utils/secure-api-route";
 
-export const GET = secureApiRoute(async (req, ctx, user) => {
-  return JSend.success({
+export const GET = secureApiRoute(async (req, ctx, user, session) => {
+  const res = ZUser.PublicUserGetMe.shape.res.parse({
     id: user.id,
     name: user.name,
     role: user.role,
@@ -10,8 +11,12 @@ export const GET = secureApiRoute(async (req, ctx, user) => {
     image: user.image,
     avatar: user.avatar,
     onboarded: user.onboarded,
-    createdAt: user.createdAt
+    createdAt: user.createdAt.toISOString(),
+    activeOrganizationId: session.activeOrganizationId
   });
+  console.log(user, session)
+
+  return JSend.success(res);
 });
 
 export const PATCH = secureApiRoute(async (req, ctx, user) => {

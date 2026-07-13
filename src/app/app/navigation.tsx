@@ -1,5 +1,6 @@
 "use client";
 
+import ProfileCenter from "@/components/particles/profile-center";
 import { Tooltip, TooltipPopup, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { ChevronDownIcon, CirclePileIcon, CircleUserRoundIcon, LibraryBigIcon, PencilRulerIcon, UserStarIcon } from "lucide-react";
 import Link from "next/link";
@@ -28,12 +29,7 @@ export default function Navigation() {
           ))}
         </ul>
         <div>
-          <Tooltip>
-            <TooltipTrigger className="group aspect-square flex-center">
-              <CircleUserRoundIcon strokeWidth={1.5} className="size-7 text-muted-foreground group-hover:text-foreground" />
-            </TooltipTrigger>
-            <TooltipPopup side="right">Profile</TooltipPopup>
-          </Tooltip>
+          <ProfileCenter />
         </div>
       </TooltipProvider>
     </aside>

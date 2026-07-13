@@ -18,6 +18,10 @@ const publicGetMe = {
     );
 
     return res;
+  },
+  options: {
+    refetchInterval: 1000 * 60 * 5, // 5 minutes
+    refetchIntervalInBackground: true,
   }
 } satisfies QueryConfig;
 

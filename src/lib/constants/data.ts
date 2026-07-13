@@ -23,7 +23,7 @@ export const books: Book[] = [
     "subject": "Physics",
     "grade": "SHS 1",
     "total": 19,
-    "status": "pending"
+    "status": "active"
   },
   {
     "id": "5Py4ExgOzVVm6Kn3jFA-G",
