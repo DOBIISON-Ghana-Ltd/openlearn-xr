@@ -283,13 +283,28 @@ export const ZMember = z.object({
 export const ZSubscription = z.object({
   id: z.string(),
   organizationId: z.string(),
+  transactionId: z.string().nullable(),
   tier: SubscriptionTierEnum.default("FREE"),
   status: SubscriptionStatusEnum.default("ACTIVE"),
   seats: z.number().int().default(1),
   isUnlimited: z.boolean().default(false),
-  stripeCustomerId: z.string().nullable(),
-  stripeSubId: z.string().nullable(),
+  paystackCustomerCode: z.string().nullable(),
+  paystackSubCode: z.string().nullable(),
   currentPeriodEnd: z.string().nullable(),
+  createdAt: z.string(),
+  updatedAt: z.string(),
+});
+
+export const ZTransaction = z.object({
+  id: z.string(),
+  organizationId: z.string(),
+  userId: z.string().nullable(),
+  reference: z.string(),
+  amount: z.number().int(),
+  currency: z.string().default("GHS"),
+  status: z.string().default("PENDING"),
+  channel: z.string().nullable(),
+  metadata: z.any().nullable(),
   createdAt: z.string(),
   updatedAt: z.string(),
 });
@@ -489,7 +504,7 @@ export const ZAppSetting = z.object({
 
 export const ZEmailLog = z.object({
   id: z.string(),
-  to: z.string().email(),
+  to: z.email(),
   subject: z.string(),
   template: z.string().nullable(),
   status: EmailLogStatusEnum.default("QUEUED"),

@@ -29,9 +29,11 @@ export const getInitialOrganization = async (userId: string) => {
               role: 'owner',
             }
           },
-          subscription: {
+          subscriptions: {
             create: {
-              tier: "FREE"
+              tier: "FREE",
+              status: "ACTIVE",
+              seats: 1
             }
           }
         }

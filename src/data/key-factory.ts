@@ -4,7 +4,12 @@ export const QUERY_KEYS = {
   "public:users": ["public", "users"] as const,
   "admin:users": ["admin", "users"] as const,
   "public:users:get:me": ["public", "users", "me"] as const,
-  "admin:users:get:all": ["admin", "users"] as const
+  "admin:users:get:all": ["admin", "users"] as const,
 
   // MEDIA
+  "public:media:post:one": ["public", "media"] as const,
+
+  // ORG
+  "public:org:get:active": ["public", "org", "active"] as const,
+  "public:org:get:all": ["public", "org", "all"] as const
 } as const

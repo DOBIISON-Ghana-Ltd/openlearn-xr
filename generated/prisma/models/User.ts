@@ -329,6 +329,7 @@ export type UserWhereInput = {
   sessionPlays?: Prisma.SessionPlayerListRelationFilter
   gamificationLogs?: Prisma.GamificationLogListRelationFilter
   editorChats?: Prisma.EditorChatListRelationFilter
+  transactions?: Prisma.TransactionListRelationFilter
 }
 
 export type UserOrderByWithRelationInput = {
@@ -359,6 +360,7 @@ export type UserOrderByWithRelationInput = {
   sessionPlays?: Prisma.SessionPlayerOrderByRelationAggregateInput
   gamificationLogs?: Prisma.GamificationLogOrderByRelationAggregateInput
   editorChats?: Prisma.EditorChatOrderByRelationAggregateInput
+  transactions?: Prisma.TransactionOrderByRelationAggregateInput
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -392,6 +394,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   sessionPlays?: Prisma.SessionPlayerListRelationFilter
   gamificationLogs?: Prisma.GamificationLogListRelationFilter
   editorChats?: Prisma.EditorChatListRelationFilter
+  transactions?: Prisma.TransactionListRelationFilter
 }, "id" | "email">
 
 export type UserOrderByWithAggregationInput = {
@@ -472,6 +475,7 @@ export type UserCreateInput = {
   sessionPlays?: Prisma.SessionPlayerCreateNestedManyWithoutUserInput
   gamificationLogs?: Prisma.GamificationLogCreateNestedManyWithoutUserInput
   editorChats?: Prisma.EditorChatCreateNestedManyWithoutUserInput
+  transactions?: Prisma.TransactionCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateInput = {
@@ -502,6 +506,7 @@ export type UserUncheckedCreateInput = {
   sessionPlays?: Prisma.SessionPlayerUncheckedCreateNestedManyWithoutUserInput
   gamificationLogs?: Prisma.GamificationLogUncheckedCreateNestedManyWithoutUserInput
   editorChats?: Prisma.EditorChatUncheckedCreateNestedManyWithoutUserInput
+  transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserUpdateInput = {
@@ -532,6 +537,7 @@ export type UserUpdateInput = {
   sessionPlays?: Prisma.SessionPlayerUpdateManyWithoutUserNestedInput
   gamificationLogs?: Prisma.GamificationLogUpdateManyWithoutUserNestedInput
   editorChats?: Prisma.EditorChatUpdateManyWithoutUserNestedInput
+  transactions?: Prisma.TransactionUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
@@ -562,6 +568,7 @@ export type UserUncheckedUpdateInput = {
   sessionPlays?: Prisma.SessionPlayerUncheckedUpdateManyWithoutUserNestedInput
   gamificationLogs?: Prisma.GamificationLogUncheckedUpdateManyWithoutUserNestedInput
   editorChats?: Prisma.EditorChatUncheckedUpdateManyWithoutUserNestedInput
+  transactions?: Prisma.TransactionUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateManyInput = {
@@ -799,6 +806,22 @@ export type UserUpdateOneRequiredWithoutMembershipsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutMembershipsInput, Prisma.UserUpdateWithoutMembershipsInput>, Prisma.UserUncheckedUpdateWithoutMembershipsInput>
 }
 
+export type UserCreateNestedOneWithoutTransactionsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutTransactionsInput, Prisma.UserUncheckedCreateWithoutTransactionsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutTransactionsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneWithoutTransactionsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutTransactionsInput, Prisma.UserUncheckedCreateWithoutTransactionsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutTransactionsInput
+  upsert?: Prisma.UserUpsertWithoutTransactionsInput
+  disconnect?: Prisma.UserWhereInput | boolean
+  delete?: Prisma.UserWhereInput | boolean
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutTransactionsInput, Prisma.UserUpdateWithoutTransactionsInput>, Prisma.UserUncheckedUpdateWithoutTransactionsInput>
+}
+
 export type UserCreateNestedOneWithoutMediaInput = {
   create?: Prisma.XOR<Prisma.UserCreateWithoutMediaInput, Prisma.UserUncheckedCreateWithoutMediaInput>
   connectOrCreate?: Prisma.UserCreateOrConnectWithoutMediaInput
@@ -912,6 +935,7 @@ export type UserCreateWithoutSessionsInput = {
   sessionPlays?: Prisma.SessionPlayerCreateNestedManyWithoutUserInput
   gamificationLogs?: Prisma.GamificationLogCreateNestedManyWithoutUserInput
   editorChats?: Prisma.EditorChatCreateNestedManyWithoutUserInput
+  transactions?: Prisma.TransactionCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutSessionsInput = {
@@ -941,6 +965,7 @@ export type UserUncheckedCreateWithoutSessionsInput = {
   sessionPlays?: Prisma.SessionPlayerUncheckedCreateNestedManyWithoutUserInput
   gamificationLogs?: Prisma.GamificationLogUncheckedCreateNestedManyWithoutUserInput
   editorChats?: Prisma.EditorChatUncheckedCreateNestedManyWithoutUserInput
+  transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutSessionsInput = {
@@ -986,6 +1011,7 @@ export type UserUpdateWithoutSessionsInput = {
   sessionPlays?: Prisma.SessionPlayerUpdateManyWithoutUserNestedInput
   gamificationLogs?: Prisma.GamificationLogUpdateManyWithoutUserNestedInput
   editorChats?: Prisma.EditorChatUpdateManyWithoutUserNestedInput
+  transactions?: Prisma.TransactionUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutSessionsInput = {
@@ -1015,6 +1041,7 @@ export type UserUncheckedUpdateWithoutSessionsInput = {
   sessionPlays?: Prisma.SessionPlayerUncheckedUpdateManyWithoutUserNestedInput
   gamificationLogs?: Prisma.GamificationLogUncheckedUpdateManyWithoutUserNestedInput
   editorChats?: Prisma.EditorChatUncheckedUpdateManyWithoutUserNestedInput
+  transactions?: Prisma.TransactionUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutAccountsInput = {
@@ -1044,6 +1071,7 @@ export type UserCreateWithoutAccountsInput = {
   sessionPlays?: Prisma.SessionPlayerCreateNestedManyWithoutUserInput
   gamificationLogs?: Prisma.GamificationLogCreateNestedManyWithoutUserInput
   editorChats?: Prisma.EditorChatCreateNestedManyWithoutUserInput
+  transactions?: Prisma.TransactionCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutAccountsInput = {
@@ -1073,6 +1101,7 @@ export type UserUncheckedCreateWithoutAccountsInput = {
   sessionPlays?: Prisma.SessionPlayerUncheckedCreateNestedManyWithoutUserInput
   gamificationLogs?: Prisma.GamificationLogUncheckedCreateNestedManyWithoutUserInput
   editorChats?: Prisma.EditorChatUncheckedCreateNestedManyWithoutUserInput
+  transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutAccountsInput = {
@@ -1118,6 +1147,7 @@ export type UserUpdateWithoutAccountsInput = {
   sessionPlays?: Prisma.SessionPlayerUpdateManyWithoutUserNestedInput
   gamificationLogs?: Prisma.GamificationLogUpdateManyWithoutUserNestedInput
   editorChats?: Prisma.EditorChatUpdateManyWithoutUserNestedInput
+  transactions?: Prisma.TransactionUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutAccountsInput = {
@@ -1147,6 +1177,7 @@ export type UserUncheckedUpdateWithoutAccountsInput = {
   sessionPlays?: Prisma.SessionPlayerUncheckedUpdateManyWithoutUserNestedInput
   gamificationLogs?: Prisma.GamificationLogUncheckedUpdateManyWithoutUserNestedInput
   editorChats?: Prisma.EditorChatUncheckedUpdateManyWithoutUserNestedInput
+  transactions?: Prisma.TransactionUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutMembershipsInput = {
@@ -1176,6 +1207,7 @@ export type UserCreateWithoutMembershipsInput = {
   sessionPlays?: Prisma.SessionPlayerCreateNestedManyWithoutUserInput
   gamificationLogs?: Prisma.GamificationLogCreateNestedManyWithoutUserInput
   editorChats?: Prisma.EditorChatCreateNestedManyWithoutUserInput
+  transactions?: Prisma.TransactionCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutMembershipsInput = {
@@ -1205,6 +1237,7 @@ export type UserUncheckedCreateWithoutMembershipsInput = {
   sessionPlays?: Prisma.SessionPlayerUncheckedCreateNestedManyWithoutUserInput
   gamificationLogs?: Prisma.GamificationLogUncheckedCreateNestedManyWithoutUserInput
   editorChats?: Prisma.EditorChatUncheckedCreateNestedManyWithoutUserInput
+  transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutMembershipsInput = {
@@ -1250,6 +1283,7 @@ export type UserUpdateWithoutMembershipsInput = {
   sessionPlays?: Prisma.SessionPlayerUpdateManyWithoutUserNestedInput
   gamificationLogs?: Prisma.GamificationLogUpdateManyWithoutUserNestedInput
   editorChats?: Prisma.EditorChatUpdateManyWithoutUserNestedInput
+  transactions?: Prisma.TransactionUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutMembershipsInput = {
@@ -1273,6 +1307,143 @@ export type UserUncheckedUpdateWithoutMembershipsInput = {
   badges?: Prisma.UserUpdatebadgesInput | string[]
   sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
+  media?: Prisma.MediaUncheckedUpdateManyWithoutUploaderNestedInput
+  moduleProgress?: Prisma.ModuleProgressUncheckedUpdateManyWithoutUserNestedInput
+  hostedSessions?: Prisma.LiveSessionUncheckedUpdateManyWithoutHostNestedInput
+  sessionPlays?: Prisma.SessionPlayerUncheckedUpdateManyWithoutUserNestedInput
+  gamificationLogs?: Prisma.GamificationLogUncheckedUpdateManyWithoutUserNestedInput
+  editorChats?: Prisma.EditorChatUncheckedUpdateManyWithoutUserNestedInput
+  transactions?: Prisma.TransactionUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserCreateWithoutTransactionsInput = {
+  id?: string
+  name: string
+  role?: string | null
+  avatar?: string | null
+  email: string
+  emailVerified?: boolean
+  image?: string | null
+  banned?: boolean | null
+  banReason?: string | null
+  banExpires?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  onboarded?: boolean
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  xp?: number
+  currentStreak?: number
+  longestStreak?: number
+  badges?: Prisma.UserCreatebadgesInput | string[]
+  sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
+  accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
+  memberships?: Prisma.MemberCreateNestedManyWithoutUserInput
+  media?: Prisma.MediaCreateNestedManyWithoutUploaderInput
+  moduleProgress?: Prisma.ModuleProgressCreateNestedManyWithoutUserInput
+  hostedSessions?: Prisma.LiveSessionCreateNestedManyWithoutHostInput
+  sessionPlays?: Prisma.SessionPlayerCreateNestedManyWithoutUserInput
+  gamificationLogs?: Prisma.GamificationLogCreateNestedManyWithoutUserInput
+  editorChats?: Prisma.EditorChatCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutTransactionsInput = {
+  id?: string
+  name: string
+  role?: string | null
+  avatar?: string | null
+  email: string
+  emailVerified?: boolean
+  image?: string | null
+  banned?: boolean | null
+  banReason?: string | null
+  banExpires?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  onboarded?: boolean
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  xp?: number
+  currentStreak?: number
+  longestStreak?: number
+  badges?: Prisma.UserCreatebadgesInput | string[]
+  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
+  accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
+  memberships?: Prisma.MemberUncheckedCreateNestedManyWithoutUserInput
+  media?: Prisma.MediaUncheckedCreateNestedManyWithoutUploaderInput
+  moduleProgress?: Prisma.ModuleProgressUncheckedCreateNestedManyWithoutUserInput
+  hostedSessions?: Prisma.LiveSessionUncheckedCreateNestedManyWithoutHostInput
+  sessionPlays?: Prisma.SessionPlayerUncheckedCreateNestedManyWithoutUserInput
+  gamificationLogs?: Prisma.GamificationLogUncheckedCreateNestedManyWithoutUserInput
+  editorChats?: Prisma.EditorChatUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutTransactionsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutTransactionsInput, Prisma.UserUncheckedCreateWithoutTransactionsInput>
+}
+
+export type UserUpsertWithoutTransactionsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutTransactionsInput, Prisma.UserUncheckedUpdateWithoutTransactionsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutTransactionsInput, Prisma.UserUncheckedCreateWithoutTransactionsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutTransactionsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutTransactionsInput, Prisma.UserUncheckedUpdateWithoutTransactionsInput>
+}
+
+export type UserUpdateWithoutTransactionsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  banned?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  banReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  banExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  onboarded?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  xp?: Prisma.IntFieldUpdateOperationsInput | number
+  currentStreak?: Prisma.IntFieldUpdateOperationsInput | number
+  longestStreak?: Prisma.IntFieldUpdateOperationsInput | number
+  badges?: Prisma.UserUpdatebadgesInput | string[]
+  sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
+  accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
+  memberships?: Prisma.MemberUpdateManyWithoutUserNestedInput
+  media?: Prisma.MediaUpdateManyWithoutUploaderNestedInput
+  moduleProgress?: Prisma.ModuleProgressUpdateManyWithoutUserNestedInput
+  hostedSessions?: Prisma.LiveSessionUpdateManyWithoutHostNestedInput
+  sessionPlays?: Prisma.SessionPlayerUpdateManyWithoutUserNestedInput
+  gamificationLogs?: Prisma.GamificationLogUpdateManyWithoutUserNestedInput
+  editorChats?: Prisma.EditorChatUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutTransactionsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  banned?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  banReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  banExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  onboarded?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  xp?: Prisma.IntFieldUpdateOperationsInput | number
+  currentStreak?: Prisma.IntFieldUpdateOperationsInput | number
+  longestStreak?: Prisma.IntFieldUpdateOperationsInput | number
+  badges?: Prisma.UserUpdatebadgesInput | string[]
+  sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
+  accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
+  memberships?: Prisma.MemberUncheckedUpdateManyWithoutUserNestedInput
   media?: Prisma.MediaUncheckedUpdateManyWithoutUploaderNestedInput
   moduleProgress?: Prisma.ModuleProgressUncheckedUpdateManyWithoutUserNestedInput
   hostedSessions?: Prisma.LiveSessionUncheckedUpdateManyWithoutHostNestedInput
@@ -1308,6 +1479,7 @@ export type UserCreateWithoutMediaInput = {
   sessionPlays?: Prisma.SessionPlayerCreateNestedManyWithoutUserInput
   gamificationLogs?: Prisma.GamificationLogCreateNestedManyWithoutUserInput
   editorChats?: Prisma.EditorChatCreateNestedManyWithoutUserInput
+  transactions?: Prisma.TransactionCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutMediaInput = {
@@ -1337,6 +1509,7 @@ export type UserUncheckedCreateWithoutMediaInput = {
   sessionPlays?: Prisma.SessionPlayerUncheckedCreateNestedManyWithoutUserInput
   gamificationLogs?: Prisma.GamificationLogUncheckedCreateNestedManyWithoutUserInput
   editorChats?: Prisma.EditorChatUncheckedCreateNestedManyWithoutUserInput
+  transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutMediaInput = {
@@ -1382,6 +1555,7 @@ export type UserUpdateWithoutMediaInput = {
   sessionPlays?: Prisma.SessionPlayerUpdateManyWithoutUserNestedInput
   gamificationLogs?: Prisma.GamificationLogUpdateManyWithoutUserNestedInput
   editorChats?: Prisma.EditorChatUpdateManyWithoutUserNestedInput
+  transactions?: Prisma.TransactionUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutMediaInput = {
@@ -1411,6 +1585,7 @@ export type UserUncheckedUpdateWithoutMediaInput = {
   sessionPlays?: Prisma.SessionPlayerUncheckedUpdateManyWithoutUserNestedInput
   gamificationLogs?: Prisma.GamificationLogUncheckedUpdateManyWithoutUserNestedInput
   editorChats?: Prisma.EditorChatUncheckedUpdateManyWithoutUserNestedInput
+  transactions?: Prisma.TransactionUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutEditorChatsInput = {
@@ -1440,6 +1615,7 @@ export type UserCreateWithoutEditorChatsInput = {
   hostedSessions?: Prisma.LiveSessionCreateNestedManyWithoutHostInput
   sessionPlays?: Prisma.SessionPlayerCreateNestedManyWithoutUserInput
   gamificationLogs?: Prisma.GamificationLogCreateNestedManyWithoutUserInput
+  transactions?: Prisma.TransactionCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutEditorChatsInput = {
@@ -1469,6 +1645,7 @@ export type UserUncheckedCreateWithoutEditorChatsInput = {
   hostedSessions?: Prisma.LiveSessionUncheckedCreateNestedManyWithoutHostInput
   sessionPlays?: Prisma.SessionPlayerUncheckedCreateNestedManyWithoutUserInput
   gamificationLogs?: Prisma.GamificationLogUncheckedCreateNestedManyWithoutUserInput
+  transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutEditorChatsInput = {
@@ -1514,6 +1691,7 @@ export type UserUpdateWithoutEditorChatsInput = {
   hostedSessions?: Prisma.LiveSessionUpdateManyWithoutHostNestedInput
   sessionPlays?: Prisma.SessionPlayerUpdateManyWithoutUserNestedInput
   gamificationLogs?: Prisma.GamificationLogUpdateManyWithoutUserNestedInput
+  transactions?: Prisma.TransactionUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutEditorChatsInput = {
@@ -1543,6 +1721,7 @@ export type UserUncheckedUpdateWithoutEditorChatsInput = {
   hostedSessions?: Prisma.LiveSessionUncheckedUpdateManyWithoutHostNestedInput
   sessionPlays?: Prisma.SessionPlayerUncheckedUpdateManyWithoutUserNestedInput
   gamificationLogs?: Prisma.GamificationLogUncheckedUpdateManyWithoutUserNestedInput
+  transactions?: Prisma.TransactionUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutModuleProgressInput = {
@@ -1572,6 +1751,7 @@ export type UserCreateWithoutModuleProgressInput = {
   sessionPlays?: Prisma.SessionPlayerCreateNestedManyWithoutUserInput
   gamificationLogs?: Prisma.GamificationLogCreateNestedManyWithoutUserInput
   editorChats?: Prisma.EditorChatCreateNestedManyWithoutUserInput
+  transactions?: Prisma.TransactionCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutModuleProgressInput = {
@@ -1601,6 +1781,7 @@ export type UserUncheckedCreateWithoutModuleProgressInput = {
   sessionPlays?: Prisma.SessionPlayerUncheckedCreateNestedManyWithoutUserInput
   gamificationLogs?: Prisma.GamificationLogUncheckedCreateNestedManyWithoutUserInput
   editorChats?: Prisma.EditorChatUncheckedCreateNestedManyWithoutUserInput
+  transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutModuleProgressInput = {
@@ -1646,6 +1827,7 @@ export type UserUpdateWithoutModuleProgressInput = {
   sessionPlays?: Prisma.SessionPlayerUpdateManyWithoutUserNestedInput
   gamificationLogs?: Prisma.GamificationLogUpdateManyWithoutUserNestedInput
   editorChats?: Prisma.EditorChatUpdateManyWithoutUserNestedInput
+  transactions?: Prisma.TransactionUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutModuleProgressInput = {
@@ -1675,6 +1857,7 @@ export type UserUncheckedUpdateWithoutModuleProgressInput = {
   sessionPlays?: Prisma.SessionPlayerUncheckedUpdateManyWithoutUserNestedInput
   gamificationLogs?: Prisma.GamificationLogUncheckedUpdateManyWithoutUserNestedInput
   editorChats?: Prisma.EditorChatUncheckedUpdateManyWithoutUserNestedInput
+  transactions?: Prisma.TransactionUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutGamificationLogsInput = {
@@ -1704,6 +1887,7 @@ export type UserCreateWithoutGamificationLogsInput = {
   hostedSessions?: Prisma.LiveSessionCreateNestedManyWithoutHostInput
   sessionPlays?: Prisma.SessionPlayerCreateNestedManyWithoutUserInput
   editorChats?: Prisma.EditorChatCreateNestedManyWithoutUserInput
+  transactions?: Prisma.TransactionCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutGamificationLogsInput = {
@@ -1733,6 +1917,7 @@ export type UserUncheckedCreateWithoutGamificationLogsInput = {
   hostedSessions?: Prisma.LiveSessionUncheckedCreateNestedManyWithoutHostInput
   sessionPlays?: Prisma.SessionPlayerUncheckedCreateNestedManyWithoutUserInput
   editorChats?: Prisma.EditorChatUncheckedCreateNestedManyWithoutUserInput
+  transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutGamificationLogsInput = {
@@ -1778,6 +1963,7 @@ export type UserUpdateWithoutGamificationLogsInput = {
   hostedSessions?: Prisma.LiveSessionUpdateManyWithoutHostNestedInput
   sessionPlays?: Prisma.SessionPlayerUpdateManyWithoutUserNestedInput
   editorChats?: Prisma.EditorChatUpdateManyWithoutUserNestedInput
+  transactions?: Prisma.TransactionUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutGamificationLogsInput = {
@@ -1807,6 +1993,7 @@ export type UserUncheckedUpdateWithoutGamificationLogsInput = {
   hostedSessions?: Prisma.LiveSessionUncheckedUpdateManyWithoutHostNestedInput
   sessionPlays?: Prisma.SessionPlayerUncheckedUpdateManyWithoutUserNestedInput
   editorChats?: Prisma.EditorChatUncheckedUpdateManyWithoutUserNestedInput
+  transactions?: Prisma.TransactionUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutHostedSessionsInput = {
@@ -1836,6 +2023,7 @@ export type UserCreateWithoutHostedSessionsInput = {
   sessionPlays?: Prisma.SessionPlayerCreateNestedManyWithoutUserInput
   gamificationLogs?: Prisma.GamificationLogCreateNestedManyWithoutUserInput
   editorChats?: Prisma.EditorChatCreateNestedManyWithoutUserInput
+  transactions?: Prisma.TransactionCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutHostedSessionsInput = {
@@ -1865,6 +2053,7 @@ export type UserUncheckedCreateWithoutHostedSessionsInput = {
   sessionPlays?: Prisma.SessionPlayerUncheckedCreateNestedManyWithoutUserInput
   gamificationLogs?: Prisma.GamificationLogUncheckedCreateNestedManyWithoutUserInput
   editorChats?: Prisma.EditorChatUncheckedCreateNestedManyWithoutUserInput
+  transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutHostedSessionsInput = {
@@ -1910,6 +2099,7 @@ export type UserUpdateWithoutHostedSessionsInput = {
   sessionPlays?: Prisma.SessionPlayerUpdateManyWithoutUserNestedInput
   gamificationLogs?: Prisma.GamificationLogUpdateManyWithoutUserNestedInput
   editorChats?: Prisma.EditorChatUpdateManyWithoutUserNestedInput
+  transactions?: Prisma.TransactionUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutHostedSessionsInput = {
@@ -1939,6 +2129,7 @@ export type UserUncheckedUpdateWithoutHostedSessionsInput = {
   sessionPlays?: Prisma.SessionPlayerUncheckedUpdateManyWithoutUserNestedInput
   gamificationLogs?: Prisma.GamificationLogUncheckedUpdateManyWithoutUserNestedInput
   editorChats?: Prisma.EditorChatUncheckedUpdateManyWithoutUserNestedInput
+  transactions?: Prisma.TransactionUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutSessionPlaysInput = {
@@ -1968,6 +2159,7 @@ export type UserCreateWithoutSessionPlaysInput = {
   hostedSessions?: Prisma.LiveSessionCreateNestedManyWithoutHostInput
   gamificationLogs?: Prisma.GamificationLogCreateNestedManyWithoutUserInput
   editorChats?: Prisma.EditorChatCreateNestedManyWithoutUserInput
+  transactions?: Prisma.TransactionCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutSessionPlaysInput = {
@@ -1997,6 +2189,7 @@ export type UserUncheckedCreateWithoutSessionPlaysInput = {
   hostedSessions?: Prisma.LiveSessionUncheckedCreateNestedManyWithoutHostInput
   gamificationLogs?: Prisma.GamificationLogUncheckedCreateNestedManyWithoutUserInput
   editorChats?: Prisma.EditorChatUncheckedCreateNestedManyWithoutUserInput
+  transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutSessionPlaysInput = {
@@ -2042,6 +2235,7 @@ export type UserUpdateWithoutSessionPlaysInput = {
   hostedSessions?: Prisma.LiveSessionUpdateManyWithoutHostNestedInput
   gamificationLogs?: Prisma.GamificationLogUpdateManyWithoutUserNestedInput
   editorChats?: Prisma.EditorChatUpdateManyWithoutUserNestedInput
+  transactions?: Prisma.TransactionUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutSessionPlaysInput = {
@@ -2071,6 +2265,7 @@ export type UserUncheckedUpdateWithoutSessionPlaysInput = {
   hostedSessions?: Prisma.LiveSessionUncheckedUpdateManyWithoutHostNestedInput
   gamificationLogs?: Prisma.GamificationLogUncheckedUpdateManyWithoutUserNestedInput
   editorChats?: Prisma.EditorChatUncheckedUpdateManyWithoutUserNestedInput
+  transactions?: Prisma.TransactionUncheckedUpdateManyWithoutUserNestedInput
 }
 
 
@@ -2088,6 +2283,7 @@ export type UserCountOutputType = {
   sessionPlays: number
   gamificationLogs: number
   editorChats: number
+  transactions: number
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -2100,6 +2296,7 @@ export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.I
   sessionPlays?: boolean | UserCountOutputTypeCountSessionPlaysArgs
   gamificationLogs?: boolean | UserCountOutputTypeCountGamificationLogsArgs
   editorChats?: boolean | UserCountOutputTypeCountEditorChatsArgs
+  transactions?: boolean | UserCountOutputTypeCountTransactionsArgs
 }
 
 /**
@@ -2175,6 +2372,13 @@ export type UserCountOutputTypeCountEditorChatsArgs<ExtArgs extends runtime.Type
   where?: Prisma.EditorChatWhereInput
 }
 
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountTransactionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.TransactionWhereInput
+}
+
 
 export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -2204,6 +2408,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   sessionPlays?: boolean | Prisma.User$sessionPlaysArgs<ExtArgs>
   gamificationLogs?: boolean | Prisma.User$gamificationLogsArgs<ExtArgs>
   editorChats?: boolean | Prisma.User$editorChatsArgs<ExtArgs>
+  transactions?: boolean | Prisma.User$transactionsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -2281,6 +2486,7 @@ export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   sessionPlays?: boolean | Prisma.User$sessionPlaysArgs<ExtArgs>
   gamificationLogs?: boolean | Prisma.User$gamificationLogsArgs<ExtArgs>
   editorChats?: boolean | Prisma.User$editorChatsArgs<ExtArgs>
+  transactions?: boolean | Prisma.User$transactionsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -2298,6 +2504,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     sessionPlays: Prisma.$SessionPlayerPayload<ExtArgs>[]
     gamificationLogs: Prisma.$GamificationLogPayload<ExtArgs>[]
     editorChats: Prisma.$EditorChatPayload<ExtArgs>[]
+    transactions: Prisma.$TransactionPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -2721,6 +2928,7 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   sessionPlays<T extends Prisma.User$sessionPlaysArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$sessionPlaysArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SessionPlayerPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   gamificationLogs<T extends Prisma.User$gamificationLogsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$gamificationLogsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$GamificationLogPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   editorChats<T extends Prisma.User$editorChatsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$editorChatsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$EditorChatPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  transactions<T extends Prisma.User$transactionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$transactionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TransactionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -3374,6 +3582,30 @@ export type User$editorChatsArgs<ExtArgs extends runtime.Types.Extensions.Intern
   take?: number
   skip?: number
   distinct?: Prisma.EditorChatScalarFieldEnum | Prisma.EditorChatScalarFieldEnum[]
+}
+
+/**
+ * User.transactions
+ */
+export type User$transactionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Transaction
+   */
+  select?: Prisma.TransactionSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Transaction
+   */
+  omit?: Prisma.TransactionOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.TransactionInclude<ExtArgs> | null
+  where?: Prisma.TransactionWhereInput
+  orderBy?: Prisma.TransactionOrderByWithRelationInput | Prisma.TransactionOrderByWithRelationInput[]
+  cursor?: Prisma.TransactionWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.TransactionScalarFieldEnum | Prisma.TransactionScalarFieldEnum[]
 }
 
 /**

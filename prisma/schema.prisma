@@ -46,6 +46,7 @@ model User {
   sessionPlays     SessionPlayer[]
   gamificationLogs GamificationLog[]
   editorChats      EditorChat[]
+  transactions     Transaction[]
 
   @@index([email])
   @@map("user")
@@ -131,10 +132,11 @@ model Organization {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  members      Member[]
-  invitations  Invitation[]
-  subscription Subscription?
-  sessions     LiveSession[]
+  members       Member[]
+  invitations   Invitation[]
+  subscriptions Subscription[]
+  transactions  Transaction[]
+  sessions      LiveSession[]
 
   @@map("organization")
 }
@@ -161,21 +163,48 @@ model Member {
 // ==========================================
 
 model Subscription {
-  id               String    @id @default(cuid())
-  organizationId   String    @unique // Every org has exactly one subscription
-  tier             String    @default("FREE") // "FREE" | "PRO" | "DEPARTMENT" | "ENTERPRISE" | "UNLIMITED"
-  status           String    @default("ACTIVE") // "ACTIVE" | "PAST_DUE" | "CANCELED" | "TRIALING"
-  seats            Int       @default(1)
-  isUnlimited      Boolean   @default(false) // true for self-hosted orgs (bypass all seat/feature checks)
-  stripeCustomerId String?
-  stripeSubId      String?
-  currentPeriodEnd DateTime?
-  createdAt        DateTime  @default(now())
-  updatedAt        DateTime  @updatedAt
+  id                   String    @id @default(cuid())
+  organizationId       String // Removed unique constraint to allow multiple subscriptions
+  transactionId        String?   @unique // Link to the exact payment that spawned/renewed this
+  tier                 String    @default("FREE") // "FREE" | "PRO" | "DEPARTMENT" | "ENTERPRISE" | "UNLIMITED"
+  status               String    @default("ACTIVE") // "ACTIVE" | "PAST_DUE" | "CANCELED" | "TRIALING"
+  seats                Int       @default(1)
+  isUnlimited          Boolean   @default(false) // true for self-hosted orgs (bypass all seat/feature checks)
+  paystackCustomerCode String?
+  paystackSubCode      String?
+  currentPeriodEnd     DateTime?
+  createdAt            DateTime  @default(now())
+  updatedAt            DateTime  @updatedAt
 
   organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  transaction  Transaction? @relation(fields: [transactionId], references: [id])
 
+  @@index([organizationId])
+  @@index([status])
   @@map("subscription")
+}
+
+model Transaction {
+  id             String   @id @default(cuid())
+  organizationId String
+  userId         String? // The user who initiated the payment
+  reference      String   @unique // Paystack transaction reference
+  amount         Int // Amount in lowest currency unit (kobo/pesewas)
+  currency       String   @default("GHS")
+  status         String   @default("PENDING") // "PENDING" | "SUCCESS" | "FAILED" | "ABANDONED"
+  channel        String? // e.g., "card", "mobile_money"
+  metadata       Json? // Optional JSON payload from Paystack
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  organization Organization  @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  user         User?         @relation(fields: [userId], references: [id], onDelete: SetNull)
+  subscription Subscription?
+
+  @@index([organizationId])
+  @@index([userId])
+  @@index([reference])
+  @@map("transaction")
 }
 
 // ==========================================

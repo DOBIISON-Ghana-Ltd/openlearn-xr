@@ -10,8 +10,12 @@ export async function getActiveOrgSubscription(orgId: string | null | undefined)
   if (!orgId) return "FREE";
 
   try {
-    const sub = await prisma.subscription.findUnique({
-      where: { organizationId: orgId },
+    const sub = await prisma.subscription.findFirst({
+      where: { 
+        organizationId: orgId,
+        status: "ACTIVE" 
+      },
+      orderBy: { createdAt: 'desc' },
       select: { tier: true }
     });
     return sub?.tier || "FREE";

@@ -1,8 +1,8 @@
 import { UseQueryOptions, UseMutationOptions } from '@tanstack/react-query';
 import Base from "./schema.base";
-import ZMedia from "./modules/media/media.schema";
-import ZUser from "./modules/user/user.schema";
-import ZOrg from "./modules/org/org.schema";
+import ZMedia from "./api/media/media.schema";
+import ZUser from "./api/user/user.schema";
+import ZOrg from "./api/org/org.schema";
 import { z } from "zod";
 
 // UTILITY TYPES

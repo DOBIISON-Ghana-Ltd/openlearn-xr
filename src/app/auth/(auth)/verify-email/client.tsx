@@ -7,7 +7,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Infer } from "@/data/types.base";
-import ZUser from "@/data/modules/user/user.schema";
+import ZUser from "@/data/api/user/user.schema";
 import { nuqs } from "@/lib/utils/nuqs";
 import useApi from "@/data/hooks/use-api";
 import { ROUTES } from "@/lib/constants/routes";
@@ -102,3 +102,4 @@ export default function ClientPage() {
     </div>
   );
 }
+

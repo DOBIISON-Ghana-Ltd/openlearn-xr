@@ -59,6 +59,7 @@ export const ModelName = {
   Organization: 'Organization',
   Member: 'Member',
   Subscription: 'Subscription',
+  Transaction: 'Transaction',
   Media: 'Media',
   Collection: 'Collection',
   EditorChat: 'EditorChat',
@@ -203,18 +204,36 @@ export type MemberScalarFieldEnum = (typeof MemberScalarFieldEnum)[keyof typeof 
 export const SubscriptionScalarFieldEnum = {
   id: 'id',
   organizationId: 'organizationId',
+  transactionId: 'transactionId',
   tier: 'tier',
   status: 'status',
   seats: 'seats',
   isUnlimited: 'isUnlimited',
-  stripeCustomerId: 'stripeCustomerId',
-  stripeSubId: 'stripeSubId',
+  paystackCustomerCode: 'paystackCustomerCode',
+  paystackSubCode: 'paystackSubCode',
   currentPeriodEnd: 'currentPeriodEnd',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
 
 export type SubscriptionScalarFieldEnum = (typeof SubscriptionScalarFieldEnum)[keyof typeof SubscriptionScalarFieldEnum]
+
+
+export const TransactionScalarFieldEnum = {
+  id: 'id',
+  organizationId: 'organizationId',
+  userId: 'userId',
+  reference: 'reference',
+  amount: 'amount',
+  currency: 'currency',
+  status: 'status',
+  channel: 'channel',
+  metadata: 'metadata',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type TransactionScalarFieldEnum = (typeof TransactionScalarFieldEnum)[keyof typeof TransactionScalarFieldEnum]
 
 
 export const MediaScalarFieldEnum = {

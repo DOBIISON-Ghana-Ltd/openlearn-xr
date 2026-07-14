@@ -1,4 +1,4 @@
-import ZUser from "@/data/modules/user/user.schema";
+import ZUser from "@/data/api/user/user.schema";
 import { JSend } from "@/lib/utils/jsend";
 import { secureApiRoute } from "@/lib/utils/secure-api-route";
 import { getActiveOrgSubscription } from "@/lib/actions/get-active-org-subscription";

@@ -13,7 +13,7 @@ const ROUTES = {
 
   // ORGANIZATIONS
   "public:org:get:subscription": ({ orgId }: { orgId: string }) => `/api/org/${orgId}/subscription`,
-  "public:org:post:create": () => `/api/org`,
+  "public:org:get:active": () => '/api/org/active',
 } as const;
 
 export default ROUTES;

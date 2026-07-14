@@ -7,6 +7,7 @@ import { ac, admin as adminRole, editor, user } from './permissions'
 import { nextCookies } from 'better-auth/next-js'
 import { env } from '@/lib/config/env'
 import { getInitialOrganization } from '@/lib/actions/get-initial-organization'
+import { createDefaultSubscription } from '@/lib/actions/create-default-subscription'
 
 export const auth = betterAuth({
   database: prismaAdapter(prisma, { provider: 'postgresql' }),
@@ -78,7 +79,13 @@ export const auth = betterAuth({
       defaultRole: 'user',
       adminRoles: ['admin']
     }),
-    organization(),
+    organization({
+      organizationHooks: {
+        afterCreateOrganization: async ({ organization }) => {
+          await createDefaultSubscription(organization.id);
+        }
+      }
+    }),
     emailOTP({
       overrideDefaultEmailVerification: true,
       sendVerificationOnSignUp: true,

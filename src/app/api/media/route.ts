@@ -1,7 +1,7 @@
 import prisma from "@/adapters/db/client";
 import { JSend } from "@/lib/utils/jsend";
 import { secureApiRoute } from "@/lib/utils/secure-api-route";
-import ZMedia from "@/data/modules/media/media.schema";
+import ZMedia from "@/data/api/media/media.schema";
 
 export const POST = secureApiRoute(async (req, ctx , user) => {
   const body = ZMedia.PublicMediaPostOne.shape.body.parse(await req.json());

@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import ZUser from "@/data/modules/user/user.schema";
+import ZUser from "@/data/api/user/user.schema";
 import { Button } from "@/components/ui/button";
 import TextBlock from "@/components/auth/form-blocks/text-block";
 import PasswordBlock from "@/components/auth/form-blocks/password-block";
