@@ -39,12 +39,6 @@ export const auth = betterAuth({
         defaultValue: false,
         input: false
       },
-      avatar: {
-        type: "string",
-        required: false,
-        defaultValue: null,
-        input: false
-      },
       metadata: {
         type: "json",
         required: false,

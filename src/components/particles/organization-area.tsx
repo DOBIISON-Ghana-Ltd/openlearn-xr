@@ -1,5 +1,5 @@
 import useApi from "@/data/hooks/use-api";
-import { match } from "ts-pattern";
+import { ORG_LOGOS } from "@/lib/constants/avatars";
 import { Skeleton } from "../ui/skeleton";
 import { Button } from "../ui/button";
 import { ChevronDownIcon, PlusIcon } from "lucide-react";
@@ -54,10 +54,11 @@ function Info() {
 
   return (
     <div className="flex gap-2 items-center px-2 pt-2">
-      {match(org.logo)
-        .with(null, () => (<div className="self-start w-10 aspect-square bg-purple-400 rounded-xs"></div>))
-        .otherwise((logo) => (<img src={logo} alt={org.name} className="self-start w-10 aspect-square rounded-xs object-cover" />))
-      }
+      <img
+        src={ORG_LOGOS[org.logo]}
+        alt={org.name}
+        className="self-start w-10 aspect-square rounded-sm object-cover"
+      />
       <div className="flex flex-col">
         <p className="text-sm-m font-normal text-foreground capitalize">{org.name}</p>
         <p className="self-start font-medium text-xs text-background px-1 bg-foreground uppercase">{org.subscriptionTier}</p>

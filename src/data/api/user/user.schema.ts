@@ -12,7 +12,6 @@ const PublicUserGetMe = ZApi({
     role: true,
     email: true,
     image: true,
-    avatar: true,
     onboarded: true,
     createdAt: true
   }).extend({
@@ -20,17 +19,6 @@ const PublicUserGetMe = ZApi({
       activeOrganizationId: true
     }).shape,
     subscriptionTier: z.string()
-  })
-});
-
-const PublicUserPatchMe = ZApi({
-  body: ZUser.pick({
-    name: true,
-    image: true,
-    avatar: true,
-  }).extend({
-    file: ZMediaFile,
-    deleteMedia: z.string().optional()
   })
 });
 
@@ -104,9 +92,28 @@ const AdminUserGetAll = ZApi({
   }).array()
 });
 
+const PublicUserUpdateAccount = ZApi({
+  body: ZUser.pick({
+    name: true,
+    email: true,
+  }).extend({
+    image: ZUser.shape.image.unwrap(),
+  })
+});
+
+const PublicUserUpdatePassword = ZApi({
+  body: z.object({
+    oldPassword: ZAccount.shape.password.unwrap(),
+    newPassword: ZAccount.shape.password.unwrap(),
+    confirmNewPassword: ZAccount.shape.password.unwrap(),
+  }).refine((data) => data.newPassword === data.confirmNewPassword, {
+    message: "Passwords don't match",
+    path: ["confirmNewPassword"]
+  })
+});
+
 const schema = {
   PublicUserGetMe,
-  PublicUserPatchMe,
   PublicUserLogin,
   PublicUserRegister,
   PublicUserCheckOtp,
@@ -115,7 +122,9 @@ const schema = {
   PublicUserResetPassword,
   PublicUserDeleteMe,
   PublicUserPatchOnboarding,
-  AdminUserGetAll
+  AdminUserGetAll,
+  PublicUserUpdateAccount,
+  PublicUserUpdatePassword,
 };
 
 export default schema;

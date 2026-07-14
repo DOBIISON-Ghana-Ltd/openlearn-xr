@@ -12,7 +12,6 @@ export const GET = secureApiRoute(async (req, ctx, user, session) => {
     role: user.role,
     email: user.email,
     image: user.image,
-    avatar: user.avatar,
     onboarded: user.onboarded,
     createdAt: user.createdAt.toISOString(),
     activeOrganizationId: session.activeOrganizationId,

@@ -25,34 +25,7 @@ const publicGetMe = {
   }
 } satisfies QueryConfig;
 
-const publicPatchMe = {
-  type: 'mutation',
-  mutationFn: async (body: Infer["PublicUserPatchMe"]["body"]) => {
-    const finalBody: Infer["PublicUserPatchMe"]["body"] = { ...body };
-    if (body.file) {
-      const { file } = body;
-      const uploadRes = await handleFileUpload({
-        file,
-        folder: "user.avatar",
-        msc: "user.avatar"
-      });
 
-      if (!uploadRes) {
-        throw new ApiError("File upload failed");
-      }
-
-      finalBody.avatar = uploadRes.id;
-      finalBody.image = getImageUrl(uploadRes.key);
-      finalBody.file = null;
-    };
-
-    const data = await fetcher(
-      () => axios.patch(R["public:user:patch:me"](), finalBody),
-      ZUser.PublicUserPatchMe.shape.res
-    );
-    return data;
-  }
-} satisfies MutationConfig;
 
 const publicDeleteMe = {
   type: 'mutation',
@@ -199,9 +172,36 @@ const adminGetAll = {
   }
 } satisfies QueryConfig;
 
+const publicUpdateAccount = {
+  type: 'mutation',
+  mutationFn: async (body: Infer["PublicUserUpdateAccount"]["body"]) => {
+    const res = await authClient.updateUser({
+      name: body.name,
+      image: body.image || undefined,
+    });
+    if (res.error) {
+      throw new ApiError(res.error.message || "Failed to update account", 400);
+    }
+    return "Account updated successfully.";
+  }
+} satisfies MutationConfig;
+
+const publicUpdatePassword = {
+  type: 'mutation',
+  mutationFn: async (body: Infer["PublicUserUpdatePassword"]["body"]) => {
+    const res = await authClient.changePassword({
+      currentPassword: body.oldPassword,
+      newPassword: body.newPassword,
+    });
+    if (res.error) {
+      throw new ApiError(res.error.message || "Failed to update password", 400);
+    }
+    return "Password updated successfully.";
+  }
+} satisfies MutationConfig;
+
 export default {
   "public:user:get:me": publicGetMe,
-  "public:user:patch:me": publicPatchMe,
   "public:user:delete:me": publicDeleteMe,
   "public:user:patch:onboarding": publicPatchOnboarding,
   "public:user:register": publicRegister,
@@ -212,4 +212,6 @@ export default {
   "public:user:send-otp": publicSendOtp,
   "public:user:reset-password": publicResetPassword,
   "admin:user:get:all": adminGetAll,
+  "public:user:update-account": publicUpdateAccount,
+  "public:user:update-password": publicUpdatePassword,
 };

@@ -68,12 +68,14 @@ export function DialogPopup({
   bottomStickOnMobile = true,
   closeProps,
   portalProps,
+  viewportClassName,
   ...props
 }: DialogPrimitive.Popup.Props & {
   showCloseButton?: boolean;
   bottomStickOnMobile?: boolean;
   closeProps?: DialogPrimitive.Close.Props;
   portalProps?: DialogPrimitive.Portal.Props;
+  viewportClassName?: string;
 }): React.ReactElement {
   return (
     <DialogPortal {...portalProps}>
@@ -82,6 +84,7 @@ export function DialogPopup({
         className={cn(
           bottomStickOnMobile &&
             "max-sm:grid-rows-[1fr_auto] max-sm:p-0 max-sm:pt-12",
+          viewportClassName
         )}
       >
         <DialogPrimitive.Popup

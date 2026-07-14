@@ -1,4 +1,5 @@
 import z from "zod";
+import { AVATARS, ORG_LOGOS, avatarKeys, logoKeys } from "@/lib/constants/avatars";
 
 // ==========================================
 // UTILITIES
@@ -181,10 +182,9 @@ export const ZUser = z.object({
   id: z.string(),
   name: z.string().min(1, "Name is required"),
   role: ZRoleList.default(["user"]),
-  avatar: z.string().nullable(),
   email: z.string().email("Invalid email address"),
   emailVerified: z.boolean().default(false),
-  image: z.string().nullable(),
+  image: z.enum(avatarKeys).default("avatar-01"),
   banned: z.boolean().nullable().default(false),
   banReason: z.string().nullable(),
   banExpires: z.string().nullable(),
@@ -262,7 +262,7 @@ export const ZOrganization = z.object({
   id: z.string(),
   name: z.string().min(1, "Organization name is required"),
   slug: z.string(),
-  logo: z.string().nullable(),
+  logo: z.enum(logoKeys).default("org-01"),
   createdAt: z.string(),
   updatedAt: z.string(),
 });
