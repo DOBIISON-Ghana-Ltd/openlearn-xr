@@ -49,12 +49,24 @@ const PublicOrgSetActive = ZApi({
   })
 });
 
+// ---------------------------------------------------------------------------
+// PATCH update active organization logo and name
+// ---------------------------------------------------------------------------
+const PublicOrgUpdateActive = ZApi({
+  body: ZOrganization.pick({
+    name: true,
+  }).extend({
+    logo: ZOrganization.shape.logo.unwrap(),
+  })
+});
+
 const schema = {
   PublicOrgGetSubscription,
   PublicOrgGetList,
   PublicOrgCreate,
   PublicOrgGetActive,
   PublicOrgSetActive,
+  PublicOrgUpdateActive,
 };
 
 export default schema;

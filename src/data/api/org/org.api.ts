@@ -96,10 +96,31 @@ const publicSetActive = {
   },
 } satisfies MutationConfig;
 
+// ---------------------------------------------------------------------------
+// PATCH update active organization logo and name
+// ---------------------------------------------------------------------------
+const publicUpdateActive = {
+  type: "mutation",
+  mutationFn: async (body: Infer["PublicOrgUpdateActive"]["body"]) => {
+    const res = await authClient.organization.update({
+      data: {
+        name: body.name,
+        logo: body.logo,
+      }
+    });
+
+    if (res.error) {
+      throw new ApiError(res.error.message || "Failed to update organization", 400);
+    }
+    return "Organization updated successfully";
+  },
+} satisfies MutationConfig;
+
 export default {
   "public:org:get:subscription": publicGetSubscription,
   "public:org:post:create": publicCreateOne,
   "public:org:get:active": publicGetActive,
   "public:org:get:all": publicGetList,
   "public:org:patch:active": publicSetActive,
+  "public:org:update-active": publicUpdateActive,
 };
