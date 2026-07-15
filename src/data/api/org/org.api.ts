@@ -12,7 +12,7 @@ import { getUniqueSlug } from "@/lib/utils/get-unique-slug";
 // ---------------------------------------------------------------------------
 const publicGetSubscription = {
   type: "query",
-  queryKey: (orgId: string) => ["public", "org", orgId, "subscription"],
+  queryKey: (orgId: string) => [...QUERY_KEYS["public:org:get:subscription"](orgId)],
   queryFn: async (orgId: string) => {
     const data = await fetcher(
       () => axios.get(R["public:org:get:subscription"]({ orgId })),
@@ -116,6 +116,63 @@ const publicUpdateActive = {
   },
 } satisfies MutationConfig;
 
+// ---------------------------------------------------------------------------
+// GET /api/org/:orgId/members
+// ---------------------------------------------------------------------------
+const publicGetMembers = {
+  type: "query",
+  queryKey: (orgId: string) => [...QUERY_KEYS["public:org:get:members"](orgId)],
+  queryFn: async (orgId: string) => {
+    const data = await fetcher(
+      () => axios.get(R["public:org:get:members"]({ orgId })),
+      ZOrg.PublicOrgGetMembers.shape.res
+    );
+    return data;
+  },
+} satisfies QueryConfig;
+
+// ---------------------------------------------------------------------------
+// DELETE /api/org/:orgId/members  — remove a member
+// ---------------------------------------------------------------------------
+const publicDeleteMember = {
+  type: "mutation",
+  mutationFn: async (vars: Pick<Infer["PublicOrgDeleteMember"], "params" | "body">) => {
+    const data = await fetcher(
+      () => axios.delete(R["public:org:delete:member"]({ orgId: vars.params.orgId }), { data: vars.body }),
+      ZOrg.PublicOrgDeleteMember.shape.res
+    );
+    return data;
+  },
+} satisfies MutationConfig;
+
+// ---------------------------------------------------------------------------
+// PATCH /api/org/:orgId/members/role  — update a member's role
+// ---------------------------------------------------------------------------
+const publicUpdateMemberRole = {
+  type: "mutation",
+  mutationFn: async (vars: Pick<Infer["PublicOrgUpdateMemberRole"], "params" | "body">) => {
+    const data = await fetcher(
+      () => axios.patch(R["public:org:patch:member-role"]({ orgId: vars.params.orgId }), vars.body),
+      ZOrg.PublicOrgUpdateMemberRole.shape.res
+    );
+    return data;
+  },
+} satisfies MutationConfig;
+
+// ---------------------------------------------------------------------------
+// POST /api/org/:orgId/members/invite  — invite a new member (stub)
+// ---------------------------------------------------------------------------
+const publicInviteMember = {
+  type: "mutation",
+  mutationFn: async (vars: Pick<Infer["PublicOrgInviteMember"], "params" | "body">) => {
+    const data = await fetcher(
+      () => axios.post(R["public:org:post:invite"]({ orgId: vars.params.orgId }), vars.body),
+      ZOrg.PublicOrgInviteMember.shape.res
+    );
+    return data;
+  },
+} satisfies MutationConfig;
+
 export default {
   "public:org:get:subscription": publicGetSubscription,
   "public:org:post:create": publicCreateOne,
@@ -123,4 +180,8 @@ export default {
   "public:org:get:all": publicGetList,
   "public:org:patch:active": publicSetActive,
   "public:org:update-active": publicUpdateActive,
+  "public:org:get:members": publicGetMembers,
+  "public:org:delete:member": publicDeleteMember,
+  "public:org:patch:member-role": publicUpdateMemberRole,
+  "public:org:post:invite": publicInviteMember,
 };

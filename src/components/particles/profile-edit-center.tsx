@@ -19,6 +19,7 @@ export function ProfileEditCenter() {
     <div className="flex flex-col">
       <div className="py-6 px-4">
         <h4 className="text-xl font-normal text-foreground">Edit Profile</h4>
+        <p className="text-sm text-muted-foreground">Manage your personal profile details, account settings, and security credentials.</p>
       </div>
       <div className="px-4 space-y-8 pb-8">
         <EditAccount />

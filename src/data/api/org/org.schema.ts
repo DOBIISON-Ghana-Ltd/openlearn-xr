@@ -1,12 +1,18 @@
 import { z } from "zod";
-import { ZApi, ZOrganization, ZSubscription, ZMember } from "@/data/schema.base";
+import { ZApi, ZOrganization, ZSubscription, ZMember, ZUser } from "@/data/schema.base";
 
 // ---------------------------------------------------------------------------
 // GET active org subscription
 // ---------------------------------------------------------------------------
 const PublicOrgGetSubscription = ZApi({
   params: z.object({ orgId: z.string() }),
-  res: ZSubscription.nullable(),
+  res: ZSubscription.pick({
+    id: true,
+    status: true,
+    seats: true,
+    isUnlimited: true,
+    currentPeriodEnd: true,
+  }),
 });
 
 // ---------------------------------------------------------------------------
@@ -60,6 +66,45 @@ const PublicOrgUpdateActive = ZApi({
   })
 });
 
+// ---------------------------------------------------------------------------
+// GET all organization members
+// ---------------------------------------------------------------------------
+const PublicOrgGetMembers = ZApi({
+  params: z.object({ orgId: z.string() }),
+  res: z.array(
+    ZMember.pick({ id: true, role: true, createdAt: true }).extend({
+      user: ZUser.pick({ id: true, name: true, email: true, image: true }),
+    })
+  ),
+});
+
+// ---------------------------------------------------------------------------
+// DELETE remove organization member
+// ---------------------------------------------------------------------------
+const PublicOrgDeleteMember = ZApi({
+  params: z.object({ orgId: z.string() }),
+  body: ZMember.pick({ id: true }),
+});
+
+// ---------------------------------------------------------------------------
+// PATCH update member role
+// ---------------------------------------------------------------------------
+const PublicOrgUpdateMemberRole = ZApi({
+  params: z.object({ orgId: z.string() }),
+  body: ZMember.pick({ id: true, role: true }),
+});
+
+// ---------------------------------------------------------------------------
+// POST invite member
+// ---------------------------------------------------------------------------
+const PublicOrgInviteMember = ZApi({
+  params: z.object({ orgId: z.string() }),
+  body: z.object({
+    email: z.email(),
+    role: ZMember.shape.role.default("member"),
+  }),
+});
+
 const schema = {
   PublicOrgGetSubscription,
   PublicOrgGetList,
@@ -67,6 +112,10 @@ const schema = {
   PublicOrgGetActive,
   PublicOrgSetActive,
   PublicOrgUpdateActive,
+  PublicOrgGetMembers,
+  PublicOrgDeleteMember,
+  PublicOrgUpdateMemberRole,
+  PublicOrgInviteMember,
 };
 
 export default schema;

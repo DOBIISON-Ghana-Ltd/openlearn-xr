@@ -11,5 +11,7 @@ export const QUERY_KEYS = {
 
   // ORG
   "public:org:get:active": ["public", "org", "active"] as const,
-  "public:org:get:all": ["public", "org", "all"] as const
+  "public:org:get:all": ["public", "org", "all"] as const,
+  "public:org:get:members": (orgId: string) => ["public", "org", orgId, "members"] as const,
+  "public:org:get:subscription": (orgId: string) => ["public", "org", orgId, "subscription"] as const,
 } as const

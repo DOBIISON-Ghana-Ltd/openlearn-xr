@@ -88,7 +88,7 @@ export default function ProfileCenter() {
                   ))}
                 </ul>
                 <div className="space-y-2 w-full">
-                  <p className="text-xs-m capitalize font-medium text-muted-foreground px-4">Organization</p>
+                  <p className="text-xs-m capitalize font-medium text-muted-foreground px-4">Workspace</p>
                   <ul className="w-full px-2 space-y-1">
                     {orgTabs.map((tab) => (
                       <li key={tab.label} className="w-full">

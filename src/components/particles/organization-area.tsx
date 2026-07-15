@@ -61,7 +61,7 @@ function Info() {
       />
       <div className="flex flex-col">
         <p className="text-sm-m font-normal text-foreground capitalize">{org.name}</p>
-        <p className="self-start font-medium text-xs text-background px-1 bg-foreground uppercase">{org.subscriptionTier}</p>
+        <p className="self-start font-medium text-[9px] text-background px-1 py-0.5 bg-foreground uppercase">{org.subscriptionTier}</p>
       </div>
     </div>
   )

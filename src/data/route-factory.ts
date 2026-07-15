@@ -13,6 +13,10 @@ const ROUTES = {
   // ORGANIZATIONS
   "public:org:get:subscription": ({ orgId }: { orgId: string }) => `/api/org/${orgId}/subscription`,
   "public:org:get:active": () => '/api/org/active',
+  "public:org:get:members": ({ orgId }: { orgId: string }) => `/api/org/${orgId}/members`,
+  "public:org:delete:member": ({ orgId }: { orgId: string }) => `/api/org/${orgId}/members`,
+  "public:org:patch:member-role": ({ orgId }: { orgId: string }) => `/api/org/${orgId}/members/role`,
+  "public:org:post:invite": ({ orgId }: { orgId: string }) => `/api/org/${orgId}/members/invite`,
 } as const;
 
 export default ROUTES;

@@ -60,12 +60,13 @@ export function ProfileOrgPreferencesCenter() {
     <div className="flex flex-col">
       <div className="py-6 px-4">
         <h4 className="text-xl font-normal text-foreground">Preferences</h4>
+        <p className="text-sm text-muted-foreground">Manage your organization&apos;s general preferences, name, and branding logo.</p>
       </div>
       <div className="px-4 max-w-md pb-8">
 
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-          <TextBlock label="Organization Name" control={control} name="name" placeholder="Organization Name" />
-          <TextBlock label="Organization Logo" control={control} name="logo" placeholder="org-01" />
+          <TextBlock label="Workspace Name" control={control} name="name" placeholder="Organization Name" />
+          <TextBlock label="Workspace Logo" control={control} name="logo" placeholder="org-01" />
 
           <div className="flex items-center justify-end gap-2 pt-2">
             {isDirty && (

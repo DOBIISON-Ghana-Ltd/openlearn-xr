@@ -2,6 +2,7 @@ import { NextRequest } from "next/server";
 import { JSend } from "@/lib/utils/jsend";
 import { secureApiRoute } from "@/lib/utils/secure-api-route";
 import prisma from "@/adapters/db/client";
+import ZOrg from "@/data/api/org/org.schema";
 
 // GET /api/org/:orgId/subscription
 export const GET = secureApiRoute(async (req: NextRequest, ctx, user) => {
@@ -16,9 +17,22 @@ export const GET = secureApiRoute(async (req: NextRequest, ctx, user) => {
     return JSend.error("Forbidden", 403);
   }
 
-  const subscription = await prisma.subscription.findUnique({
+  const subscription = await prisma.subscription.findFirst({
     where: { organizationId: orgId },
+    orderBy: { createdAt: "desc" },
   });
 
-  return JSend.success(subscription);
+  if (!subscription) {
+    return JSend.error("Subscription not found", 404);
+  }
+
+  const parsed = ZOrg.PublicOrgGetSubscription.shape.res.parse({
+    id: subscription.id,
+    status: subscription.status,
+    seats: subscription.seats,
+    isUnlimited: subscription.isUnlimited,
+    currentPeriodEnd: subscription.currentPeriodEnd?.toISOString() ?? null,
+  });
+
+  return JSend.success(parsed);
 });

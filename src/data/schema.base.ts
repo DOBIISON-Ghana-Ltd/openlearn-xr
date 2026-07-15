@@ -104,75 +104,25 @@ export const ZRoleList = z.preprocess((value) => {
   return value;
 }, z.array(RoleEnum).min(1));
 
-export const InvitationStatusEnum = z.enum([
-  "pending",
-  "accepted",
-  "rejected",
-  "canceled",
-]);
+export const InvitationStatusEnum = z.enum(["pending", "accepted", "rejected", "canceled"]);
 
-export const MemberRoleEnum = z.enum([
-  "owner",
-  "admin",
-  "editor",
-  "teacher",
-  "member",
-]);
+export const MemberRoleEnum = z.enum(["owner", "member"]);
 
-export const SubscriptionTierEnum = z.enum([
-  "FREE",
-  "PRO",
-  "DEPARTMENT",
-  "ENTERPRISE",
-  "UNLIMITED",
-]);
+export const SubscriptionTierEnum = z.enum(["FREE", "PRO", "DEPARTMENT", "ENTERPRISE", "UNLIMITED"]);
 
-export const SubscriptionStatusEnum = z.enum([
-  "ACTIVE",
-  "PAST_DUE",
-  "CANCELED",
-  "TRIALING",
-]);
+export const SubscriptionStatusEnum = z.enum(["ACTIVE", "PAST_DUE", "CANCELED", "TRIALING"]);
 
-export const MediaStatusEnum = z.enum([
-  "active",
-  "deleted",
-  "uploading",
-  "processing",
-  "ready",
-  "failed",
-]);
+export const MediaStatusEnum = z.enum(["active", "deleted", "uploading", "processing", "ready", "failed"]);
 
-export const ModuleVersionStatusEnum = z.enum([
-  "DRAFT",
-  "PUBLISHED",
-  "ARCHIVED",
-]);
+export const ModuleVersionStatusEnum = z.enum(["DRAFT", "PUBLISHED", "ARCHIVED"]);
 
 export const ModuleProgressPlayModeEnum = z.enum(["free", "controlled"]);
 
-export const GamificationLogActionEnum = z.enum([
-  "XP_EARNED",
-  "XP_DEDUCTED",
-  "STREAK_INCREMENT",
-  "STREAK_RESET",
-  "BADGE_AWARDED",
-]);
+export const GamificationLogActionEnum = z.enum(["XP_EARNED", "XP_DEDUCTED", "STREAK_INCREMENT", "STREAK_RESET", "BADGE_AWARDED"]);
 
-export const LiveSessionStatusEnum = z.enum([
-  "STAGING",
-  "WAITING",
-  "ACTIVE",
-  "COMPLETED",
-  "CANCELLED",
-]);
+export const LiveSessionStatusEnum = z.enum(["STAGING", "WAITING", "ACTIVE", "COMPLETED", "CANCELLED"]);
 
-export const EmailLogStatusEnum = z.enum([
-  "QUEUED",
-  "SENT",
-  "FAILED",
-  "BOUNCED",
-]);
+export const EmailLogStatusEnum = z.enum(["QUEUED", "SENT", "FAILED", "BOUNCED"]);
 
 // ==========================================
 // BETTER AUTH CORE
