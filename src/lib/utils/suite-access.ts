@@ -10,14 +10,14 @@ export const hasEditorAccess = (roles: string[]) => {
   return roles.includes("admin") || roles.includes("editor");
 };
 
-export const hasSessionAccess = (subscriptionTier: string) => {
-  return subscriptionTier !== "FREE";
+export const hasSessionAccess = (subscriptionTier: string, isUnlimited?: boolean) => {
+  return subscriptionTier !== "FREE" || !!isUnlimited;
 };
 
-export const getAccessibleSuites = (roles: string[], subscriptionTier: string) => {
+export const getAccessibleSuites = (roles: string[], subscriptionTier: string, isUnlimited?: boolean) => {
   return {
     admin: hasAdminAccess(roles),
     editor: hasEditorAccess(roles),
-    session: hasSessionAccess(subscriptionTier),
+    session: hasSessionAccess(subscriptionTier, isUnlimited),
   };
 };

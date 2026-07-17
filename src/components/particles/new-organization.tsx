@@ -37,7 +37,9 @@ export function NewOrganization(props: DialogPrimitive.Root.Props) {
           type: "success",
           title: "Organization created successfully!"
         });
-        queryClient.invalidateQueries({ queryKey: [...QUERY_KEYS["public:org:get:active"]] });
+        queryClient.resetQueries({ queryKey: [...QUERY_KEYS["public:org:get:active"]] });
+        queryClient.invalidateQueries({ queryKey: [...QUERY_KEYS["public:org:get:all"]] });
+        queryClient.invalidateQueries({ queryKey: [...QUERY_KEYS["public:users:get:me"]] });
         reset(defaultValues);
         closeRef.current(); // Call captured DialogClose click handler to close the dialog
       },

@@ -12,9 +12,9 @@ export default async function Layout({ children }: { children: React.ReactNode }
     redirect("/auth/login?redirect=/app/session");
   }
 
-  const subscriptionTier = await getActiveOrgSubscription(res.session.activeOrganizationId);
+  const { tier, isUnlimited } = await getActiveOrgSubscription(res.session.activeOrganizationId);
 
-  if (subscriptionTier === "FREE") {
+  if (tier === "FREE" && !isUnlimited) {
     // Free tiers do not have access to the session suite.
     redirect("/app");
   }

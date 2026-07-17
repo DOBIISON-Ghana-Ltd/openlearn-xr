@@ -40,6 +40,10 @@ const parsers = {
   library: {
     book: parseAsString.withDefault('')
   },
+  session: {
+    new: parseAsString.withDefault('false'),
+    moduleId: parseAsString.withDefault(''),
+  },
   page: paginationPage
 } as const
 

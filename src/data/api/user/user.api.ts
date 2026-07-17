@@ -57,7 +57,7 @@ const publicRegister = {
       email: body.email,
       password: body.password
     });
-    if (error) throw new Error(error.message);
+    if (error) throw new ApiError(error.message || "Registration failed", error.status || 400);
     return "User registered successfully.";
   }
 } satisfies MutationConfig;
@@ -70,7 +70,7 @@ const publicLogin = {
       password: body.password,
       callbackURL: body.redirect || ROUTES.SIMS.DASHBOARD
     });
-    if (error) throw new Error(error.message);
+    if (error) throw new ApiError(error.message || "Login failed", error.status || 400);
 
     return "User logged in successfully.";
   }

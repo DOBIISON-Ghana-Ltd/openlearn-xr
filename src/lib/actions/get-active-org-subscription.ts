@@ -7,7 +7,7 @@ import prisma from "@/adapters/db/client";
  * Returns "FREE" if not found or if orgId is missing.
  */
 export async function getActiveOrgSubscription(orgId: string | null | undefined) {
-  if (!orgId) return "FREE";
+  if (!orgId) return { tier: "FREE", isUnlimited: false };
 
   try {
     const sub = await prisma.subscription.findFirst({
@@ -16,11 +16,14 @@ export async function getActiveOrgSubscription(orgId: string | null | undefined)
         status: "ACTIVE" 
       },
       orderBy: { createdAt: 'desc' },
-      select: { tier: true }
+      select: { tier: true, isUnlimited: true }
     });
-    return sub?.tier || "FREE";
+    return {
+      tier: sub?.tier || "FREE",
+      isUnlimited: sub?.isUnlimited || false
+    };
   } catch (error) {
     console.error("Failed to fetch organization subscription:", error);
-    return "FREE";
+    return { tier: "FREE", isUnlimited: false };
   }
 }

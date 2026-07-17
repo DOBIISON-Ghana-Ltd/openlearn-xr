@@ -4,7 +4,7 @@ import { secureApiRoute } from "@/lib/utils/secure-api-route";
 import { getActiveOrgSubscription } from "@/lib/actions/get-active-org-subscription";
 
 export const GET = secureApiRoute(async (req, ctx, user, session) => {
-  const subscriptionTier = await getActiveOrgSubscription(session.activeOrganizationId);
+  const subscriptionInfo = await getActiveOrgSubscription(session.activeOrganizationId);
 
   const res = ZUser.PublicUserGetMe.shape.res.parse({
     id: user.id,
@@ -15,7 +15,8 @@ export const GET = secureApiRoute(async (req, ctx, user, session) => {
     onboarded: user.onboarded,
     createdAt: user.createdAt.toISOString(),
     activeOrganizationId: session.activeOrganizationId,
-    subscriptionTier
+    subscriptionTier: subscriptionInfo.tier,
+    isUnlimited: subscriptionInfo.isUnlimited
   });
 
   return JSend.success(res);

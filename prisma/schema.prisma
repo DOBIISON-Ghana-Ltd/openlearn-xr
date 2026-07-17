@@ -211,41 +211,61 @@ model Transaction {
 // ==========================================
 
 model Media {
-  id           String   @id @default(cuid())
-  uploaderId   String
-  collectionId String? // Null until assigned to a collection
-  folder       String // e.g. "avatar", "documents"
-  status       String   @default("active") // "active" | "deleted" | "uploading" | "processing" | "ready" | "failed"
-  key          String   @unique // Path/key in the configured storage adapter
-  fileName     String // original file name
-  mimeType     String
-  metadata     Json? // Optional JSON for variable metadata (e.g. { sizeBytes, width, height })
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
+  id          String            @id @default(cuid())
+  uploaderId  String
+  folder      String            // e.g. "avatar", "documents"
+  status      String            @default("active") // "active" | "deleted" | "uploading" | "processing" | "ready" | "failed"
+  key         String            @unique // Path/key in the configured storage adapter
+  fileName    String            // original file name
+  mimeType    String
+  metadata    Json?             // Optional JSON for variable metadata (e.g. { sizeBytes, width, height })
+  createdAt   DateTime          @default(now())
+  updatedAt   DateTime          @updatedAt
 
-  uploader   User        @relation("Uploader", fields: [uploaderId], references: [id], onDelete: Cascade)
-  collection Collection? @relation(fields: [collectionId], references: [id], onDelete: SetNull)
+  uploader    User              @relation("Uploader", fields: [uploaderId], references: [id], onDelete: Cascade)
+  collections CollectionMedia[]
 
   @@index([uploaderId])
-  @@index([collectionId])
   @@index([status])
   @@map("media")
 }
 
 model Collection {
-  id           String   @id @default(cuid())
-  name         String // "SHS Physics Book One"
-  slug         String   @unique
-  description  String?
-  coverMediaId String? // Optional cover image reference (storageKey or Media ID)
-  parsedIndex  Json? // AI-generated JSON: topics, subtopics, lab locations, page refs
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
+  id          String   @id @default(cuid())
+  name        String   // "SHS Physics Book One"
+  slug        String   @unique
+  description String?
+  parsedIndex Json?    // AI-generated JSON: topics, subtopics, lab locations, page refs
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 
-  media   Media[]
-  modules Module[]
+  mediaFiles  CollectionMedia[]
+  modules     Module[]
 
   @@map("collection")
+}
+
+model CollectionMedia {
+  id           String              @id @default(cuid())
+  collectionId String
+  mediaId      String
+  role         CollectionMediaRole @default(SUPPLEMENTAL)
+
+  collection   Collection @relation(fields: [collectionId], references: [id], onDelete: Cascade)
+  media        Media      @relation(fields: [mediaId], references: [id], onDelete: Cascade)
+
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+
+  @@unique([collectionId, mediaId])
+  @@index([collectionId])
+  @@index([mediaId])
+  @@map("collection_media")
+}
+
+enum CollectionMediaRole {
+  PRIMARY
+  SUPPLEMENTAL
 }
 
 // ==========================================
@@ -277,7 +297,6 @@ model Module {
   title              String
   slug               String   @unique
   description        String
-  thumbnail          String? // storageKey reference
   orderIndex         Int // Controls "Book Mode" linear unlock ordering
   publishedVersionId String?  @unique // FK to the currently live ModuleVersion
   createdAt          DateTime @default(now())
@@ -293,26 +312,26 @@ model Module {
 }
 
 model ModuleVersion {
-  id             String    @id @default(cuid())
-  moduleId       String
-  versionNumber  Int // Auto-incrementing per module (1, 2, 3 …)
-  branchedFromId String? // The version this was forked from (null for v1)
-  status         String    @default("DRAFT") // "DRAFT" | "PUBLISHED" | "ARCHIVED"
-  simulationData Json // AI-generated 3D scene/lab config JSON
-  changeNote     String? // Optional editor note describing what changed
-  createdById    String // Editor who created this version
-  publishedAt    DateTime?
-  createdAt      DateTime  @default(now())
-  updatedAt      DateTime  @updatedAt
+  id               String             @id @default(cuid())
+  moduleId         String
+  versionNumber    Int // Auto-incrementing per module (1, 2, 3 …)
+  branchedFromId   String? // The version this was forked from (null for v1)
+  status           String             @default("DRAFT") // "DRAFT" | "PUBLISHED" | "ARCHIVED"
+  interactiveConfig Json               // Rive-like interactive lab state/transition timeline configuration
+  changeNote       String? // Optional editor note describing what changed
+  createdById      String // Editor who created this version
+  publishedAt      DateTime?
+  createdAt        DateTime           @default(now())
+  updatedAt        DateTime           @updatedAt
 
-  module         Module             @relation("ModuleVersions", fields: [moduleId], references: [id], onDelete: Cascade)
-  branchedFrom   ModuleVersion?     @relation("VersionBranch", fields: [branchedFromId], references: [id])
-  branches       ModuleVersion[]    @relation("VersionBranch")
-  publishedFor   Module?            @relation("PublishedVersion") // back-relation for Module.publishedVersionId
-  checkpoints    ModuleCheckpoint[]
-  editorChat     EditorChat?
-  sessions       LiveSession[]
-  moduleProgress ModuleProgress[]
+  module           Module             @relation("ModuleVersions", fields: [moduleId], references: [id], onDelete: Cascade)
+  branchedFrom     ModuleVersion?     @relation("VersionBranch", fields: [branchedFromId], references: [id])
+  branches         ModuleVersion[]    @relation("VersionBranch")
+  publishedFor     Module?            @relation("PublishedVersion") // back-relation for Module.publishedVersionId
+  checkpoints      ModuleCheckpoint[]
+  editorChat       EditorChat?
+  sessions         LiveSession[]
+  moduleProgress   ModuleProgress[]
 
   @@unique([moduleId, versionNumber])
   @@index([moduleId])
@@ -326,8 +345,8 @@ model ModuleCheckpoint {
   orderIndex      Int // Position in the lab flow
   question        String
   options         Json // [{label: "A", text: "...", isCorrect: true}]
+  correctAnswer   String   // The correct answer option/key (e.g. "A" or "true")
   points          Int      @default(10)
-  triggerAt       String? // e.g., "step_3" — when in the sim this fires
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt
 
@@ -393,7 +412,7 @@ model LiveSession {
   moduleVersionId String // The exact published version being played in this session
   joinCode        String    @unique // e.g. "A5F9B"
   name            String? // Optional human name for the session
-  status          String    @default("STAGING") // "STAGING" | "WAITING" | "ACTIVE" | "COMPLETED" | "CANCELLED"
+  status          String    @default("STAGING") // "STAGING" | "ACTIVE" | "COMPLETED" | "CANCELLED"
   config          Json? // Pre-play config: time limits, anonymous allowed, etc.
   startedAt       DateTime?
   endedAt         DateTime?

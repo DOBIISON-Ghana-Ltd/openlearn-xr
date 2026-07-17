@@ -163,6 +163,7 @@ export function ProfileOrgMembersCenter() {
   const qc = useQueryClient();
   const inviteHandle = DialogPrimitive.createHandle();
 
+  const { data: me } = useApi.query("public:user:get:me");
   const { data: activeOrg } = useApi.query("public:org:get:active");
   const { data: subscription } = useApi.query(
     "public:org:get:subscription",
@@ -174,7 +175,6 @@ export function ProfileOrgMembersCenter() {
     activeOrg?.id,
     !!activeOrg?.id
   );
-  const { data: me } = useApi.query("public:user:get:me");
 
   if (isLoading) {
     return <ProfileOrgMembersCenter.Skeleton />;
@@ -182,7 +182,7 @@ export function ProfileOrgMembersCenter() {
 
   const orgId = activeOrg?.id;
   const tier = activeOrg?.subscriptionTier ?? "FREE";
-  const canInvite = INVITE_ALLOWED_TIERS.includes(tier);
+  const canInvite = INVITE_ALLOWED_TIERS.includes(tier) || !!me?.isUnlimited;
 
   const totalSeats = match(subscription)
     .with({ isUnlimited: true }, () => "∞")

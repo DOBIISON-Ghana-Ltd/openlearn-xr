@@ -3,6 +3,8 @@ import Base from "./schema.base";
 import ZMedia from "./api/media/media.schema";
 import ZUser from "./api/user/user.schema";
 import ZOrg from "./api/org/org.schema";
+import ZSession from "./api/session/session.schema";
+import ZModules from "./api/modules/modules.schema";
 import { z } from "zod";
 
 // UTILITY TYPES
@@ -29,4 +31,6 @@ export type Infer =
   InferAll<typeof Base> &
   InferAll<typeof ZMedia> &
   InferAll<typeof ZUser> &
-  InferAll<typeof ZOrg>;
+  InferAll<typeof ZOrg> &
+  InferAll<typeof ZSession> &
+  InferAll<typeof ZModules>;

@@ -62,6 +62,7 @@ export const ModelName = {
   Transaction: 'Transaction',
   Media: 'Media',
   Collection: 'Collection',
+  CollectionMedia: 'CollectionMedia',
   EditorChat: 'EditorChat',
   Module: 'Module',
   ModuleVersion: 'ModuleVersion',
@@ -238,7 +239,6 @@ export type TransactionScalarFieldEnum = (typeof TransactionScalarFieldEnum)[key
 export const MediaScalarFieldEnum = {
   id: 'id',
   uploaderId: 'uploaderId',
-  collectionId: 'collectionId',
   folder: 'folder',
   status: 'status',
   key: 'key',
@@ -257,13 +257,24 @@ export const CollectionScalarFieldEnum = {
   name: 'name',
   slug: 'slug',
   description: 'description',
-  coverMediaId: 'coverMediaId',
   parsedIndex: 'parsedIndex',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
 
 export type CollectionScalarFieldEnum = (typeof CollectionScalarFieldEnum)[keyof typeof CollectionScalarFieldEnum]
+
+
+export const CollectionMediaScalarFieldEnum = {
+  id: 'id',
+  collectionId: 'collectionId',
+  mediaId: 'mediaId',
+  role: 'role',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type CollectionMediaScalarFieldEnum = (typeof CollectionMediaScalarFieldEnum)[keyof typeof CollectionMediaScalarFieldEnum]
 
 
 export const EditorChatScalarFieldEnum = {
@@ -284,7 +295,6 @@ export const ModuleScalarFieldEnum = {
   title: 'title',
   slug: 'slug',
   description: 'description',
-  thumbnail: 'thumbnail',
   orderIndex: 'orderIndex',
   publishedVersionId: 'publishedVersionId',
   createdAt: 'createdAt',
@@ -300,7 +310,7 @@ export const ModuleVersionScalarFieldEnum = {
   versionNumber: 'versionNumber',
   branchedFromId: 'branchedFromId',
   status: 'status',
-  simulationData: 'simulationData',
+  interactiveConfig: 'interactiveConfig',
   changeNote: 'changeNote',
   createdById: 'createdById',
   publishedAt: 'publishedAt',
@@ -317,8 +327,8 @@ export const ModuleCheckpointScalarFieldEnum = {
   orderIndex: 'orderIndex',
   question: 'question',
   options: 'options',
+  correctAnswer: 'correctAnswer',
   points: 'points',
-  triggerAt: 'triggerAt',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const

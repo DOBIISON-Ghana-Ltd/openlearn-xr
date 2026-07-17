@@ -239,6 +239,23 @@ export type IntWithAggregatesFilter<$PrismaModel = never> = {
   _max?: Prisma.NestedIntFilter<$PrismaModel>
 }
 
+export type EnumCollectionMediaRoleFilter<$PrismaModel = never> = {
+  equals?: $Enums.CollectionMediaRole | Prisma.EnumCollectionMediaRoleFieldRefInput<$PrismaModel>
+  in?: $Enums.CollectionMediaRole[] | Prisma.ListEnumCollectionMediaRoleFieldRefInput<$PrismaModel>
+  notIn?: $Enums.CollectionMediaRole[] | Prisma.ListEnumCollectionMediaRoleFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumCollectionMediaRoleFilter<$PrismaModel> | $Enums.CollectionMediaRole
+}
+
+export type EnumCollectionMediaRoleWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.CollectionMediaRole | Prisma.EnumCollectionMediaRoleFieldRefInput<$PrismaModel>
+  in?: $Enums.CollectionMediaRole[] | Prisma.ListEnumCollectionMediaRoleFieldRefInput<$PrismaModel>
+  notIn?: $Enums.CollectionMediaRole[] | Prisma.ListEnumCollectionMediaRoleFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumCollectionMediaRoleWithAggregatesFilter<$PrismaModel> | $Enums.CollectionMediaRole
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumCollectionMediaRoleFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumCollectionMediaRoleFilter<$PrismaModel>
+}
+
 export type JsonFilter<$PrismaModel = never> =
 | Prisma.PatchUndefined<
     Prisma.Either<Required<JsonFilterBase<$PrismaModel>>, Exclude<keyof Required<JsonFilterBase<$PrismaModel>>, 'path'>>,
@@ -526,6 +543,23 @@ export type NestedFloatFilter<$PrismaModel = never> = {
   gt?: number | Prisma.FloatFieldRefInput<$PrismaModel>
   gte?: number | Prisma.FloatFieldRefInput<$PrismaModel>
   not?: Prisma.NestedFloatFilter<$PrismaModel> | number
+}
+
+export type NestedEnumCollectionMediaRoleFilter<$PrismaModel = never> = {
+  equals?: $Enums.CollectionMediaRole | Prisma.EnumCollectionMediaRoleFieldRefInput<$PrismaModel>
+  in?: $Enums.CollectionMediaRole[] | Prisma.ListEnumCollectionMediaRoleFieldRefInput<$PrismaModel>
+  notIn?: $Enums.CollectionMediaRole[] | Prisma.ListEnumCollectionMediaRoleFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumCollectionMediaRoleFilter<$PrismaModel> | $Enums.CollectionMediaRole
+}
+
+export type NestedEnumCollectionMediaRoleWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.CollectionMediaRole | Prisma.EnumCollectionMediaRoleFieldRefInput<$PrismaModel>
+  in?: $Enums.CollectionMediaRole[] | Prisma.ListEnumCollectionMediaRoleFieldRefInput<$PrismaModel>
+  notIn?: $Enums.CollectionMediaRole[] | Prisma.ListEnumCollectionMediaRoleFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumCollectionMediaRoleWithAggregatesFilter<$PrismaModel> | $Enums.CollectionMediaRole
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumCollectionMediaRoleFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumCollectionMediaRoleFilter<$PrismaModel>
 }
 
 export type NestedJsonFilter<$PrismaModel = never> =

@@ -1,11 +1,15 @@
-import userModule from './api/user/user.api';
-import mediaModule from './api/media/media.api';
-import orgModule from './api/org/org.api';
+import userApi from './api/user/user.api';
+import mediaApi from './api/media/media.api';
+import orgApi from './api/org/org.api';
+import sessionApi from './api/session/session.api';
+import moduleApi from './api/modules/modules.api';
 
 export const apiRegistry = {
-  ...userModule,
-  ...mediaModule,
-  ...orgModule
+  ...userApi,
+  ...mediaApi,
+  ...orgApi,
+  ...sessionApi,
+  ...moduleApi,
 } as const;
 
 export type ApiRegistry = typeof apiRegistry;

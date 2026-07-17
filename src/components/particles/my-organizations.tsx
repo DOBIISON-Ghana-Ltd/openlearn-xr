@@ -17,8 +17,11 @@ export default function MyOrganizations(props: MenuPrimitive.Root.Props) {
       { id: orgId },
       {
         onSuccess: () => {
-          queryClient.invalidateQueries({
+          queryClient.resetQueries({
             queryKey: [...QUERY_KEYS["public:org:get:active"]],
+          });
+          queryClient.invalidateQueries({
+            queryKey: [...QUERY_KEYS["public:users:get:me"]],
           });
         },
       }

@@ -5,6 +5,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { useMemo } from "react";
 import { LoaderIcon, InboxIcon } from "lucide-react";
 import { cn } from "@/lib/utils/cn";
+import { match } from "ts-pattern";
 
 type DataTableProps<TData, TValue> = {
   columns: ColumnDef<TData, TValue>[]
@@ -43,13 +44,11 @@ export function DataTable<TData, TValue>(props: DataTableProps<TData, TValue>) {
         ))}
       </TableHeader>
       <TableBody>
-        {loading ? (
-          <Loader length={columns.length} />
-        ) : rows?.length ? (
-          <Content columns={columns} rows={rows} />
-        ) : (
-          <NoResult length={columns.length} />
-        )}
+        {match({ loading: !!loading, hasRows: (rows?.length ?? 0) > 0 })
+          .with({ loading: true }, () => <Loader length={columns.length} />)
+          .with({ loading: false, hasRows: true }, () => <Content columns={columns} rows={rows} />)
+          .with({ loading: false, hasRows: false }, () => <NoResult length={columns.length} />)
+          .exhaustive()}
       </TableBody>
     </Table>
   )
@@ -94,7 +93,7 @@ function NoResult(props: INoResult) {
     <TableRow className="hover:bg-background">
       <TableCell colSpan={props.length}>
         <div className="flex flex-col items-center justify-center gap-2 py-8">
-          <InboxIcon className="size-7 text-muted-foreground opacity-50" />
+          <InboxIcon strokeWidth={1.5} className="size-7 text-muted-foreground opacity-50" />
           <p className="text-sm font-semibold text-muted-foreground">No results.</p>
         </div>
       </TableCell>

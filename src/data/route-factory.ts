@@ -17,6 +17,13 @@ const ROUTES = {
   "public:org:delete:member": ({ orgId }: { orgId: string }) => `/api/org/${orgId}/members`,
   "public:org:patch:member-role": ({ orgId }: { orgId: string }) => `/api/org/${orgId}/members/role`,
   "public:org:post:invite": ({ orgId }: { orgId: string }) => `/api/org/${orgId}/members/invite`,
+
+  // SESSIONS
+  "public:session:get:all":        () => '/api/sessions',
+  "public:session:get:overview":   (id: string) => `/api/sessions/${id}/overview`,
+  "public:session:post:create":    () => '/api/sessions',
+  "public:module-version:get:all": () => '/api/modules/versions',
 } as const;
+
 
 export default ROUTES;

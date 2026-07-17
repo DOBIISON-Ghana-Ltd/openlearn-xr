@@ -66,7 +66,7 @@ export type ModuleVersionCountAggregateOutputType = {
   versionNumber: number
   branchedFromId: number
   status: number
-  simulationData: number
+  interactiveConfig: number
   changeNote: number
   createdById: number
   publishedAt: number
@@ -116,7 +116,7 @@ export type ModuleVersionCountAggregateInputType = {
   versionNumber?: true
   branchedFromId?: true
   status?: true
-  simulationData?: true
+  interactiveConfig?: true
   changeNote?: true
   createdById?: true
   publishedAt?: true
@@ -217,7 +217,7 @@ export type ModuleVersionGroupByOutputType = {
   versionNumber: number
   branchedFromId: string | null
   status: string
-  simulationData: runtime.JsonValue
+  interactiveConfig: runtime.JsonValue
   changeNote: string | null
   createdById: string
   publishedAt: Date | null
@@ -254,7 +254,7 @@ export type ModuleVersionWhereInput = {
   versionNumber?: Prisma.IntFilter<"ModuleVersion"> | number
   branchedFromId?: Prisma.StringNullableFilter<"ModuleVersion"> | string | null
   status?: Prisma.StringFilter<"ModuleVersion"> | string
-  simulationData?: Prisma.JsonFilter<"ModuleVersion">
+  interactiveConfig?: Prisma.JsonFilter<"ModuleVersion">
   changeNote?: Prisma.StringNullableFilter<"ModuleVersion"> | string | null
   createdById?: Prisma.StringFilter<"ModuleVersion"> | string
   publishedAt?: Prisma.DateTimeNullableFilter<"ModuleVersion"> | Date | string | null
@@ -276,7 +276,7 @@ export type ModuleVersionOrderByWithRelationInput = {
   versionNumber?: Prisma.SortOrder
   branchedFromId?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrder
-  simulationData?: Prisma.SortOrder
+  interactiveConfig?: Prisma.SortOrder
   changeNote?: Prisma.SortOrderInput | Prisma.SortOrder
   createdById?: Prisma.SortOrder
   publishedAt?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -302,7 +302,7 @@ export type ModuleVersionWhereUniqueInput = Prisma.AtLeast<{
   versionNumber?: Prisma.IntFilter<"ModuleVersion"> | number
   branchedFromId?: Prisma.StringNullableFilter<"ModuleVersion"> | string | null
   status?: Prisma.StringFilter<"ModuleVersion"> | string
-  simulationData?: Prisma.JsonFilter<"ModuleVersion">
+  interactiveConfig?: Prisma.JsonFilter<"ModuleVersion">
   changeNote?: Prisma.StringNullableFilter<"ModuleVersion"> | string | null
   createdById?: Prisma.StringFilter<"ModuleVersion"> | string
   publishedAt?: Prisma.DateTimeNullableFilter<"ModuleVersion"> | Date | string | null
@@ -324,7 +324,7 @@ export type ModuleVersionOrderByWithAggregationInput = {
   versionNumber?: Prisma.SortOrder
   branchedFromId?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrder
-  simulationData?: Prisma.SortOrder
+  interactiveConfig?: Prisma.SortOrder
   changeNote?: Prisma.SortOrderInput | Prisma.SortOrder
   createdById?: Prisma.SortOrder
   publishedAt?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -346,7 +346,7 @@ export type ModuleVersionScalarWhereWithAggregatesInput = {
   versionNumber?: Prisma.IntWithAggregatesFilter<"ModuleVersion"> | number
   branchedFromId?: Prisma.StringNullableWithAggregatesFilter<"ModuleVersion"> | string | null
   status?: Prisma.StringWithAggregatesFilter<"ModuleVersion"> | string
-  simulationData?: Prisma.JsonWithAggregatesFilter<"ModuleVersion">
+  interactiveConfig?: Prisma.JsonWithAggregatesFilter<"ModuleVersion">
   changeNote?: Prisma.StringNullableWithAggregatesFilter<"ModuleVersion"> | string | null
   createdById?: Prisma.StringWithAggregatesFilter<"ModuleVersion"> | string
   publishedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"ModuleVersion"> | Date | string | null
@@ -358,7 +358,7 @@ export type ModuleVersionCreateInput = {
   id?: string
   versionNumber: number
   status?: string
-  simulationData: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  interactiveConfig: Prisma.JsonNullValueInput | runtime.InputJsonValue
   changeNote?: string | null
   createdById: string
   publishedAt?: Date | string | null
@@ -380,7 +380,7 @@ export type ModuleVersionUncheckedCreateInput = {
   versionNumber: number
   branchedFromId?: string | null
   status?: string
-  simulationData: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  interactiveConfig: Prisma.JsonNullValueInput | runtime.InputJsonValue
   changeNote?: string | null
   createdById: string
   publishedAt?: Date | string | null
@@ -398,7 +398,7 @@ export type ModuleVersionUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   versionNumber?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.StringFieldUpdateOperationsInput | string
-  simulationData?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  interactiveConfig?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   changeNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdById?: Prisma.StringFieldUpdateOperationsInput | string
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -420,7 +420,7 @@ export type ModuleVersionUncheckedUpdateInput = {
   versionNumber?: Prisma.IntFieldUpdateOperationsInput | number
   branchedFromId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.StringFieldUpdateOperationsInput | string
-  simulationData?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  interactiveConfig?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   changeNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdById?: Prisma.StringFieldUpdateOperationsInput | string
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -440,7 +440,7 @@ export type ModuleVersionCreateManyInput = {
   versionNumber: number
   branchedFromId?: string | null
   status?: string
-  simulationData: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  interactiveConfig: Prisma.JsonNullValueInput | runtime.InputJsonValue
   changeNote?: string | null
   createdById: string
   publishedAt?: Date | string | null
@@ -452,7 +452,7 @@ export type ModuleVersionUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   versionNumber?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.StringFieldUpdateOperationsInput | string
-  simulationData?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  interactiveConfig?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   changeNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdById?: Prisma.StringFieldUpdateOperationsInput | string
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -466,7 +466,7 @@ export type ModuleVersionUncheckedUpdateManyInput = {
   versionNumber?: Prisma.IntFieldUpdateOperationsInput | number
   branchedFromId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.StringFieldUpdateOperationsInput | string
-  simulationData?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  interactiveConfig?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   changeNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdById?: Prisma.StringFieldUpdateOperationsInput | string
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -505,7 +505,7 @@ export type ModuleVersionCountOrderByAggregateInput = {
   versionNumber?: Prisma.SortOrder
   branchedFromId?: Prisma.SortOrder
   status?: Prisma.SortOrder
-  simulationData?: Prisma.SortOrder
+  interactiveConfig?: Prisma.SortOrder
   changeNote?: Prisma.SortOrder
   createdById?: Prisma.SortOrder
   publishedAt?: Prisma.SortOrder
@@ -725,7 +725,7 @@ export type ModuleVersionCreateWithoutEditorChatInput = {
   id?: string
   versionNumber: number
   status?: string
-  simulationData: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  interactiveConfig: Prisma.JsonNullValueInput | runtime.InputJsonValue
   changeNote?: string | null
   createdById: string
   publishedAt?: Date | string | null
@@ -746,7 +746,7 @@ export type ModuleVersionUncheckedCreateWithoutEditorChatInput = {
   versionNumber: number
   branchedFromId?: string | null
   status?: string
-  simulationData: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  interactiveConfig: Prisma.JsonNullValueInput | runtime.InputJsonValue
   changeNote?: string | null
   createdById: string
   publishedAt?: Date | string | null
@@ -779,7 +779,7 @@ export type ModuleVersionUpdateWithoutEditorChatInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   versionNumber?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.StringFieldUpdateOperationsInput | string
-  simulationData?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  interactiveConfig?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   changeNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdById?: Prisma.StringFieldUpdateOperationsInput | string
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -800,7 +800,7 @@ export type ModuleVersionUncheckedUpdateWithoutEditorChatInput = {
   versionNumber?: Prisma.IntFieldUpdateOperationsInput | number
   branchedFromId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.StringFieldUpdateOperationsInput | string
-  simulationData?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  interactiveConfig?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   changeNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdById?: Prisma.StringFieldUpdateOperationsInput | string
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -817,7 +817,7 @@ export type ModuleVersionCreateWithoutModuleInput = {
   id?: string
   versionNumber: number
   status?: string
-  simulationData: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  interactiveConfig: Prisma.JsonNullValueInput | runtime.InputJsonValue
   changeNote?: string | null
   createdById: string
   publishedAt?: Date | string | null
@@ -837,7 +837,7 @@ export type ModuleVersionUncheckedCreateWithoutModuleInput = {
   versionNumber: number
   branchedFromId?: string | null
   status?: string
-  simulationData: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  interactiveConfig: Prisma.JsonNullValueInput | runtime.InputJsonValue
   changeNote?: string | null
   createdById: string
   publishedAt?: Date | string | null
@@ -865,7 +865,7 @@ export type ModuleVersionCreateWithoutPublishedForInput = {
   id?: string
   versionNumber: number
   status?: string
-  simulationData: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  interactiveConfig: Prisma.JsonNullValueInput | runtime.InputJsonValue
   changeNote?: string | null
   createdById: string
   publishedAt?: Date | string | null
@@ -886,7 +886,7 @@ export type ModuleVersionUncheckedCreateWithoutPublishedForInput = {
   versionNumber: number
   branchedFromId?: string | null
   status?: string
-  simulationData: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  interactiveConfig: Prisma.JsonNullValueInput | runtime.InputJsonValue
   changeNote?: string | null
   createdById: string
   publishedAt?: Date | string | null
@@ -929,7 +929,7 @@ export type ModuleVersionScalarWhereInput = {
   versionNumber?: Prisma.IntFilter<"ModuleVersion"> | number
   branchedFromId?: Prisma.StringNullableFilter<"ModuleVersion"> | string | null
   status?: Prisma.StringFilter<"ModuleVersion"> | string
-  simulationData?: Prisma.JsonFilter<"ModuleVersion">
+  interactiveConfig?: Prisma.JsonFilter<"ModuleVersion">
   changeNote?: Prisma.StringNullableFilter<"ModuleVersion"> | string | null
   createdById?: Prisma.StringFilter<"ModuleVersion"> | string
   publishedAt?: Prisma.DateTimeNullableFilter<"ModuleVersion"> | Date | string | null
@@ -952,7 +952,7 @@ export type ModuleVersionUpdateWithoutPublishedForInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   versionNumber?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.StringFieldUpdateOperationsInput | string
-  simulationData?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  interactiveConfig?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   changeNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdById?: Prisma.StringFieldUpdateOperationsInput | string
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -973,7 +973,7 @@ export type ModuleVersionUncheckedUpdateWithoutPublishedForInput = {
   versionNumber?: Prisma.IntFieldUpdateOperationsInput | number
   branchedFromId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.StringFieldUpdateOperationsInput | string
-  simulationData?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  interactiveConfig?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   changeNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdById?: Prisma.StringFieldUpdateOperationsInput | string
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -990,7 +990,7 @@ export type ModuleVersionCreateWithoutBranchesInput = {
   id?: string
   versionNumber: number
   status?: string
-  simulationData: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  interactiveConfig: Prisma.JsonNullValueInput | runtime.InputJsonValue
   changeNote?: string | null
   createdById: string
   publishedAt?: Date | string | null
@@ -1011,7 +1011,7 @@ export type ModuleVersionUncheckedCreateWithoutBranchesInput = {
   versionNumber: number
   branchedFromId?: string | null
   status?: string
-  simulationData: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  interactiveConfig: Prisma.JsonNullValueInput | runtime.InputJsonValue
   changeNote?: string | null
   createdById: string
   publishedAt?: Date | string | null
@@ -1033,7 +1033,7 @@ export type ModuleVersionCreateWithoutBranchedFromInput = {
   id?: string
   versionNumber: number
   status?: string
-  simulationData: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  interactiveConfig: Prisma.JsonNullValueInput | runtime.InputJsonValue
   changeNote?: string | null
   createdById: string
   publishedAt?: Date | string | null
@@ -1053,7 +1053,7 @@ export type ModuleVersionUncheckedCreateWithoutBranchedFromInput = {
   moduleId: string
   versionNumber: number
   status?: string
-  simulationData: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  interactiveConfig: Prisma.JsonNullValueInput | runtime.InputJsonValue
   changeNote?: string | null
   createdById: string
   publishedAt?: Date | string | null
@@ -1092,7 +1092,7 @@ export type ModuleVersionUpdateWithoutBranchesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   versionNumber?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.StringFieldUpdateOperationsInput | string
-  simulationData?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  interactiveConfig?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   changeNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdById?: Prisma.StringFieldUpdateOperationsInput | string
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1113,7 +1113,7 @@ export type ModuleVersionUncheckedUpdateWithoutBranchesInput = {
   versionNumber?: Prisma.IntFieldUpdateOperationsInput | number
   branchedFromId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.StringFieldUpdateOperationsInput | string
-  simulationData?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  interactiveConfig?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   changeNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdById?: Prisma.StringFieldUpdateOperationsInput | string
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1146,7 +1146,7 @@ export type ModuleVersionCreateWithoutCheckpointsInput = {
   id?: string
   versionNumber: number
   status?: string
-  simulationData: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  interactiveConfig: Prisma.JsonNullValueInput | runtime.InputJsonValue
   changeNote?: string | null
   createdById: string
   publishedAt?: Date | string | null
@@ -1167,7 +1167,7 @@ export type ModuleVersionUncheckedCreateWithoutCheckpointsInput = {
   versionNumber: number
   branchedFromId?: string | null
   status?: string
-  simulationData: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  interactiveConfig: Prisma.JsonNullValueInput | runtime.InputJsonValue
   changeNote?: string | null
   createdById: string
   publishedAt?: Date | string | null
@@ -1200,7 +1200,7 @@ export type ModuleVersionUpdateWithoutCheckpointsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   versionNumber?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.StringFieldUpdateOperationsInput | string
-  simulationData?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  interactiveConfig?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   changeNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdById?: Prisma.StringFieldUpdateOperationsInput | string
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1221,7 +1221,7 @@ export type ModuleVersionUncheckedUpdateWithoutCheckpointsInput = {
   versionNumber?: Prisma.IntFieldUpdateOperationsInput | number
   branchedFromId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.StringFieldUpdateOperationsInput | string
-  simulationData?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  interactiveConfig?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   changeNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdById?: Prisma.StringFieldUpdateOperationsInput | string
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1238,7 +1238,7 @@ export type ModuleVersionCreateWithoutModuleProgressInput = {
   id?: string
   versionNumber: number
   status?: string
-  simulationData: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  interactiveConfig: Prisma.JsonNullValueInput | runtime.InputJsonValue
   changeNote?: string | null
   createdById: string
   publishedAt?: Date | string | null
@@ -1259,7 +1259,7 @@ export type ModuleVersionUncheckedCreateWithoutModuleProgressInput = {
   versionNumber: number
   branchedFromId?: string | null
   status?: string
-  simulationData: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  interactiveConfig: Prisma.JsonNullValueInput | runtime.InputJsonValue
   changeNote?: string | null
   createdById: string
   publishedAt?: Date | string | null
@@ -1292,7 +1292,7 @@ export type ModuleVersionUpdateWithoutModuleProgressInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   versionNumber?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.StringFieldUpdateOperationsInput | string
-  simulationData?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  interactiveConfig?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   changeNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdById?: Prisma.StringFieldUpdateOperationsInput | string
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1313,7 +1313,7 @@ export type ModuleVersionUncheckedUpdateWithoutModuleProgressInput = {
   versionNumber?: Prisma.IntFieldUpdateOperationsInput | number
   branchedFromId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.StringFieldUpdateOperationsInput | string
-  simulationData?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  interactiveConfig?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   changeNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdById?: Prisma.StringFieldUpdateOperationsInput | string
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1330,7 +1330,7 @@ export type ModuleVersionCreateWithoutSessionsInput = {
   id?: string
   versionNumber: number
   status?: string
-  simulationData: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  interactiveConfig: Prisma.JsonNullValueInput | runtime.InputJsonValue
   changeNote?: string | null
   createdById: string
   publishedAt?: Date | string | null
@@ -1351,7 +1351,7 @@ export type ModuleVersionUncheckedCreateWithoutSessionsInput = {
   versionNumber: number
   branchedFromId?: string | null
   status?: string
-  simulationData: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  interactiveConfig: Prisma.JsonNullValueInput | runtime.InputJsonValue
   changeNote?: string | null
   createdById: string
   publishedAt?: Date | string | null
@@ -1384,7 +1384,7 @@ export type ModuleVersionUpdateWithoutSessionsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   versionNumber?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.StringFieldUpdateOperationsInput | string
-  simulationData?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  interactiveConfig?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   changeNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdById?: Prisma.StringFieldUpdateOperationsInput | string
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1405,7 +1405,7 @@ export type ModuleVersionUncheckedUpdateWithoutSessionsInput = {
   versionNumber?: Prisma.IntFieldUpdateOperationsInput | number
   branchedFromId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.StringFieldUpdateOperationsInput | string
-  simulationData?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  interactiveConfig?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   changeNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdById?: Prisma.StringFieldUpdateOperationsInput | string
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1423,7 +1423,7 @@ export type ModuleVersionCreateManyModuleInput = {
   versionNumber: number
   branchedFromId?: string | null
   status?: string
-  simulationData: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  interactiveConfig: Prisma.JsonNullValueInput | runtime.InputJsonValue
   changeNote?: string | null
   createdById: string
   publishedAt?: Date | string | null
@@ -1435,7 +1435,7 @@ export type ModuleVersionUpdateWithoutModuleInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   versionNumber?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.StringFieldUpdateOperationsInput | string
-  simulationData?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  interactiveConfig?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   changeNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdById?: Prisma.StringFieldUpdateOperationsInput | string
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1455,7 +1455,7 @@ export type ModuleVersionUncheckedUpdateWithoutModuleInput = {
   versionNumber?: Prisma.IntFieldUpdateOperationsInput | number
   branchedFromId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.StringFieldUpdateOperationsInput | string
-  simulationData?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  interactiveConfig?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   changeNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdById?: Prisma.StringFieldUpdateOperationsInput | string
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1474,7 +1474,7 @@ export type ModuleVersionUncheckedUpdateManyWithoutModuleInput = {
   versionNumber?: Prisma.IntFieldUpdateOperationsInput | number
   branchedFromId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.StringFieldUpdateOperationsInput | string
-  simulationData?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  interactiveConfig?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   changeNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdById?: Prisma.StringFieldUpdateOperationsInput | string
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1487,7 +1487,7 @@ export type ModuleVersionCreateManyBranchedFromInput = {
   moduleId: string
   versionNumber: number
   status?: string
-  simulationData: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  interactiveConfig: Prisma.JsonNullValueInput | runtime.InputJsonValue
   changeNote?: string | null
   createdById: string
   publishedAt?: Date | string | null
@@ -1499,7 +1499,7 @@ export type ModuleVersionUpdateWithoutBranchedFromInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   versionNumber?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.StringFieldUpdateOperationsInput | string
-  simulationData?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  interactiveConfig?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   changeNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdById?: Prisma.StringFieldUpdateOperationsInput | string
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1519,7 +1519,7 @@ export type ModuleVersionUncheckedUpdateWithoutBranchedFromInput = {
   moduleId?: Prisma.StringFieldUpdateOperationsInput | string
   versionNumber?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.StringFieldUpdateOperationsInput | string
-  simulationData?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  interactiveConfig?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   changeNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdById?: Prisma.StringFieldUpdateOperationsInput | string
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1538,7 +1538,7 @@ export type ModuleVersionUncheckedUpdateManyWithoutBranchedFromInput = {
   moduleId?: Prisma.StringFieldUpdateOperationsInput | string
   versionNumber?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.StringFieldUpdateOperationsInput | string
-  simulationData?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  interactiveConfig?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   changeNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdById?: Prisma.StringFieldUpdateOperationsInput | string
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1610,7 +1610,7 @@ export type ModuleVersionSelect<ExtArgs extends runtime.Types.Extensions.Interna
   versionNumber?: boolean
   branchedFromId?: boolean
   status?: boolean
-  simulationData?: boolean
+  interactiveConfig?: boolean
   changeNote?: boolean
   createdById?: boolean
   publishedAt?: boolean
@@ -1633,7 +1633,7 @@ export type ModuleVersionSelectCreateManyAndReturn<ExtArgs extends runtime.Types
   versionNumber?: boolean
   branchedFromId?: boolean
   status?: boolean
-  simulationData?: boolean
+  interactiveConfig?: boolean
   changeNote?: boolean
   createdById?: boolean
   publishedAt?: boolean
@@ -1649,7 +1649,7 @@ export type ModuleVersionSelectUpdateManyAndReturn<ExtArgs extends runtime.Types
   versionNumber?: boolean
   branchedFromId?: boolean
   status?: boolean
-  simulationData?: boolean
+  interactiveConfig?: boolean
   changeNote?: boolean
   createdById?: boolean
   publishedAt?: boolean
@@ -1665,7 +1665,7 @@ export type ModuleVersionSelectScalar = {
   versionNumber?: boolean
   branchedFromId?: boolean
   status?: boolean
-  simulationData?: boolean
+  interactiveConfig?: boolean
   changeNote?: boolean
   createdById?: boolean
   publishedAt?: boolean
@@ -1673,7 +1673,7 @@ export type ModuleVersionSelectScalar = {
   updatedAt?: boolean
 }
 
-export type ModuleVersionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "moduleId" | "versionNumber" | "branchedFromId" | "status" | "simulationData" | "changeNote" | "createdById" | "publishedAt" | "createdAt" | "updatedAt", ExtArgs["result"]["moduleVersion"]>
+export type ModuleVersionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "moduleId" | "versionNumber" | "branchedFromId" | "status" | "interactiveConfig" | "changeNote" | "createdById" | "publishedAt" | "createdAt" | "updatedAt", ExtArgs["result"]["moduleVersion"]>
 export type ModuleVersionInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   module?: boolean | Prisma.ModuleDefaultArgs<ExtArgs>
   branchedFrom?: boolean | Prisma.ModuleVersion$branchedFromArgs<ExtArgs>
@@ -1712,7 +1712,7 @@ export type $ModuleVersionPayload<ExtArgs extends runtime.Types.Extensions.Inter
     versionNumber: number
     branchedFromId: string | null
     status: string
-    simulationData: runtime.JsonValue
+    interactiveConfig: runtime.JsonValue
     changeNote: string | null
     createdById: string
     publishedAt: Date | null
@@ -2154,7 +2154,7 @@ export interface ModuleVersionFieldRefs {
   readonly versionNumber: Prisma.FieldRef<"ModuleVersion", 'Int'>
   readonly branchedFromId: Prisma.FieldRef<"ModuleVersion", 'String'>
   readonly status: Prisma.FieldRef<"ModuleVersion", 'String'>
-  readonly simulationData: Prisma.FieldRef<"ModuleVersion", 'Json'>
+  readonly interactiveConfig: Prisma.FieldRef<"ModuleVersion", 'Json'>
   readonly changeNote: Prisma.FieldRef<"ModuleVersion", 'String'>
   readonly createdById: Prisma.FieldRef<"ModuleVersion", 'String'>
   readonly publishedAt: Prisma.FieldRef<"ModuleVersion", 'DateTime'>

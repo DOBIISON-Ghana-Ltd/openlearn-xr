@@ -395,6 +395,7 @@ export const ModelName = {
   Transaction: 'Transaction',
   Media: 'Media',
   Collection: 'Collection',
+  CollectionMedia: 'CollectionMedia',
   EditorChat: 'EditorChat',
   Module: 'Module',
   ModuleVersion: 'ModuleVersion',
@@ -422,7 +423,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "session" | "account" | "verification" | "invitation" | "organization" | "member" | "subscription" | "transaction" | "media" | "collection" | "editorChat" | "module" | "moduleVersion" | "moduleCheckpoint" | "moduleProgress" | "gamificationLog" | "liveSession" | "sessionCheckpoint" | "sessionPlayer" | "sessionAnalytic" | "appSetting" | "emailLog"
+    modelProps: "user" | "session" | "account" | "verification" | "invitation" | "organization" | "member" | "subscription" | "transaction" | "media" | "collection" | "collectionMedia" | "editorChat" | "module" | "moduleVersion" | "moduleCheckpoint" | "moduleProgress" | "gamificationLog" | "liveSession" | "sessionCheckpoint" | "sessionPlayer" | "sessionAnalytic" | "appSetting" | "emailLog"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1237,6 +1238,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.CollectionCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.CollectionCountAggregateOutputType> | number
+        }
+      }
+    }
+    CollectionMedia: {
+      payload: Prisma.$CollectionMediaPayload<ExtArgs>
+      fields: Prisma.CollectionMediaFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.CollectionMediaFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CollectionMediaPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.CollectionMediaFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CollectionMediaPayload>
+        }
+        findFirst: {
+          args: Prisma.CollectionMediaFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CollectionMediaPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.CollectionMediaFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CollectionMediaPayload>
+        }
+        findMany: {
+          args: Prisma.CollectionMediaFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CollectionMediaPayload>[]
+        }
+        create: {
+          args: Prisma.CollectionMediaCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CollectionMediaPayload>
+        }
+        createMany: {
+          args: Prisma.CollectionMediaCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.CollectionMediaCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CollectionMediaPayload>[]
+        }
+        delete: {
+          args: Prisma.CollectionMediaDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CollectionMediaPayload>
+        }
+        update: {
+          args: Prisma.CollectionMediaUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CollectionMediaPayload>
+        }
+        deleteMany: {
+          args: Prisma.CollectionMediaDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.CollectionMediaUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.CollectionMediaUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CollectionMediaPayload>[]
+        }
+        upsert: {
+          args: Prisma.CollectionMediaUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CollectionMediaPayload>
+        }
+        aggregate: {
+          args: Prisma.CollectionMediaAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateCollectionMedia>
+        }
+        groupBy: {
+          args: Prisma.CollectionMediaGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.CollectionMediaGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.CollectionMediaCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.CollectionMediaCountAggregateOutputType> | number
         }
       }
     }
@@ -2313,7 +2388,6 @@ export type TransactionScalarFieldEnum = (typeof TransactionScalarFieldEnum)[key
 export const MediaScalarFieldEnum = {
   id: 'id',
   uploaderId: 'uploaderId',
-  collectionId: 'collectionId',
   folder: 'folder',
   status: 'status',
   key: 'key',
@@ -2332,13 +2406,24 @@ export const CollectionScalarFieldEnum = {
   name: 'name',
   slug: 'slug',
   description: 'description',
-  coverMediaId: 'coverMediaId',
   parsedIndex: 'parsedIndex',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
 
 export type CollectionScalarFieldEnum = (typeof CollectionScalarFieldEnum)[keyof typeof CollectionScalarFieldEnum]
+
+
+export const CollectionMediaScalarFieldEnum = {
+  id: 'id',
+  collectionId: 'collectionId',
+  mediaId: 'mediaId',
+  role: 'role',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type CollectionMediaScalarFieldEnum = (typeof CollectionMediaScalarFieldEnum)[keyof typeof CollectionMediaScalarFieldEnum]
 
 
 export const EditorChatScalarFieldEnum = {
@@ -2359,7 +2444,6 @@ export const ModuleScalarFieldEnum = {
   title: 'title',
   slug: 'slug',
   description: 'description',
-  thumbnail: 'thumbnail',
   orderIndex: 'orderIndex',
   publishedVersionId: 'publishedVersionId',
   createdAt: 'createdAt',
@@ -2375,7 +2459,7 @@ export const ModuleVersionScalarFieldEnum = {
   versionNumber: 'versionNumber',
   branchedFromId: 'branchedFromId',
   status: 'status',
-  simulationData: 'simulationData',
+  interactiveConfig: 'interactiveConfig',
   changeNote: 'changeNote',
   createdById: 'createdById',
   publishedAt: 'publishedAt',
@@ -2392,8 +2476,8 @@ export const ModuleCheckpointScalarFieldEnum = {
   orderIndex: 'orderIndex',
   question: 'question',
   options: 'options',
+  correctAnswer: 'correctAnswer',
   points: 'points',
-  triggerAt: 'triggerAt',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -2634,6 +2718,20 @@ export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel,
 
 
 /**
+ * Reference to a field of type 'CollectionMediaRole'
+ */
+export type EnumCollectionMediaRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'CollectionMediaRole'>
+    
+
+
+/**
+ * Reference to a field of type 'CollectionMediaRole[]'
+ */
+export type ListEnumCollectionMediaRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'CollectionMediaRole[]'>
+    
+
+
+/**
  * Reference to a field of type 'Float'
  */
 export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
@@ -2767,6 +2865,7 @@ export type GlobalOmitConfig = {
   transaction?: Prisma.TransactionOmit
   media?: Prisma.MediaOmit
   collection?: Prisma.CollectionOmit
+  collectionMedia?: Prisma.CollectionMediaOmit
   editorChat?: Prisma.EditorChatOmit
   module?: Prisma.ModuleOmit
   moduleVersion?: Prisma.ModuleVersionOmit

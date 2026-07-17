@@ -10,6 +10,13 @@ export const ZMediaFile = z.file()
   .mime(["image/png", "image/jpeg", "image/jpg", "image/webp"])
   .nullable();
 
+export const ZDate = z.preprocess((val) => {
+  if (val instanceof Date) {
+    return val.toISOString();
+  }
+  return val;
+}, z.string());
+
 export const ZStorageMetadata = z.object({
   key: z.string(),
   msc: z.string()
@@ -120,9 +127,11 @@ export const ModuleProgressPlayModeEnum = z.enum(["free", "controlled"]);
 
 export const GamificationLogActionEnum = z.enum(["XP_EARNED", "XP_DEDUCTED", "STREAK_INCREMENT", "STREAK_RESET", "BADGE_AWARDED"]);
 
-export const LiveSessionStatusEnum = z.enum(["STAGING", "WAITING", "ACTIVE", "COMPLETED", "CANCELLED"]);
+export const LiveSessionStatusEnum = z.enum(["STAGING", "ACTIVE", "COMPLETED", "CANCELLED"]);
 
 export const EmailLogStatusEnum = z.enum(["QUEUED", "SENT", "FAILED", "BOUNCED"]);
+
+export const CollectionMediaRoleEnum = z.enum(["PRIMARY", "SUPPLEMENTAL"]);
 
 // ==========================================
 // BETTER AUTH CORE
@@ -137,7 +146,7 @@ export const ZUser = z.object({
   image: z.enum(avatarKeys).default("avatar-01"),
   banned: z.boolean().nullable().default(false),
   banReason: z.string().nullable(),
-  banExpires: z.string().nullable(),
+  banExpires: ZDate.nullable(),
   onboarded: z.boolean().default(false),
   metadata: z.record(z.string(), z.any()).nullable(),
   // Gamification aggregate
@@ -145,21 +154,21 @@ export const ZUser = z.object({
   currentStreak: z.number().int().default(0),
   longestStreak: z.number().int().default(0),
   badges: z.array(z.string()).default([]),
-  createdAt: z.string(),
-  updatedAt: z.string(),
+  createdAt: ZDate,
+  updatedAt: ZDate,
 });
 
 export const ZSession = z.object({
   id: z.string(),
-  expiresAt: z.string(),
+  expiresAt: ZDate,
   token: z.string(),
   ipAddress: z.string().nullable(),
   userAgent: z.string().nullable(),
   userId: z.string(),
   impersonatedBy: z.string().nullable(),
   activeOrganizationId: z.string().nullable(),
-  createdAt: z.string(),
-  updatedAt: z.string(),
+  createdAt: ZDate,
+  updatedAt: ZDate,
 });
 
 /** Password validator for forms — always required, 8–64 chars */
@@ -175,22 +184,22 @@ export const ZAccount = z.object({
   accessToken: z.string().nullable(),
   refreshToken: z.string().nullable(),
   idToken: z.string().nullable(),
-  accessTokenExpiresAt: z.string().nullable(),
-  refreshTokenExpiresAt: z.string().nullable(),
+  accessTokenExpiresAt: ZDate.nullable(),
+  refreshTokenExpiresAt: ZDate.nullable(),
   scope: z.string().nullable(),
   /** Stored password — nullable because OAuth accounts have no password */
   password: ZPassword.nullable(),
-  createdAt: z.string(),
-  updatedAt: z.string(),
+  createdAt: ZDate,
+  updatedAt: ZDate,
 });
 
 export const ZVerification = z.object({
   id: z.string(),
   identifier: z.string(),
   value: z.string(),
-  expiresAt: z.string(),
-  createdAt: z.string(),
-  updatedAt: z.string(),
+  expiresAt: ZDate,
+  createdAt: ZDate,
+  updatedAt: ZDate,
 });
 
 // ==========================================
@@ -203,9 +212,9 @@ export const ZInvitation = z.object({
   email: z.string().email(),
   role: z.string().nullable(),
   status: InvitationStatusEnum.default("pending"),
-  expiresAt: z.string(),
+  expiresAt: ZDate,
   inviterId: z.string(),
-  createdAt: z.string(),
+  createdAt: ZDate,
 });
 
 export const ZOrganization = z.object({
@@ -213,8 +222,8 @@ export const ZOrganization = z.object({
   name: z.string().min(1, "Organization name is required"),
   slug: z.string(),
   logo: z.enum(logoKeys).default("org-01"),
-  createdAt: z.string(),
-  updatedAt: z.string(),
+  createdAt: ZDate,
+  updatedAt: ZDate,
 });
 
 export const ZMember = z.object({
@@ -222,8 +231,8 @@ export const ZMember = z.object({
   userId: z.string(),
   organizationId: z.string(),
   role: MemberRoleEnum,
-  createdAt: z.string(),
-  updatedAt: z.string(),
+  createdAt: ZDate,
+  updatedAt: ZDate,
 });
 
 // ==========================================
@@ -240,9 +249,9 @@ export const ZSubscription = z.object({
   isUnlimited: z.boolean().default(false),
   paystackCustomerCode: z.string().nullable(),
   paystackSubCode: z.string().nullable(),
-  currentPeriodEnd: z.string().nullable(),
-  createdAt: z.string(),
-  updatedAt: z.string(),
+  currentPeriodEnd: ZDate.nullable(),
+  createdAt: ZDate,
+  updatedAt: ZDate,
 });
 
 export const ZTransaction = z.object({
@@ -255,8 +264,8 @@ export const ZTransaction = z.object({
   status: z.string().default("PENDING"),
   channel: z.string().nullable(),
   metadata: z.any().nullable(),
-  createdAt: z.string(),
-  updatedAt: z.string(),
+  createdAt: ZDate,
+  updatedAt: ZDate,
 });
 
 // ==========================================
@@ -272,15 +281,14 @@ export const ZMediaMetadata = z.object({
 export const ZMedia = z.object({
   id: z.string(),
   uploaderId: z.string(),
-  collectionId: z.string().nullable(),
   folder: z.string(),
   status: MediaStatusEnum.default("active"),
   key: z.string(),
   fileName: z.string(),
   mimeType: z.string(),
   metadata: ZMediaMetadata.nullable(),
-  createdAt: z.string(),
-  updatedAt: z.string(),
+  createdAt: ZDate,
+  updatedAt: ZDate,
 });
 
 export const ZCollection = z.object({
@@ -288,10 +296,18 @@ export const ZCollection = z.object({
   name: z.string().min(1, "Collection name is required"),
   slug: z.string(),
   description: z.string().nullable(),
-  coverMediaId: z.string().nullable(),
   parsedIndex: z.record(z.string(), z.any()).nullable(),
-  createdAt: z.string(),
-  updatedAt: z.string(),
+  createdAt: ZDate,
+  updatedAt: ZDate,
+});
+
+export const ZCollectionMedia = z.object({
+  id: z.string(),
+  collectionId: z.string(),
+  mediaId: z.string(),
+  role: CollectionMediaRoleEnum.default("SUPPLEMENTAL"),
+  createdAt: ZDate,
+  updatedAt: ZDate,
 });
 
 // ==========================================
@@ -308,8 +324,8 @@ export const ZEditorChat = z.object({
       content: z.string(),
     })
   ),
-  createdAt: z.string(),
-  updatedAt: z.string(),
+  createdAt: ZDate,
+  updatedAt: ZDate,
 });
 
 // ==========================================
@@ -322,11 +338,10 @@ export const ZModule = z.object({
   title: z.string().min(1, "Title is required"),
   slug: z.string(),
   description: z.string(),
-  thumbnail: z.string().nullable(),
   orderIndex: z.number().int(),
   publishedVersionId: z.string().nullable(),
-  createdAt: z.string(),
-  updatedAt: z.string(),
+  createdAt: ZDate,
+  updatedAt: ZDate,
 });
 
 export const ZModuleVersion = z.object({
@@ -335,12 +350,12 @@ export const ZModuleVersion = z.object({
   versionNumber: z.number().int().positive(),
   branchedFromId: z.string().nullable(),
   status: ModuleVersionStatusEnum.default("DRAFT"),
-  simulationData: z.record(z.string(), z.any()),
+  interactiveConfig: z.record(z.string(), z.any()),
   changeNote: z.string().nullable(),
   createdById: z.string(),
-  publishedAt: z.string().nullable(),
-  createdAt: z.string(),
-  updatedAt: z.string(),
+  publishedAt: ZDate.nullable(),
+  createdAt: ZDate,
+  updatedAt: ZDate,
 });
 
 export const ZModuleCheckpoint = z.object({
@@ -355,10 +370,10 @@ export const ZModuleCheckpoint = z.object({
       isCorrect: z.boolean(),
     })
   ),
+  correctAnswer: z.string(),
   points: z.number().int().default(10),
-  triggerAt: z.string().nullable(),
-  createdAt: z.string(),
-  updatedAt: z.string(),
+  createdAt: ZDate,
+  updatedAt: ZDate,
 });
 
 // ==========================================
@@ -374,11 +389,11 @@ export const ZModuleProgress = z.object({
   isCompleted: z.boolean().default(false),
   highScore: z.number().int().default(0),
   totalPlays: z.number().int().default(0),
-  lastPlayedAt: z.string().nullable(),
+  lastPlayedAt: ZDate.nullable(),
   playMode: ModuleProgressPlayModeEnum.default("free"),
-  completedAt: z.string().nullable(),
-  createdAt: z.string(),
-  updatedAt: z.string(),
+  completedAt: ZDate.nullable(),
+  createdAt: ZDate,
+  updatedAt: ZDate,
 });
 
 export const ZGamificationLog = z.object({
@@ -387,7 +402,7 @@ export const ZGamificationLog = z.object({
   action: GamificationLogActionEnum,
   delta: z.number().int().default(0),
   meta: z.record(z.string(), z.any()).nullable(),
-  createdAt: z.string(),
+  createdAt: ZDate,
 });
 
 // ==========================================
@@ -403,10 +418,10 @@ export const ZLiveSession = z.object({
   name: z.string().nullable(),
   status: LiveSessionStatusEnum.default("STAGING"),
   config: z.record(z.string(), z.any()).nullable(),
-  startedAt: z.string().nullable(),
-  endedAt: z.string().nullable(),
-  createdAt: z.string(),
-  updatedAt: z.string(),
+  startedAt: ZDate.nullable(),
+  endedAt: ZDate.nullable(),
+  createdAt: ZDate,
+  updatedAt: ZDate,
 });
 
 export const ZSessionCheckpoint = z.object({
@@ -414,8 +429,8 @@ export const ZSessionCheckpoint = z.object({
   sessionId: z.string(),
   checkpointId: z.string(),
   isEnabled: z.boolean().default(true),
-  createdAt: z.string(),
-  updatedAt: z.string(),
+  createdAt: ZDate,
+  updatedAt: ZDate,
 });
 
 export const ZSessionPlayer = z.object({
@@ -425,8 +440,8 @@ export const ZSessionPlayer = z.object({
   anonymousName: z.string().nullable(),
   score: z.number().int().default(0),
   completionRate: z.number().min(0).max(1).default(0.0),
-  joinedAt: z.string(),
-  completedAt: z.string().nullable(),
+  joinedAt: ZDate,
+  completedAt: ZDate.nullable(),
 });
 
 export const ZSessionAnalytic = z.object({
@@ -435,7 +450,7 @@ export const ZSessionAnalytic = z.object({
   playerId: z.string(),
   event: z.string(),
   payload: z.record(z.string(), z.any()).nullable(),
-  recordedAt: z.string(),
+  recordedAt: ZDate,
 });
 
 // ==========================================
@@ -448,8 +463,8 @@ export const ZAppSetting = z.object({
   value: z.string(),
   description: z.string().nullable(),
   updatedById: z.string().nullable(),
-  createdAt: z.string(),
-  updatedAt: z.string(),
+  createdAt: ZDate,
+  updatedAt: ZDate,
 });
 
 export const ZEmailLog = z.object({
@@ -459,9 +474,9 @@ export const ZEmailLog = z.object({
   template: z.string().nullable(),
   status: EmailLogStatusEnum.default("QUEUED"),
   errorMsg: z.string().nullable(),
-  sentAt: z.string().nullable(),
-  createdAt: z.string(),
-  updatedAt: z.string(),
+  sentAt: ZDate.nullable(),
+  createdAt: ZDate,
+  updatedAt: ZDate,
 });
 
 // ==========================================
@@ -471,6 +486,7 @@ export const ZEmailLog = z.object({
 const baseSchema = {
   // Utilities
   ZMediaFile,
+  ZDate,
   ZBaseFilter,
   ZStorageMetadata,
   ZPaginationMetadata,
@@ -488,6 +504,7 @@ const baseSchema = {
   GamificationLogActionEnum,
   LiveSessionStatusEnum,
   EmailLogStatusEnum,
+  CollectionMediaRoleEnum,
   // Better Auth Core
   ZUser,
   ZSession,
@@ -503,6 +520,7 @@ const baseSchema = {
   // Editor Suite
   ZMedia,
   ZCollection,
+  ZCollectionMedia,
   ZEditorChat,
   // Module Layer
   ZModule,

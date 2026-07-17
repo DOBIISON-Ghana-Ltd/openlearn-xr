@@ -25,17 +25,21 @@ export const formatter = {
     day: 'numeric',
   }),
 
-  // 4. Numeric: Standard data format (e.g., "10/24/2025")
+  // 4. Numeric: Standard data format (e.g., "02-08-26, 20:24")
   numeric: new Intl.DateTimeFormat(locales, {
-    year: 'numeric',
-    month: 'numeric',
-    day: 'numeric',
+    year: '2-digit',
+    month: '2-digit',
+    day: '2-digit',
+    hour: '2-digit',
+    minute: '2-digit',
+    hour12: false,
   }),
 };
 
 export const formatDate = (date: string| null, type: keyof typeof formatter = 'public') => {
   if (!date) return "—";
-  return formatter[type].format(new Date(date));
+  const formatted = formatter[type].format(new Date(date));
+  return type === 'numeric' ? formatted.replace(/\//g, '-') : formatted;
 };
 
 // import { match, P } from 'ts-pattern';

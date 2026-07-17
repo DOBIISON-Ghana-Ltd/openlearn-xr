@@ -40,7 +40,6 @@ export type ModuleMinAggregateOutputType = {
   title: string | null
   slug: string | null
   description: string | null
-  thumbnail: string | null
   orderIndex: number | null
   publishedVersionId: string | null
   createdAt: Date | null
@@ -53,7 +52,6 @@ export type ModuleMaxAggregateOutputType = {
   title: string | null
   slug: string | null
   description: string | null
-  thumbnail: string | null
   orderIndex: number | null
   publishedVersionId: string | null
   createdAt: Date | null
@@ -66,7 +64,6 @@ export type ModuleCountAggregateOutputType = {
   title: number
   slug: number
   description: number
-  thumbnail: number
   orderIndex: number
   publishedVersionId: number
   createdAt: number
@@ -89,7 +86,6 @@ export type ModuleMinAggregateInputType = {
   title?: true
   slug?: true
   description?: true
-  thumbnail?: true
   orderIndex?: true
   publishedVersionId?: true
   createdAt?: true
@@ -102,7 +98,6 @@ export type ModuleMaxAggregateInputType = {
   title?: true
   slug?: true
   description?: true
-  thumbnail?: true
   orderIndex?: true
   publishedVersionId?: true
   createdAt?: true
@@ -115,7 +110,6 @@ export type ModuleCountAggregateInputType = {
   title?: true
   slug?: true
   description?: true
-  thumbnail?: true
   orderIndex?: true
   publishedVersionId?: true
   createdAt?: true
@@ -215,7 +209,6 @@ export type ModuleGroupByOutputType = {
   title: string
   slug: string
   description: string
-  thumbnail: string | null
   orderIndex: number
   publishedVersionId: string | null
   createdAt: Date
@@ -251,7 +244,6 @@ export type ModuleWhereInput = {
   title?: Prisma.StringFilter<"Module"> | string
   slug?: Prisma.StringFilter<"Module"> | string
   description?: Prisma.StringFilter<"Module"> | string
-  thumbnail?: Prisma.StringNullableFilter<"Module"> | string | null
   orderIndex?: Prisma.IntFilter<"Module"> | number
   publishedVersionId?: Prisma.StringNullableFilter<"Module"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Module"> | Date | string
@@ -268,7 +260,6 @@ export type ModuleOrderByWithRelationInput = {
   title?: Prisma.SortOrder
   slug?: Prisma.SortOrder
   description?: Prisma.SortOrder
-  thumbnail?: Prisma.SortOrderInput | Prisma.SortOrder
   orderIndex?: Prisma.SortOrder
   publishedVersionId?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -289,7 +280,6 @@ export type ModuleWhereUniqueInput = Prisma.AtLeast<{
   collectionId?: Prisma.StringFilter<"Module"> | string
   title?: Prisma.StringFilter<"Module"> | string
   description?: Prisma.StringFilter<"Module"> | string
-  thumbnail?: Prisma.StringNullableFilter<"Module"> | string | null
   orderIndex?: Prisma.IntFilter<"Module"> | number
   createdAt?: Prisma.DateTimeFilter<"Module"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Module"> | Date | string
@@ -305,7 +295,6 @@ export type ModuleOrderByWithAggregationInput = {
   title?: Prisma.SortOrder
   slug?: Prisma.SortOrder
   description?: Prisma.SortOrder
-  thumbnail?: Prisma.SortOrderInput | Prisma.SortOrder
   orderIndex?: Prisma.SortOrder
   publishedVersionId?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -326,7 +315,6 @@ export type ModuleScalarWhereWithAggregatesInput = {
   title?: Prisma.StringWithAggregatesFilter<"Module"> | string
   slug?: Prisma.StringWithAggregatesFilter<"Module"> | string
   description?: Prisma.StringWithAggregatesFilter<"Module"> | string
-  thumbnail?: Prisma.StringNullableWithAggregatesFilter<"Module"> | string | null
   orderIndex?: Prisma.IntWithAggregatesFilter<"Module"> | number
   publishedVersionId?: Prisma.StringNullableWithAggregatesFilter<"Module"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Module"> | Date | string
@@ -338,7 +326,6 @@ export type ModuleCreateInput = {
   title: string
   slug: string
   description: string
-  thumbnail?: string | null
   orderIndex: number
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -354,7 +341,6 @@ export type ModuleUncheckedCreateInput = {
   title: string
   slug: string
   description: string
-  thumbnail?: string | null
   orderIndex: number
   publishedVersionId?: string | null
   createdAt?: Date | string
@@ -368,7 +354,6 @@ export type ModuleUpdateInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
-  thumbnail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   orderIndex?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -384,7 +369,6 @@ export type ModuleUncheckedUpdateInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
-  thumbnail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   orderIndex?: Prisma.IntFieldUpdateOperationsInput | number
   publishedVersionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -399,7 +383,6 @@ export type ModuleCreateManyInput = {
   title: string
   slug: string
   description: string
-  thumbnail?: string | null
   orderIndex: number
   publishedVersionId?: string | null
   createdAt?: Date | string
@@ -411,7 +394,6 @@ export type ModuleUpdateManyMutationInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
-  thumbnail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   orderIndex?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -423,7 +405,6 @@ export type ModuleUncheckedUpdateManyInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
-  thumbnail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   orderIndex?: Prisma.IntFieldUpdateOperationsInput | number
   publishedVersionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -446,7 +427,6 @@ export type ModuleCountOrderByAggregateInput = {
   title?: Prisma.SortOrder
   slug?: Prisma.SortOrder
   description?: Prisma.SortOrder
-  thumbnail?: Prisma.SortOrder
   orderIndex?: Prisma.SortOrder
   publishedVersionId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -463,7 +443,6 @@ export type ModuleMaxOrderByAggregateInput = {
   title?: Prisma.SortOrder
   slug?: Prisma.SortOrder
   description?: Prisma.SortOrder
-  thumbnail?: Prisma.SortOrder
   orderIndex?: Prisma.SortOrder
   publishedVersionId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -476,7 +455,6 @@ export type ModuleMinOrderByAggregateInput = {
   title?: Prisma.SortOrder
   slug?: Prisma.SortOrder
   description?: Prisma.SortOrder
-  thumbnail?: Prisma.SortOrder
   orderIndex?: Prisma.SortOrder
   publishedVersionId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -604,7 +582,6 @@ export type ModuleCreateWithoutCollectionInput = {
   title: string
   slug: string
   description: string
-  thumbnail?: string | null
   orderIndex: number
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -618,7 +595,6 @@ export type ModuleUncheckedCreateWithoutCollectionInput = {
   title: string
   slug: string
   description: string
-  thumbnail?: string | null
   orderIndex: number
   publishedVersionId?: string | null
   createdAt?: Date | string
@@ -662,7 +638,6 @@ export type ModuleScalarWhereInput = {
   title?: Prisma.StringFilter<"Module"> | string
   slug?: Prisma.StringFilter<"Module"> | string
   description?: Prisma.StringFilter<"Module"> | string
-  thumbnail?: Prisma.StringNullableFilter<"Module"> | string | null
   orderIndex?: Prisma.IntFilter<"Module"> | number
   publishedVersionId?: Prisma.StringNullableFilter<"Module"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Module"> | Date | string
@@ -674,7 +649,6 @@ export type ModuleCreateWithoutVersionsInput = {
   title: string
   slug: string
   description: string
-  thumbnail?: string | null
   orderIndex: number
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -689,7 +663,6 @@ export type ModuleUncheckedCreateWithoutVersionsInput = {
   title: string
   slug: string
   description: string
-  thumbnail?: string | null
   orderIndex: number
   publishedVersionId?: string | null
   createdAt?: Date | string
@@ -707,7 +680,6 @@ export type ModuleCreateWithoutPublishedVersionInput = {
   title: string
   slug: string
   description: string
-  thumbnail?: string | null
   orderIndex: number
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -722,7 +694,6 @@ export type ModuleUncheckedCreateWithoutPublishedVersionInput = {
   title: string
   slug: string
   description: string
-  thumbnail?: string | null
   orderIndex: number
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -751,7 +722,6 @@ export type ModuleUpdateWithoutVersionsInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
-  thumbnail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   orderIndex?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -766,7 +736,6 @@ export type ModuleUncheckedUpdateWithoutVersionsInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
-  thumbnail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   orderIndex?: Prisma.IntFieldUpdateOperationsInput | number
   publishedVersionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -790,7 +759,6 @@ export type ModuleUpdateWithoutPublishedVersionInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
-  thumbnail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   orderIndex?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -805,7 +773,6 @@ export type ModuleUncheckedUpdateWithoutPublishedVersionInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
-  thumbnail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   orderIndex?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -818,7 +785,6 @@ export type ModuleCreateWithoutProgressInput = {
   title: string
   slug: string
   description: string
-  thumbnail?: string | null
   orderIndex: number
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -833,7 +799,6 @@ export type ModuleUncheckedCreateWithoutProgressInput = {
   title: string
   slug: string
   description: string
-  thumbnail?: string | null
   orderIndex: number
   publishedVersionId?: string | null
   createdAt?: Date | string
@@ -862,7 +827,6 @@ export type ModuleUpdateWithoutProgressInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
-  thumbnail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   orderIndex?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -877,7 +841,6 @@ export type ModuleUncheckedUpdateWithoutProgressInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
-  thumbnail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   orderIndex?: Prisma.IntFieldUpdateOperationsInput | number
   publishedVersionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -890,7 +853,6 @@ export type ModuleCreateManyCollectionInput = {
   title: string
   slug: string
   description: string
-  thumbnail?: string | null
   orderIndex: number
   publishedVersionId?: string | null
   createdAt?: Date | string
@@ -902,7 +864,6 @@ export type ModuleUpdateWithoutCollectionInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
-  thumbnail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   orderIndex?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -916,7 +877,6 @@ export type ModuleUncheckedUpdateWithoutCollectionInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
-  thumbnail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   orderIndex?: Prisma.IntFieldUpdateOperationsInput | number
   publishedVersionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -930,7 +890,6 @@ export type ModuleUncheckedUpdateManyWithoutCollectionInput = {
   title?: Prisma.StringFieldUpdateOperationsInput | string
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
-  thumbnail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   orderIndex?: Prisma.IntFieldUpdateOperationsInput | number
   publishedVersionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -983,7 +942,6 @@ export type ModuleSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   title?: boolean
   slug?: boolean
   description?: boolean
-  thumbnail?: boolean
   orderIndex?: boolean
   publishedVersionId?: boolean
   createdAt?: boolean
@@ -1001,7 +959,6 @@ export type ModuleSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extens
   title?: boolean
   slug?: boolean
   description?: boolean
-  thumbnail?: boolean
   orderIndex?: boolean
   publishedVersionId?: boolean
   createdAt?: boolean
@@ -1016,7 +973,6 @@ export type ModuleSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extens
   title?: boolean
   slug?: boolean
   description?: boolean
-  thumbnail?: boolean
   orderIndex?: boolean
   publishedVersionId?: boolean
   createdAt?: boolean
@@ -1031,14 +987,13 @@ export type ModuleSelectScalar = {
   title?: boolean
   slug?: boolean
   description?: boolean
-  thumbnail?: boolean
   orderIndex?: boolean
   publishedVersionId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type ModuleOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "collectionId" | "title" | "slug" | "description" | "thumbnail" | "orderIndex" | "publishedVersionId" | "createdAt" | "updatedAt", ExtArgs["result"]["module"]>
+export type ModuleOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "collectionId" | "title" | "slug" | "description" | "orderIndex" | "publishedVersionId" | "createdAt" | "updatedAt", ExtArgs["result"]["module"]>
 export type ModuleInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   collection?: boolean | Prisma.CollectionDefaultArgs<ExtArgs>
   versions?: boolean | Prisma.Module$versionsArgs<ExtArgs>
@@ -1069,7 +1024,6 @@ export type $ModulePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
     title: string
     slug: string
     description: string
-    thumbnail: string | null
     orderIndex: number
     publishedVersionId: string | null
     createdAt: Date
@@ -1506,7 +1460,6 @@ export interface ModuleFieldRefs {
   readonly title: Prisma.FieldRef<"Module", 'String'>
   readonly slug: Prisma.FieldRef<"Module", 'String'>
   readonly description: Prisma.FieldRef<"Module", 'String'>
-  readonly thumbnail: Prisma.FieldRef<"Module", 'String'>
   readonly orderIndex: Prisma.FieldRef<"Module", 'Int'>
   readonly publishedVersionId: Prisma.FieldRef<"Module", 'String'>
   readonly createdAt: Prisma.FieldRef<"Module", 'DateTime'>

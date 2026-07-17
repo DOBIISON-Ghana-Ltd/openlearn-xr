@@ -19,8 +19,9 @@ export default function Navigation() {
 
   const roles = user?.role || [];
   const subscriptionTier = user?.subscriptionTier || "FREE";
+  const isUnlimited = user?.isUnlimited || false;
 
-  const access = getAccessibleSuites(roles, subscriptionTier);
+  const access = getAccessibleSuites(roles, subscriptionTier, isUnlimited);
 
   const filteredLinks = links.filter(link => {
     if (link.label === "Admin") return access.admin;

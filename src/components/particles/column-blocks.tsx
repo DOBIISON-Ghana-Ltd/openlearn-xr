@@ -1,36 +1,30 @@
 "use client";
 
 import { formatDate } from "@/lib/utils/format-date";
-import { MoreVertical, LucideIcon, InfoIcon, PencilIcon } from "lucide-react";
+import { MoreVertical, LucideIcon } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Menu, MenuPopup, MenuGroup, MenuItem, MenuTrigger } from "@/components/ui/menu";
+import { AVATARS } from "@/lib/constants/avatars";
 
 export {
   PrimitiveHeader,
   PrimitiveCell,
-  LocationCell,
-  RoleCell,
   DateCell,
-  StatusCell01,
-  StatusCell02,
-  OrgListCell01,
-  ActionCell
+  ActionCell,
+  DurationCell,
+  HostCell,
+  StatusCell
 }
 
 type IHeader = {
-  icon?: LucideIcon;
   label: string;
 }
 const PrimitiveHeader = (props: IHeader) => {
   return (
-    <div className="px-2 flex items-center gap-1 text-muted-foreground">
-      {/* icon */}
-      {props.icon && <props.icon className="size-4.5" />}
-
-      {/* label */}
-      <p className="font-normal">
+    <div className="px-2 text-muted-foreground">
+      <p className="text-xs-m font-normal">
         {props.label}
       </p>
     </div>
@@ -42,41 +36,9 @@ type IPrimitiveCell = {
 }
 const PrimitiveCell = (props: IPrimitiveCell) => {
   return (
-    <p className="px-2 flex items-center">
+    <p className="px-2 py-2.5 flex items-center">
       {props.label}
     </p>
-  )
-}
-
-type ILocationCell = {
-  location: { city: string; country: string } | null;
-}
-const LocationCell = (props: ILocationCell) => {
-  return (
-    <p className="px-2 flex items-center">
-      {props.location ? `${props.location.city}, ${props.location.country}` : "N/A"}
-    </p>
-  )
-}
-
-type IRoleCell = {
-  role: string[];
-  map?: Record<string, string>;
-}
-const RoleCell = (props: IRoleCell) => {
-  const { role, map = {} } = props;
-
-  return (
-    <div className="px-2 flex items-center gap-1">
-      {role.map((r) => {
-        const label = map[r] || r.split('_').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
-        return (
-          <p key={r}>
-            {label}
-          </p>
-        );
-      })}
-    </div>
   )
 }
 
@@ -89,52 +51,25 @@ const DateCell = (props: IDateCell) => {
   const dateString = date instanceof Date ? date.toISOString() : date;
 
   return (
-    <p className="px-2 flex items-center">
+    <p className="px-2 py-2.5 flex items-center">
       {formatDate(dateString, "admin")}
     </p>
   )
 };
 
-type IStatusCell01 = {
-  value: boolean;
+type IChipCell = {
+  value: string[];
 }
-const StatusCell01 = (props: IStatusCell01) => {
+const ChipCell = (props: IChipCell) => {
   const { value } = props;
 
   return (
-    <div className="px-2 flex items-center gap-1">
-      <Badge variant="outline">
-        {value ? "Active" : "Inactive"}
-      </Badge>
-    </div>
-  )
-}
-
-type IStatusCell02 = {
-  value: string;
-}
-const StatusCell02 = (props: IStatusCell02) => {
-  const { value } = props;
-
-  return (
-    <div className="px-2 flex items-center gap-1 capitalize">
-      <Badge>{value}</Badge>
-    </div>
-  )
-}
-
-type IOrgListCell01 = {
-  orgs: { organization: { id: string; name: string } }[]
-}
-const OrgListCell01 = (props: IOrgListCell01) => {
-  const { orgs } = props;
-
-  return (
-    <div className="px-2 flex items-center gap-1 capitalize">
-      {orgs.slice(0, 2).map((m) => (
-        <Badge key={m.organization.id}>{m.organization.name}</Badge>
+    <div className="px-2 py-2.5 flex items-center gap-1 shrink-0 capitalize">
+      {value.map((val) => (
+        <Badge variant="outline">
+          {val}
+        </Badge>
       ))}
-      {orgs.length > 2 ? (<Badge>{orgs.length - 2}</Badge>) : null}
     </div>
   )
 }
@@ -171,9 +106,9 @@ const ActionCell = (props: IActionCell) => {
   const openStates = sheetActions.map(() => useState(false));
 
   return (
-    <div className="px-2">
+    <div className="px-2 py-2.5">
       <Menu>
-        <MenuTrigger render={<Button variant="ghost" size="icon-xs"/>}>
+        <MenuTrigger render={<Button variant="ghost" size="icon-xs" />}>
           <span className="sr-only">Open menu</span>
           <MoreVertical />
         </MenuTrigger>
@@ -216,6 +151,63 @@ const ActionCell = (props: IActionCell) => {
           </React.Fragment>
         ) : null;
       })}
+    </div>
+  )
+}
+
+type IDurationCell = {
+  startedAt: string | Date | null;
+  endedAt: string | Date | null;
+}
+const DurationCell = (props: IDurationCell) => {
+  const { startedAt, endedAt } = props;
+
+  const startStr = startedAt instanceof Date ? startedAt.toISOString() : startedAt;
+  const endStr = endedAt instanceof Date ? endedAt.toISOString() : endedAt;
+
+  const startFormatted = startStr ? formatDate(startStr, "numeric") : "N/A";
+  const endFormatted = endStr ? formatDate(endStr, "numeric") : "N/A";
+
+  return (
+    <p className="px-2 py-2.5 flex items-center text-sm text-muted-foreground">
+      {startFormatted} / {endFormatted}
+    </p>
+  );
+}
+
+type IHostCell = {
+  name: string;
+  image: string | null;
+}
+const HostCell = (props: IHostCell) => {
+  const { name, image } = props;
+  const avatarSrc = AVATARS[image as keyof typeof AVATARS] || AVATARS["avatar-01"];
+
+  return (
+    <div className="px-2 py-2.5 flex items-center gap-2">
+      <img src={avatarSrc} alt={name} className="size-6 rounded-full object-cover shrink-0" />
+      <span className="text-sm font-normal text-foreground whitespace-nowrap">{name}</span>
+    </div>
+  )
+}
+
+type IStatusCell = {
+  status: string;
+}
+const StatusCell = (props: IStatusCell) => {
+  const { status } = props;
+  const variant = {
+    ACTIVE: "default" as const,
+    STAGING: "secondary" as const,
+    COMPLETED: "outline" as const,
+    CANCELLED: "destructive" as const,
+  }[status] || ("outline" as const);
+
+  return (
+    <div className="px-2 py-2.5 flex items-center">
+      <Badge variant={variant} className="capitalize py-0.5 px-2">
+        {status.toLowerCase()}
+      </Badge>
     </div>
   )
 }

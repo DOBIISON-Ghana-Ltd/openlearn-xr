@@ -73,6 +73,11 @@ export type Media = Prisma.MediaModel
  */
 export type Collection = Prisma.CollectionModel
 /**
+ * Model CollectionMedia
+ * 
+ */
+export type CollectionMedia = Prisma.CollectionMediaModel
+/**
  * Model EditorChat
  * 
  */
