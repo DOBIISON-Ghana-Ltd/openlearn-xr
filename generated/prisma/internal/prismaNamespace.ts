@@ -400,14 +400,16 @@ export const ModelName = {
   Module: 'Module',
   ModuleVersion: 'ModuleVersion',
   ModuleCheckpoint: 'ModuleCheckpoint',
-  ModuleProgress: 'ModuleProgress',
+  CollectionProgress: 'CollectionProgress',
+  ModuleCompletion: 'ModuleCompletion',
   GamificationLog: 'GamificationLog',
   LiveSession: 'LiveSession',
   SessionCheckpoint: 'SessionCheckpoint',
   SessionPlayer: 'SessionPlayer',
   SessionAnalytic: 'SessionAnalytic',
   AppSetting: 'AppSetting',
-  EmailLog: 'EmailLog'
+  EmailLog: 'EmailLog',
+  PlayAttempt: 'PlayAttempt'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -423,7 +425,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "session" | "account" | "verification" | "invitation" | "organization" | "member" | "subscription" | "transaction" | "media" | "collection" | "collectionMedia" | "editorChat" | "module" | "moduleVersion" | "moduleCheckpoint" | "moduleProgress" | "gamificationLog" | "liveSession" | "sessionCheckpoint" | "sessionPlayer" | "sessionAnalytic" | "appSetting" | "emailLog"
+    modelProps: "user" | "session" | "account" | "verification" | "invitation" | "organization" | "member" | "subscription" | "transaction" | "media" | "collection" | "collectionMedia" | "editorChat" | "module" | "moduleVersion" | "moduleCheckpoint" | "collectionProgress" | "moduleCompletion" | "gamificationLog" | "liveSession" | "sessionCheckpoint" | "sessionPlayer" | "sessionAnalytic" | "appSetting" | "emailLog" | "playAttempt"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1611,77 +1613,151 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
-    ModuleProgress: {
-      payload: Prisma.$ModuleProgressPayload<ExtArgs>
-      fields: Prisma.ModuleProgressFieldRefs
+    CollectionProgress: {
+      payload: Prisma.$CollectionProgressPayload<ExtArgs>
+      fields: Prisma.CollectionProgressFieldRefs
       operations: {
         findUnique: {
-          args: Prisma.ModuleProgressFindUniqueArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ModuleProgressPayload> | null
+          args: Prisma.CollectionProgressFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CollectionProgressPayload> | null
         }
         findUniqueOrThrow: {
-          args: Prisma.ModuleProgressFindUniqueOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ModuleProgressPayload>
+          args: Prisma.CollectionProgressFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CollectionProgressPayload>
         }
         findFirst: {
-          args: Prisma.ModuleProgressFindFirstArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ModuleProgressPayload> | null
+          args: Prisma.CollectionProgressFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CollectionProgressPayload> | null
         }
         findFirstOrThrow: {
-          args: Prisma.ModuleProgressFindFirstOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ModuleProgressPayload>
+          args: Prisma.CollectionProgressFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CollectionProgressPayload>
         }
         findMany: {
-          args: Prisma.ModuleProgressFindManyArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ModuleProgressPayload>[]
+          args: Prisma.CollectionProgressFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CollectionProgressPayload>[]
         }
         create: {
-          args: Prisma.ModuleProgressCreateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ModuleProgressPayload>
+          args: Prisma.CollectionProgressCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CollectionProgressPayload>
         }
         createMany: {
-          args: Prisma.ModuleProgressCreateManyArgs<ExtArgs>
+          args: Prisma.CollectionProgressCreateManyArgs<ExtArgs>
           result: BatchPayload
         }
         createManyAndReturn: {
-          args: Prisma.ModuleProgressCreateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ModuleProgressPayload>[]
+          args: Prisma.CollectionProgressCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CollectionProgressPayload>[]
         }
         delete: {
-          args: Prisma.ModuleProgressDeleteArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ModuleProgressPayload>
+          args: Prisma.CollectionProgressDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CollectionProgressPayload>
         }
         update: {
-          args: Prisma.ModuleProgressUpdateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ModuleProgressPayload>
+          args: Prisma.CollectionProgressUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CollectionProgressPayload>
         }
         deleteMany: {
-          args: Prisma.ModuleProgressDeleteManyArgs<ExtArgs>
+          args: Prisma.CollectionProgressDeleteManyArgs<ExtArgs>
           result: BatchPayload
         }
         updateMany: {
-          args: Prisma.ModuleProgressUpdateManyArgs<ExtArgs>
+          args: Prisma.CollectionProgressUpdateManyArgs<ExtArgs>
           result: BatchPayload
         }
         updateManyAndReturn: {
-          args: Prisma.ModuleProgressUpdateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ModuleProgressPayload>[]
+          args: Prisma.CollectionProgressUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CollectionProgressPayload>[]
         }
         upsert: {
-          args: Prisma.ModuleProgressUpsertArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ModuleProgressPayload>
+          args: Prisma.CollectionProgressUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CollectionProgressPayload>
         }
         aggregate: {
-          args: Prisma.ModuleProgressAggregateArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.AggregateModuleProgress>
+          args: Prisma.CollectionProgressAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateCollectionProgress>
         }
         groupBy: {
-          args: Prisma.ModuleProgressGroupByArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.ModuleProgressGroupByOutputType>[]
+          args: Prisma.CollectionProgressGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.CollectionProgressGroupByOutputType>[]
         }
         count: {
-          args: Prisma.ModuleProgressCountArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.ModuleProgressCountAggregateOutputType> | number
+          args: Prisma.CollectionProgressCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.CollectionProgressCountAggregateOutputType> | number
+        }
+      }
+    }
+    ModuleCompletion: {
+      payload: Prisma.$ModuleCompletionPayload<ExtArgs>
+      fields: Prisma.ModuleCompletionFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.ModuleCompletionFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ModuleCompletionPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.ModuleCompletionFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ModuleCompletionPayload>
+        }
+        findFirst: {
+          args: Prisma.ModuleCompletionFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ModuleCompletionPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.ModuleCompletionFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ModuleCompletionPayload>
+        }
+        findMany: {
+          args: Prisma.ModuleCompletionFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ModuleCompletionPayload>[]
+        }
+        create: {
+          args: Prisma.ModuleCompletionCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ModuleCompletionPayload>
+        }
+        createMany: {
+          args: Prisma.ModuleCompletionCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.ModuleCompletionCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ModuleCompletionPayload>[]
+        }
+        delete: {
+          args: Prisma.ModuleCompletionDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ModuleCompletionPayload>
+        }
+        update: {
+          args: Prisma.ModuleCompletionUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ModuleCompletionPayload>
+        }
+        deleteMany: {
+          args: Prisma.ModuleCompletionDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.ModuleCompletionUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.ModuleCompletionUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ModuleCompletionPayload>[]
+        }
+        upsert: {
+          args: Prisma.ModuleCompletionUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ModuleCompletionPayload>
+        }
+        aggregate: {
+          args: Prisma.ModuleCompletionAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateModuleCompletion>
+        }
+        groupBy: {
+          args: Prisma.ModuleCompletionGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ModuleCompletionGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.ModuleCompletionCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ModuleCompletionCountAggregateOutputType> | number
         }
       }
     }
@@ -2203,6 +2279,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    PlayAttempt: {
+      payload: Prisma.$PlayAttemptPayload<ExtArgs>
+      fields: Prisma.PlayAttemptFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.PlayAttemptFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PlayAttemptPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.PlayAttemptFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PlayAttemptPayload>
+        }
+        findFirst: {
+          args: Prisma.PlayAttemptFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PlayAttemptPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.PlayAttemptFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PlayAttemptPayload>
+        }
+        findMany: {
+          args: Prisma.PlayAttemptFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PlayAttemptPayload>[]
+        }
+        create: {
+          args: Prisma.PlayAttemptCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PlayAttemptPayload>
+        }
+        createMany: {
+          args: Prisma.PlayAttemptCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.PlayAttemptCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PlayAttemptPayload>[]
+        }
+        delete: {
+          args: Prisma.PlayAttemptDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PlayAttemptPayload>
+        }
+        update: {
+          args: Prisma.PlayAttemptUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PlayAttemptPayload>
+        }
+        deleteMany: {
+          args: Prisma.PlayAttemptDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.PlayAttemptUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.PlayAttemptUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PlayAttemptPayload>[]
+        }
+        upsert: {
+          args: Prisma.PlayAttemptUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PlayAttemptPayload>
+        }
+        aggregate: {
+          args: Prisma.PlayAttemptAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregatePlayAttempt>
+        }
+        groupBy: {
+          args: Prisma.PlayAttemptGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.PlayAttemptGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.PlayAttemptCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.PlayAttemptCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -2485,23 +2635,31 @@ export const ModuleCheckpointScalarFieldEnum = {
 export type ModuleCheckpointScalarFieldEnum = (typeof ModuleCheckpointScalarFieldEnum)[keyof typeof ModuleCheckpointScalarFieldEnum]
 
 
-export const ModuleProgressScalarFieldEnum = {
+export const CollectionProgressScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
-  moduleId: 'moduleId',
-  lastPlayedVersionId: 'lastPlayedVersionId',
-  isUnlocked: 'isUnlocked',
-  isCompleted: 'isCompleted',
-  highScore: 'highScore',
-  totalPlays: 'totalPlays',
-  lastPlayedAt: 'lastPlayedAt',
-  playMode: 'playMode',
-  completedAt: 'completedAt',
+  collectionId: 'collectionId',
+  activeIndex: 'activeIndex',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
 
-export type ModuleProgressScalarFieldEnum = (typeof ModuleProgressScalarFieldEnum)[keyof typeof ModuleProgressScalarFieldEnum]
+export type CollectionProgressScalarFieldEnum = (typeof CollectionProgressScalarFieldEnum)[keyof typeof CollectionProgressScalarFieldEnum]
+
+
+export const ModuleCompletionScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  moduleId: 'moduleId',
+  lastPlayedVersionId: 'lastPlayedVersionId',
+  highScore: 'highScore',
+  totalPlays: 'totalPlays',
+  lastPlayedAt: 'lastPlayedAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ModuleCompletionScalarFieldEnum = (typeof ModuleCompletionScalarFieldEnum)[keyof typeof ModuleCompletionScalarFieldEnum]
 
 
 export const GamificationLogScalarFieldEnum = {
@@ -2598,6 +2756,22 @@ export const EmailLogScalarFieldEnum = {
 } as const
 
 export type EmailLogScalarFieldEnum = (typeof EmailLogScalarFieldEnum)[keyof typeof EmailLogScalarFieldEnum]
+
+
+export const PlayAttemptScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  sessionId: 'sessionId',
+  moduleVersionId: 'moduleVersionId',
+  playMode: 'playMode',
+  currentCheckpointIndex: 'currentCheckpointIndex',
+  accumulatedPoints: 'accumulatedPoints',
+  sessionPlayerId: 'sessionPlayerId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type PlayAttemptScalarFieldEnum = (typeof PlayAttemptScalarFieldEnum)[keyof typeof PlayAttemptScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -2714,20 +2888,6 @@ export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'In
  * Reference to a field of type 'Int[]'
  */
 export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
-    
-
-
-/**
- * Reference to a field of type 'CollectionMediaRole'
- */
-export type EnumCollectionMediaRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'CollectionMediaRole'>
-    
-
-
-/**
- * Reference to a field of type 'CollectionMediaRole[]'
- */
-export type ListEnumCollectionMediaRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'CollectionMediaRole[]'>
     
 
 
@@ -2870,7 +3030,8 @@ export type GlobalOmitConfig = {
   module?: Prisma.ModuleOmit
   moduleVersion?: Prisma.ModuleVersionOmit
   moduleCheckpoint?: Prisma.ModuleCheckpointOmit
-  moduleProgress?: Prisma.ModuleProgressOmit
+  collectionProgress?: Prisma.CollectionProgressOmit
+  moduleCompletion?: Prisma.ModuleCompletionOmit
   gamificationLog?: Prisma.GamificationLogOmit
   liveSession?: Prisma.LiveSessionOmit
   sessionCheckpoint?: Prisma.SessionCheckpointOmit
@@ -2878,6 +3039,7 @@ export type GlobalOmitConfig = {
   sessionAnalytic?: Prisma.SessionAnalyticOmit
   appSetting?: Prisma.AppSettingOmit
   emailLog?: Prisma.EmailLogOmit
+  playAttempt?: Prisma.PlayAttemptOmit
 }
 
 /* Types for Logging */

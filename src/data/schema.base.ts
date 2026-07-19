@@ -380,18 +380,36 @@ export const ZModuleCheckpoint = z.object({
 // SIMULATION SUITE — GAMIFICATION & PROGRESS
 // ==========================================
 
-export const ZModuleProgress = z.object({
+export const ZCollectionProgress = z.object({
+  id: z.string(),
+  userId: z.string(),
+  collectionId: z.string(),
+  activeIndex: z.number().int().default(0),
+  createdAt: ZDate,
+  updatedAt: ZDate,
+});
+
+export const ZModuleCompletion = z.object({
   id: z.string(),
   userId: z.string(),
   moduleId: z.string(),
   lastPlayedVersionId: z.string().nullable(),
-  isUnlocked: z.boolean().default(false),
-  isCompleted: z.boolean().default(false),
   highScore: z.number().int().default(0),
   totalPlays: z.number().int().default(0),
   lastPlayedAt: ZDate.nullable(),
-  playMode: ModuleProgressPlayModeEnum.default("free"),
-  completedAt: ZDate.nullable(),
+  createdAt: ZDate,
+  updatedAt: ZDate,
+});
+
+export const ZPlayAttempt = z.object({
+  id: z.string(),
+  userId: z.string().nullable(),
+  sessionId: z.string().nullable(),
+  moduleVersionId: z.string(),
+  playMode: z.enum(["session", "library", "free"]),
+  currentCheckpointIndex: z.number().int().default(0),
+  accumulatedPoints: z.number().int().default(0),
+  sessionPlayerId: z.string().nullable(),
   createdAt: ZDate,
   updatedAt: ZDate,
 });
@@ -527,7 +545,9 @@ const baseSchema = {
   ZModuleVersion,
   ZModuleCheckpoint,
   // Gamification & Progress
-  ZModuleProgress,
+  ZCollectionProgress,
+  ZModuleCompletion,
+  ZPlayAttempt,
   ZGamificationLog,
   // Live Sessions
   ZLiveSession,

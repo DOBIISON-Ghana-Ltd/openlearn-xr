@@ -98,10 +98,15 @@ export type ModuleVersion = Prisma.ModuleVersionModel
  */
 export type ModuleCheckpoint = Prisma.ModuleCheckpointModel
 /**
- * Model ModuleProgress
+ * Model CollectionProgress
  * 
  */
-export type ModuleProgress = Prisma.ModuleProgressModel
+export type CollectionProgress = Prisma.CollectionProgressModel
+/**
+ * Model ModuleCompletion
+ * 
+ */
+export type ModuleCompletion = Prisma.ModuleCompletionModel
 /**
  * Model GamificationLog
  * 
@@ -137,3 +142,8 @@ export type AppSetting = Prisma.AppSettingModel
  * 
  */
 export type EmailLog = Prisma.EmailLogModel
+/**
+ * Model PlayAttempt
+ * 
+ */
+export type PlayAttempt = Prisma.PlayAttemptModel

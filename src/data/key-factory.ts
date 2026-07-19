@@ -15,8 +15,9 @@ export const QUERY_KEYS = {
   "public:org:get:members": (orgId: string) => ["public", "org", orgId, "members"] as const,
   "public:org:get:subscription": (orgId: string) => ["public", "org", orgId, "subscription"] as const,
 
-  // SESSIONS
+  // SESSIONS & MODULES
   "public:session:get:all": ["public", "session", "all"] as const,
   "public:session:get:overview": (id: string) => ["public", "session", id, "overview"] as const,
   "public:module-version:get:all": ["public", "module-version", "all"] as const,
+  "public:module-completion:get:all": ["public", "module-completion", "all"] as const,
 } as const

@@ -251,7 +251,7 @@ export type ModuleWhereInput = {
   collection?: Prisma.XOR<Prisma.CollectionScalarRelationFilter, Prisma.CollectionWhereInput>
   versions?: Prisma.ModuleVersionListRelationFilter
   publishedVersion?: Prisma.XOR<Prisma.ModuleVersionNullableScalarRelationFilter, Prisma.ModuleVersionWhereInput> | null
-  progress?: Prisma.ModuleProgressListRelationFilter
+  completions?: Prisma.ModuleCompletionListRelationFilter
 }
 
 export type ModuleOrderByWithRelationInput = {
@@ -267,7 +267,7 @@ export type ModuleOrderByWithRelationInput = {
   collection?: Prisma.CollectionOrderByWithRelationInput
   versions?: Prisma.ModuleVersionOrderByRelationAggregateInput
   publishedVersion?: Prisma.ModuleVersionOrderByWithRelationInput
-  progress?: Prisma.ModuleProgressOrderByRelationAggregateInput
+  completions?: Prisma.ModuleCompletionOrderByRelationAggregateInput
 }
 
 export type ModuleWhereUniqueInput = Prisma.AtLeast<{
@@ -286,7 +286,7 @@ export type ModuleWhereUniqueInput = Prisma.AtLeast<{
   collection?: Prisma.XOR<Prisma.CollectionScalarRelationFilter, Prisma.CollectionWhereInput>
   versions?: Prisma.ModuleVersionListRelationFilter
   publishedVersion?: Prisma.XOR<Prisma.ModuleVersionNullableScalarRelationFilter, Prisma.ModuleVersionWhereInput> | null
-  progress?: Prisma.ModuleProgressListRelationFilter
+  completions?: Prisma.ModuleCompletionListRelationFilter
 }, "id" | "slug" | "publishedVersionId">
 
 export type ModuleOrderByWithAggregationInput = {
@@ -332,7 +332,7 @@ export type ModuleCreateInput = {
   collection: Prisma.CollectionCreateNestedOneWithoutModulesInput
   versions?: Prisma.ModuleVersionCreateNestedManyWithoutModuleInput
   publishedVersion?: Prisma.ModuleVersionCreateNestedOneWithoutPublishedForInput
-  progress?: Prisma.ModuleProgressCreateNestedManyWithoutModuleInput
+  completions?: Prisma.ModuleCompletionCreateNestedManyWithoutModuleInput
 }
 
 export type ModuleUncheckedCreateInput = {
@@ -346,7 +346,7 @@ export type ModuleUncheckedCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   versions?: Prisma.ModuleVersionUncheckedCreateNestedManyWithoutModuleInput
-  progress?: Prisma.ModuleProgressUncheckedCreateNestedManyWithoutModuleInput
+  completions?: Prisma.ModuleCompletionUncheckedCreateNestedManyWithoutModuleInput
 }
 
 export type ModuleUpdateInput = {
@@ -360,7 +360,7 @@ export type ModuleUpdateInput = {
   collection?: Prisma.CollectionUpdateOneRequiredWithoutModulesNestedInput
   versions?: Prisma.ModuleVersionUpdateManyWithoutModuleNestedInput
   publishedVersion?: Prisma.ModuleVersionUpdateOneWithoutPublishedForNestedInput
-  progress?: Prisma.ModuleProgressUpdateManyWithoutModuleNestedInput
+  completions?: Prisma.ModuleCompletionUpdateManyWithoutModuleNestedInput
 }
 
 export type ModuleUncheckedUpdateInput = {
@@ -374,7 +374,7 @@ export type ModuleUncheckedUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   versions?: Prisma.ModuleVersionUncheckedUpdateManyWithoutModuleNestedInput
-  progress?: Prisma.ModuleProgressUncheckedUpdateManyWithoutModuleNestedInput
+  completions?: Prisma.ModuleCompletionUncheckedUpdateManyWithoutModuleNestedInput
 }
 
 export type ModuleCreateManyInput = {
@@ -563,18 +563,18 @@ export type ModuleUncheckedUpdateOneWithoutPublishedVersionNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.ModuleUpdateToOneWithWhereWithoutPublishedVersionInput, Prisma.ModuleUpdateWithoutPublishedVersionInput>, Prisma.ModuleUncheckedUpdateWithoutPublishedVersionInput>
 }
 
-export type ModuleCreateNestedOneWithoutProgressInput = {
-  create?: Prisma.XOR<Prisma.ModuleCreateWithoutProgressInput, Prisma.ModuleUncheckedCreateWithoutProgressInput>
-  connectOrCreate?: Prisma.ModuleCreateOrConnectWithoutProgressInput
+export type ModuleCreateNestedOneWithoutCompletionsInput = {
+  create?: Prisma.XOR<Prisma.ModuleCreateWithoutCompletionsInput, Prisma.ModuleUncheckedCreateWithoutCompletionsInput>
+  connectOrCreate?: Prisma.ModuleCreateOrConnectWithoutCompletionsInput
   connect?: Prisma.ModuleWhereUniqueInput
 }
 
-export type ModuleUpdateOneRequiredWithoutProgressNestedInput = {
-  create?: Prisma.XOR<Prisma.ModuleCreateWithoutProgressInput, Prisma.ModuleUncheckedCreateWithoutProgressInput>
-  connectOrCreate?: Prisma.ModuleCreateOrConnectWithoutProgressInput
-  upsert?: Prisma.ModuleUpsertWithoutProgressInput
+export type ModuleUpdateOneRequiredWithoutCompletionsNestedInput = {
+  create?: Prisma.XOR<Prisma.ModuleCreateWithoutCompletionsInput, Prisma.ModuleUncheckedCreateWithoutCompletionsInput>
+  connectOrCreate?: Prisma.ModuleCreateOrConnectWithoutCompletionsInput
+  upsert?: Prisma.ModuleUpsertWithoutCompletionsInput
   connect?: Prisma.ModuleWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.ModuleUpdateToOneWithWhereWithoutProgressInput, Prisma.ModuleUpdateWithoutProgressInput>, Prisma.ModuleUncheckedUpdateWithoutProgressInput>
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ModuleUpdateToOneWithWhereWithoutCompletionsInput, Prisma.ModuleUpdateWithoutCompletionsInput>, Prisma.ModuleUncheckedUpdateWithoutCompletionsInput>
 }
 
 export type ModuleCreateWithoutCollectionInput = {
@@ -587,7 +587,7 @@ export type ModuleCreateWithoutCollectionInput = {
   updatedAt?: Date | string
   versions?: Prisma.ModuleVersionCreateNestedManyWithoutModuleInput
   publishedVersion?: Prisma.ModuleVersionCreateNestedOneWithoutPublishedForInput
-  progress?: Prisma.ModuleProgressCreateNestedManyWithoutModuleInput
+  completions?: Prisma.ModuleCompletionCreateNestedManyWithoutModuleInput
 }
 
 export type ModuleUncheckedCreateWithoutCollectionInput = {
@@ -600,7 +600,7 @@ export type ModuleUncheckedCreateWithoutCollectionInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   versions?: Prisma.ModuleVersionUncheckedCreateNestedManyWithoutModuleInput
-  progress?: Prisma.ModuleProgressUncheckedCreateNestedManyWithoutModuleInput
+  completions?: Prisma.ModuleCompletionUncheckedCreateNestedManyWithoutModuleInput
 }
 
 export type ModuleCreateOrConnectWithoutCollectionInput = {
@@ -654,7 +654,7 @@ export type ModuleCreateWithoutVersionsInput = {
   updatedAt?: Date | string
   collection: Prisma.CollectionCreateNestedOneWithoutModulesInput
   publishedVersion?: Prisma.ModuleVersionCreateNestedOneWithoutPublishedForInput
-  progress?: Prisma.ModuleProgressCreateNestedManyWithoutModuleInput
+  completions?: Prisma.ModuleCompletionCreateNestedManyWithoutModuleInput
 }
 
 export type ModuleUncheckedCreateWithoutVersionsInput = {
@@ -667,7 +667,7 @@ export type ModuleUncheckedCreateWithoutVersionsInput = {
   publishedVersionId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  progress?: Prisma.ModuleProgressUncheckedCreateNestedManyWithoutModuleInput
+  completions?: Prisma.ModuleCompletionUncheckedCreateNestedManyWithoutModuleInput
 }
 
 export type ModuleCreateOrConnectWithoutVersionsInput = {
@@ -685,7 +685,7 @@ export type ModuleCreateWithoutPublishedVersionInput = {
   updatedAt?: Date | string
   collection: Prisma.CollectionCreateNestedOneWithoutModulesInput
   versions?: Prisma.ModuleVersionCreateNestedManyWithoutModuleInput
-  progress?: Prisma.ModuleProgressCreateNestedManyWithoutModuleInput
+  completions?: Prisma.ModuleCompletionCreateNestedManyWithoutModuleInput
 }
 
 export type ModuleUncheckedCreateWithoutPublishedVersionInput = {
@@ -698,7 +698,7 @@ export type ModuleUncheckedCreateWithoutPublishedVersionInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   versions?: Prisma.ModuleVersionUncheckedCreateNestedManyWithoutModuleInput
-  progress?: Prisma.ModuleProgressUncheckedCreateNestedManyWithoutModuleInput
+  completions?: Prisma.ModuleCompletionUncheckedCreateNestedManyWithoutModuleInput
 }
 
 export type ModuleCreateOrConnectWithoutPublishedVersionInput = {
@@ -727,7 +727,7 @@ export type ModuleUpdateWithoutVersionsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   collection?: Prisma.CollectionUpdateOneRequiredWithoutModulesNestedInput
   publishedVersion?: Prisma.ModuleVersionUpdateOneWithoutPublishedForNestedInput
-  progress?: Prisma.ModuleProgressUpdateManyWithoutModuleNestedInput
+  completions?: Prisma.ModuleCompletionUpdateManyWithoutModuleNestedInput
 }
 
 export type ModuleUncheckedUpdateWithoutVersionsInput = {
@@ -740,7 +740,7 @@ export type ModuleUncheckedUpdateWithoutVersionsInput = {
   publishedVersionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  progress?: Prisma.ModuleProgressUncheckedUpdateManyWithoutModuleNestedInput
+  completions?: Prisma.ModuleCompletionUncheckedUpdateManyWithoutModuleNestedInput
 }
 
 export type ModuleUpsertWithoutPublishedVersionInput = {
@@ -764,7 +764,7 @@ export type ModuleUpdateWithoutPublishedVersionInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   collection?: Prisma.CollectionUpdateOneRequiredWithoutModulesNestedInput
   versions?: Prisma.ModuleVersionUpdateManyWithoutModuleNestedInput
-  progress?: Prisma.ModuleProgressUpdateManyWithoutModuleNestedInput
+  completions?: Prisma.ModuleCompletionUpdateManyWithoutModuleNestedInput
 }
 
 export type ModuleUncheckedUpdateWithoutPublishedVersionInput = {
@@ -777,10 +777,10 @@ export type ModuleUncheckedUpdateWithoutPublishedVersionInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   versions?: Prisma.ModuleVersionUncheckedUpdateManyWithoutModuleNestedInput
-  progress?: Prisma.ModuleProgressUncheckedUpdateManyWithoutModuleNestedInput
+  completions?: Prisma.ModuleCompletionUncheckedUpdateManyWithoutModuleNestedInput
 }
 
-export type ModuleCreateWithoutProgressInput = {
+export type ModuleCreateWithoutCompletionsInput = {
   id?: string
   title: string
   slug: string
@@ -793,7 +793,7 @@ export type ModuleCreateWithoutProgressInput = {
   publishedVersion?: Prisma.ModuleVersionCreateNestedOneWithoutPublishedForInput
 }
 
-export type ModuleUncheckedCreateWithoutProgressInput = {
+export type ModuleUncheckedCreateWithoutCompletionsInput = {
   id?: string
   collectionId: string
   title: string
@@ -806,23 +806,23 @@ export type ModuleUncheckedCreateWithoutProgressInput = {
   versions?: Prisma.ModuleVersionUncheckedCreateNestedManyWithoutModuleInput
 }
 
-export type ModuleCreateOrConnectWithoutProgressInput = {
+export type ModuleCreateOrConnectWithoutCompletionsInput = {
   where: Prisma.ModuleWhereUniqueInput
-  create: Prisma.XOR<Prisma.ModuleCreateWithoutProgressInput, Prisma.ModuleUncheckedCreateWithoutProgressInput>
+  create: Prisma.XOR<Prisma.ModuleCreateWithoutCompletionsInput, Prisma.ModuleUncheckedCreateWithoutCompletionsInput>
 }
 
-export type ModuleUpsertWithoutProgressInput = {
-  update: Prisma.XOR<Prisma.ModuleUpdateWithoutProgressInput, Prisma.ModuleUncheckedUpdateWithoutProgressInput>
-  create: Prisma.XOR<Prisma.ModuleCreateWithoutProgressInput, Prisma.ModuleUncheckedCreateWithoutProgressInput>
+export type ModuleUpsertWithoutCompletionsInput = {
+  update: Prisma.XOR<Prisma.ModuleUpdateWithoutCompletionsInput, Prisma.ModuleUncheckedUpdateWithoutCompletionsInput>
+  create: Prisma.XOR<Prisma.ModuleCreateWithoutCompletionsInput, Prisma.ModuleUncheckedCreateWithoutCompletionsInput>
   where?: Prisma.ModuleWhereInput
 }
 
-export type ModuleUpdateToOneWithWhereWithoutProgressInput = {
+export type ModuleUpdateToOneWithWhereWithoutCompletionsInput = {
   where?: Prisma.ModuleWhereInput
-  data: Prisma.XOR<Prisma.ModuleUpdateWithoutProgressInput, Prisma.ModuleUncheckedUpdateWithoutProgressInput>
+  data: Prisma.XOR<Prisma.ModuleUpdateWithoutCompletionsInput, Prisma.ModuleUncheckedUpdateWithoutCompletionsInput>
 }
 
-export type ModuleUpdateWithoutProgressInput = {
+export type ModuleUpdateWithoutCompletionsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   slug?: Prisma.StringFieldUpdateOperationsInput | string
@@ -835,7 +835,7 @@ export type ModuleUpdateWithoutProgressInput = {
   publishedVersion?: Prisma.ModuleVersionUpdateOneWithoutPublishedForNestedInput
 }
 
-export type ModuleUncheckedUpdateWithoutProgressInput = {
+export type ModuleUncheckedUpdateWithoutCompletionsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   collectionId?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
@@ -869,7 +869,7 @@ export type ModuleUpdateWithoutCollectionInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   versions?: Prisma.ModuleVersionUpdateManyWithoutModuleNestedInput
   publishedVersion?: Prisma.ModuleVersionUpdateOneWithoutPublishedForNestedInput
-  progress?: Prisma.ModuleProgressUpdateManyWithoutModuleNestedInput
+  completions?: Prisma.ModuleCompletionUpdateManyWithoutModuleNestedInput
 }
 
 export type ModuleUncheckedUpdateWithoutCollectionInput = {
@@ -882,7 +882,7 @@ export type ModuleUncheckedUpdateWithoutCollectionInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   versions?: Prisma.ModuleVersionUncheckedUpdateManyWithoutModuleNestedInput
-  progress?: Prisma.ModuleProgressUncheckedUpdateManyWithoutModuleNestedInput
+  completions?: Prisma.ModuleCompletionUncheckedUpdateManyWithoutModuleNestedInput
 }
 
 export type ModuleUncheckedUpdateManyWithoutCollectionInput = {
@@ -903,12 +903,12 @@ export type ModuleUncheckedUpdateManyWithoutCollectionInput = {
 
 export type ModuleCountOutputType = {
   versions: number
-  progress: number
+  completions: number
 }
 
 export type ModuleCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   versions?: boolean | ModuleCountOutputTypeCountVersionsArgs
-  progress?: boolean | ModuleCountOutputTypeCountProgressArgs
+  completions?: boolean | ModuleCountOutputTypeCountCompletionsArgs
 }
 
 /**
@@ -931,8 +931,8 @@ export type ModuleCountOutputTypeCountVersionsArgs<ExtArgs extends runtime.Types
 /**
  * ModuleCountOutputType without action
  */
-export type ModuleCountOutputTypeCountProgressArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.ModuleProgressWhereInput
+export type ModuleCountOutputTypeCountCompletionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ModuleCompletionWhereInput
 }
 
 
@@ -949,7 +949,7 @@ export type ModuleSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   collection?: boolean | Prisma.CollectionDefaultArgs<ExtArgs>
   versions?: boolean | Prisma.Module$versionsArgs<ExtArgs>
   publishedVersion?: boolean | Prisma.Module$publishedVersionArgs<ExtArgs>
-  progress?: boolean | Prisma.Module$progressArgs<ExtArgs>
+  completions?: boolean | Prisma.Module$completionsArgs<ExtArgs>
   _count?: boolean | Prisma.ModuleCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["module"]>
 
@@ -998,7 +998,7 @@ export type ModuleInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   collection?: boolean | Prisma.CollectionDefaultArgs<ExtArgs>
   versions?: boolean | Prisma.Module$versionsArgs<ExtArgs>
   publishedVersion?: boolean | Prisma.Module$publishedVersionArgs<ExtArgs>
-  progress?: boolean | Prisma.Module$progressArgs<ExtArgs>
+  completions?: boolean | Prisma.Module$completionsArgs<ExtArgs>
   _count?: boolean | Prisma.ModuleCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type ModuleIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1016,7 +1016,7 @@ export type $ModulePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
     collection: Prisma.$CollectionPayload<ExtArgs>
     versions: Prisma.$ModuleVersionPayload<ExtArgs>[]
     publishedVersion: Prisma.$ModuleVersionPayload<ExtArgs> | null
-    progress: Prisma.$ModuleProgressPayload<ExtArgs>[]
+    completions: Prisma.$ModuleCompletionPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1425,7 +1425,7 @@ export interface Prisma__ModuleClient<T, Null = never, ExtArgs extends runtime.T
   collection<T extends Prisma.CollectionDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.CollectionDefaultArgs<ExtArgs>>): Prisma.Prisma__CollectionClient<runtime.Types.Result.GetResult<Prisma.$CollectionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   versions<T extends Prisma.Module$versionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Module$versionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ModuleVersionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   publishedVersion<T extends Prisma.Module$publishedVersionArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Module$publishedVersionArgs<ExtArgs>>): Prisma.Prisma__ModuleVersionClient<runtime.Types.Result.GetResult<Prisma.$ModuleVersionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-  progress<T extends Prisma.Module$progressArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Module$progressArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ModuleProgressPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  completions<T extends Prisma.Module$completionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Module$completionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ModuleCompletionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1908,27 +1908,27 @@ export type Module$publishedVersionArgs<ExtArgs extends runtime.Types.Extensions
 }
 
 /**
- * Module.progress
+ * Module.completions
  */
-export type Module$progressArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type Module$completionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the ModuleProgress
+   * Select specific fields to fetch from the ModuleCompletion
    */
-  select?: Prisma.ModuleProgressSelect<ExtArgs> | null
+  select?: Prisma.ModuleCompletionSelect<ExtArgs> | null
   /**
-   * Omit specific fields from the ModuleProgress
+   * Omit specific fields from the ModuleCompletion
    */
-  omit?: Prisma.ModuleProgressOmit<ExtArgs> | null
+  omit?: Prisma.ModuleCompletionOmit<ExtArgs> | null
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.ModuleProgressInclude<ExtArgs> | null
-  where?: Prisma.ModuleProgressWhereInput
-  orderBy?: Prisma.ModuleProgressOrderByWithRelationInput | Prisma.ModuleProgressOrderByWithRelationInput[]
-  cursor?: Prisma.ModuleProgressWhereUniqueInput
+  include?: Prisma.ModuleCompletionInclude<ExtArgs> | null
+  where?: Prisma.ModuleCompletionWhereInput
+  orderBy?: Prisma.ModuleCompletionOrderByWithRelationInput | Prisma.ModuleCompletionOrderByWithRelationInput[]
+  cursor?: Prisma.ModuleCompletionWhereUniqueInput
   take?: number
   skip?: number
-  distinct?: Prisma.ModuleProgressScalarFieldEnum | Prisma.ModuleProgressScalarFieldEnum[]
+  distinct?: Prisma.ModuleCompletionScalarFieldEnum | Prisma.ModuleCompletionScalarFieldEnum[]
 }
 
 /**

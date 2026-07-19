@@ -196,6 +196,7 @@ export type CollectionWhereInput = {
   updatedAt?: Prisma.DateTimeFilter<"Collection"> | Date | string
   mediaFiles?: Prisma.CollectionMediaListRelationFilter
   modules?: Prisma.ModuleListRelationFilter
+  progress?: Prisma.CollectionProgressListRelationFilter
 }
 
 export type CollectionOrderByWithRelationInput = {
@@ -208,6 +209,7 @@ export type CollectionOrderByWithRelationInput = {
   updatedAt?: Prisma.SortOrder
   mediaFiles?: Prisma.CollectionMediaOrderByRelationAggregateInput
   modules?: Prisma.ModuleOrderByRelationAggregateInput
+  progress?: Prisma.CollectionProgressOrderByRelationAggregateInput
 }
 
 export type CollectionWhereUniqueInput = Prisma.AtLeast<{
@@ -223,6 +225,7 @@ export type CollectionWhereUniqueInput = Prisma.AtLeast<{
   updatedAt?: Prisma.DateTimeFilter<"Collection"> | Date | string
   mediaFiles?: Prisma.CollectionMediaListRelationFilter
   modules?: Prisma.ModuleListRelationFilter
+  progress?: Prisma.CollectionProgressListRelationFilter
 }, "id" | "slug">
 
 export type CollectionOrderByWithAggregationInput = {
@@ -261,6 +264,7 @@ export type CollectionCreateInput = {
   updatedAt?: Date | string
   mediaFiles?: Prisma.CollectionMediaCreateNestedManyWithoutCollectionInput
   modules?: Prisma.ModuleCreateNestedManyWithoutCollectionInput
+  progress?: Prisma.CollectionProgressCreateNestedManyWithoutCollectionInput
 }
 
 export type CollectionUncheckedCreateInput = {
@@ -273,6 +277,7 @@ export type CollectionUncheckedCreateInput = {
   updatedAt?: Date | string
   mediaFiles?: Prisma.CollectionMediaUncheckedCreateNestedManyWithoutCollectionInput
   modules?: Prisma.ModuleUncheckedCreateNestedManyWithoutCollectionInput
+  progress?: Prisma.CollectionProgressUncheckedCreateNestedManyWithoutCollectionInput
 }
 
 export type CollectionUpdateInput = {
@@ -285,6 +290,7 @@ export type CollectionUpdateInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   mediaFiles?: Prisma.CollectionMediaUpdateManyWithoutCollectionNestedInput
   modules?: Prisma.ModuleUpdateManyWithoutCollectionNestedInput
+  progress?: Prisma.CollectionProgressUpdateManyWithoutCollectionNestedInput
 }
 
 export type CollectionUncheckedUpdateInput = {
@@ -297,6 +303,7 @@ export type CollectionUncheckedUpdateInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   mediaFiles?: Prisma.CollectionMediaUncheckedUpdateManyWithoutCollectionNestedInput
   modules?: Prisma.ModuleUncheckedUpdateManyWithoutCollectionNestedInput
+  progress?: Prisma.CollectionProgressUncheckedUpdateManyWithoutCollectionNestedInput
 }
 
 export type CollectionCreateManyInput = {
@@ -390,6 +397,20 @@ export type CollectionUpdateOneRequiredWithoutModulesNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.CollectionUpdateToOneWithWhereWithoutModulesInput, Prisma.CollectionUpdateWithoutModulesInput>, Prisma.CollectionUncheckedUpdateWithoutModulesInput>
 }
 
+export type CollectionCreateNestedOneWithoutProgressInput = {
+  create?: Prisma.XOR<Prisma.CollectionCreateWithoutProgressInput, Prisma.CollectionUncheckedCreateWithoutProgressInput>
+  connectOrCreate?: Prisma.CollectionCreateOrConnectWithoutProgressInput
+  connect?: Prisma.CollectionWhereUniqueInput
+}
+
+export type CollectionUpdateOneRequiredWithoutProgressNestedInput = {
+  create?: Prisma.XOR<Prisma.CollectionCreateWithoutProgressInput, Prisma.CollectionUncheckedCreateWithoutProgressInput>
+  connectOrCreate?: Prisma.CollectionCreateOrConnectWithoutProgressInput
+  upsert?: Prisma.CollectionUpsertWithoutProgressInput
+  connect?: Prisma.CollectionWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.CollectionUpdateToOneWithWhereWithoutProgressInput, Prisma.CollectionUpdateWithoutProgressInput>, Prisma.CollectionUncheckedUpdateWithoutProgressInput>
+}
+
 export type CollectionCreateWithoutMediaFilesInput = {
   id?: string
   name: string
@@ -399,6 +420,7 @@ export type CollectionCreateWithoutMediaFilesInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   modules?: Prisma.ModuleCreateNestedManyWithoutCollectionInput
+  progress?: Prisma.CollectionProgressCreateNestedManyWithoutCollectionInput
 }
 
 export type CollectionUncheckedCreateWithoutMediaFilesInput = {
@@ -410,6 +432,7 @@ export type CollectionUncheckedCreateWithoutMediaFilesInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   modules?: Prisma.ModuleUncheckedCreateNestedManyWithoutCollectionInput
+  progress?: Prisma.CollectionProgressUncheckedCreateNestedManyWithoutCollectionInput
 }
 
 export type CollectionCreateOrConnectWithoutMediaFilesInput = {
@@ -437,6 +460,7 @@ export type CollectionUpdateWithoutMediaFilesInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   modules?: Prisma.ModuleUpdateManyWithoutCollectionNestedInput
+  progress?: Prisma.CollectionProgressUpdateManyWithoutCollectionNestedInput
 }
 
 export type CollectionUncheckedUpdateWithoutMediaFilesInput = {
@@ -448,6 +472,7 @@ export type CollectionUncheckedUpdateWithoutMediaFilesInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   modules?: Prisma.ModuleUncheckedUpdateManyWithoutCollectionNestedInput
+  progress?: Prisma.CollectionProgressUncheckedUpdateManyWithoutCollectionNestedInput
 }
 
 export type CollectionCreateWithoutModulesInput = {
@@ -459,6 +484,7 @@ export type CollectionCreateWithoutModulesInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   mediaFiles?: Prisma.CollectionMediaCreateNestedManyWithoutCollectionInput
+  progress?: Prisma.CollectionProgressCreateNestedManyWithoutCollectionInput
 }
 
 export type CollectionUncheckedCreateWithoutModulesInput = {
@@ -470,6 +496,7 @@ export type CollectionUncheckedCreateWithoutModulesInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   mediaFiles?: Prisma.CollectionMediaUncheckedCreateNestedManyWithoutCollectionInput
+  progress?: Prisma.CollectionProgressUncheckedCreateNestedManyWithoutCollectionInput
 }
 
 export type CollectionCreateOrConnectWithoutModulesInput = {
@@ -497,6 +524,7 @@ export type CollectionUpdateWithoutModulesInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   mediaFiles?: Prisma.CollectionMediaUpdateManyWithoutCollectionNestedInput
+  progress?: Prisma.CollectionProgressUpdateManyWithoutCollectionNestedInput
 }
 
 export type CollectionUncheckedUpdateWithoutModulesInput = {
@@ -508,6 +536,71 @@ export type CollectionUncheckedUpdateWithoutModulesInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   mediaFiles?: Prisma.CollectionMediaUncheckedUpdateManyWithoutCollectionNestedInput
+  progress?: Prisma.CollectionProgressUncheckedUpdateManyWithoutCollectionNestedInput
+}
+
+export type CollectionCreateWithoutProgressInput = {
+  id?: string
+  name: string
+  slug: string
+  description?: string | null
+  parsedIndex?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  mediaFiles?: Prisma.CollectionMediaCreateNestedManyWithoutCollectionInput
+  modules?: Prisma.ModuleCreateNestedManyWithoutCollectionInput
+}
+
+export type CollectionUncheckedCreateWithoutProgressInput = {
+  id?: string
+  name: string
+  slug: string
+  description?: string | null
+  parsedIndex?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  mediaFiles?: Prisma.CollectionMediaUncheckedCreateNestedManyWithoutCollectionInput
+  modules?: Prisma.ModuleUncheckedCreateNestedManyWithoutCollectionInput
+}
+
+export type CollectionCreateOrConnectWithoutProgressInput = {
+  where: Prisma.CollectionWhereUniqueInput
+  create: Prisma.XOR<Prisma.CollectionCreateWithoutProgressInput, Prisma.CollectionUncheckedCreateWithoutProgressInput>
+}
+
+export type CollectionUpsertWithoutProgressInput = {
+  update: Prisma.XOR<Prisma.CollectionUpdateWithoutProgressInput, Prisma.CollectionUncheckedUpdateWithoutProgressInput>
+  create: Prisma.XOR<Prisma.CollectionCreateWithoutProgressInput, Prisma.CollectionUncheckedCreateWithoutProgressInput>
+  where?: Prisma.CollectionWhereInput
+}
+
+export type CollectionUpdateToOneWithWhereWithoutProgressInput = {
+  where?: Prisma.CollectionWhereInput
+  data: Prisma.XOR<Prisma.CollectionUpdateWithoutProgressInput, Prisma.CollectionUncheckedUpdateWithoutProgressInput>
+}
+
+export type CollectionUpdateWithoutProgressInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  parsedIndex?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  mediaFiles?: Prisma.CollectionMediaUpdateManyWithoutCollectionNestedInput
+  modules?: Prisma.ModuleUpdateManyWithoutCollectionNestedInput
+}
+
+export type CollectionUncheckedUpdateWithoutProgressInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  parsedIndex?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  mediaFiles?: Prisma.CollectionMediaUncheckedUpdateManyWithoutCollectionNestedInput
+  modules?: Prisma.ModuleUncheckedUpdateManyWithoutCollectionNestedInput
 }
 
 
@@ -518,11 +611,13 @@ export type CollectionUncheckedUpdateWithoutModulesInput = {
 export type CollectionCountOutputType = {
   mediaFiles: number
   modules: number
+  progress: number
 }
 
 export type CollectionCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   mediaFiles?: boolean | CollectionCountOutputTypeCountMediaFilesArgs
   modules?: boolean | CollectionCountOutputTypeCountModulesArgs
+  progress?: boolean | CollectionCountOutputTypeCountProgressArgs
 }
 
 /**
@@ -549,6 +644,13 @@ export type CollectionCountOutputTypeCountModulesArgs<ExtArgs extends runtime.Ty
   where?: Prisma.ModuleWhereInput
 }
 
+/**
+ * CollectionCountOutputType without action
+ */
+export type CollectionCountOutputTypeCountProgressArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.CollectionProgressWhereInput
+}
+
 
 export type CollectionSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -560,6 +662,7 @@ export type CollectionSelect<ExtArgs extends runtime.Types.Extensions.InternalAr
   updatedAt?: boolean
   mediaFiles?: boolean | Prisma.Collection$mediaFilesArgs<ExtArgs>
   modules?: boolean | Prisma.Collection$modulesArgs<ExtArgs>
+  progress?: boolean | Prisma.Collection$progressArgs<ExtArgs>
   _count?: boolean | Prisma.CollectionCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["collection"]>
 
@@ -597,6 +700,7 @@ export type CollectionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs
 export type CollectionInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   mediaFiles?: boolean | Prisma.Collection$mediaFilesArgs<ExtArgs>
   modules?: boolean | Prisma.Collection$modulesArgs<ExtArgs>
+  progress?: boolean | Prisma.Collection$progressArgs<ExtArgs>
   _count?: boolean | Prisma.CollectionCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type CollectionIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -607,6 +711,7 @@ export type $CollectionPayload<ExtArgs extends runtime.Types.Extensions.Internal
   objects: {
     mediaFiles: Prisma.$CollectionMediaPayload<ExtArgs>[]
     modules: Prisma.$ModulePayload<ExtArgs>[]
+    progress: Prisma.$CollectionProgressPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1012,6 +1117,7 @@ export interface Prisma__CollectionClient<T, Null = never, ExtArgs extends runti
   readonly [Symbol.toStringTag]: "PrismaPromise"
   mediaFiles<T extends Prisma.Collection$mediaFilesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Collection$mediaFilesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CollectionMediaPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   modules<T extends Prisma.Collection$modulesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Collection$modulesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ModulePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  progress<T extends Prisma.Collection$progressArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Collection$progressArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CollectionProgressPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1486,6 +1592,30 @@ export type Collection$modulesArgs<ExtArgs extends runtime.Types.Extensions.Inte
   take?: number
   skip?: number
   distinct?: Prisma.ModuleScalarFieldEnum | Prisma.ModuleScalarFieldEnum[]
+}
+
+/**
+ * Collection.progress
+ */
+export type Collection$progressArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the CollectionProgress
+   */
+  select?: Prisma.CollectionProgressSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the CollectionProgress
+   */
+  omit?: Prisma.CollectionProgressOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CollectionProgressInclude<ExtArgs> | null
+  where?: Prisma.CollectionProgressWhereInput
+  orderBy?: Prisma.CollectionProgressOrderByWithRelationInput | Prisma.CollectionProgressOrderByWithRelationInput[]
+  cursor?: Prisma.CollectionProgressWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.CollectionProgressScalarFieldEnum | Prisma.CollectionProgressScalarFieldEnum[]
 }
 
 /**

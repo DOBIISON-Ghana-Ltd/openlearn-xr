@@ -247,6 +247,7 @@ export type SessionPlayerWhereInput = {
   session?: Prisma.XOR<Prisma.LiveSessionScalarRelationFilter, Prisma.LiveSessionWhereInput>
   user?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   analytics?: Prisma.SessionAnalyticListRelationFilter
+  playAttempt?: Prisma.XOR<Prisma.PlayAttemptNullableScalarRelationFilter, Prisma.PlayAttemptWhereInput> | null
 }
 
 export type SessionPlayerOrderByWithRelationInput = {
@@ -261,6 +262,7 @@ export type SessionPlayerOrderByWithRelationInput = {
   session?: Prisma.LiveSessionOrderByWithRelationInput
   user?: Prisma.UserOrderByWithRelationInput
   analytics?: Prisma.SessionAnalyticOrderByRelationAggregateInput
+  playAttempt?: Prisma.PlayAttemptOrderByWithRelationInput
 }
 
 export type SessionPlayerWhereUniqueInput = Prisma.AtLeast<{
@@ -278,6 +280,7 @@ export type SessionPlayerWhereUniqueInput = Prisma.AtLeast<{
   session?: Prisma.XOR<Prisma.LiveSessionScalarRelationFilter, Prisma.LiveSessionWhereInput>
   user?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   analytics?: Prisma.SessionAnalyticListRelationFilter
+  playAttempt?: Prisma.XOR<Prisma.PlayAttemptNullableScalarRelationFilter, Prisma.PlayAttemptWhereInput> | null
 }, "id">
 
 export type SessionPlayerOrderByWithAggregationInput = {
@@ -320,6 +323,7 @@ export type SessionPlayerCreateInput = {
   session: Prisma.LiveSessionCreateNestedOneWithoutPlayersInput
   user?: Prisma.UserCreateNestedOneWithoutSessionPlaysInput
   analytics?: Prisma.SessionAnalyticCreateNestedManyWithoutPlayerInput
+  playAttempt?: Prisma.PlayAttemptCreateNestedOneWithoutSessionPlayerInput
 }
 
 export type SessionPlayerUncheckedCreateInput = {
@@ -332,6 +336,7 @@ export type SessionPlayerUncheckedCreateInput = {
   joinedAt?: Date | string
   completedAt?: Date | string | null
   analytics?: Prisma.SessionAnalyticUncheckedCreateNestedManyWithoutPlayerInput
+  playAttempt?: Prisma.PlayAttemptUncheckedCreateNestedOneWithoutSessionPlayerInput
 }
 
 export type SessionPlayerUpdateInput = {
@@ -344,6 +349,7 @@ export type SessionPlayerUpdateInput = {
   session?: Prisma.LiveSessionUpdateOneRequiredWithoutPlayersNestedInput
   user?: Prisma.UserUpdateOneWithoutSessionPlaysNestedInput
   analytics?: Prisma.SessionAnalyticUpdateManyWithoutPlayerNestedInput
+  playAttempt?: Prisma.PlayAttemptUpdateOneWithoutSessionPlayerNestedInput
 }
 
 export type SessionPlayerUncheckedUpdateInput = {
@@ -356,6 +362,7 @@ export type SessionPlayerUncheckedUpdateInput = {
   joinedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   analytics?: Prisma.SessionAnalyticUncheckedUpdateManyWithoutPlayerNestedInput
+  playAttempt?: Prisma.PlayAttemptUncheckedUpdateOneWithoutSessionPlayerNestedInput
 }
 
 export type SessionPlayerCreateManyInput = {
@@ -445,6 +452,11 @@ export type SessionPlayerSumOrderByAggregateInput = {
 export type SessionPlayerScalarRelationFilter = {
   is?: Prisma.SessionPlayerWhereInput
   isNot?: Prisma.SessionPlayerWhereInput
+}
+
+export type SessionPlayerNullableScalarRelationFilter = {
+  is?: Prisma.SessionPlayerWhereInput | null
+  isNot?: Prisma.SessionPlayerWhereInput | null
 }
 
 export type SessionPlayerCreateNestedManyWithoutUserInput = {
@@ -553,6 +565,22 @@ export type SessionPlayerUpdateOneRequiredWithoutAnalyticsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.SessionPlayerUpdateToOneWithWhereWithoutAnalyticsInput, Prisma.SessionPlayerUpdateWithoutAnalyticsInput>, Prisma.SessionPlayerUncheckedUpdateWithoutAnalyticsInput>
 }
 
+export type SessionPlayerCreateNestedOneWithoutPlayAttemptInput = {
+  create?: Prisma.XOR<Prisma.SessionPlayerCreateWithoutPlayAttemptInput, Prisma.SessionPlayerUncheckedCreateWithoutPlayAttemptInput>
+  connectOrCreate?: Prisma.SessionPlayerCreateOrConnectWithoutPlayAttemptInput
+  connect?: Prisma.SessionPlayerWhereUniqueInput
+}
+
+export type SessionPlayerUpdateOneWithoutPlayAttemptNestedInput = {
+  create?: Prisma.XOR<Prisma.SessionPlayerCreateWithoutPlayAttemptInput, Prisma.SessionPlayerUncheckedCreateWithoutPlayAttemptInput>
+  connectOrCreate?: Prisma.SessionPlayerCreateOrConnectWithoutPlayAttemptInput
+  upsert?: Prisma.SessionPlayerUpsertWithoutPlayAttemptInput
+  disconnect?: Prisma.SessionPlayerWhereInput | boolean
+  delete?: Prisma.SessionPlayerWhereInput | boolean
+  connect?: Prisma.SessionPlayerWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.SessionPlayerUpdateToOneWithWhereWithoutPlayAttemptInput, Prisma.SessionPlayerUpdateWithoutPlayAttemptInput>, Prisma.SessionPlayerUncheckedUpdateWithoutPlayAttemptInput>
+}
+
 export type SessionPlayerCreateWithoutUserInput = {
   id?: string
   anonymousName?: string | null
@@ -562,6 +590,7 @@ export type SessionPlayerCreateWithoutUserInput = {
   completedAt?: Date | string | null
   session: Prisma.LiveSessionCreateNestedOneWithoutPlayersInput
   analytics?: Prisma.SessionAnalyticCreateNestedManyWithoutPlayerInput
+  playAttempt?: Prisma.PlayAttemptCreateNestedOneWithoutSessionPlayerInput
 }
 
 export type SessionPlayerUncheckedCreateWithoutUserInput = {
@@ -573,6 +602,7 @@ export type SessionPlayerUncheckedCreateWithoutUserInput = {
   joinedAt?: Date | string
   completedAt?: Date | string | null
   analytics?: Prisma.SessionAnalyticUncheckedCreateNestedManyWithoutPlayerInput
+  playAttempt?: Prisma.PlayAttemptUncheckedCreateNestedOneWithoutSessionPlayerInput
 }
 
 export type SessionPlayerCreateOrConnectWithoutUserInput = {
@@ -624,6 +654,7 @@ export type SessionPlayerCreateWithoutSessionInput = {
   completedAt?: Date | string | null
   user?: Prisma.UserCreateNestedOneWithoutSessionPlaysInput
   analytics?: Prisma.SessionAnalyticCreateNestedManyWithoutPlayerInput
+  playAttempt?: Prisma.PlayAttemptCreateNestedOneWithoutSessionPlayerInput
 }
 
 export type SessionPlayerUncheckedCreateWithoutSessionInput = {
@@ -635,6 +666,7 @@ export type SessionPlayerUncheckedCreateWithoutSessionInput = {
   joinedAt?: Date | string
   completedAt?: Date | string | null
   analytics?: Prisma.SessionAnalyticUncheckedCreateNestedManyWithoutPlayerInput
+  playAttempt?: Prisma.PlayAttemptUncheckedCreateNestedOneWithoutSessionPlayerInput
 }
 
 export type SessionPlayerCreateOrConnectWithoutSessionInput = {
@@ -672,6 +704,7 @@ export type SessionPlayerCreateWithoutAnalyticsInput = {
   completedAt?: Date | string | null
   session: Prisma.LiveSessionCreateNestedOneWithoutPlayersInput
   user?: Prisma.UserCreateNestedOneWithoutSessionPlaysInput
+  playAttempt?: Prisma.PlayAttemptCreateNestedOneWithoutSessionPlayerInput
 }
 
 export type SessionPlayerUncheckedCreateWithoutAnalyticsInput = {
@@ -683,6 +716,7 @@ export type SessionPlayerUncheckedCreateWithoutAnalyticsInput = {
   completionRate?: number
   joinedAt?: Date | string
   completedAt?: Date | string | null
+  playAttempt?: Prisma.PlayAttemptUncheckedCreateNestedOneWithoutSessionPlayerInput
 }
 
 export type SessionPlayerCreateOrConnectWithoutAnalyticsInput = {
@@ -710,6 +744,7 @@ export type SessionPlayerUpdateWithoutAnalyticsInput = {
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   session?: Prisma.LiveSessionUpdateOneRequiredWithoutPlayersNestedInput
   user?: Prisma.UserUpdateOneWithoutSessionPlaysNestedInput
+  playAttempt?: Prisma.PlayAttemptUpdateOneWithoutSessionPlayerNestedInput
 }
 
 export type SessionPlayerUncheckedUpdateWithoutAnalyticsInput = {
@@ -721,6 +756,71 @@ export type SessionPlayerUncheckedUpdateWithoutAnalyticsInput = {
   completionRate?: Prisma.FloatFieldUpdateOperationsInput | number
   joinedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  playAttempt?: Prisma.PlayAttemptUncheckedUpdateOneWithoutSessionPlayerNestedInput
+}
+
+export type SessionPlayerCreateWithoutPlayAttemptInput = {
+  id?: string
+  anonymousName?: string | null
+  score?: number
+  completionRate?: number
+  joinedAt?: Date | string
+  completedAt?: Date | string | null
+  session: Prisma.LiveSessionCreateNestedOneWithoutPlayersInput
+  user?: Prisma.UserCreateNestedOneWithoutSessionPlaysInput
+  analytics?: Prisma.SessionAnalyticCreateNestedManyWithoutPlayerInput
+}
+
+export type SessionPlayerUncheckedCreateWithoutPlayAttemptInput = {
+  id?: string
+  sessionId: string
+  userId?: string | null
+  anonymousName?: string | null
+  score?: number
+  completionRate?: number
+  joinedAt?: Date | string
+  completedAt?: Date | string | null
+  analytics?: Prisma.SessionAnalyticUncheckedCreateNestedManyWithoutPlayerInput
+}
+
+export type SessionPlayerCreateOrConnectWithoutPlayAttemptInput = {
+  where: Prisma.SessionPlayerWhereUniqueInput
+  create: Prisma.XOR<Prisma.SessionPlayerCreateWithoutPlayAttemptInput, Prisma.SessionPlayerUncheckedCreateWithoutPlayAttemptInput>
+}
+
+export type SessionPlayerUpsertWithoutPlayAttemptInput = {
+  update: Prisma.XOR<Prisma.SessionPlayerUpdateWithoutPlayAttemptInput, Prisma.SessionPlayerUncheckedUpdateWithoutPlayAttemptInput>
+  create: Prisma.XOR<Prisma.SessionPlayerCreateWithoutPlayAttemptInput, Prisma.SessionPlayerUncheckedCreateWithoutPlayAttemptInput>
+  where?: Prisma.SessionPlayerWhereInput
+}
+
+export type SessionPlayerUpdateToOneWithWhereWithoutPlayAttemptInput = {
+  where?: Prisma.SessionPlayerWhereInput
+  data: Prisma.XOR<Prisma.SessionPlayerUpdateWithoutPlayAttemptInput, Prisma.SessionPlayerUncheckedUpdateWithoutPlayAttemptInput>
+}
+
+export type SessionPlayerUpdateWithoutPlayAttemptInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  anonymousName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  score?: Prisma.IntFieldUpdateOperationsInput | number
+  completionRate?: Prisma.FloatFieldUpdateOperationsInput | number
+  joinedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  session?: Prisma.LiveSessionUpdateOneRequiredWithoutPlayersNestedInput
+  user?: Prisma.UserUpdateOneWithoutSessionPlaysNestedInput
+  analytics?: Prisma.SessionAnalyticUpdateManyWithoutPlayerNestedInput
+}
+
+export type SessionPlayerUncheckedUpdateWithoutPlayAttemptInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  sessionId?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  anonymousName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  score?: Prisma.IntFieldUpdateOperationsInput | number
+  completionRate?: Prisma.FloatFieldUpdateOperationsInput | number
+  joinedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  analytics?: Prisma.SessionAnalyticUncheckedUpdateManyWithoutPlayerNestedInput
 }
 
 export type SessionPlayerCreateManyUserInput = {
@@ -742,6 +842,7 @@ export type SessionPlayerUpdateWithoutUserInput = {
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   session?: Prisma.LiveSessionUpdateOneRequiredWithoutPlayersNestedInput
   analytics?: Prisma.SessionAnalyticUpdateManyWithoutPlayerNestedInput
+  playAttempt?: Prisma.PlayAttemptUpdateOneWithoutSessionPlayerNestedInput
 }
 
 export type SessionPlayerUncheckedUpdateWithoutUserInput = {
@@ -753,6 +854,7 @@ export type SessionPlayerUncheckedUpdateWithoutUserInput = {
   joinedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   analytics?: Prisma.SessionAnalyticUncheckedUpdateManyWithoutPlayerNestedInput
+  playAttempt?: Prisma.PlayAttemptUncheckedUpdateOneWithoutSessionPlayerNestedInput
 }
 
 export type SessionPlayerUncheckedUpdateManyWithoutUserInput = {
@@ -784,6 +886,7 @@ export type SessionPlayerUpdateWithoutSessionInput = {
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   user?: Prisma.UserUpdateOneWithoutSessionPlaysNestedInput
   analytics?: Prisma.SessionAnalyticUpdateManyWithoutPlayerNestedInput
+  playAttempt?: Prisma.PlayAttemptUpdateOneWithoutSessionPlayerNestedInput
 }
 
 export type SessionPlayerUncheckedUpdateWithoutSessionInput = {
@@ -795,6 +898,7 @@ export type SessionPlayerUncheckedUpdateWithoutSessionInput = {
   joinedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   analytics?: Prisma.SessionAnalyticUncheckedUpdateManyWithoutPlayerNestedInput
+  playAttempt?: Prisma.PlayAttemptUncheckedUpdateOneWithoutSessionPlayerNestedInput
 }
 
 export type SessionPlayerUncheckedUpdateManyWithoutSessionInput = {
@@ -850,6 +954,7 @@ export type SessionPlayerSelect<ExtArgs extends runtime.Types.Extensions.Interna
   session?: boolean | Prisma.LiveSessionDefaultArgs<ExtArgs>
   user?: boolean | Prisma.SessionPlayer$userArgs<ExtArgs>
   analytics?: boolean | Prisma.SessionPlayer$analyticsArgs<ExtArgs>
+  playAttempt?: boolean | Prisma.SessionPlayer$playAttemptArgs<ExtArgs>
   _count?: boolean | Prisma.SessionPlayerCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["sessionPlayer"]>
 
@@ -895,6 +1000,7 @@ export type SessionPlayerInclude<ExtArgs extends runtime.Types.Extensions.Intern
   session?: boolean | Prisma.LiveSessionDefaultArgs<ExtArgs>
   user?: boolean | Prisma.SessionPlayer$userArgs<ExtArgs>
   analytics?: boolean | Prisma.SessionPlayer$analyticsArgs<ExtArgs>
+  playAttempt?: boolean | Prisma.SessionPlayer$playAttemptArgs<ExtArgs>
   _count?: boolean | Prisma.SessionPlayerCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type SessionPlayerIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -912,6 +1018,7 @@ export type $SessionPlayerPayload<ExtArgs extends runtime.Types.Extensions.Inter
     session: Prisma.$LiveSessionPayload<ExtArgs>
     user: Prisma.$UserPayload<ExtArgs> | null
     analytics: Prisma.$SessionAnalyticPayload<ExtArgs>[]
+    playAttempt: Prisma.$PlayAttemptPayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1319,6 +1426,7 @@ export interface Prisma__SessionPlayerClient<T, Null = never, ExtArgs extends ru
   session<T extends Prisma.LiveSessionDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.LiveSessionDefaultArgs<ExtArgs>>): Prisma.Prisma__LiveSessionClient<runtime.Types.Result.GetResult<Prisma.$LiveSessionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   user<T extends Prisma.SessionPlayer$userArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.SessionPlayer$userArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   analytics<T extends Prisma.SessionPlayer$analyticsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.SessionPlayer$analyticsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SessionAnalyticPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  playAttempt<T extends Prisma.SessionPlayer$playAttemptArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.SessionPlayer$playAttemptArgs<ExtArgs>>): Prisma.Prisma__PlayAttemptClient<runtime.Types.Result.GetResult<Prisma.$PlayAttemptPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1797,6 +1905,25 @@ export type SessionPlayer$analyticsArgs<ExtArgs extends runtime.Types.Extensions
   take?: number
   skip?: number
   distinct?: Prisma.SessionAnalyticScalarFieldEnum | Prisma.SessionAnalyticScalarFieldEnum[]
+}
+
+/**
+ * SessionPlayer.playAttempt
+ */
+export type SessionPlayer$playAttemptArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the PlayAttempt
+   */
+  select?: Prisma.PlayAttemptSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the PlayAttempt
+   */
+  omit?: Prisma.PlayAttemptOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.PlayAttemptInclude<ExtArgs> | null
+  where?: Prisma.PlayAttemptWhereInput
 }
 
 /**

@@ -240,6 +240,7 @@ export type LiveSessionWhereInput = {
   players?: Prisma.SessionPlayerListRelationFilter
   sessionCheckpoints?: Prisma.SessionCheckpointListRelationFilter
   analytics?: Prisma.SessionAnalyticListRelationFilter
+  playAttempts?: Prisma.PlayAttemptListRelationFilter
 }
 
 export type LiveSessionOrderByWithRelationInput = {
@@ -261,6 +262,7 @@ export type LiveSessionOrderByWithRelationInput = {
   players?: Prisma.SessionPlayerOrderByRelationAggregateInput
   sessionCheckpoints?: Prisma.SessionCheckpointOrderByRelationAggregateInput
   analytics?: Prisma.SessionAnalyticOrderByRelationAggregateInput
+  playAttempts?: Prisma.PlayAttemptOrderByRelationAggregateInput
 }
 
 export type LiveSessionWhereUniqueInput = Prisma.AtLeast<{
@@ -285,6 +287,7 @@ export type LiveSessionWhereUniqueInput = Prisma.AtLeast<{
   players?: Prisma.SessionPlayerListRelationFilter
   sessionCheckpoints?: Prisma.SessionCheckpointListRelationFilter
   analytics?: Prisma.SessionAnalyticListRelationFilter
+  playAttempts?: Prisma.PlayAttemptListRelationFilter
 }, "id" | "joinCode">
 
 export type LiveSessionOrderByWithAggregationInput = {
@@ -339,6 +342,7 @@ export type LiveSessionCreateInput = {
   players?: Prisma.SessionPlayerCreateNestedManyWithoutSessionInput
   sessionCheckpoints?: Prisma.SessionCheckpointCreateNestedManyWithoutSessionInput
   analytics?: Prisma.SessionAnalyticCreateNestedManyWithoutSessionInput
+  playAttempts?: Prisma.PlayAttemptCreateNestedManyWithoutSessionInput
 }
 
 export type LiveSessionUncheckedCreateInput = {
@@ -357,6 +361,7 @@ export type LiveSessionUncheckedCreateInput = {
   players?: Prisma.SessionPlayerUncheckedCreateNestedManyWithoutSessionInput
   sessionCheckpoints?: Prisma.SessionCheckpointUncheckedCreateNestedManyWithoutSessionInput
   analytics?: Prisma.SessionAnalyticUncheckedCreateNestedManyWithoutSessionInput
+  playAttempts?: Prisma.PlayAttemptUncheckedCreateNestedManyWithoutSessionInput
 }
 
 export type LiveSessionUpdateInput = {
@@ -375,6 +380,7 @@ export type LiveSessionUpdateInput = {
   players?: Prisma.SessionPlayerUpdateManyWithoutSessionNestedInput
   sessionCheckpoints?: Prisma.SessionCheckpointUpdateManyWithoutSessionNestedInput
   analytics?: Prisma.SessionAnalyticUpdateManyWithoutSessionNestedInput
+  playAttempts?: Prisma.PlayAttemptUpdateManyWithoutSessionNestedInput
 }
 
 export type LiveSessionUncheckedUpdateInput = {
@@ -393,6 +399,7 @@ export type LiveSessionUncheckedUpdateInput = {
   players?: Prisma.SessionPlayerUncheckedUpdateManyWithoutSessionNestedInput
   sessionCheckpoints?: Prisma.SessionCheckpointUncheckedUpdateManyWithoutSessionNestedInput
   analytics?: Prisma.SessionAnalyticUncheckedUpdateManyWithoutSessionNestedInput
+  playAttempts?: Prisma.PlayAttemptUncheckedUpdateManyWithoutSessionNestedInput
 }
 
 export type LiveSessionCreateManyInput = {
@@ -493,6 +500,11 @@ export type LiveSessionMinOrderByAggregateInput = {
 export type LiveSessionScalarRelationFilter = {
   is?: Prisma.LiveSessionWhereInput
   isNot?: Prisma.LiveSessionWhereInput
+}
+
+export type LiveSessionNullableScalarRelationFilter = {
+  is?: Prisma.LiveSessionWhereInput | null
+  isNot?: Prisma.LiveSessionWhereInput | null
 }
 
 export type LiveSessionCreateNestedManyWithoutHostInput = {
@@ -663,6 +675,22 @@ export type LiveSessionUpdateOneRequiredWithoutAnalyticsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.LiveSessionUpdateToOneWithWhereWithoutAnalyticsInput, Prisma.LiveSessionUpdateWithoutAnalyticsInput>, Prisma.LiveSessionUncheckedUpdateWithoutAnalyticsInput>
 }
 
+export type LiveSessionCreateNestedOneWithoutPlayAttemptsInput = {
+  create?: Prisma.XOR<Prisma.LiveSessionCreateWithoutPlayAttemptsInput, Prisma.LiveSessionUncheckedCreateWithoutPlayAttemptsInput>
+  connectOrCreate?: Prisma.LiveSessionCreateOrConnectWithoutPlayAttemptsInput
+  connect?: Prisma.LiveSessionWhereUniqueInput
+}
+
+export type LiveSessionUpdateOneWithoutPlayAttemptsNestedInput = {
+  create?: Prisma.XOR<Prisma.LiveSessionCreateWithoutPlayAttemptsInput, Prisma.LiveSessionUncheckedCreateWithoutPlayAttemptsInput>
+  connectOrCreate?: Prisma.LiveSessionCreateOrConnectWithoutPlayAttemptsInput
+  upsert?: Prisma.LiveSessionUpsertWithoutPlayAttemptsInput
+  disconnect?: Prisma.LiveSessionWhereInput | boolean
+  delete?: Prisma.LiveSessionWhereInput | boolean
+  connect?: Prisma.LiveSessionWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.LiveSessionUpdateToOneWithWhereWithoutPlayAttemptsInput, Prisma.LiveSessionUpdateWithoutPlayAttemptsInput>, Prisma.LiveSessionUncheckedUpdateWithoutPlayAttemptsInput>
+}
+
 export type LiveSessionCreateWithoutHostInput = {
   id?: string
   joinCode: string
@@ -678,6 +706,7 @@ export type LiveSessionCreateWithoutHostInput = {
   players?: Prisma.SessionPlayerCreateNestedManyWithoutSessionInput
   sessionCheckpoints?: Prisma.SessionCheckpointCreateNestedManyWithoutSessionInput
   analytics?: Prisma.SessionAnalyticCreateNestedManyWithoutSessionInput
+  playAttempts?: Prisma.PlayAttemptCreateNestedManyWithoutSessionInput
 }
 
 export type LiveSessionUncheckedCreateWithoutHostInput = {
@@ -695,6 +724,7 @@ export type LiveSessionUncheckedCreateWithoutHostInput = {
   players?: Prisma.SessionPlayerUncheckedCreateNestedManyWithoutSessionInput
   sessionCheckpoints?: Prisma.SessionCheckpointUncheckedCreateNestedManyWithoutSessionInput
   analytics?: Prisma.SessionAnalyticUncheckedCreateNestedManyWithoutSessionInput
+  playAttempts?: Prisma.PlayAttemptUncheckedCreateNestedManyWithoutSessionInput
 }
 
 export type LiveSessionCreateOrConnectWithoutHostInput = {
@@ -756,6 +786,7 @@ export type LiveSessionCreateWithoutOrganizationInput = {
   players?: Prisma.SessionPlayerCreateNestedManyWithoutSessionInput
   sessionCheckpoints?: Prisma.SessionCheckpointCreateNestedManyWithoutSessionInput
   analytics?: Prisma.SessionAnalyticCreateNestedManyWithoutSessionInput
+  playAttempts?: Prisma.PlayAttemptCreateNestedManyWithoutSessionInput
 }
 
 export type LiveSessionUncheckedCreateWithoutOrganizationInput = {
@@ -773,6 +804,7 @@ export type LiveSessionUncheckedCreateWithoutOrganizationInput = {
   players?: Prisma.SessionPlayerUncheckedCreateNestedManyWithoutSessionInput
   sessionCheckpoints?: Prisma.SessionCheckpointUncheckedCreateNestedManyWithoutSessionInput
   analytics?: Prisma.SessionAnalyticUncheckedCreateNestedManyWithoutSessionInput
+  playAttempts?: Prisma.PlayAttemptUncheckedCreateNestedManyWithoutSessionInput
 }
 
 export type LiveSessionCreateOrConnectWithoutOrganizationInput = {
@@ -816,6 +848,7 @@ export type LiveSessionCreateWithoutModuleVersionInput = {
   players?: Prisma.SessionPlayerCreateNestedManyWithoutSessionInput
   sessionCheckpoints?: Prisma.SessionCheckpointCreateNestedManyWithoutSessionInput
   analytics?: Prisma.SessionAnalyticCreateNestedManyWithoutSessionInput
+  playAttempts?: Prisma.PlayAttemptCreateNestedManyWithoutSessionInput
 }
 
 export type LiveSessionUncheckedCreateWithoutModuleVersionInput = {
@@ -833,6 +866,7 @@ export type LiveSessionUncheckedCreateWithoutModuleVersionInput = {
   players?: Prisma.SessionPlayerUncheckedCreateNestedManyWithoutSessionInput
   sessionCheckpoints?: Prisma.SessionCheckpointUncheckedCreateNestedManyWithoutSessionInput
   analytics?: Prisma.SessionAnalyticUncheckedCreateNestedManyWithoutSessionInput
+  playAttempts?: Prisma.PlayAttemptUncheckedCreateNestedManyWithoutSessionInput
 }
 
 export type LiveSessionCreateOrConnectWithoutModuleVersionInput = {
@@ -876,6 +910,7 @@ export type LiveSessionCreateWithoutSessionCheckpointsInput = {
   moduleVersion: Prisma.ModuleVersionCreateNestedOneWithoutSessionsInput
   players?: Prisma.SessionPlayerCreateNestedManyWithoutSessionInput
   analytics?: Prisma.SessionAnalyticCreateNestedManyWithoutSessionInput
+  playAttempts?: Prisma.PlayAttemptCreateNestedManyWithoutSessionInput
 }
 
 export type LiveSessionUncheckedCreateWithoutSessionCheckpointsInput = {
@@ -893,6 +928,7 @@ export type LiveSessionUncheckedCreateWithoutSessionCheckpointsInput = {
   updatedAt?: Date | string
   players?: Prisma.SessionPlayerUncheckedCreateNestedManyWithoutSessionInput
   analytics?: Prisma.SessionAnalyticUncheckedCreateNestedManyWithoutSessionInput
+  playAttempts?: Prisma.PlayAttemptUncheckedCreateNestedManyWithoutSessionInput
 }
 
 export type LiveSessionCreateOrConnectWithoutSessionCheckpointsInput = {
@@ -926,6 +962,7 @@ export type LiveSessionUpdateWithoutSessionCheckpointsInput = {
   moduleVersion?: Prisma.ModuleVersionUpdateOneRequiredWithoutSessionsNestedInput
   players?: Prisma.SessionPlayerUpdateManyWithoutSessionNestedInput
   analytics?: Prisma.SessionAnalyticUpdateManyWithoutSessionNestedInput
+  playAttempts?: Prisma.PlayAttemptUpdateManyWithoutSessionNestedInput
 }
 
 export type LiveSessionUncheckedUpdateWithoutSessionCheckpointsInput = {
@@ -943,6 +980,7 @@ export type LiveSessionUncheckedUpdateWithoutSessionCheckpointsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   players?: Prisma.SessionPlayerUncheckedUpdateManyWithoutSessionNestedInput
   analytics?: Prisma.SessionAnalyticUncheckedUpdateManyWithoutSessionNestedInput
+  playAttempts?: Prisma.PlayAttemptUncheckedUpdateManyWithoutSessionNestedInput
 }
 
 export type LiveSessionCreateWithoutPlayersInput = {
@@ -960,6 +998,7 @@ export type LiveSessionCreateWithoutPlayersInput = {
   moduleVersion: Prisma.ModuleVersionCreateNestedOneWithoutSessionsInput
   sessionCheckpoints?: Prisma.SessionCheckpointCreateNestedManyWithoutSessionInput
   analytics?: Prisma.SessionAnalyticCreateNestedManyWithoutSessionInput
+  playAttempts?: Prisma.PlayAttemptCreateNestedManyWithoutSessionInput
 }
 
 export type LiveSessionUncheckedCreateWithoutPlayersInput = {
@@ -977,6 +1016,7 @@ export type LiveSessionUncheckedCreateWithoutPlayersInput = {
   updatedAt?: Date | string
   sessionCheckpoints?: Prisma.SessionCheckpointUncheckedCreateNestedManyWithoutSessionInput
   analytics?: Prisma.SessionAnalyticUncheckedCreateNestedManyWithoutSessionInput
+  playAttempts?: Prisma.PlayAttemptUncheckedCreateNestedManyWithoutSessionInput
 }
 
 export type LiveSessionCreateOrConnectWithoutPlayersInput = {
@@ -1010,6 +1050,7 @@ export type LiveSessionUpdateWithoutPlayersInput = {
   moduleVersion?: Prisma.ModuleVersionUpdateOneRequiredWithoutSessionsNestedInput
   sessionCheckpoints?: Prisma.SessionCheckpointUpdateManyWithoutSessionNestedInput
   analytics?: Prisma.SessionAnalyticUpdateManyWithoutSessionNestedInput
+  playAttempts?: Prisma.PlayAttemptUpdateManyWithoutSessionNestedInput
 }
 
 export type LiveSessionUncheckedUpdateWithoutPlayersInput = {
@@ -1027,6 +1068,7 @@ export type LiveSessionUncheckedUpdateWithoutPlayersInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   sessionCheckpoints?: Prisma.SessionCheckpointUncheckedUpdateManyWithoutSessionNestedInput
   analytics?: Prisma.SessionAnalyticUncheckedUpdateManyWithoutSessionNestedInput
+  playAttempts?: Prisma.PlayAttemptUncheckedUpdateManyWithoutSessionNestedInput
 }
 
 export type LiveSessionCreateWithoutAnalyticsInput = {
@@ -1044,6 +1086,7 @@ export type LiveSessionCreateWithoutAnalyticsInput = {
   moduleVersion: Prisma.ModuleVersionCreateNestedOneWithoutSessionsInput
   players?: Prisma.SessionPlayerCreateNestedManyWithoutSessionInput
   sessionCheckpoints?: Prisma.SessionCheckpointCreateNestedManyWithoutSessionInput
+  playAttempts?: Prisma.PlayAttemptCreateNestedManyWithoutSessionInput
 }
 
 export type LiveSessionUncheckedCreateWithoutAnalyticsInput = {
@@ -1061,6 +1104,7 @@ export type LiveSessionUncheckedCreateWithoutAnalyticsInput = {
   updatedAt?: Date | string
   players?: Prisma.SessionPlayerUncheckedCreateNestedManyWithoutSessionInput
   sessionCheckpoints?: Prisma.SessionCheckpointUncheckedCreateNestedManyWithoutSessionInput
+  playAttempts?: Prisma.PlayAttemptUncheckedCreateNestedManyWithoutSessionInput
 }
 
 export type LiveSessionCreateOrConnectWithoutAnalyticsInput = {
@@ -1094,6 +1138,7 @@ export type LiveSessionUpdateWithoutAnalyticsInput = {
   moduleVersion?: Prisma.ModuleVersionUpdateOneRequiredWithoutSessionsNestedInput
   players?: Prisma.SessionPlayerUpdateManyWithoutSessionNestedInput
   sessionCheckpoints?: Prisma.SessionCheckpointUpdateManyWithoutSessionNestedInput
+  playAttempts?: Prisma.PlayAttemptUpdateManyWithoutSessionNestedInput
 }
 
 export type LiveSessionUncheckedUpdateWithoutAnalyticsInput = {
@@ -1111,6 +1156,95 @@ export type LiveSessionUncheckedUpdateWithoutAnalyticsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   players?: Prisma.SessionPlayerUncheckedUpdateManyWithoutSessionNestedInput
   sessionCheckpoints?: Prisma.SessionCheckpointUncheckedUpdateManyWithoutSessionNestedInput
+  playAttempts?: Prisma.PlayAttemptUncheckedUpdateManyWithoutSessionNestedInput
+}
+
+export type LiveSessionCreateWithoutPlayAttemptsInput = {
+  id?: string
+  joinCode: string
+  name?: string | null
+  status?: string
+  config?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  startedAt?: Date | string | null
+  endedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  host: Prisma.UserCreateNestedOneWithoutHostedSessionsInput
+  organization?: Prisma.OrganizationCreateNestedOneWithoutSessionsInput
+  moduleVersion: Prisma.ModuleVersionCreateNestedOneWithoutSessionsInput
+  players?: Prisma.SessionPlayerCreateNestedManyWithoutSessionInput
+  sessionCheckpoints?: Prisma.SessionCheckpointCreateNestedManyWithoutSessionInput
+  analytics?: Prisma.SessionAnalyticCreateNestedManyWithoutSessionInput
+}
+
+export type LiveSessionUncheckedCreateWithoutPlayAttemptsInput = {
+  id?: string
+  hostId: string
+  organizationId?: string | null
+  moduleVersionId: string
+  joinCode: string
+  name?: string | null
+  status?: string
+  config?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  startedAt?: Date | string | null
+  endedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  players?: Prisma.SessionPlayerUncheckedCreateNestedManyWithoutSessionInput
+  sessionCheckpoints?: Prisma.SessionCheckpointUncheckedCreateNestedManyWithoutSessionInput
+  analytics?: Prisma.SessionAnalyticUncheckedCreateNestedManyWithoutSessionInput
+}
+
+export type LiveSessionCreateOrConnectWithoutPlayAttemptsInput = {
+  where: Prisma.LiveSessionWhereUniqueInput
+  create: Prisma.XOR<Prisma.LiveSessionCreateWithoutPlayAttemptsInput, Prisma.LiveSessionUncheckedCreateWithoutPlayAttemptsInput>
+}
+
+export type LiveSessionUpsertWithoutPlayAttemptsInput = {
+  update: Prisma.XOR<Prisma.LiveSessionUpdateWithoutPlayAttemptsInput, Prisma.LiveSessionUncheckedUpdateWithoutPlayAttemptsInput>
+  create: Prisma.XOR<Prisma.LiveSessionCreateWithoutPlayAttemptsInput, Prisma.LiveSessionUncheckedCreateWithoutPlayAttemptsInput>
+  where?: Prisma.LiveSessionWhereInput
+}
+
+export type LiveSessionUpdateToOneWithWhereWithoutPlayAttemptsInput = {
+  where?: Prisma.LiveSessionWhereInput
+  data: Prisma.XOR<Prisma.LiveSessionUpdateWithoutPlayAttemptsInput, Prisma.LiveSessionUncheckedUpdateWithoutPlayAttemptsInput>
+}
+
+export type LiveSessionUpdateWithoutPlayAttemptsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  joinCode?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  config?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  startedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  host?: Prisma.UserUpdateOneRequiredWithoutHostedSessionsNestedInput
+  organization?: Prisma.OrganizationUpdateOneWithoutSessionsNestedInput
+  moduleVersion?: Prisma.ModuleVersionUpdateOneRequiredWithoutSessionsNestedInput
+  players?: Prisma.SessionPlayerUpdateManyWithoutSessionNestedInput
+  sessionCheckpoints?: Prisma.SessionCheckpointUpdateManyWithoutSessionNestedInput
+  analytics?: Prisma.SessionAnalyticUpdateManyWithoutSessionNestedInput
+}
+
+export type LiveSessionUncheckedUpdateWithoutPlayAttemptsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  hostId?: Prisma.StringFieldUpdateOperationsInput | string
+  organizationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  moduleVersionId?: Prisma.StringFieldUpdateOperationsInput | string
+  joinCode?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.StringFieldUpdateOperationsInput | string
+  config?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  startedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  players?: Prisma.SessionPlayerUncheckedUpdateManyWithoutSessionNestedInput
+  sessionCheckpoints?: Prisma.SessionCheckpointUncheckedUpdateManyWithoutSessionNestedInput
+  analytics?: Prisma.SessionAnalyticUncheckedUpdateManyWithoutSessionNestedInput
 }
 
 export type LiveSessionCreateManyHostInput = {
@@ -1142,6 +1276,7 @@ export type LiveSessionUpdateWithoutHostInput = {
   players?: Prisma.SessionPlayerUpdateManyWithoutSessionNestedInput
   sessionCheckpoints?: Prisma.SessionCheckpointUpdateManyWithoutSessionNestedInput
   analytics?: Prisma.SessionAnalyticUpdateManyWithoutSessionNestedInput
+  playAttempts?: Prisma.PlayAttemptUpdateManyWithoutSessionNestedInput
 }
 
 export type LiveSessionUncheckedUpdateWithoutHostInput = {
@@ -1159,6 +1294,7 @@ export type LiveSessionUncheckedUpdateWithoutHostInput = {
   players?: Prisma.SessionPlayerUncheckedUpdateManyWithoutSessionNestedInput
   sessionCheckpoints?: Prisma.SessionCheckpointUncheckedUpdateManyWithoutSessionNestedInput
   analytics?: Prisma.SessionAnalyticUncheckedUpdateManyWithoutSessionNestedInput
+  playAttempts?: Prisma.PlayAttemptUncheckedUpdateManyWithoutSessionNestedInput
 }
 
 export type LiveSessionUncheckedUpdateManyWithoutHostInput = {
@@ -1204,6 +1340,7 @@ export type LiveSessionUpdateWithoutOrganizationInput = {
   players?: Prisma.SessionPlayerUpdateManyWithoutSessionNestedInput
   sessionCheckpoints?: Prisma.SessionCheckpointUpdateManyWithoutSessionNestedInput
   analytics?: Prisma.SessionAnalyticUpdateManyWithoutSessionNestedInput
+  playAttempts?: Prisma.PlayAttemptUpdateManyWithoutSessionNestedInput
 }
 
 export type LiveSessionUncheckedUpdateWithoutOrganizationInput = {
@@ -1221,6 +1358,7 @@ export type LiveSessionUncheckedUpdateWithoutOrganizationInput = {
   players?: Prisma.SessionPlayerUncheckedUpdateManyWithoutSessionNestedInput
   sessionCheckpoints?: Prisma.SessionCheckpointUncheckedUpdateManyWithoutSessionNestedInput
   analytics?: Prisma.SessionAnalyticUncheckedUpdateManyWithoutSessionNestedInput
+  playAttempts?: Prisma.PlayAttemptUncheckedUpdateManyWithoutSessionNestedInput
 }
 
 export type LiveSessionUncheckedUpdateManyWithoutOrganizationInput = {
@@ -1266,6 +1404,7 @@ export type LiveSessionUpdateWithoutModuleVersionInput = {
   players?: Prisma.SessionPlayerUpdateManyWithoutSessionNestedInput
   sessionCheckpoints?: Prisma.SessionCheckpointUpdateManyWithoutSessionNestedInput
   analytics?: Prisma.SessionAnalyticUpdateManyWithoutSessionNestedInput
+  playAttempts?: Prisma.PlayAttemptUpdateManyWithoutSessionNestedInput
 }
 
 export type LiveSessionUncheckedUpdateWithoutModuleVersionInput = {
@@ -1283,6 +1422,7 @@ export type LiveSessionUncheckedUpdateWithoutModuleVersionInput = {
   players?: Prisma.SessionPlayerUncheckedUpdateManyWithoutSessionNestedInput
   sessionCheckpoints?: Prisma.SessionCheckpointUncheckedUpdateManyWithoutSessionNestedInput
   analytics?: Prisma.SessionAnalyticUncheckedUpdateManyWithoutSessionNestedInput
+  playAttempts?: Prisma.PlayAttemptUncheckedUpdateManyWithoutSessionNestedInput
 }
 
 export type LiveSessionUncheckedUpdateManyWithoutModuleVersionInput = {
@@ -1308,12 +1448,14 @@ export type LiveSessionCountOutputType = {
   players: number
   sessionCheckpoints: number
   analytics: number
+  playAttempts: number
 }
 
 export type LiveSessionCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   players?: boolean | LiveSessionCountOutputTypeCountPlayersArgs
   sessionCheckpoints?: boolean | LiveSessionCountOutputTypeCountSessionCheckpointsArgs
   analytics?: boolean | LiveSessionCountOutputTypeCountAnalyticsArgs
+  playAttempts?: boolean | LiveSessionCountOutputTypeCountPlayAttemptsArgs
 }
 
 /**
@@ -1347,6 +1489,13 @@ export type LiveSessionCountOutputTypeCountAnalyticsArgs<ExtArgs extends runtime
   where?: Prisma.SessionAnalyticWhereInput
 }
 
+/**
+ * LiveSessionCountOutputType without action
+ */
+export type LiveSessionCountOutputTypeCountPlayAttemptsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.PlayAttemptWhereInput
+}
+
 
 export type LiveSessionSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -1367,6 +1516,7 @@ export type LiveSessionSelect<ExtArgs extends runtime.Types.Extensions.InternalA
   players?: boolean | Prisma.LiveSession$playersArgs<ExtArgs>
   sessionCheckpoints?: boolean | Prisma.LiveSession$sessionCheckpointsArgs<ExtArgs>
   analytics?: boolean | Prisma.LiveSession$analyticsArgs<ExtArgs>
+  playAttempts?: boolean | Prisma.LiveSession$playAttemptsArgs<ExtArgs>
   _count?: boolean | Prisma.LiveSessionCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["liveSession"]>
 
@@ -1429,6 +1579,7 @@ export type LiveSessionInclude<ExtArgs extends runtime.Types.Extensions.Internal
   players?: boolean | Prisma.LiveSession$playersArgs<ExtArgs>
   sessionCheckpoints?: boolean | Prisma.LiveSession$sessionCheckpointsArgs<ExtArgs>
   analytics?: boolean | Prisma.LiveSession$analyticsArgs<ExtArgs>
+  playAttempts?: boolean | Prisma.LiveSession$playAttemptsArgs<ExtArgs>
   _count?: boolean | Prisma.LiveSessionCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type LiveSessionIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1451,6 +1602,7 @@ export type $LiveSessionPayload<ExtArgs extends runtime.Types.Extensions.Interna
     players: Prisma.$SessionPlayerPayload<ExtArgs>[]
     sessionCheckpoints: Prisma.$SessionCheckpointPayload<ExtArgs>[]
     analytics: Prisma.$SessionAnalyticPayload<ExtArgs>[]
+    playAttempts: Prisma.$PlayAttemptPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1865,6 +2017,7 @@ export interface Prisma__LiveSessionClient<T, Null = never, ExtArgs extends runt
   players<T extends Prisma.LiveSession$playersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.LiveSession$playersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SessionPlayerPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   sessionCheckpoints<T extends Prisma.LiveSession$sessionCheckpointsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.LiveSession$sessionCheckpointsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SessionCheckpointPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   analytics<T extends Prisma.LiveSession$analyticsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.LiveSession$analyticsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SessionAnalyticPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  playAttempts<T extends Prisma.LiveSession$playAttemptsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.LiveSession$playAttemptsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PlayAttemptPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2395,6 +2548,30 @@ export type LiveSession$analyticsArgs<ExtArgs extends runtime.Types.Extensions.I
   take?: number
   skip?: number
   distinct?: Prisma.SessionAnalyticScalarFieldEnum | Prisma.SessionAnalyticScalarFieldEnum[]
+}
+
+/**
+ * LiveSession.playAttempts
+ */
+export type LiveSession$playAttemptsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the PlayAttempt
+   */
+  select?: Prisma.PlayAttemptSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the PlayAttempt
+   */
+  omit?: Prisma.PlayAttemptOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.PlayAttemptInclude<ExtArgs> | null
+  where?: Prisma.PlayAttemptWhereInput
+  orderBy?: Prisma.PlayAttemptOrderByWithRelationInput | Prisma.PlayAttemptOrderByWithRelationInput[]
+  cursor?: Prisma.PlayAttemptWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.PlayAttemptScalarFieldEnum | Prisma.PlayAttemptScalarFieldEnum[]
 }
 
 /**

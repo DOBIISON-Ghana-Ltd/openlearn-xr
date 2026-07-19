@@ -8,7 +8,7 @@ import ZModules from "./modules.schema";
 // ---------------------------------------------------------------------------
 // GET /api/modules/versions
 // ---------------------------------------------------------------------------
-const publicGetAllModuleVersions = {
+const publicGetAllVersions = {
   type: "query",
   queryKey: () => [...QUERY_KEYS["public:module-version:get:all"]],
   queryFn: async () => {
@@ -20,8 +20,24 @@ const publicGetAllModuleVersions = {
   },
 } satisfies QueryConfig;
 
+// ---------------------------------------------------------------------------
+// GET /api/modules/completions
+// ---------------------------------------------------------------------------
+const publicGetAllCompletions = {
+  type: "query",
+  queryKey: () => [...QUERY_KEYS["public:module-completion:get:all"]],
+  queryFn: async () => {
+    const data = await fetcher(
+      () => axios.get(R["public:module-completion:get:all"]()),
+      ZModules.PublicModuleCompletionGetAll.shape.res
+    );
+    return data;
+  },
+} satisfies QueryConfig;
+
 const api = {
-  "public:module-version:get:all": publicGetAllModuleVersions,
+  "public:module-version:get:all": publicGetAllVersions,
+  "public:module-completion:get:all": publicGetAllCompletions,
 };
 
 export default api;

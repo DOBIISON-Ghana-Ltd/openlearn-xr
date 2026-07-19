@@ -9,9 +9,7 @@
 * 🟢 You can import this file directly.
 */
 
-export const CollectionMediaRole = {
-  PRIMARY: 'PRIMARY',
-  SUPPLEMENTAL: 'SUPPLEMENTAL'
-} as const
 
-export type CollectionMediaRole = (typeof CollectionMediaRole)[keyof typeof CollectionMediaRole]
+
+// This file is empty because there are no enums in the schema.
+export {}

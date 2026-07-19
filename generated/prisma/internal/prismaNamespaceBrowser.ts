@@ -67,14 +67,16 @@ export const ModelName = {
   Module: 'Module',
   ModuleVersion: 'ModuleVersion',
   ModuleCheckpoint: 'ModuleCheckpoint',
-  ModuleProgress: 'ModuleProgress',
+  CollectionProgress: 'CollectionProgress',
+  ModuleCompletion: 'ModuleCompletion',
   GamificationLog: 'GamificationLog',
   LiveSession: 'LiveSession',
   SessionCheckpoint: 'SessionCheckpoint',
   SessionPlayer: 'SessionPlayer',
   SessionAnalytic: 'SessionAnalytic',
   AppSetting: 'AppSetting',
-  EmailLog: 'EmailLog'
+  EmailLog: 'EmailLog',
+  PlayAttempt: 'PlayAttempt'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -336,23 +338,31 @@ export const ModuleCheckpointScalarFieldEnum = {
 export type ModuleCheckpointScalarFieldEnum = (typeof ModuleCheckpointScalarFieldEnum)[keyof typeof ModuleCheckpointScalarFieldEnum]
 
 
-export const ModuleProgressScalarFieldEnum = {
+export const CollectionProgressScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
-  moduleId: 'moduleId',
-  lastPlayedVersionId: 'lastPlayedVersionId',
-  isUnlocked: 'isUnlocked',
-  isCompleted: 'isCompleted',
-  highScore: 'highScore',
-  totalPlays: 'totalPlays',
-  lastPlayedAt: 'lastPlayedAt',
-  playMode: 'playMode',
-  completedAt: 'completedAt',
+  collectionId: 'collectionId',
+  activeIndex: 'activeIndex',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
 
-export type ModuleProgressScalarFieldEnum = (typeof ModuleProgressScalarFieldEnum)[keyof typeof ModuleProgressScalarFieldEnum]
+export type CollectionProgressScalarFieldEnum = (typeof CollectionProgressScalarFieldEnum)[keyof typeof CollectionProgressScalarFieldEnum]
+
+
+export const ModuleCompletionScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  moduleId: 'moduleId',
+  lastPlayedVersionId: 'lastPlayedVersionId',
+  highScore: 'highScore',
+  totalPlays: 'totalPlays',
+  lastPlayedAt: 'lastPlayedAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ModuleCompletionScalarFieldEnum = (typeof ModuleCompletionScalarFieldEnum)[keyof typeof ModuleCompletionScalarFieldEnum]
 
 
 export const GamificationLogScalarFieldEnum = {
@@ -449,6 +459,22 @@ export const EmailLogScalarFieldEnum = {
 } as const
 
 export type EmailLogScalarFieldEnum = (typeof EmailLogScalarFieldEnum)[keyof typeof EmailLogScalarFieldEnum]
+
+
+export const PlayAttemptScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  sessionId: 'sessionId',
+  moduleVersionId: 'moduleVersionId',
+  playMode: 'playMode',
+  currentCheckpointIndex: 'currentCheckpointIndex',
+  accumulatedPoints: 'accumulatedPoints',
+  sessionPlayerId: 'sessionPlayerId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type PlayAttemptScalarFieldEnum = (typeof PlayAttemptScalarFieldEnum)[keyof typeof PlayAttemptScalarFieldEnum]
 
 
 export const SortOrder = {

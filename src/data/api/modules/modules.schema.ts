@@ -1,4 +1,4 @@
-import { ZApi, ZModule, ZModuleVersion } from "@/data/schema.base";
+import { ZApi, ZCollection, ZModule, ZModuleCompletion, ZModuleVersion } from "@/data/schema.base";
 import { z } from "zod";
 
 // ---------------------------------------------------------------------------
@@ -12,8 +12,35 @@ const PublicModuleVersionGetAll = ZApi({
   )
 });
 
+// ---------------------------------------------------------------------------
+// GET /api/modules/completions — all module completions for current user
+// ---------------------------------------------------------------------------
+const PublicModuleCompletionGetAll = ZApi({
+  res: z.array(
+    ZModuleCompletion.pick({
+      id: true,
+      highScore: true,
+      totalPlays: true,
+      lastPlayedAt: true,
+    }).extend({
+      module: ZModule.pick({
+        id: true,
+        title: true,
+      }).extend({
+        collection: ZCollection.pick({
+          name: true,
+        }),
+      }),
+      lastPlayedVersion: ZModuleVersion.pick({
+        versionNumber: true,
+      }).nullable(),
+    })
+  )
+});
+
 const schema = {
   PublicModuleVersionGetAll,
+  PublicModuleCompletionGetAll,
 };
 
 export default schema;
