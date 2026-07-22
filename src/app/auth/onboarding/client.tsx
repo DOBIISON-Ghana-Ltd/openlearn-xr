@@ -12,7 +12,7 @@ import { Input } from '@/components/ui/input'
 import { Field, FieldError } from '@/components/ui/field'
 import useApi from '@/data/hooks/use-api'
 import { nuqs } from '@/lib/utils/nuqs'
-import { ROUTES } from '@/lib/constants/routes'
+import { PATHS } from '@/lib/constants/paths'
 import { toastManager } from '@/components/ui/toast'
 import { LoaderIcon, GraduationCap, BookOpen, Compass, Check, Atom, FlaskConical, Dna, ChevronLeftIcon } from 'lucide-react'
 import { cn } from '@/lib/utils/cn'
@@ -132,7 +132,7 @@ export default function ClientPage() {
           type: "success"
         });
         await authClient.getSession();
-        router.push(params.redirect || ROUTES.SIMS.DASHBOARD);
+        router.push(params.redirect || PATHS.SIMS.DASHBOARD);
         clearStore();
       },
       onError: (err) => {

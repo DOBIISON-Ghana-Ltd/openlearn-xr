@@ -3,7 +3,7 @@
 import React from 'react'
 import { Book } from '@/lib/constants/data';
 import { useRouter } from 'next/navigation';
-import { ROUTES } from '@/lib/constants/routes';
+import { PATHS } from '@/lib/constants/paths';
 import { Button } from '@/components/ui/button';
 
 export default function BookCard(props: Book) {
@@ -29,7 +29,7 @@ export default function BookCard(props: Book) {
           variant={status === "pending" ? "secondary" : "default"}
           className="w-full rounded-none"
           disabled={status === "pending"}
-          onClick={() => router.push(`/app/library?book=${id}`)}
+          onClick={() => router.push(`${PATHS.SIMS.LIBRARY.ROOT}?book=${id}`)}
         >
           {status === "pending" ? "Coming Soon" : "Explore"}
         </Button>

@@ -4,12 +4,12 @@ import * as React from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { Menu, X } from 'lucide-react'
-import { ROUTES } from '@/lib/constants/routes'
+import { PATHS } from '@/lib/constants/paths'
 import { Button } from '@/components/ui/button'
 
 const NAV_LINKS = [
-  { label: 'Explore', href: ROUTES.SIMS.MODULES },
-  { label: 'Licensing', href: ROUTES.LICENSING },
+  { label: 'Explore', href: PATHS.SIMS.MODULES },
+  { label: 'Licensing', href: PATHS.LICENSING },
 ]
 
 export default function Header() {
@@ -19,7 +19,7 @@ export default function Header() {
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-backdrop-filter:bg-background/60">
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-6">
         {/* Left: Logo */}
-        <Link href={ROUTES.HOME} className="flex items-center gap-2 shrink-0">
+        <Link href={PATHS.HOME} className="flex items-center gap-2 shrink-0">
           <Image
             src="/brand/logo-light.png"
             alt="OpenLearn"
@@ -45,7 +45,7 @@ export default function Header() {
 
         {/* Right: CTA & Mobile Toggle */}
         <div className="flex items-center gap-4">
-          <Button render={<Link href={ROUTES.SIMS.PLAY('session')} />} className="hidden sm:inline-flex rounded-full">
+          <Button render={<Link href={PATHS.SIMS.PLAY('session')} />} className="hidden sm:inline-flex rounded-full">
             Play Session
           </Button>
 
@@ -75,7 +75,7 @@ export default function Header() {
             ))}
           </nav>
           <div className="pt-4 border-t">
-            <Button render={<Link href={ROUTES.SIMS.PLAY('session')} />} className="w-full rounded-full" onClick={() => setIsMobileMenuOpen(false)}>
+            <Button render={<Link href={PATHS.SIMS.PLAY('session')} />} className="w-full rounded-full" onClick={() => setIsMobileMenuOpen(false)}>
               Play Session
             </Button>
           </div>

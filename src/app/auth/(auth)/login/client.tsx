@@ -12,9 +12,9 @@ import GoogleAuthButton from "@/components/auth/google-oauth-button";
 import { Infer } from "@/data/types.base";
 import { nuqs } from "@/lib/utils/nuqs";
 import useApi from "@/data/hooks/use-api";
-import { ROUTES } from "@/lib/constants/routes";
 import { toastManager } from "@/components/ui/toast";
 import { LoaderIcon } from "lucide-react";
+import { PATHS } from "@/lib/constants/paths";
 
 const ZForm = ZUser.PublicUserLogin.shape.body;
 type IForm = Infer["PublicUserLogin"]["body"];
@@ -29,8 +29,8 @@ export default function ClientPage() {
     defaultValues: { email: "", password: "" },
   });
 
-  const registerUrl = nuqs.getUrl("register", { redirect: params.redirect }, ROUTES.AUTH.REGISTER);
-  const forgotPasswordUrl = nuqs.getUrl("forgotPassword", { redirect: params.redirect }, ROUTES.AUTH.FORGOT_PASSWORD);
+  const registerUrl = nuqs.getUrl("register", { redirect: params.redirect }, PATHS.AUTH.REGISTER);
+  const forgotPasswordUrl = nuqs.getUrl("forgotPassword", { redirect: params.redirect }, PATHS.AUTH.FORGOT_PASSWORD);
 
   const onSubmit = (data: IForm) => {
     login({ ...data, redirect: params.redirect }, {
@@ -43,7 +43,7 @@ export default function ClientPage() {
       onError: (err) => {
         const msg = err.message?.toLowerCase() ?? "";
         if (msg.includes("verif") || msg.includes("not_verified")) {
-          router.push(`${ROUTES.AUTH.VERIFY_EMAIL}?email=${encodeURIComponent(getValues("email"))}`);
+          router.push(`${PATHS.AUTH.VERIFY_EMAIL}?email=${encodeURIComponent(getValues("email"))}`);
         }
         //if login error show sonner toast invalid password
         if (msg.includes("password")) {

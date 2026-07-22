@@ -4,22 +4,13 @@ import { JSend } from "@/lib/utils/jsend";
 import { secureApiRoute } from "@/lib/utils/secure-api-route";
 
 export const GET = secureApiRoute(async (req, ctx, user) => {
-  const users = await prisma.user.findMany({
-    select: {
-      id: true,
-      name: true,
-      role: true,
-      email: true,
-      image: true,
-      onboarded: true,
-      createdAt: true,
-    },
+  const logs = await prisma.emailLog.findMany({
     orderBy: {
       createdAt: "desc",
     },
   });
 
-  const parsed = ZUser.AdminUserGetAll.shape.res.parse(users);
+  const parsed = ZUser.AdminEmailLogGetAll.shape.res.parse(logs);
 
   return JSend.success(parsed);
 });

@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { ZAccount, ZApi, ZMediaFile, ZPassword, ZSession, ZUser } from "@/data/schema.base";
+import { ZAccount, ZApi, ZEmailLog, ZMediaFile, ZPassword, ZRoleList, ZSession, ZUser } from "@/data/schema.base";
 import { ZOnboardingMetadata } from "@/store/onboarding/schema";
 
 const ZOtpType = z.enum(["email-verification", "sign-in", "forget-password"]);
@@ -88,9 +88,24 @@ const PublicUserPatchOnboarding = ZApi({
 });
 
 const AdminUserGetAll = ZApi({
-  res: ZUser.pick({
-    id: true,
-  }).array()
+  res: z.array(
+    ZUser.pick({
+      id: true,
+      name: true,
+      email: true,
+      role: true,
+      image: true,
+      onboarded: true,
+      createdAt: true,
+    })
+  )
+});
+
+const AdminUserSetRole = ZApi({
+  body: z.object({
+    userId: ZUser.shape.id,
+    role: ZRoleList,
+  })
 });
 
 const PublicUserUpdateAccount = ZApi({
@@ -113,6 +128,21 @@ const PublicUserUpdatePassword = ZApi({
   })
 });
 
+const AdminEmailLogGetAll = ZApi({
+  res: z.array(
+    ZEmailLog.pick({
+      id: true,
+      to: true,
+      subject: true,
+      template: true,
+      status: true,
+      errorMsg: true,
+      sentAt: true,
+      createdAt: true,
+    })
+  )
+});
+
 const schema = {
   PublicUserGetMe,
   PublicUserLogin,
@@ -124,8 +154,10 @@ const schema = {
   PublicUserDeleteMe,
   PublicUserPatchOnboarding,
   AdminUserGetAll,
+  AdminUserSetRole,
   PublicUserUpdateAccount,
   PublicUserUpdatePassword,
+  AdminEmailLogGetAll,
 };
 
 export default schema;

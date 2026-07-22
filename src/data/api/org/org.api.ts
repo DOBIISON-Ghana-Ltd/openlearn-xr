@@ -173,6 +173,21 @@ const publicInviteMember = {
   },
 } satisfies MutationConfig;
 
+// ---------------------------------------------------------------------------
+// GET /api/admin/subscriptions
+// ---------------------------------------------------------------------------
+const adminGetAllSubscriptions = {
+  type: "query",
+  queryKey: () => [...QUERY_KEYS["admin:subscription:get:all"]],
+  queryFn: async () => {
+    const data = await fetcher(
+      () => axios.get(R["admin:subscription:get:all"]()),
+      ZOrg.AdminSubscriptionGetAll.shape.res
+    );
+    return data;
+  },
+} satisfies QueryConfig;
+
 export default {
   "public:org:get:subscription": publicGetSubscription,
   "public:org:post:create": publicCreateOne,
@@ -184,4 +199,5 @@ export default {
   "public:org:delete:member": publicDeleteMember,
   "public:org:patch:member-role": publicUpdateMemberRole,
   "public:org:post:invite": publicInviteMember,
+  "admin:subscription:get:all": adminGetAllSubscriptions,
 };

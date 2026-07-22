@@ -27,6 +27,8 @@ const ROUTES = {
   "public:collection:post:create":     () => '/api/editor/collections',
   "public:module:get:all":            () => '/api/editor/modules',
   "public:module:post:create":        () => '/api/editor/modules',
+  "admin:subscription:get:all":       () => '/api/admin/subscriptions',
+  "admin:email-log:get:all":          () => '/api/admin/email',
 } as const;
 
 

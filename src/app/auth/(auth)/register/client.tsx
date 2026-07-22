@@ -9,7 +9,7 @@ import { Infer } from "@/data/types.base";
 import ZUser from "@/data/api/user/user.schema";
 import { nuqs } from "@/lib/utils/nuqs";
 import useApi from "@/data/hooks/use-api";
-import { ROUTES } from "@/lib/constants/routes";
+import { PATHS } from "@/lib/constants/paths";
 import { toastManager } from "@/components/ui/toast";
 import TextBlock from "@/components/auth/form-blocks/text-block";
 import PasswordBlock from "@/components/auth/form-blocks/password-block";
@@ -24,7 +24,7 @@ export default function ClientPage() {
   const [params] = nuqs.getStates("register");
   const router = useRouter();
   const { mutate, isPending } = useApi.mutate("public:user:register");
-  const loginUrl = nuqs.getUrl("login", { redirect: params.redirect }, ROUTES.AUTH.LOGIN);
+  const loginUrl = nuqs.getUrl("login", { redirect: params.redirect }, PATHS.AUTH.LOGIN);
 
   const { handleSubmit, control } = useForm<IForm>({
     resolver: zodResolver(ZForm),
@@ -43,7 +43,7 @@ export default function ClientPage() {
         const url = nuqs.getUrl(
           "verifyEmail",
           { email: data.email, redirect: params.redirect },
-          ROUTES.AUTH.VERIFY_EMAIL
+          PATHS.AUTH.VERIFY_EMAIL
         );
         router.push(url);
       },
@@ -71,11 +71,11 @@ export default function ClientPage() {
           label={
             <>
               I agree to the{" "}
-              <Link href={ROUTES.LEGAL.TERMS} className="underline text-muted-foreground hover:text-muted-foreground/80 transition-colors">
+              <Link href={PATHS.LEGAL.TERMS} className="underline text-muted-foreground hover:text-muted-foreground/80 transition-colors">
                 Terms and Conditions
               </Link>{" "}
               and{" "}
-              <Link href={ROUTES.LEGAL.PRIVACY} className="underline text-muted-foreground hover:text-muted-foreground/80 transition-colors">
+              <Link href={PATHS.LEGAL.PRIVACY} className="underline text-muted-foreground hover:text-muted-foreground/80 transition-colors">
                 Privacy Policy
               </Link>
             </>

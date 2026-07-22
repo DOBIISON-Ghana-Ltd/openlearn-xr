@@ -3,17 +3,18 @@
 import { LayoutDashboard, Trophy, BarChart2, Sliders, Settings } from "lucide-react";
 import Link from "next/link";
 import { useParams } from "next/navigation";
+import { PATHS } from "@/lib/constants/paths";
 
 export default function Navigation() {
   const params = useParams();
   const id = params.id as string;
 
   const links = [
-    { icon: LayoutDashboard, href: `/app/session/${id}`, label: "Overview" },
-    { icon: Trophy, href: `/app/session/${id}/leaderboard`, label: "Leaderboard" },
-    { icon: BarChart2, href: `/app/session/${id}/analytics`, label: "Analytics" },
-    { icon: Sliders, href: `/app/session/${id}/configurations`, label: "Configurations" },
-    { icon: Settings, href: `/app/session/${id}/settings`, label: "Settings" },
+    { icon: LayoutDashboard, href: PATHS.SESSION.ONE.ROOT(id), label: "Overview" },
+    { icon: Trophy, href: PATHS.SESSION.ONE.LEADERBOARD(id), label: "Leaderboard" },
+    { icon: BarChart2, href: PATHS.SESSION.ONE.ANALYTICS(id), label: "Analytics" },
+    { icon: Sliders, href: PATHS.SESSION.ONE.CONFIGURATIONS(id), label: "Configurations" },
+    { icon: Settings, href: PATHS.SESSION.ONE.SETTINGS(id), label: "Settings" },
   ];
 
   return (

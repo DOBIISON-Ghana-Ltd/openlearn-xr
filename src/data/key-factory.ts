@@ -22,4 +22,6 @@ export const QUERY_KEYS = {
   "public:module-completion:get:all": ["public", "module-completion", "all"] as const,
   "public:collection:get:all": ["public", "collection", "all"] as const,
   "public:module:get:all": ["public", "module", "all"] as const,
+  "admin:subscription:get:all": ["admin", "subscription", "all"] as const,
+  "admin:email-log:get:all": ["admin", "email-log", "all"] as const,
 } as const

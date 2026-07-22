@@ -1,7 +1,7 @@
 "use client";
 
 import { authClient } from '@/adapters/auth/client';
-import { ROUTES } from '@/lib/constants/routes';
+import { PATHS } from '@/lib/constants/paths';
 import { nuqs } from '@/lib/utils/nuqs';
 import { Loader } from 'lucide-react';
 import { useRouter } from 'next/navigation';
@@ -20,13 +20,13 @@ export default function Page() {
       if (session) {
         if (!active) return;
 
-        router.replace(state.redirect || ROUTES.SIMS.DASHBOARD);
+        router.replace(state.redirect || PATHS.SIMS.DASHBOARD);
         router.refresh();
       } else {
         await authClient.signOut();
         if (!active) return;
 
-        const redirectUrl = nuqs.getUrl('login', { redirect: state.redirect }, ROUTES.AUTH.LOGIN);
+        const redirectUrl = nuqs.getUrl('login', { redirect: state.redirect }, PATHS.AUTH.LOGIN);
         router.replace(redirectUrl);
       }
     };

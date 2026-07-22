@@ -3,7 +3,7 @@
 import React from 'react'
 import { Button } from '@/components/ui/button';
 import { Module } from '@/lib/constants/data';
-import { ROUTES } from '@/lib/constants/routes';
+import { PATHS } from '@/lib/constants/paths';
 import { useRouter } from 'next/navigation';
 import { BadgeCheckIcon } from 'lucide-react';
 
@@ -39,7 +39,7 @@ export default function ModuleCard(props: IProps) {
           variant={status === "pending" ? "secondary" : "default"}
           className="w-full rounded-none"
           disabled={status === "pending"}
-          onClick={() => router.push(ROUTES.SIMS.PLAY(mode, id))}
+          onClick={() => router.push(PATHS.SIMS.PLAY(mode, id))}
         >
           {status === "pending"? "Coming Soon" : "Play"}
         </Button>

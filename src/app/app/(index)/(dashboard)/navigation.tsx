@@ -2,22 +2,23 @@
 
 import { BookIcon, BookOpenIcon, LayoutDashboard, PuzzleIcon } from "lucide-react";
 import Link from "next/link";
+import { PATHS } from "@/lib/constants/paths";
 
 const links = [
-  { icon: LayoutDashboard, href: "/app", label: "Home" },
-  { icon: BookOpenIcon, href: "/app/library", label: "Library" },
-  { icon: PuzzleIcon, href: "/app/modules", label: "Modules" },
+  { icon: LayoutDashboard, href: PATHS.SIMS.DASHBOARD, label: "Home" },
+  { icon: BookOpenIcon, href: PATHS.SIMS.LIBRARY.ROOT, label: "Library" },
+  { icon: PuzzleIcon, href: PATHS.SIMS.MODULES, label: "Modules" },
 ];
 
 const recentLinks = [
-  { label: "Pressure Changes with Depth", href: "/app" },
-  { label: "Detecting Charge with a Gold Leaf Electroscope", href: "/app" },
-  { label: "Determination of Density", href: "/app" },
-  { label: "Determine Coefficient of Friction", href: "/app" },
-  { label: "Series and Parallel Connections of Capacitors", href: "/app" },
-  { label: "Behaviour of a Capacitor in DC and AC Circuits", href: "/app" },
-  { label: "Model Ionic Bonds and Crystals", href: "/app" },
-]
+  { label: "Pressure Changes with Depth", href: PATHS.SIMS.DASHBOARD },
+  { label: "Detecting Charge with a Gold Leaf Electroscope", href: PATHS.SIMS.DASHBOARD },
+  { label: "Determination of Density", href: PATHS.SIMS.DASHBOARD },
+  { label: "Determine Coefficient of Friction", href: PATHS.SIMS.DASHBOARD },
+  { label: "Series and Parallel Connections of Capacitors", href: PATHS.SIMS.DASHBOARD },
+  { label: "Behaviour of a Capacitor in DC and AC Circuits", href: PATHS.SIMS.DASHBOARD },
+  { label: "Model Ionic Bonds and Crystals", href: PATHS.SIMS.DASHBOARD },
+];
 
 export default function Navigation() {
   return (

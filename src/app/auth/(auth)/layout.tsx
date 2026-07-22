@@ -1,4 +1,4 @@
-import { ROUTES } from '@/lib/constants/routes'
+import { PATHS } from '@/lib/constants/paths'
 import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
@@ -8,7 +8,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     <div className="min-h-dvh px-4 pb-6">
       <div className="w-full max-w-sm mx-auto space-y-20">
         <div className="flex justify-center py-6">
-          <Link href={ROUTES.HOME}>
+          <Link href={PATHS.HOME}>
             <Image 
               src="/brand/logo-light.png" 
               alt="Openlearn" 

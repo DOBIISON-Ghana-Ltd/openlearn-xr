@@ -5,7 +5,7 @@ import { Infer, MutationConfig, QueryConfig } from '@/data/types.base';
 import ZUser from './user.schema';
 import { authClient } from '@/adapters/auth/client';
 import { getImageUrl, handleFileUpload } from '@/lib/utils/media-helper';
-import { ROUTES } from '@/lib/constants/routes';
+import { PATHS } from '@/lib/constants/paths';
 import { QUERY_KEYS } from '@/data/key-factory';
 
 const publicGetMe = {
@@ -68,7 +68,7 @@ const publicLogin = {
     const { error } = await authClient.signIn.email({
       email: body.email,
       password: body.password,
-      callbackURL: body.redirect || ROUTES.SIMS.DASHBOARD
+      callbackURL: body.redirect || PATHS.SIMS.DASHBOARD
     });
     if (error) throw new ApiError(error.message || "Login failed", error.status || 400);
 
@@ -172,6 +172,21 @@ const adminGetAll = {
   }
 } satisfies QueryConfig;
 
+const adminSetRole = {
+  type: 'mutation',
+  mutationFn: async (body: Infer["AdminUserSetRole"]["body"]) => {
+    const roleValue = body.role.join(",");
+    const res = await authClient.admin.setRole({
+      userId: body.userId,
+      role: roleValue as any,
+    });
+    if (res.error) {
+      throw new ApiError(res.error.message || "Failed to update user role", 400);
+    }
+    return "User role updated successfully.";
+  }
+} satisfies MutationConfig;
+
 const publicUpdateAccount = {
   type: 'mutation',
   mutationFn: async (body: Infer["PublicUserUpdateAccount"]["body"]) => {
@@ -200,6 +215,18 @@ const publicUpdatePassword = {
   }
 } satisfies MutationConfig;
 
+const adminGetAllEmailLogs = {
+  type: 'query',
+  queryKey: () => [...QUERY_KEYS["admin:email-log:get:all"]],
+  queryFn: async () => {
+    const data = await fetcher(
+      () => axios.get(R["admin:email-log:get:all"]()),
+      ZUser.AdminEmailLogGetAll.shape.res
+    );
+    return data;
+  }
+} satisfies QueryConfig;
+
 export default {
   "public:user:get:me": publicGetMe,
   "public:user:delete:me": publicDeleteMe,
@@ -212,6 +239,8 @@ export default {
   "public:user:send-otp": publicSendOtp,
   "public:user:reset-password": publicResetPassword,
   "admin:user:get:all": adminGetAll,
+  "admin:user:patch:role": adminSetRole,
+  "admin:email-log:get:all": adminGetAllEmailLogs,
   "public:user:update-account": publicUpdateAccount,
   "public:user:update-password": publicUpdatePassword,
 };

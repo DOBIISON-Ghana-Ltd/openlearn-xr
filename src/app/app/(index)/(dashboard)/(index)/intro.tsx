@@ -1,10 +1,11 @@
 import { LogoSvg } from "@/components/svgs/logo";
 import { BookOpenIcon, PuzzleIcon } from "lucide-react";
 import Link from "next/link";
+import { PATHS } from "@/lib/constants/paths";
 
 const links = [
-  { icon: BookOpenIcon, href: "/app/library", label: "Browse Library", desc: "Explore the library of simulations" },
-  { icon: PuzzleIcon, href: "/app/modules", label: "Play Modules", desc: "Engage with interactive learning modules" },
+  { icon: BookOpenIcon, href: PATHS.SIMS.LIBRARY.ROOT, label: "Browse Library", desc: "Explore the library of simulations" },
+  { icon: PuzzleIcon, href: PATHS.SIMS.MODULES, label: "Play Modules", desc: "Engage with interactive learning modules" },
 ];
 
 

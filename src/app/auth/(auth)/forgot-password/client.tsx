@@ -8,7 +8,7 @@ import { useRouter } from "next/navigation";
 import ZUser from "@/data/api/user/user.schema";
 import { nuqs } from "@/lib/utils/nuqs";
 import useApi from "@/data/hooks/use-api";
-import { ROUTES } from "@/lib/constants/routes";
+import { PATHS } from "@/lib/constants/paths";
 import { toastManager } from "@/components/ui/toast";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent } from "@/components/ui/tabs";
@@ -30,7 +30,7 @@ export default function ClientPage() {
   const { mutate: sendOtp, isPending: IPSendOtp } = useApi.mutate("public:user:send-otp");
   const { mutate: checkOtp, isPending: IPCheckOtp } = useApi.mutate("public:user:check-otp");
 
-  const loginUrl = nuqs.getUrl("login", { redirect: params.redirect }, ROUTES.AUTH.LOGIN);
+  const loginUrl = nuqs.getUrl("login", { redirect: params.redirect }, PATHS.AUTH.LOGIN);
 
   const sendForm = useForm<ISendForm>({
     resolver: zodResolver(ZSendForm),
@@ -70,7 +70,7 @@ export default function ClientPage() {
           email: data.email,
           otp: data.otp,
           redirect: params.redirect,
-        }, ROUTES.AUTH.RESET_PASSWORD);
+        }, PATHS.AUTH.RESET_PASSWORD);
         router.push(url);
       },
       onError: (err) => {

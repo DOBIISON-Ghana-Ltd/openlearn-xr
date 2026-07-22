@@ -105,6 +105,27 @@ const PublicOrgInviteMember = ZApi({
   }),
 });
 
+const AdminSubscriptionGetAll = ZApi({
+  res: z.array(
+    ZSubscription.pick({
+      id: true,
+      organizationId: true,
+      tier: true,
+      status: true,
+      seats: true,
+      isUnlimited: true,
+      currentPeriodEnd: true,
+      createdAt: true,
+    }).extend({
+      organization: ZOrganization.pick({
+        id: true,
+        name: true,
+        logo: true,
+      }),
+    })
+  ),
+});
+
 const schema = {
   PublicOrgGetSubscription,
   PublicOrgGetList,
@@ -116,6 +137,7 @@ const schema = {
   PublicOrgDeleteMember,
   PublicOrgUpdateMemberRole,
   PublicOrgInviteMember,
+  AdminSubscriptionGetAll,
 };
 
 export default schema;

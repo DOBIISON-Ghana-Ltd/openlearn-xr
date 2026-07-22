@@ -1,16 +1,16 @@
 import Image from 'next/image'
 import Link from 'next/link'
-import { ROUTES } from '@/lib/constants/routes'
+import { PATHS } from '@/lib/constants/paths'
 
 const LEGAL_LINKS = [
-  { label: 'Privacy Policy', href: ROUTES.LEGAL.PRIVACY },
-  { label: 'Terms of Use', href: ROUTES.LEGAL.TERMS },
-  { label: 'Cookie Policy', href: ROUTES.LEGAL.COOKIES },
+  { label: 'Privacy Policy', href: PATHS.LEGAL.PRIVACY },
+  { label: 'Terms of Use', href: PATHS.LEGAL.TERMS },
+  { label: 'Cookie Policy', href: PATHS.LEGAL.COOKIES },
 ]
 
 const RESOURCE_LINKS = [
   { label: 'GitHub Repository', href: 'https://github.com/open-learn-xr', external: true },
-  { label: 'Contact School Setup', href: ROUTES.CONTACT, external: false },
+  { label: 'Contact School Setup', href: PATHS.CONTACT, external: false },
 ]
 
 export function Footer() {
@@ -20,7 +20,7 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Brand */}
           <div className="col-span-1 md:col-span-2 flex flex-col items-start gap-4">
-            <Link href={ROUTES.HOME} className="flex items-center gap-2">
+            <Link href={PATHS.HOME} className="flex items-center gap-2">
               <Image
                 src="/brand/logo-light.png"
                 alt="OpenLearn"

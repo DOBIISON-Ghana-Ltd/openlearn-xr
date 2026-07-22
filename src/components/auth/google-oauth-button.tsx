@@ -1,6 +1,6 @@
 import { authClient } from "@/adapters/auth/client";
 import { Button } from "@/components/ui/button";
-import { ROUTES } from "@/lib/constants/routes";
+import { PATHS } from "@/lib/constants/paths";
 import getAbsoluteClientUrl from "@/lib/utils/absolute-client-url";
 import { nuqs } from "@/lib/utils/nuqs";
 
@@ -8,7 +8,7 @@ export default function GoogleAuthButton() {
   const [params] = nuqs.getStates("login");
 
   const handleGoogleLogin = async () => {
-    const callbackPath = params.redirect || ROUTES.SIMS.DASHBOARD;
+    const callbackPath = params.redirect || PATHS.SIMS.DASHBOARD;
 
     await authClient.signIn.social({
       provider: "google",

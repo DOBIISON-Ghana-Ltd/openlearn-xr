@@ -2,11 +2,12 @@
 
 import { FolderKanban, Boxes } from "lucide-react";
 import Link from "next/link";
+import { PATHS } from "@/lib/constants/paths";
 
 export default function Navigation() {
   const links = [
-    { icon: Boxes, href: "/app/editor", label: "Modules" },
-    { icon: FolderKanban, href: "/app/editor/collections", label: "Collections" },
+    { icon: Boxes, href: PATHS.EDITOR.DASHBOARD, label: "Modules" },
+    { icon: FolderKanban, href: PATHS.EDITOR.COLLECTIONS.ROOT, label: "Collections" },
   ];
 
   return (

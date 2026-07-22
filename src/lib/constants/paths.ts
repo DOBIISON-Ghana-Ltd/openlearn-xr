@@ -1,4 +1,4 @@
-export const ROUTES = {
+export const PATHS = {
   // MARKETING ROUTES
   HOME: '/',
   LICENSING: '/licensing',
@@ -6,7 +6,7 @@ export const ROUTES = {
   LEGAL: {
     TERMS: '/legal/terms',
     PRIVACY: '/legal/privacy',
-    COOKIES: '/legal/cookies'
+    COOKIES: '/legal/cookies',
   },
 
   // AUTH ROUTES
@@ -24,7 +24,7 @@ export const ROUTES = {
     DASHBOARD: '/app',
     LIBRARY: {
       ROOT: '/app/library',
-      ONE: (id: string) => `/app/library/${id}`
+      ONE: (id: string) => `/app/library/${id}`,
     },
     MODULES: '/app/modules',
     PLAY: (mode: string, id?: string) => `/app/play/${mode}/${id}`,
@@ -34,18 +34,31 @@ export const ROUTES = {
   // EDITOR SUITE
   EDITOR: {
     DASHBOARD: '/app/editor',
+    ONE: (id: string) => `/app/editor/${id}`,
+    COLLECTIONS: {
+      ROOT: '/app/editor/collections',
+      ONE: (id: string) => `/app/editor/collections/${id}`,
+    },
   },
 
   // SESSION SUITE
   SESSION: {
     DASHBOARD: '/app/session',
+    ONE: {
+      ROOT: (id: string) => `/app/session/${id}`,
+      LEADERBOARD: (id: string) => `/app/session/${id}/leaderboard`,
+      ANALYTICS: (id: string) => `/app/session/${id}/analytics`,
+      CONFIGURATIONS: (id: string) => `/app/session/${id}/configurations`,
+      SETTINGS: (id: string) => `/app/session/${id}/settings`,
+    },
   },
 
   // ADMIN SUITE
   ADMIN: {
     DASHBOARD: '/app/admin',
     ANALYTICS: '/app/admin/analytics',
-    MODULES: '/app/admin/modules',
     USERS: '/app/admin/users',
+    SUBSCRIPTIONS: '/app/admin/subscriptions',
+    EMAIL: '/app/admin/email',
   },
 } as const;

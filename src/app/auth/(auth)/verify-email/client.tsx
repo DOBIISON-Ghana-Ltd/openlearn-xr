@@ -10,7 +10,7 @@ import { Infer } from "@/data/types.base";
 import ZUser from "@/data/api/user/user.schema";
 import { nuqs } from "@/lib/utils/nuqs";
 import useApi from "@/data/hooks/use-api";
-import { ROUTES } from "@/lib/constants/routes";
+import { PATHS } from "@/lib/constants/paths";
 import { toastManager } from "@/components/ui/toast";
 import { InputOTP, InputOTPGroup, InputOTPSlot } from "@/components/ui/input-otp";
 import { LoaderIcon } from "lucide-react";
@@ -35,7 +35,7 @@ export default function ClientPage() {
   const onSubmit = (data: IForm) => {
     verifyOtp(data, {
       onSuccess: () => {
-        const url = nuqs.getUrl("login", { redirect: params.redirect }, ROUTES.AUTH.LOGIN);
+        const url = nuqs.getUrl("login", { redirect: params.redirect }, PATHS.AUTH.LOGIN);
         router.replace(url);
       },
       onError: (err) => {
@@ -61,7 +61,7 @@ export default function ClientPage() {
 
   useEffect(() => {
     if (!params.email) {
-      const url = nuqs.getUrl("login", { redirect: params.redirect }, ROUTES.AUTH.LOGIN);
+      const url = nuqs.getUrl("login", { redirect: params.redirect }, PATHS.AUTH.LOGIN);
       router.replace(url);
     }
   }, [params, router]);
@@ -95,7 +95,7 @@ export default function ClientPage() {
 
       <p className="text-center text-sm text-muted-foreground">
         Back to{" "}
-        <Link href={ROUTES.AUTH.LOGIN} className="underline text-primary hover:text-primary/80 font-medium transition-colors">
+        <Link href={PATHS.AUTH.LOGIN} className="underline text-primary hover:text-primary/80 font-medium transition-colors">
           Sign in
         </Link>
       </p>

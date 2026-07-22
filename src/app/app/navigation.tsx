@@ -6,13 +6,14 @@ import { ChevronDownIcon, CirclePileIcon, CircleUserRoundIcon, LibraryBigIcon, P
 import Link from "next/link";
 import useApi from "@/data/hooks/use-api";
 import { getAccessibleSuites } from "@/lib/utils/suite-access";
+import { PATHS } from "@/lib/constants/paths";
 
 const links = [
-  { icon: LibraryBigIcon, href: "/app", label: "Simulation" },
-  { icon: CirclePileIcon, href: "/app/session", label: "Sessions" },
-  { icon: PencilRulerIcon, href: "/app/editor", label: "Editor" },
-  { icon: UserStarIcon, href: "/app/admin", label: "Admin" },
-]
+  { icon: LibraryBigIcon, href: PATHS.SIMS.DASHBOARD, label: "Simulation" },
+  { icon: CirclePileIcon, href: PATHS.SESSION.DASHBOARD, label: "Sessions" },
+  { icon: PencilRulerIcon, href: PATHS.EDITOR.DASHBOARD, label: "Editor" },
+  { icon: UserStarIcon, href: PATHS.ADMIN.DASHBOARD, label: "Admin" },
+];
 
 export default function Navigation() {
   const { data: user } = useApi.query("public:user:get:me");

@@ -1,6 +1,6 @@
 import { createSerializer, parseAsString, useQueryStates } from 'nuqs'
 import type { inferParserType, UseQueryStatesKeysMap } from 'nuqs'
-import { ROUTES } from "@/lib/constants/routes"
+import { PATHS } from "@/lib/constants/paths"
 
 // --- Parser definitions ---
 const paginationPage = {
@@ -82,7 +82,7 @@ export const nuqs = {
     route?: string
   ): string {
     return createSerializer(parsers[key])(
-      route || ROUTES.SIMS.DASHBOARD, 
+      route || PATHS.SIMS.DASHBOARD, 
       data as any
     )
   },
