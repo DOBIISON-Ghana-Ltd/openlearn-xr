@@ -20,4 +20,6 @@ export const QUERY_KEYS = {
   "public:session:get:overview": (id: string) => ["public", "session", id, "overview"] as const,
   "public:module-version:get:all": ["public", "module-version", "all"] as const,
   "public:module-completion:get:all": ["public", "module-completion", "all"] as const,
+  "public:collection:get:all": ["public", "collection", "all"] as const,
+  "public:module:get:all": ["public", "module", "all"] as const,
 } as const

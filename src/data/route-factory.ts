@@ -23,6 +23,10 @@ const ROUTES = {
   "public:session:post:create":       () => '/api/sessions',
   "public:module-version:get:all":    () => '/api/modules/versions',
   "public:module-completion:get:all": () => '/api/modules/completions',
+  "public:collection:get:all":        () => '/api/editor/collections',
+  "public:collection:post:create":     () => '/api/editor/collections',
+  "public:module:get:all":            () => '/api/editor/modules',
+  "public:module:post:create":        () => '/api/editor/modules',
 } as const;
 
 
