@@ -1,4 +1,4 @@
-import { ZApi, ZCollection, ZModule, ZModuleCompletion, ZModuleVersion } from "@/data/schema.base";
+import { ZApi, ZCollection, ZCollectionMedia, ZMedia, ZModule, ZModuleCompletion, ZModuleVersion } from "@/data/schema.base";
 import { z } from "zod";
 
 // ---------------------------------------------------------------------------
@@ -107,6 +107,46 @@ const PublicModuleCreate = ZApi({
   }),
 });
 
+// ---------------------------------------------------------------------------
+// GET /api/editor/collections/:collectionId/documents — documents in collection
+// ---------------------------------------------------------------------------
+const AdminCollectionGetDocuments = ZApi({
+  params: z.object({
+    collectionId: z.string().min(1, "Collection ID is required"),
+  }),
+  res: z.array(
+    ZCollectionMedia.pick({
+      id: true,
+      createdAt: true,
+    }).extend({
+      media: ZMedia.pick({
+        id: true,
+        fileName: true,
+        mimeType: true,
+        key: true,
+        status: true,
+        folder: true,
+        metadata: true,
+        createdAt: true,
+        updatedAt: true,
+      }),
+    })
+  )
+});
+
+// ---------------------------------------------------------------------------
+// PATCH /api/editor/collections/:id — update collection details
+// ---------------------------------------------------------------------------
+const AdminCollectionPatchDetails = ZApi({
+  params: ZCollection.pick({
+    id: true,
+  }),
+  body: ZCollection.pick({
+    name: true,
+    description: true,
+  }),
+});
+
 const schema = {
   PublicModuleVersionGetAll,
   PublicModuleCompletionGetAll,
@@ -114,6 +154,8 @@ const schema = {
   PublicModuleGetAll,
   PublicCollectionCreate,
   PublicModuleCreate,
+  AdminCollectionGetDocuments,
+  AdminCollectionPatchDetails,
 };
 
 export default schema;

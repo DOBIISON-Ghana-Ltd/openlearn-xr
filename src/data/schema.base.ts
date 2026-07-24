@@ -131,8 +131,6 @@ export const LiveSessionStatusEnum = z.enum(["STAGING", "ACTIVE", "COMPLETED", "
 
 export const EmailLogStatusEnum = z.enum(["QUEUED", "SENT", "FAILED", "BOUNCED"]);
 
-export const CollectionMediaRoleEnum = z.enum(["PRIMARY", "SUPPLEMENTAL"]);
-
 // ==========================================
 // BETTER AUTH CORE
 // ==========================================
@@ -296,7 +294,7 @@ export const ZCollection = z.object({
   name: z.string().min(1, "Collection name is required"),
   slug: z.string(),
   description: z.string().nullable(),
-  parsedIndex: z.record(z.string(), z.any()).nullable(),
+  level: z.string().nullable(),
   createdAt: ZDate,
   updatedAt: ZDate,
 });
@@ -305,7 +303,6 @@ export const ZCollectionMedia = z.object({
   id: z.string(),
   collectionId: z.string(),
   mediaId: z.string(),
-  role: CollectionMediaRoleEnum.default("SUPPLEMENTAL"),
   createdAt: ZDate,
   updatedAt: ZDate,
 });
@@ -351,6 +348,7 @@ export const ZModuleVersion = z.object({
   branchedFromId: z.string().nullable(),
   status: ModuleVersionStatusEnum.default("DRAFT"),
   interactiveConfig: z.record(z.string(), z.any()),
+  notes: z.record(z.string(), z.any()).nullable(),
   changeNote: z.string().nullable(),
   createdById: z.string(),
   publishedAt: ZDate.nullable(),
@@ -363,14 +361,8 @@ export const ZModuleCheckpoint = z.object({
   moduleVersionId: z.string(),
   orderIndex: z.number().int(),
   question: z.string().min(1, "Question is required"),
-  options: z.array(
-    z.object({
-      label: z.string(),
-      text: z.string(),
-      isCorrect: z.boolean(),
-    })
-  ),
-  correctAnswer: z.string(),
+  options: z.array(z.string()),
+  correctAnswer: z.number().int(),
   points: z.number().int().default(10),
   createdAt: ZDate,
   updatedAt: ZDate,
@@ -522,7 +514,6 @@ const baseSchema = {
   GamificationLogActionEnum,
   LiveSessionStatusEnum,
   EmailLogStatusEnum,
-  CollectionMediaRoleEnum,
   // Better Auth Core
   ZUser,
   ZSession,

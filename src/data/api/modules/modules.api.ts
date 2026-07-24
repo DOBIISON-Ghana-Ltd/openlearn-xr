@@ -93,10 +93,35 @@ const publicCreateModule = {
   },
 } satisfies MutationConfig;
 
+const adminGetCollectionDocuments = {
+  type: "query",
+  queryKey: (collectionId: string) => [...QUERY_KEYS["admin:collection:get:documents"](collectionId)],
+  queryFn: async (collectionId: string) => {
+    const data = await fetcher(
+      () => axios.get(R["admin:collection:get:documents"]({ collectionId })),
+      ZModules.AdminCollectionGetDocuments.shape.res
+    );
+    return data;
+  },
+} satisfies QueryConfig;
+
+const adminPatchCollectionDetails = {
+  type: "mutation",
+  mutationFn: async (vars: Pick<Infer["AdminCollectionPatchDetails"], "params" | "body">) => {
+    const data = await fetcher(
+      () => axios.patch(R["admin:collection:patch:details"]({ id: vars.params.id }), vars.body),
+      ZModules.AdminCollectionPatchDetails.shape.res
+    );
+    return data;
+  },
+} satisfies MutationConfig;
+
 const api = {
   "public:module-version:get:all": publicGetAllVersions,
   "public:module-completion:get:all": publicGetAllCompletions,
   "public:collection:get:all": publicGetAllCollections,
+  "admin:collection:get:documents": adminGetCollectionDocuments,
+  "admin:collection:patch:details": adminPatchCollectionDetails,
   "public:module:get:all": publicGetAllModules,
   "public:collection:post:create": publicCreateCollection,
   "public:module:post:create": publicCreateModule,

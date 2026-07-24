@@ -1,8 +1,7 @@
 import slugify from "@sindresorhus/slugify";
 import { nanoid } from "nanoid";
 
-export const getUniqueSlug = (name: string) => {
-    const baseSlug = slugify(name);
-    const uniqueSlug = `${baseSlug}-${nanoid(6)}`;
-    return uniqueSlug;
-}
+export const getUniqueSlug = (name: string, withSuffix: boolean = true) => {
+  const baseSlug = slugify(name);
+  return withSuffix ? `${baseSlug}-${nanoid(6)}` : baseSlug;
+};

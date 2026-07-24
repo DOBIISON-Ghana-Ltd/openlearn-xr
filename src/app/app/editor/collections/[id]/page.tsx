@@ -1,5 +1,6 @@
 import { connection } from "next/server";
-import ClientPage from "./client";
+import Content from "./content";
+import Documents from "./documents";
 
 interface PageProps {
   params: Promise<{
@@ -11,5 +12,10 @@ export default async function Page({ params }: PageProps) {
   const { id } = await params;
   await connection();
 
-  return (<ClientPage collectionId={id} />);
+  return (
+    <>
+      <Content collectionId={id} />
+      <Documents collectionId={id} />
+    </>
+  );
 }

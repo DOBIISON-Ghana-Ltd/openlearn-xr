@@ -10,6 +10,7 @@
     "email:dev": "email dev --dir adapters/email/templates",
     "prisma:generate": "prisma generate",
     "prisma:migrate": "prisma migrate dev",
+    "prisma:seed": "npx tsx prisma/seed.ts",
     "prisma:studio": "prisma studio"
   },
   "dependencies": {

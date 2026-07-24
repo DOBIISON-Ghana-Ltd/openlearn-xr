@@ -259,7 +259,7 @@ export const CollectionScalarFieldEnum = {
   name: 'name',
   slug: 'slug',
   description: 'description',
-  parsedIndex: 'parsedIndex',
+  level: 'level',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -271,7 +271,6 @@ export const CollectionMediaScalarFieldEnum = {
   id: 'id',
   collectionId: 'collectionId',
   mediaId: 'mediaId',
-  role: 'role',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -313,6 +312,7 @@ export const ModuleVersionScalarFieldEnum = {
   branchedFromId: 'branchedFromId',
   status: 'status',
   interactiveConfig: 'interactiveConfig',
+  notes: 'notes',
   changeNote: 'changeNote',
   createdById: 'createdById',
   publishedAt: 'publishedAt',

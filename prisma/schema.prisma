@@ -237,7 +237,7 @@ model Collection {
   name        String   // "SHS Physics Book One"
   slug        String   @unique
   description String?
-  parsedIndex Json?    // AI-generated JSON: topics, subtopics, lab locations, page refs
+  level       String?
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
@@ -252,7 +252,6 @@ model CollectionMedia {
   id           String     @id @default(cuid())
   collectionId String
   mediaId      String
-  role         String     @default("SUPPLEMENTAL") // "PRIMARY" | "SUPPLEMENTAL"
 
   collection   Collection @relation(fields: [collectionId], references: [id], onDelete: Cascade)
   media        Media      @relation(fields: [mediaId], references: [id], onDelete: Cascade)
@@ -316,6 +315,7 @@ model ModuleVersion {
   branchedFromId   String? // The version this was forked from (null for v1)
   status           String             @default("DRAFT") // "DRAFT" | "PUBLISHED" | "ARCHIVED"
   interactiveConfig Json               // Rive-like interactive lab state/transition timeline configuration
+  notes            Json?
   changeNote       String? // Optional editor note describing what changed
   createdById      String // Editor who created this version
   publishedAt      DateTime?
@@ -343,8 +343,8 @@ model ModuleCheckpoint {
   moduleVersionId String
   orderIndex      Int // Position in the lab flow
   question        String
-  options         Json // [{label: "A", text: "...", isCorrect: true}]
-  correctAnswer   String   // The correct answer option/key (e.g. "A" or "true")
+  options         String[]
+  correctAnswer   Int
   points          Int      @default(10)
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt
