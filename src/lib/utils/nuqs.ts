@@ -43,7 +43,7 @@ const parsers = {
     grade: parseAsString.withDefault('all'),
   },
   "sim:library": {
-    book: parseAsString.withDefault(''),
+    collectionId: parseAsString.withDefault(''),
   },
 
   // SES SUITE (Live Sessions & Multiplayer)

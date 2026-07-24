@@ -1,14 +1,22 @@
 "use client";
 
-import React from 'react'
-import { Book } from '@/lib/constants/data';
-import { useRouter } from 'next/navigation';
-import { PATHS } from '@/lib/constants/paths';
-import { Button } from '@/components/ui/button';
+import React from "react";
+import { useRouter } from "next/navigation";
+import { PATHS } from "@/lib/constants/paths";
+import { Button } from "@/components/ui/button";
+import { Infer } from "@/data/types.base";
+import { nuqs } from "@/lib/utils/nuqs";
 
-export default function BookCard(props: Book) {
+type IProps = {
+  data: Infer["SimCollectionGetAll"]["res"][number];
+};
+
+export default function BookCard(props: IProps) {
   const router = useRouter();
-  const { subject, grade, total, id, status } = props;
+  const { data: { id, name, level, _count } } = props;
+
+  const total = _count?.modules ?? 0;
+  const isComingSoon = total === 0;
 
   return (
     <div className="relative w-full aspect-video p-4 flex flex-col gap-2 border">
@@ -17,23 +25,26 @@ export default function BookCard(props: Book) {
           00/{total.toString().padStart(2, "0")}
         </p>
       </div>
-      <div className='flex-1 space-y-0'>
-        <h3 className="text-base leading-snug">{subject}</h3>
+      <div className="flex-1 space-y-0">
+        <h3 className="text-base leading-snug">{name}</h3>
         <p className="text-sm text-muted-foreground font-normal">
-          {grade}
+          {level}
         </p>
       </div>
-      <div className='flex flex-col gap-1'>
+      <div className="flex flex-col gap-1">
         <Button
           size="sm"
-          variant={status === "pending" ? "secondary" : "default"}
+          variant={isComingSoon ? "secondary" : "default"}
           className="w-full rounded-none"
-          disabled={status === "pending"}
-          onClick={() => router.push(`${PATHS.SIMS.LIBRARY.ROOT}?book=${id}`)}
+          disabled={isComingSoon}
+          onClick={() => {
+            const url = nuqs.getUrl("sim:library", { collectionId: id }, PATHS.SIMS.LIBRARY.ROOT);
+            router.push(url);
+          }}
         >
-          {status === "pending" ? "Coming Soon" : "Explore"}
+          {isComingSoon ? "Coming Soon" : "Explore"}
         </Button>
       </div>
     </div>
-  )
+  );
 }

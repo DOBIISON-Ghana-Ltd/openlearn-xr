@@ -15,6 +15,8 @@ const ROUTES = {
   "sim:module:get:all": () => `/api/sim/modules`,
   "sim:module-version:get:options": () => `/api/sim/modules/versions`,
   "sim:module-completion:get:all": () => `/api/sim/modules/completions`,
+  "sim:collection:get:all": () => `/api/sim/collections`,
+  "sim:collection:get:modules": ({ collectionId }: { collectionId: string }) => `/api/sim/collections/${collectionId}/modules`,
 
   // SES SUITE
   "ses:session:get:all": () => `/api/ses/sessions`,

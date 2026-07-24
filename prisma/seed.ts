@@ -274,7 +274,7 @@ const seedData: SeedCollection[] = [
   },
   {
     name: "Physics",
-    level: "SHS 3",
+    level: "Year Three",
     description: "Senior High School 3 Physics curriculum covering rotational mechanics, gravitation, simple harmonic motion, circuit analysis, electromagnetic induction, and AC electronics.",
     modules: [
       { title: "Establishing principle of moments", checkpoints: [] },
@@ -290,7 +290,7 @@ const seedData: SeedCollection[] = [
   },
   {
     name: "Chemistry",
-    level: "SHS 1",
+    level: "Year One",
     description: "Senior High School 1 Chemistry curriculum covering atomic theory, stoichiometry, gas laws, solubility, periodic trends, and ionic bonding.",
     modules: [
       { title: "Model Dalton's Atom and Orbitals", description: "Construct 3D visual models of s, p, and d electron orbitals and explore Dalton's atomic postulates.", checkpoints: checkpoints["Model Dalton's Atom and Orbitals"] },
@@ -308,7 +308,7 @@ const seedData: SeedCollection[] = [
   },
   {
     name: "Chemistry",
-    level: "SHS 2",
+    level: "Year Two",
     description: "Senior High School 2 Chemistry curriculum covering thermochemistry, chemical kinetics, chemical equilibria, acid-base chemistry, and organic hydrocarbons.",
     modules: [
       { title: "Constructing Energy Cycles and Born-Haber Cycles", description: "Construct Born-Haber thermodynamic energy cycles to calculate lattice energy, ionization energy, and electron affinity.", checkpoints: checkpoints["Constructing Energy Cycles and Born-Haber Cycles"] },
@@ -327,7 +327,7 @@ const seedData: SeedCollection[] = [
   },
   {
     name: "Chemistry",
-    level: "SHS 3",
+    level: "Year Three",
     description: "Senior High School 3 Chemistry curriculum covering buffers, electrochemistry, redox titrations, transition metal chemistry, and functional organic compounds.",
     modules: [
       { title: "Preparation of Buffer Solutions", checkpoints: [] },

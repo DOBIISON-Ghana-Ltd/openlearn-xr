@@ -41,8 +41,34 @@ const simModuleVersionGetOptions = {
   },
 } satisfies QueryConfig;
 
+const simCollectionGetAll = {
+  type: "query",
+  queryKey: () => [...QUERY_KEYS["sim:collection:get:all"]],
+  queryFn: async () => {
+    const data = await fetcher(
+      () => axios.get(R["sim:collection:get:all"]()),
+      ZSim.SimCollectionGetAll.shape.res
+    );
+    return data;
+  },
+} satisfies QueryConfig;
+
+const simCollectionGetModules = {
+  type: "query",
+  queryKey: (params: Infer["SimCollectionGetModules"]["params"]) => [...QUERY_KEYS["sim:collection:get:modules"](params.collectionId)],
+  queryFn: async (params: Infer["SimCollectionGetModules"]["params"]) => {
+    const data = await fetcher(
+      () => axios.get(R["sim:collection:get:modules"](params)),
+      ZSim.SimCollectionGetModules.shape.res
+    );
+    return data;
+  },
+} satisfies QueryConfig;
+
 export default {
   "sim:module:get:all": simModuleGetAll,
   "sim:module-completion:get:all": simModuleCompletionGetAll,
   "sim:module-version:get:options": simModuleVersionGetOptions,
+  "sim:collection:get:all": simCollectionGetAll,
+  "sim:collection:get:modules": simCollectionGetModules,
 };

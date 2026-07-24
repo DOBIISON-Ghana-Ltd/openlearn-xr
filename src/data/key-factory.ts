@@ -10,6 +10,8 @@ export const QUERY_KEYS = {
   "sim:module:get:all": (query?: Record<string, any>) => ["sim", "module", "all", query] as const,
   "sim:module-version:get:options": ["sim", "module-version", "options"] as const,
   "sim:module-completion:get:all": ["sim", "module-completion", "all"] as const,
+  "sim:collection:get:all": ["sim", "collection", "all"] as const,
+  "sim:collection:get:modules": (collectionId: string) => ["sim", "collection", collectionId, "modules"] as const,
 
   // SES SUITE
   "ses:session:get:all": ["ses", "session", "all"] as const,

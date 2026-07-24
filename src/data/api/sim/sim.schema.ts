@@ -75,10 +75,45 @@ const SimModuleVersionGetOptions = ZApi({
   ),
 });
 
+// ---------------------------------------------------------------------------
+// GET /api/sim/collections — collections list for library page
+// ---------------------------------------------------------------------------
+const SimCollectionGetAll = ZApi({
+  res: z.array(
+    ZCollection.pick({
+      id: true,
+      name: true,
+      level: true,
+    }).extend({
+      _count: z.object({
+        modules: z.number().int(),
+      }).optional(),
+    })
+  ),
+});
+
+// ---------------------------------------------------------------------------
+// GET /api/sim/collections/[id]/modules — modules in collection for library
+// ---------------------------------------------------------------------------
+const SimCollectionGetModules = ZApi({
+  params: z.object({
+    collectionId: ZCollection.shape.id,
+  }),
+  res: ZCollection.pick({
+    id: true,
+    name: true,
+    level: true,
+  }).extend({
+    modules: SimModuleGetAll.shape.res,
+  }),
+});
+
 const schema = {
   SimModuleGetAll,
   SimModuleCompletionGetAll,
   SimModuleVersionGetOptions,
+  SimCollectionGetAll,
+  SimCollectionGetModules,
 };
 
 export default schema;
