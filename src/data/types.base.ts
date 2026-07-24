@@ -1,10 +1,10 @@
 import { UseQueryOptions, UseMutationOptions } from '@tanstack/react-query';
 import Base from "./schema.base";
-import ZMedia from "./api/media/media.schema";
-import ZUser from "./api/user/user.schema";
-import ZOrg from "./api/org/org.schema";
-import ZSession from "./api/session/session.schema";
-import ZModules from "./api/modules/modules.schema";
+import ZApp from "./api/app/app.schema";
+import ZSim from "./api/sim/sim.schema";
+import ZSes from "./api/ses/ses.schema";
+import ZEditor from "./api/editor/editor.schema";
+import ZAdmin from "./api/admin/admin.schema";
 import { z } from "zod";
 
 // UTILITY TYPES
@@ -29,8 +29,8 @@ export type ApiConfig = QueryConfig | MutationConfig;
 
 export type Infer = 
   InferAll<typeof Base> &
-  InferAll<typeof ZMedia> &
-  InferAll<typeof ZUser> &
-  InferAll<typeof ZOrg> &
-  InferAll<typeof ZSession> &
-  InferAll<typeof ZModules>;
+  InferAll<typeof ZApp> &
+  InferAll<typeof ZSim> &
+  InferAll<typeof ZSes> &
+  InferAll<typeof ZEditor> &
+  InferAll<typeof ZAdmin>;

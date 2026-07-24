@@ -7,9 +7,9 @@ import { QUERY_KEYS } from "@/data/key-factory";
 import { match } from "ts-pattern";
 
 export default function MyOrganizations(props: MenuPrimitive.Root.Props) {
-  const { data: orgs, isLoading: isListLoading } = useApi.query("public:org:get:all");
-  const { data: activeOrg } = useApi.query("public:org:get:active");
-  const { mutate: setActive } = useApi.mutate("public:org:patch:active");
+  const { data: orgs, isLoading: isListLoading } = useApi.query("app:org:get:all");
+  const { data: activeOrg } = useApi.query("app:org:get:active");
+  const { mutate: setActive } = useApi.mutate("app:org:patch:active");
   const queryClient = useQueryClient();
 
   const handleSelectOrg = (orgId: string) => {
@@ -18,10 +18,10 @@ export default function MyOrganizations(props: MenuPrimitive.Root.Props) {
       {
         onSuccess: () => {
           queryClient.resetQueries({
-            queryKey: [...QUERY_KEYS["public:org:get:active"]],
+            queryKey: [...QUERY_KEYS["app:org:get:active"]],
           });
           queryClient.invalidateQueries({
-            queryKey: [...QUERY_KEYS["public:users:get:me"]],
+            queryKey: [...QUERY_KEYS["app:user:get:me"]],
           });
         },
       }

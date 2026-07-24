@@ -19,7 +19,7 @@ import Link from "next/link";
 // ---------------------------------------------------------------------------
 // Types
 // ---------------------------------------------------------------------------
-type IMember = Infer["PublicOrgGetMembers"]["res"][number];
+type IMember = Infer["AppOrgGetMembers"]["res"][number];
 
 const INVITE_ALLOWED_TIERS = ["DEPARTMENT", "ENTERPRISE", "UNLIMITED"];
 
@@ -32,8 +32,8 @@ type MemberMenuProps = MenuPrimitive.Root.Props & {
   onSuccess: () => void;
 };
 export function MemberMenu({ member, orgId, onSuccess, ...menuProps }: MemberMenuProps) {
-  const { mutate: removeUser, isPending: isRemoving } = useApi.mutate("public:org:delete:member");
-  const { mutate: changeRole, isPending: isChangingRole } = useApi.mutate("public:org:patch:member-role");
+  const { mutate: removeUser, isPending: isRemoving } = useApi.mutate("app:org:delete:member");
+  const { mutate: changeRole, isPending: isChangingRole } = useApi.mutate("app:org:patch:member-role");
 
   const isPending = isRemoving || isChangingRole;
   const isOwner = member.role === "owner";
@@ -163,15 +163,15 @@ export function ProfileOrgMembersCenter() {
   const qc = useQueryClient();
   const inviteHandle = DialogPrimitive.createHandle();
 
-  const { data: me } = useApi.query("public:user:get:me");
-  const { data: activeOrg } = useApi.query("public:org:get:active");
+  const { data: me } = useApi.query("app:user:get:me");
+  const { data: activeOrg } = useApi.query("app:org:get:active");
   const { data: subscription } = useApi.query(
-    "public:org:get:subscription",
+    "app:org:get:subscription",
     activeOrg?.id,
     !!activeOrg?.id
   );
   const { data: members, isLoading } = useApi.query(
-    "public:org:get:members",
+    "app:org:get:members",
     activeOrg?.id,
     !!activeOrg?.id
   );
@@ -194,7 +194,7 @@ export function ProfileOrgMembersCenter() {
   const isCallerOwner = callerMember?.role === "owner";
 
   const invalidateMembers = () => {
-    qc.invalidateQueries({ queryKey: QUERY_KEYS["public:org:get:members"](orgId) });
+    qc.invalidateQueries({ queryKey: QUERY_KEYS["app:org:get:members"](orgId) });
   };
 
   return (

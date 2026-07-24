@@ -16,14 +16,14 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Infer } from "@/data/types.base";
-import ZModules from "@/data/api/modules/modules.schema";
+import ZEditor from "@/data/api/editor/editor.schema";
 import TextBlock from "@/components/particles/form-blocks/text-block";
 import useApi from "@/data/hooks/use-api";
 import { useQueryClient } from "@tanstack/react-query";
 import { QUERY_KEYS } from "@/data/key-factory";
 
-const ZForm = ZModules.PublicCollectionCreate.shape.body;
-type IForm = Infer["PublicCollectionCreate"]["body"];
+const ZForm = ZEditor.EditorCollectionPostCreate.shape.body;
+type IForm = Infer["EditorCollectionPostCreate"]["body"];
 
 const defaultValues: IForm = {
   name: "",
@@ -36,7 +36,7 @@ export default function NewCollectionDialog(props: INewCollection) {
   const closeRef = useRef<() => void>(() => {});
   const queryClient = useQueryClient();
 
-  const { mutate: createCollection, isPending } = useApi.mutate("public:collection:post:create");
+  const { mutate: createCollection, isPending } = useApi.mutate("editor:collection:post:create");
 
   const { handleSubmit, control, reset } = useForm({
     resolver: zodResolver(ZForm),
@@ -46,7 +46,7 @@ export default function NewCollectionDialog(props: INewCollection) {
   const onSubmit = (data: IForm) => {
     createCollection(data, {
       onSuccess: () => {
-        queryClient.invalidateQueries({ queryKey: [...QUERY_KEYS["public:collection:get:all"]] });
+        queryClient.invalidateQueries({ queryKey: [...QUERY_KEYS["editor:collection:get:all"]] });
         reset(defaultValues);
         closeRef.current();
       },

@@ -7,7 +7,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Infer } from "@/data/types.base";
-import ZUser from "@/data/api/user/user.schema";
+import ZApp from "@/data/api/app/app.schema";
 import { nuqs } from "@/lib/utils/nuqs";
 import useApi from "@/data/hooks/use-api";
 import { PATHS } from "@/lib/constants/paths";
@@ -15,15 +15,15 @@ import { toastManager } from "@/components/ui/toast";
 import { InputOTP, InputOTPGroup, InputOTPSlot } from "@/components/ui/input-otp";
 import { LoaderIcon } from "lucide-react";
 
-const ZForm = ZUser.PublicUserVerifyEmail.shape.body;
-type IForm = Infer["PublicUserVerifyEmail"]["body"];
+const ZForm = ZApp.AppUserVerifyEmailOtp.shape.body;
+type IForm = Infer["AppUserVerifyEmailOtp"]["body"];
 
 export default function ClientPage() {
-  const [params] = nuqs.getStates("verifyEmail");
+  const [params] = nuqs.getStates("app:verify-email");
   const router = useRouter();
 
-  const { mutate: verifyOtp, isPending: IPVerify } = useApi.mutate("public:user:verify-email-otp");
-  const { mutate: resendOtp, isPending: IPResend } = useApi.mutate("public:user:send-otp");
+  const { mutate: verifyOtp, isPending: IPVerify } = useApi.mutate("app:user:verify-email-otp");
+  const { mutate: resendOtp, isPending: IPResend } = useApi.mutate("app:user:send-otp");
 
   const { handleSubmit, control, reset } = useForm<IForm>({
     resolver: zodResolver(ZForm),
@@ -35,7 +35,7 @@ export default function ClientPage() {
   const onSubmit = (data: IForm) => {
     verifyOtp(data, {
       onSuccess: () => {
-        const url = nuqs.getUrl("login", { redirect: params.redirect }, PATHS.AUTH.LOGIN);
+        const url = nuqs.getUrl("app:login", { redirect: params.redirect }, PATHS.AUTH.LOGIN);
         router.replace(url);
       },
       onError: (err) => {
@@ -61,7 +61,7 @@ export default function ClientPage() {
 
   useEffect(() => {
     if (!params.email) {
-      const url = nuqs.getUrl("login", { redirect: params.redirect }, PATHS.AUTH.LOGIN);
+      const url = nuqs.getUrl("app:login", { redirect: params.redirect }, PATHS.AUTH.LOGIN);
       router.replace(url);
     }
   }, [params, router]);

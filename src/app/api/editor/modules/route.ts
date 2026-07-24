@@ -1,7 +1,7 @@
 import { secureApiRoute } from "@/lib/utils/secure-api-route";
 import { JSend } from "@/lib/utils/jsend";
 import prisma from "@/adapters/db/client";
-import ZModules from "@/data/api/modules/modules.schema";
+import ZEditor from "@/data/api/editor/editor.schema";
 import slugify from "@sindresorhus/slugify";
 import { nanoid } from "nanoid";
 
@@ -26,18 +26,17 @@ export const GET = secureApiRoute(async (req, ctx, user) => {
     },
   });
 
-  const parsedData = ZModules.PublicModuleGetAll.shape.res.parse(modules);
+  const parsedData = ZEditor.EditorModuleGetAll.shape.res.parse(modules);
   return JSend.success(parsedData);
 });
 
 export const POST = secureApiRoute(async (req, ctx, user) => {
   const rawBody = await req.json();
-  const body = ZModules.PublicModuleCreate.shape.body.parse(rawBody);
+  const body = ZEditor.EditorModulePostCreate.shape.body.parse(rawBody);
 
   const baseSlug = slugify(body.title);
   const uniqueSlug = `${baseSlug}-${nanoid(6)}`;
 
-  // Find current max orderIndex in this collection to append
   const lastModule = await prisma.module.findFirst({
     where: { collectionId: body.collectionId },
     orderBy: { orderIndex: "desc" },
@@ -58,6 +57,6 @@ export const POST = secureApiRoute(async (req, ctx, user) => {
     },
   });
 
-  const parsedData = ZModules.PublicModuleCreate.shape.res.parse(created);
+  const parsedData = ZEditor.EditorModulePostCreate.shape.res.parse(created);
   return JSend.success(parsedData);
 });

@@ -5,7 +5,7 @@ import { AwardIcon, FlameIcon, RocketIcon } from 'lucide-react';
 import React from 'react'
 
 export default function HeaderUserStats() {
-  const { data } = useApi.query('public:user:get:me');
+  const { data } = useApi.query('app:user:get:me');
 
   if (!data) {
     return null;

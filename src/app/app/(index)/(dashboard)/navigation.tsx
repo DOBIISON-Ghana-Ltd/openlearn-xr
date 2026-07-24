@@ -1,6 +1,6 @@
 "use client";
 
-import { BookIcon, BookOpenIcon, LayoutDashboard, PuzzleIcon } from "lucide-react";
+import { BookOpenIcon, LayoutDashboard, PuzzleIcon } from "lucide-react";
 import Link from "next/link";
 import { PATHS } from "@/lib/constants/paths";
 
@@ -8,16 +8,6 @@ const links = [
   { icon: LayoutDashboard, href: PATHS.SIMS.DASHBOARD, label: "Home" },
   { icon: BookOpenIcon, href: PATHS.SIMS.LIBRARY.ROOT, label: "Library" },
   { icon: PuzzleIcon, href: PATHS.SIMS.MODULES, label: "Modules" },
-];
-
-const recentLinks = [
-  { label: "Pressure Changes with Depth", href: PATHS.SIMS.DASHBOARD },
-  { label: "Detecting Charge with a Gold Leaf Electroscope", href: PATHS.SIMS.DASHBOARD },
-  { label: "Determination of Density", href: PATHS.SIMS.DASHBOARD },
-  { label: "Determine Coefficient of Friction", href: PATHS.SIMS.DASHBOARD },
-  { label: "Series and Parallel Connections of Capacitors", href: PATHS.SIMS.DASHBOARD },
-  { label: "Behaviour of a Capacitor in DC and AC Circuits", href: PATHS.SIMS.DASHBOARD },
-  { label: "Model Ionic Bonds and Crystals", href: PATHS.SIMS.DASHBOARD },
 ];
 
 export default function Navigation() {
@@ -33,7 +23,7 @@ export default function Navigation() {
           </li>
         ))}
       </ul>
-      <div className="space-y-2">
+      {/* <div className="space-y-2">
         <p className="text-xs-m capitalize font-medium text-muted-foreground px-4">Recents</p>
         <ul>
           {recentLinks.map((link) => (
@@ -44,7 +34,7 @@ export default function Navigation() {
             </li>
           ))}
         </ul>
-      </div>
+      </div> */}
     </div>
   )
 }

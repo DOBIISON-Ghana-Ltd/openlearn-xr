@@ -42,7 +42,7 @@ export default function OrganizationArea() {
 };
 
 function Info() {
-  const { data: org, isLoading } = useApi.query("public:org:get:active");
+  const { data: org, isLoading } = useApi.query("app:org:get:active");
 
   if (isLoading) {
     return <Info.Skeleton />

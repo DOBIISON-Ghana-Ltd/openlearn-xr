@@ -8,7 +8,7 @@ import Navigation from './navigation';
 export default async function Layout({ children }: { children: React.ReactNode }) {
 
   const queryClient = getQueryClient();
-  await prefetchApi(queryClient, 'public:user:get:me');
+  await prefetchApi(queryClient, 'app:user:get:me');
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>

@@ -16,7 +16,7 @@ const links = [
 ];
 
 export default function Navigation() {
-  const { data: user } = useApi.query("public:user:get:me");
+  const { data: user } = useApi.query("app:user:get:me");
 
   const roles = user?.role || [];
   const subscriptionTier = user?.subscriptionTier || "FREE";

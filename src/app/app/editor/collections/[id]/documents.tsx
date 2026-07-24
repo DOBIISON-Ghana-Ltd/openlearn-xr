@@ -12,10 +12,10 @@ interface ClientPageProps {
   collectionId: string;
 }
 
-type IDocument = Infer["AdminCollectionGetDocuments"]["res"][number];
+type IDocument = Infer["EditorCollectionGetDocuments"]["res"][number];
 
 export default function Documents({ collectionId }: ClientPageProps) {
-  const { data: documents, isLoading } = useApi.query("admin:collection:get:documents", collectionId);
+  const { data: documents, isLoading } = useApi.query("editor:collection:get:documents", collectionId);
 
   const status = isLoading ? "loading" : documents && documents.length > 0 ? "success" : "empty";
 

@@ -11,7 +11,7 @@ interface ClientPageProps {
 }
 
 export default function ClientPage({ sessionId }: ClientPageProps) {
-  const { data: session } = useApi.query("public:session:get:overview", sessionId);
+  const { data: session } = useApi.query("ses:session:get:overview", sessionId);
 
   return (
     <div className="size-full space-y-5 pb-7">

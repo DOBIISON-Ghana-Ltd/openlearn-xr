@@ -13,7 +13,7 @@ import {
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
-type ISchema = Infer["PublicSessionGetAll"]["res"][number];
+type ISchema = Infer["SesSessionGetAll"]["res"][number];
 
 export const columns: ColumnDef<ISchema>[] = [
   {

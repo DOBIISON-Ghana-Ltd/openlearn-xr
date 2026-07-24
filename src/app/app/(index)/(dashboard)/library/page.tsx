@@ -8,7 +8,7 @@ import BookCard from "@/components/particles/book-card";
 import ModuleCard from "@/components/particles/module-card";
 
 export default function Page() {
-  const [{ book: bookId }] = nuqs.getStates('library');
+  const [{ book: bookId }] = nuqs.getStates('sim:library');
 
   const selectedBook = bookId ? books.find(b => b.id === bookId) : null;
   const filteredModules = selectedBook ? modules.filter(m => m.bookId === bookId) : [];
@@ -32,7 +32,23 @@ export default function Page() {
         {selectedBook ? (
           <>
             {filteredModules.map((module) => (
-              <ModuleCard key={module.id} {...module} mode="library" />
+              <ModuleCard
+                key={module.id}
+                mode="library"
+                data={{
+                  id: module.id,
+                  versionNumber: module.orderPosition,
+                  status: module.status === "active" ? "PUBLISHED" : "DRAFT",
+                  _count: { checkpoints: module.checkpoints },
+                  module: {
+                    title: module.title,
+                    collection: {
+                      name: selectedBook?.subject ?? "",
+                      level: selectedBook?.grade ?? "",
+                    },
+                  },
+                }}
+              />
             ))}
           </>
         ) : (

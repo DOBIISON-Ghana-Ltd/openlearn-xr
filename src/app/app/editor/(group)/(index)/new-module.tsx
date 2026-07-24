@@ -16,15 +16,15 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Infer } from "@/data/types.base";
-import ZModules from "@/data/api/modules/modules.schema";
+import ZEditor from "@/data/api/editor/editor.schema";
 import TextBlock from "@/components/particles/form-blocks/text-block";
 import ComboboxBlock from "@/components/particles/form-blocks/combobox-block";
 import useApi from "@/data/hooks/use-api";
 import { useQueryClient } from "@tanstack/react-query";
 import { QUERY_KEYS } from "@/data/key-factory";
 
-const ZForm = ZModules.PublicModuleCreate.shape.body;
-type IForm = Infer["PublicModuleCreate"]["body"];
+const ZForm = ZEditor.EditorModulePostCreate.shape.body;
+type IForm = Infer["EditorModulePostCreate"]["body"];
 
 const defaultValues: IForm = {
   title: "",
@@ -38,8 +38,8 @@ export default function NewModuleDialog(props: INewModule) {
   const closeRef = useRef<() => void>(() => {});
   const queryClient = useQueryClient();
 
-  const { data: collections } = useApi.query("public:collection:get:all");
-  const { mutate: createModule, isPending } = useApi.mutate("public:module:post:create");
+  const { data: collections } = useApi.query("editor:collection:get:all");
+  const { mutate: createModule, isPending } = useApi.mutate("editor:module:post:create");
 
   const collectionItems = (collections ?? []).map((c) => ({
     label: c.name,
@@ -54,7 +54,7 @@ export default function NewModuleDialog(props: INewModule) {
   const onSubmit = (data: IForm) => {
     createModule(data, {
       onSuccess: () => {
-        queryClient.invalidateQueries({ queryKey: [...QUERY_KEYS["public:module:get:all"]] });
+        queryClient.invalidateQueries({ queryKey: [...QUERY_KEYS["editor:module:get:all"]] });
         reset(defaultValues);
         closeRef.current();
       },

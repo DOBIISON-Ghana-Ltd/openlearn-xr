@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { useEffect } from "react";
 import { Infer } from "@/data/types.base";
-import ZUser from "@/data/api/user/user.schema";
+import ZApp from "@/data/api/app/app.schema";
 import { nuqs } from "@/lib/utils/nuqs";
 import useApi from "@/data/hooks/use-api";
 import { PATHS } from "@/lib/constants/paths";
@@ -15,15 +15,15 @@ import { toastManager } from "@/components/ui/toast";
 import PasswordBlock from "@/components/auth/form-blocks/password-block";
 import { LoaderIcon } from "lucide-react";
 
-const ZForm = ZUser.PublicUserResetPassword.shape.body;
-type IForm = Infer["PublicUserResetPassword"]["body"];
+const ZForm = ZApp.AppUserResetPassword.shape.body;
+type IForm = Infer["AppUserResetPassword"]["body"];
 
 export default function ClientPage() {
   const router = useRouter();
-  const [params] = nuqs.getStates("resetPassword");
-  const { mutate: resetPassword, isPending } = useApi.mutate("public:user:reset-password");
+  const [params] = nuqs.getStates("app:reset-password");
+  const { mutate: resetPassword, isPending } = useApi.mutate("app:user:reset-password");
 
-  const loginUrl = nuqs.getUrl("login", { redirect: params.redirect }, PATHS.AUTH.LOGIN);
+  const loginUrl = nuqs.getUrl("app:login", { redirect: params.redirect }, PATHS.AUTH.LOGIN);
 
   const { handleSubmit, control } = useForm<IForm>({
     resolver: zodResolver(ZForm),
@@ -55,7 +55,7 @@ export default function ClientPage() {
 
   useEffect(() => {
     if (!params.email || !params.otp) {
-      const url = nuqs.getUrl("forgotPassword", { redirect: params.redirect }, PATHS.AUTH.FORGOT_PASSWORD);
+      const url = nuqs.getUrl("app:forgot-password", { redirect: params.redirect }, PATHS.AUTH.FORGOT_PASSWORD);
       router.replace(url);
     }
   }, [params, router]);

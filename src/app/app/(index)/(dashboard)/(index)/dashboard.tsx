@@ -5,7 +5,7 @@ import { columns } from "./columns";
 import useApi from "@/data/hooks/use-api";
 
 export default function Dashboard() {
-  const { data, isLoading } = useApi.query("public:module-completion:get:all");
+  const { data, isLoading } = useApi.query("sim:module-completion:get:all");
 
   return (
     <div className="size-full flex flex-col">

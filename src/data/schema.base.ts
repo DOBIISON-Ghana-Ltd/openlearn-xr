@@ -294,7 +294,7 @@ export const ZCollection = z.object({
   name: z.string().min(1, "Collection name is required"),
   slug: z.string(),
   description: z.string().nullable(),
-  level: z.string().nullable(),
+  level: z.string(),
   createdAt: ZDate,
   updatedAt: ZDate,
 });

@@ -6,11 +6,11 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Dialog, DialogClose, DialogDescription, DialogFooter, DialogHeader, DialogPanel, DialogPopup, DialogPrimitive, DialogTitle } from "../ui/dialog";
 import { Button } from "../ui/button";
 import { Infer } from "@/data/types.base";
-import ZOrg from "@/data/api/org/org.schema";
+import ZApp from "@/data/api/app/app.schema";
 import TextBlock from "./form-blocks/text-block";
 
-const ZForm = ZOrg.PublicOrgInviteMember.shape.body;
-type IForm = Infer["PublicOrgInviteMember"]["body"];
+const ZForm = ZApp.AppOrgInviteMember.shape.body;
+type IForm = Infer["AppOrgInviteMember"]["body"];
 
 const defaultValues: IForm = {
   email: "",

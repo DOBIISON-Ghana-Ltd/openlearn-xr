@@ -10,7 +10,7 @@ import NewSessionDialog from "@/components/particles/new-session";
 const newSessionHandle = DialogPrimitive.createHandle();
 
 export default function Page() {
-  const { data, isLoading } = useApi.query("public:session:get:all");
+  const { data, isLoading } = useApi.query("ses:session:get:all");
 
   return (
     <div className="size-full flex flex-col">

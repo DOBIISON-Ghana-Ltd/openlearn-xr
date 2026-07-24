@@ -10,7 +10,7 @@ import useApi from "@/data/hooks/use-api";
 const newModuleHandle = DialogPrimitive.createHandle();
 
 export default function ClientPage() {
-  const { data: modules, isLoading } = useApi.query("public:module:get:all");
+  const { data: modules, isLoading } = useApi.query("editor:module:get:all");
 
   return (
     <div className="size-full flex flex-col">

@@ -5,7 +5,7 @@ import getAbsoluteClientUrl from "@/lib/utils/absolute-client-url";
 import { nuqs } from "@/lib/utils/nuqs";
 
 export default function GoogleAuthButton() {
-  const [params] = nuqs.getStates("login");
+  const [params] = nuqs.getStates("app:login");
 
   const handleGoogleLogin = async () => {
     const callbackPath = params.redirect || PATHS.SIMS.DASHBOARD;

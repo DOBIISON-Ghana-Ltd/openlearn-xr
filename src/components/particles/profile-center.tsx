@@ -41,8 +41,8 @@ function TabButton({ label, icon: Icon, isActive, onClick }: TabButtonProps) {
 
 export default function ProfileCenter() {
   const queryClient = useQueryClient();
-  const { data } = useApi.query('public:user:get:me');
-  const { mutate: logout } = useApi.mutate("public:user:logout");
+  const { data } = useApi.query('app:user:get:me');
+  const { mutate: logout } = useApi.mutate("app:user:logout");
   const [activeTab, setActiveTab] = useState("Profile");
 
   if (!data) return null;

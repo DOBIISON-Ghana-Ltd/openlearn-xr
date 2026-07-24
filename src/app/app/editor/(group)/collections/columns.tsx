@@ -11,7 +11,7 @@ import {
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
-type ISchema = Infer["PublicCollectionGetAll"]["res"][number];
+type ISchema = Infer["EditorCollectionGetAll"]["res"][number];
 
 export const columns: ColumnDef<ISchema>[] = [
   {

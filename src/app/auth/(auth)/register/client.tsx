@@ -6,7 +6,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/components/ui/button";
 import { Infer } from "@/data/types.base";
-import ZUser from "@/data/api/user/user.schema";
+import ZApp from "@/data/api/app/app.schema";
 import { nuqs } from "@/lib/utils/nuqs";
 import useApi from "@/data/hooks/use-api";
 import { PATHS } from "@/lib/constants/paths";
@@ -17,14 +17,14 @@ import CheckBlock from "@/components/auth/form-blocks/check-block";
 import { LoaderIcon } from "lucide-react";
 import GoogleAuthButton from "@/components/auth/google-oauth-button";
 
-const ZForm = ZUser.PublicUserRegister.shape.body;
-type IForm = Infer["PublicUserRegister"]["body"];
+const ZForm = ZApp.AppUserRegister.shape.body;
+type IForm = Infer["AppUserRegister"]["body"];
 
 export default function ClientPage() {
-  const [params] = nuqs.getStates("register");
+  const [params] = nuqs.getStates("app:register");
   const router = useRouter();
-  const { mutate, isPending } = useApi.mutate("public:user:register");
-  const loginUrl = nuqs.getUrl("login", { redirect: params.redirect }, PATHS.AUTH.LOGIN);
+  const { mutate, isPending } = useApi.mutate("app:user:register");
+  const loginUrl = nuqs.getUrl("app:login", { redirect: params.redirect }, PATHS.AUTH.LOGIN);
 
   const { handleSubmit, control } = useForm<IForm>({
     resolver: zodResolver(ZForm),
@@ -41,7 +41,7 @@ export default function ClientPage() {
     mutate(data, {
       onSuccess: () => {
         const url = nuqs.getUrl(
-          "verifyEmail",
+          "app:verify-email",
           { email: data.email, redirect: params.redirect },
           PATHS.AUTH.VERIFY_EMAIL
         );

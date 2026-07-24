@@ -15,7 +15,7 @@ export default async function Page({ params }: PageProps) {
   await connection();
 
   const queryClient = getQueryClient();
-  await prefetchApi(queryClient, "public:session:get:overview", id);
+  await prefetchApi(queryClient, "ses:session:get:overview", id);
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>

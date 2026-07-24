@@ -12,7 +12,7 @@ import {
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
-type ISchema = Infer["PublicModuleCompletionGetAll"]["res"][number];
+type ISchema = Infer["SimModuleCompletionGetAll"]["res"][number];
 
 export const columns: ColumnDef<ISchema>[] = [
   {

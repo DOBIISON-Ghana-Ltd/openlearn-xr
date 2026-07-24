@@ -9,13 +9,13 @@ import { toastManager } from "@/components/ui/toast";
 import { Dialog, DialogClose, DialogDescription, DialogFooter, DialogHeader, DialogPanel, DialogPopup, DialogPrimitive, DialogTitle } from "../ui/dialog";
 import { Button } from "../ui/button";
 import { Infer } from "@/data/types.base";
-import ZOrg from "@/data/api/org/org.schema";
+import ZApp from "@/data/api/app/app.schema";
 import TextBlock from "./form-blocks/text-block";
 import { match } from "ts-pattern";
 import { QUERY_KEYS } from "@/data/key-factory";
 
-const ZForm = ZOrg.PublicOrgCreate.shape.body;
-type IForm = Infer["PublicOrgCreate"]["body"];
+const ZForm = ZApp.AppOrgCreate.shape.body;
+type IForm = Infer["AppOrgCreate"]["body"];
 
 const defaultValues: IForm = { name: "" };
 
@@ -28,7 +28,7 @@ export function NewOrganization(props: DialogPrimitive.Root.Props) {
     defaultValues,
   });
 
-  const { mutate, isPending } = useApi.mutate("public:org:post:create");
+  const { mutate, isPending } = useApi.mutate("app:org:post:create");
 
   const onSubmit = (data: IForm) => {
     mutate(data, {
@@ -37,9 +37,9 @@ export function NewOrganization(props: DialogPrimitive.Root.Props) {
           type: "success",
           title: "Organization created successfully!"
         });
-        queryClient.resetQueries({ queryKey: [...QUERY_KEYS["public:org:get:active"]] });
-        queryClient.invalidateQueries({ queryKey: [...QUERY_KEYS["public:org:get:all"]] });
-        queryClient.invalidateQueries({ queryKey: [...QUERY_KEYS["public:users:get:me"]] });
+        queryClient.resetQueries({ queryKey: [...QUERY_KEYS["app:org:get:active"]] });
+        queryClient.invalidateQueries({ queryKey: [...QUERY_KEYS["app:org:get:all"]] });
+        queryClient.invalidateQueries({ queryKey: [...QUERY_KEYS["app:user:get:me"]] });
         reset(defaultValues);
         closeRef.current(); // Call captured DialogClose click handler to close the dialog
       },

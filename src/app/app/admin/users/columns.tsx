@@ -23,7 +23,7 @@ type IUser = Infer["AdminUserGetAll"]["res"][number];
 
 function UserRoleActions({ user }: { user: IUser }) {
   const qc = useQueryClient();
-  const { data: me } = useApi.query("public:user:get:me");
+  const { data: me } = useApi.query("app:user:get:me");
   const { mutate: setRole, isPending } = useApi.mutate("admin:user:patch:role");
 
   if (me?.id === user.id) {
@@ -35,12 +35,12 @@ function UserRoleActions({ user }: { user: IUser }) {
   const isEditor = roles.includes("editor");
   const isUserOnly = !isAdmin && !isEditor;
 
-  const handleAssignRole = (newRoles: Infer["AdminUserSetRole"]["body"]["role"]) => {
+  const handleAssignRole = (newRoles: Infer["AdminUserPatchRole"]["body"]["role"]) => {
     setRole(
       { userId: user.id, role: newRoles },
       {
         onSuccess: () => {
-          qc.invalidateQueries({ queryKey: [...QUERY_KEYS["admin:users:get:all"]] });
+          qc.invalidateQueries({ queryKey: [...QUERY_KEYS["admin:user:get:all"]] });
         },
       }
     );

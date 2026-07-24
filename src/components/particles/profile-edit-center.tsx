@@ -8,7 +8,7 @@ import AvatarBlock from "./form-blocks/avatar-block";
 import TextBlock from "./form-blocks/text-block";
 import Password from "./form-blocks/password-block";
 import useApi from "@/data/hooks/use-api";
-import ZUser from "@/data/api/user/user.schema";
+import ZApp from "@/data/api/app/app.schema";
 import { Infer } from "@/data/types.base";
 import { toastManager } from "@/components/ui/toast";
 import { useQueryClient } from "@tanstack/react-query";
@@ -29,12 +29,12 @@ export function ProfileEditCenter() {
   );
 }
 
-const ZFormAccount = ZUser.PublicUserUpdateAccount.shape.body;
-type IFormAccount = Infer["PublicUserUpdateAccount"]["body"];
+const ZFormAccount = ZApp.AppUserUpdateAccount.shape.body;
+type IFormAccount = Infer["AppUserUpdateAccount"]["body"];
 
 function EditAccount() {
-  const { data: me } = useApi.query("public:user:get:me");
-  const { mutate: updateAccount, isPending } = useApi.mutate("public:user:update-account");
+  const { data: me } = useApi.query("app:user:get:me");
+  const { mutate: updateAccount, isPending } = useApi.mutate("app:user:update-account");
   const queryClient = useQueryClient();
 
   const defaultValues: IFormAccount = {
@@ -59,7 +59,7 @@ function EditAccount() {
       onSuccess: () => {
         toastManager.add({ type: "success", title: "Account updated successfully!" });
         queryClient.invalidateQueries({
-          queryKey: [...QUERY_KEYS["public:users:get:me"]],
+          queryKey: [...QUERY_KEYS["app:user:get:me"]],
         });
       },
       onError: (err: any) => {
@@ -101,8 +101,8 @@ function EditAccount() {
   );
 }
 
-const ZFormPassword = ZUser.PublicUserUpdatePassword.shape.body;
-type IFormPassword = Infer["PublicUserUpdatePassword"]["body"];
+const ZFormPassword = ZApp.AppUserUpdatePassword.shape.body;
+type IFormPassword = Infer["AppUserUpdatePassword"]["body"];
 
 const defaultPasswordValues: IFormPassword = {
   oldPassword: "",
@@ -111,7 +111,7 @@ const defaultPasswordValues: IFormPassword = {
 };
 
 function Security() {
-  const { mutate: updatePassword, isPending } = useApi.mutate("public:user:update-password");
+  const { mutate: updatePassword, isPending } = useApi.mutate("app:user:update-password");
 
   const { handleSubmit, control, reset, formState: { isDirty } } = useForm<IFormPassword>({
     resolver: zodResolver(ZFormPassword),

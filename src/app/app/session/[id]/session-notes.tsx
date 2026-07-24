@@ -46,7 +46,7 @@ export default function SessionNotes() {
   const params = useParams();
   const id = params.id as string;
 
-  const { data: session } = useApi.query("public:session:get:overview", id);
+  const { data: session } = useApi.query("ses:session:get:overview", id);
   const overview = session?.moduleVersion.module.overview;
 
   return (

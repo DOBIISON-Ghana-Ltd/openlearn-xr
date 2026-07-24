@@ -8,7 +8,7 @@ export default async function Page() {
   await connection();
 
   const queryClient = getQueryClient();
-  await prefetchApi(queryClient, "public:collection:get:all");
+  await prefetchApi(queryClient, "editor:collection:get:all");
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>

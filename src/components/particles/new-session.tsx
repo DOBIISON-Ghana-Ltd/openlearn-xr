@@ -17,14 +17,14 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Infer } from "@/data/types.base";
-import ZSession from "@/data/api/session/session.schema";
+import ZSes from "@/data/api/ses/ses.schema";
 import TextBlock from "./form-blocks/text-block";
 import ComboboxBlock from "./form-blocks/combobox-block";
 import useApi from "@/data/hooks/use-api";
 import { nuqs } from "@/lib/utils/nuqs";
 
-const ZForm = ZSession.PublicSessionCreate.shape.body;
-type IForm = Infer["PublicSessionCreate"]["body"];
+const ZForm = ZSes.SesSessionPostCreate.shape.body;
+type IForm = Infer["SesSessionPostCreate"]["body"];
 
 const defaultValues: IForm = {
   name: "",
@@ -37,10 +37,10 @@ export default function NewSessionDialog(props: INewSession) {
   const router = useRouter();
   const closeRef = useRef<() => void>(() => { });
   const [open, setOpen] = useState(false);
-  const [query, setQuery] = nuqs.getStates("session");
+  const [query, setQuery] = nuqs.getStates("ses:dashboard");
 
-  const { data: moduleVersions } = useApi.query("public:module-version:get:all");
-  const { mutate: createSession, isPending } = useApi.mutate("public:session:post:create");
+  const { data: moduleVersions } = useApi.query("sim:module-version:get:options");
+  const { mutate: createSession, isPending } = useApi.mutate("ses:session:post:create");
 
   const moduleItems = (moduleVersions ?? []).map((v) => ({
     label: `${v.module.title} #v${v.versionNumber}`,

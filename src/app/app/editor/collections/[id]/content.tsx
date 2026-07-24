@@ -10,19 +10,17 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { match } from "ts-pattern";
 import useApi from "@/data/hooks/use-api";
 import { Infer } from "@/data/types.base";
-import ZModules from "@/data/api/modules/modules.schema";
+import ZEditor from "@/data/api/editor/editor.schema";
 
 interface ClientPageProps {
   collectionId: string;
 }
 
-const ZForm = ZModules.AdminCollectionPatchDetails.shape.body;
-type IForm = Infer["AdminCollectionPatchDetails"]["body"];
+const ZForm = ZEditor.EditorCollectionPatchDetails.shape.body;
+type IForm = Infer["EditorCollectionPatchDetails"]["body"];
 
 export default function Content({ collectionId }: ClientPageProps) {
-  const [isNameView, setIsNameView] = useState(true);
-  const [isDescView, setIsDescView] = useState(true);
-  const { mutate, isPending } = useApi.mutate("admin:collection:patch:details");
+  const { mutate, isPending } = useApi.mutate("editor:collection:patch:details");
 
   const defaultValues: IForm = {
     name: "",

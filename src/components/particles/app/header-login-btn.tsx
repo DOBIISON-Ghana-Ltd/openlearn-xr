@@ -8,7 +8,7 @@ import Link from 'next/link';
 import { PATHS } from '@/lib/constants/paths';
 
 export default function HeaderLoginBtn() {
-  const { data } = useApi.query('public:user:get:me');
+  const { data } = useApi.query('app:user:get:me');
 
   if (data) {
     return null;

@@ -63,9 +63,9 @@ const subjectsList = [
 ];
 
 export default function ClientPage() {
-  const [params] = nuqs.getStates("onboarding");
+  const [params] = nuqs.getStates("app:onboarding");
   const router = useRouter();
-  const { mutate: completeOnboarding, isPending } = useApi.mutate("public:user:patch:onboarding");
+  const { mutate: completeOnboarding, isPending } = useApi.mutate("app:user:patch:onboarding");
 
   const { currentTab, setTab, updateMetadata, clearStore } = useOnboardingStore();
   const [mounted, setMounted] = useState(false);

@@ -9,7 +9,7 @@ import React, { useEffect } from 'react';
 
 export default function Page() {
   const router = useRouter();
-  const [state] = nuqs.getStates('verifyCache');
+  const [state] = nuqs.getStates('app:verify-cache');
 
   useEffect(() => {
     let active = true;
@@ -26,7 +26,7 @@ export default function Page() {
         await authClient.signOut();
         if (!active) return;
 
-        const redirectUrl = nuqs.getUrl('login', { redirect: state.redirect }, PATHS.AUTH.LOGIN);
+        const redirectUrl = nuqs.getUrl('app:login', { redirect: state.redirect }, PATHS.AUTH.LOGIN);
         router.replace(redirectUrl);
       }
     };

@@ -6,18 +6,18 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "../ui/button";
 import TextBlock from "./form-blocks/text-block";
 import useApi from "@/data/hooks/use-api";
-import ZOrg from "@/data/api/org/org.schema";
+import ZApp from "@/data/api/app/app.schema";
 import { Infer } from "@/data/types.base";
 import { toastManager } from "@/components/ui/toast";
 import { useQueryClient } from "@tanstack/react-query";
 import { QUERY_KEYS } from "@/data/key-factory";
 
-const ZFormPreferences = ZOrg.PublicOrgUpdateActive.shape.body;
-type IFormPreferences = Infer["PublicOrgUpdateActive"]["body"];
+const ZFormPreferences = ZApp.AppOrgUpdateActive.shape.body;
+type IFormPreferences = Infer["AppOrgUpdateActive"]["body"];
 
 export function ProfileOrgPreferencesCenter() {
-  const { data: activeOrg } = useApi.query("public:org:get:active");
-  const { mutate: updateOrg, isPending } = useApi.mutate("public:org:update-active");
+  const { data: activeOrg } = useApi.query("app:org:get:active");
+  const { mutate: updateOrg, isPending } = useApi.mutate("app:org:update-active");
   const queryClient = useQueryClient();
 
   const defaultValues: IFormPreferences = {
@@ -44,10 +44,10 @@ export function ProfileOrgPreferencesCenter() {
       onSuccess: () => {
         toastManager.add({ type: "success", title: "Organization updated successfully!" });
         queryClient.invalidateQueries({
-          queryKey: [...QUERY_KEYS["public:org:get:active"]],
+          queryKey: [...QUERY_KEYS["app:org:get:active"]],
         });
         queryClient.invalidateQueries({
-          queryKey: [...QUERY_KEYS["public:org:get:all"]],
+          queryKey: [...QUERY_KEYS["app:org:get:all"]],
         });
       },
       onError: (err: any) => {

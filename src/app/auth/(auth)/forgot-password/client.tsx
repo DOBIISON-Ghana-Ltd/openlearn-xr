@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useController, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
-import ZUser from "@/data/api/user/user.schema";
+import ZApp from "@/data/api/app/app.schema";
 import { nuqs } from "@/lib/utils/nuqs";
 import useApi from "@/data/hooks/use-api";
 import { PATHS } from "@/lib/constants/paths";
@@ -17,20 +17,20 @@ import { InputOTP, InputOTPGroup, InputOTPSlot } from "@/components/ui/input-otp
 import { Infer } from "@/data/types.base";
 import { LoaderIcon } from "lucide-react";
 
-const ZSendForm = ZUser.PublicUserSendOtp.shape.body;
-const ZCheckForm = ZUser.PublicUserCheckOtp.shape.body;
+const ZSendForm = ZApp.AppUserSendOtp.shape.body;
+const ZCheckForm = ZApp.AppUserCheckOtp.shape.body;
 
-type ISendForm = Infer["PublicUserSendOtp"]["body"];
-type ICheckForm = Infer["PublicUserCheckOtp"]["body"];
+type ISendForm = Infer["AppUserSendOtp"]["body"];
+type ICheckForm = Infer["AppUserCheckOtp"]["body"];
 
 export default function ClientPage() {
   const router = useRouter();
-  const [params] = nuqs.getStates("forgotPassword");
+  const [params] = nuqs.getStates("app:forgot-password");
   const [tab, setTab] = useState("send");
-  const { mutate: sendOtp, isPending: IPSendOtp } = useApi.mutate("public:user:send-otp");
-  const { mutate: checkOtp, isPending: IPCheckOtp } = useApi.mutate("public:user:check-otp");
+  const { mutate: sendOtp, isPending: IPSendOtp } = useApi.mutate("app:user:send-otp");
+  const { mutate: checkOtp, isPending: IPCheckOtp } = useApi.mutate("app:user:check-otp");
 
-  const loginUrl = nuqs.getUrl("login", { redirect: params.redirect }, PATHS.AUTH.LOGIN);
+  const loginUrl = nuqs.getUrl("app:login", { redirect: params.redirect }, PATHS.AUTH.LOGIN);
 
   const sendForm = useForm<ISendForm>({
     resolver: zodResolver(ZSendForm),
@@ -66,7 +66,7 @@ export default function ClientPage() {
   const onCheckSubmit = (data: ICheckForm) => {
     checkOtp(data, {
       onSuccess: () => {
-        const url = nuqs.getUrl("resetPassword", {
+        const url = nuqs.getUrl("app:reset-password", {
           email: data.email,
           otp: data.otp,
           redirect: params.redirect,

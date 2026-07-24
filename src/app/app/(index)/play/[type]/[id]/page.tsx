@@ -17,7 +17,7 @@ import useApi from '@/data/hooks/use-api';
 export default function PlayPage() {
   const params = useParams();
   const id = params?.id as string;
-  const { data } = useApi.query('public:user:get:me');
+  const { data } = useApi.query('app:user:get:me');
   const userId = useStableUserId(data?.id ?? undefined);
 
   const initSession = useSimStore((s) => s.initSession);

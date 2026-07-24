@@ -9,9 +9,9 @@ import { CheckIcon, CrownIcon, CreditCardIcon } from "lucide-react";
 import { Skeleton } from "../ui/skeleton";
 
 export function ProfileOrgLicenseCenter() {
-  const { data: activeOrg } = useApi.query("public:org:get:active");
+  const { data: activeOrg } = useApi.query("app:org:get:active");
   const { data: subscription, isLoading } = useApi.query(
-    "public:org:get:subscription",
+    "app:org:get:subscription",
     activeOrg?.id,
     !!activeOrg?.id
   );

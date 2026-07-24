@@ -8,7 +8,7 @@ export default async function Page() {
   await connection();
 
   const queryClient = getQueryClient();
-  await prefetchApi(queryClient, "public:module-completion:get:all");
+  await prefetchApi(queryClient, "sim:module-completion:get:all");
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
