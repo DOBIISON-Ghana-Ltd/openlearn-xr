@@ -119,17 +119,6 @@ const EditorModulePostCreate = ZApi({
   }),
 });
 
-// ---------------------------------------------------------------------------
-// GET /api/editor/modules/versions — module versions for options select
-// ---------------------------------------------------------------------------
-const EditorModuleVersionGetOptions = ZApi({
-  res: z.array(
-    ZModuleVersion.pick({ id: true, versionNumber: true }).extend({
-      module: ZModule.pick({ id: true, title: true }),
-    })
-  ),
-});
-
 const schema = {
   EditorCollectionGetAll,
   EditorCollectionPostCreate,
@@ -137,7 +126,6 @@ const schema = {
   EditorCollectionPatchDetails,
   EditorModuleGetAll,
   EditorModulePostCreate,
-  EditorModuleVersionGetOptions,
 };
 
 export default schema;

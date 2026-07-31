@@ -2,8 +2,10 @@
 
 export default function Cancelled() {
   return (
-    <div className="w-full px-5 aspect-video flex">
-      <p className="text-sm-m font-medium text-muted-foreground">Cancelled</p>
+    <div className="size-full px-5 flex-center">
+      <p className="text-sm-m font-normal text-muted-foreground">
+        Session Was Cancelled
+      </p>
     </div>
   )
 }

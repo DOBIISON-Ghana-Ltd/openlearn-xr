@@ -82,18 +82,6 @@ const editorModulePostCreate = {
   },
 } satisfies MutationConfig;
 
-const editorModuleVersionGetOptions = {
-  type: "query",
-  queryKey: () => [...QUERY_KEYS["editor:module-version:get:options"]],
-  queryFn: async () => {
-    const data = await fetcher(
-      () => axios.get(R["editor:module-version:get:options"]()),
-      ZEditor.EditorModuleVersionGetOptions.shape.res
-    );
-    return data;
-  },
-} satisfies QueryConfig;
-
 export default {
   "editor:collection:get:all": editorCollectionGetAll,
   "editor:collection:post:create": editorCollectionPostCreate,
@@ -101,5 +89,4 @@ export default {
   "editor:collection:patch:details": editorCollectionPatchDetails,
   "editor:module:get:all": editorModuleGetAll,
   "editor:module:post:create": editorModulePostCreate,
-  "editor:module-version:get:options": editorModuleVersionGetOptions,
 };

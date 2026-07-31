@@ -10,7 +10,6 @@ import {
   ZSubscription,
   ZUser,
 } from "@/data/schema.base";
-import { ZOnboardingMetadata } from "@/store/onboarding/schema";
 
 const ZOtpType = z.enum(["email-verification", "sign-in", "forget-password"]);
 const ZOtp = z.string().length(6, "OTP must be 6 digits");
@@ -101,10 +100,6 @@ const AppUserResetPassword = ZApi({
 });
 
 const AppUserDeleteMe = ZApi({});
-
-const AppUserPatchOnboarding = ZApi({
-  body: ZOnboardingMetadata,
-});
 
 const AppUserUpdateAccount = ZApi({
   body: ZUser.pick({
@@ -234,7 +229,6 @@ const schema = {
   AppUserSendOtp,
   AppUserResetPassword,
   AppUserDeleteMe,
-  AppUserPatchOnboarding,
   AppUserUpdateAccount,
   AppUserUpdatePassword,
   AppOrgGetSubscription,

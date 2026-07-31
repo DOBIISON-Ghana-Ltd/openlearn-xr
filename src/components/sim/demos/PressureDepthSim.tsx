@@ -5,7 +5,7 @@ import { Text } from '@react-three/drei';
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import * as THREE from 'three';
-import { useSimStore } from '@/store/play/store';
+import { useSimStore } from '@/store/sim/store';
 
 gsap.registerPlugin(useGSAP);
 

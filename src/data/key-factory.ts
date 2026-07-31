@@ -8,20 +8,25 @@ export const QUERY_KEYS = {
 
   // SIM SUITE
   "sim:module:get:all": (query?: Record<string, any>) => ["sim", "module", "all", query] as const,
-  "sim:module-version:get:options": ["sim", "module-version", "options"] as const,
   "sim:module-completion:get:all": ["sim", "module-completion", "all"] as const,
   "sim:collection:get:all": ["sim", "collection", "all"] as const,
   "sim:collection:get:modules": (collectionId: string) => ["sim", "collection", collectionId, "modules"] as const,
+  "sim:session:get:stats": (id: string) => ["sim", "session", id, "stats"] as const,
+  "sim:session:get:players": (id: string) => ["sim", "session", id, "players"] as const,
+  "sim:module:get:stats": (id: string) => ["sim", "module", id, "stats"] as const,
 
   // SES SUITE
   "ses:session:get:all": ["ses", "session", "all"] as const,
   "ses:session:get:overview": (id: string) => ["ses", "session", id, "overview"] as const,
+  "ses:session:get:notes": (id: string) => ["ses", "session", id, "notes"] as const,
+  "ses:session:get:players": (id: string) => ["ses", "session", id, "players"] as const,
+  "ses:session:get:player-summary": (id: string) => ["ses", "session", id, "player-summary"] as const,
+  "ses:module-version:get:options": ["ses", "module-version", "options"] as const,
 
   // EDITOR SUITE
   "editor:collection:get:all": ["editor", "collection", "all"] as const,
   "editor:collection:get:documents": (collectionId: string) => ["editor", "collection", collectionId, "documents"] as const,
   "editor:module:get:all": ["editor", "module", "all"] as const,
-  "editor:module-version:get:options": ["editor", "module-version", "options"] as const,
 
   // ADMIN SUITE
   "admin:user:get:all": ["admin", "user", "all"] as const,

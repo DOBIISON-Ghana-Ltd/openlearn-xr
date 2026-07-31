@@ -4,7 +4,7 @@ import { useRef, useEffect, useState } from 'react';
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import * as THREE from 'three';
-import { useSimStore } from '@/store/play/store';
+import { useSimStore } from '@/store/sim/store';
 import { Text } from '@react-three/drei';
 
 gsap.registerPlugin(useGSAP);

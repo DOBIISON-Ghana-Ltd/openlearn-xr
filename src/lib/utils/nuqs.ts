@@ -45,6 +45,9 @@ const parsers = {
   "sim:library": {
     collectionId: parseAsString.withDefault(''),
   },
+  "sim:play": {
+    code: parseAsString.withDefault(''),
+  },
 
   // SES SUITE (Live Sessions & Multiplayer)
   "ses:dashboard": {

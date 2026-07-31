@@ -2,7 +2,7 @@
 
 import { Switch } from '@/components/ui/switch';
 import { Label } from '@/components/ui/label';
-import { useSimStore } from '@/store/play/store';
+import { useSimStore } from '@/store/sim/store';
 
 interface SwitchBlockProps {
   id: string;

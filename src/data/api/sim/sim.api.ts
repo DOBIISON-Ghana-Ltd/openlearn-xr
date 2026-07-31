@@ -1,6 +1,6 @@
 import fetcher from "@/data/fetcher";
 import { axios } from "@/data/axios";
-import { Infer, QueryConfig } from "@/data/types.base";
+import { Infer, QueryConfig, MutationConfig } from "@/data/types.base";
 import { QUERY_KEYS } from "@/data/key-factory";
 import R from "@/data/route-factory";
 import ZSim from "./sim.schema";
@@ -24,18 +24,6 @@ const simModuleCompletionGetAll = {
     const data = await fetcher(
       () => axios.get(R["sim:module-completion:get:all"]()),
       ZSim.SimModuleCompletionGetAll.shape.res
-    );
-    return data;
-  },
-} satisfies QueryConfig;
-
-const simModuleVersionGetOptions = {
-  type: "query",
-  queryKey: () => [...QUERY_KEYS["sim:module-version:get:options"]],
-  queryFn: async () => {
-    const data = await fetcher(
-      () => axios.get(R["sim:module-version:get:options"]()),
-      ZSim.SimModuleVersionGetOptions.shape.res
     );
     return data;
   },
@@ -65,10 +53,72 @@ const simCollectionGetModules = {
   },
 } satisfies QueryConfig;
 
+const simSessionGetStats = {
+  type: "query",
+  queryKey: (params: Infer["SimSessionGetStats"]["params"]) => [...QUERY_KEYS["sim:session:get:stats"](params.id)],
+  queryFn: async (params: Infer["SimSessionGetStats"]["params"]) => {
+    const data = await fetcher(
+      () => axios.get(R["sim:session:get:stats"](params)),
+      ZSim.SimSessionGetStats.shape.res
+    );
+    return data;
+  },
+} satisfies QueryConfig;
+
+const simSessionGetPlayers = {
+  type: "query",
+  queryKey: (params: Infer["SimSessionGetPlayers"]["params"]) => [...QUERY_KEYS["sim:session:get:players"](params.id)],
+  queryFn: async (params: Infer["SimSessionGetPlayers"]["params"]) => {
+    const data = await fetcher(
+      () => axios.get(R["sim:session:get:players"](params)),
+      ZSim.SimSessionGetPlayers.shape.res
+    );
+    return data;
+  },
+} satisfies QueryConfig;
+
+const simModuleGetStats = {
+  type: "query",
+  queryKey: (params: Infer["SimModuleGetStats"]["params"]) => [...QUERY_KEYS["sim:module:get:stats"](params.id)],
+  queryFn: async (params: Infer["SimModuleGetStats"]["params"]) => {
+    const data = await fetcher(
+      () => axios.get(R["sim:module:get:stats"](params)),
+      ZSim.SimModuleGetStats.shape.res
+    );
+    return data;
+  },
+} satisfies QueryConfig;
+
+const simSessionPostJoin = {
+  type: "mutation",
+  mutationFn: async (vars: Pick<Infer["SimSessionPostJoin"], "params" | "body">) => {
+    const data = await fetcher(
+      () => axios.post(R["sim:session:post:join"]({ id: vars.params.id }), vars.body),
+      ZSim.SimSessionPostJoin.shape.res
+    );
+    return data;
+  },
+} satisfies MutationConfig;
+
+const simSessionPostLeave = {
+  type: "mutation",
+  mutationFn: async (vars: Pick<Infer["SimSessionPostLeave"], "params" | "body">) => {
+    const data = await fetcher(
+      () => axios.post(R["sim:session:post:leave"]({ id: vars.params.id }), vars.body),
+      ZSim.SimSessionPostLeave.shape.res
+    );
+    return data;
+  },
+} satisfies MutationConfig;
+
 export default {
   "sim:module:get:all": simModuleGetAll,
   "sim:module-completion:get:all": simModuleCompletionGetAll,
-  "sim:module-version:get:options": simModuleVersionGetOptions,
   "sim:collection:get:all": simCollectionGetAll,
   "sim:collection:get:modules": simCollectionGetModules,
+  "sim:session:get:stats": simSessionGetStats,
+  "sim:session:get:players": simSessionGetPlayers,
+  "sim:module:get:stats": simModuleGetStats,
+  "sim:session:post:join": simSessionPostJoin,
+  "sim:session:post:leave": simSessionPostLeave,
 };

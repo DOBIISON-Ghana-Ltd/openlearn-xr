@@ -22,6 +22,14 @@ export const ZStorageMetadata = z.object({
   msc: z.string()
 });
 
+export const ZSessionConfig = z.object({
+  allowLateAdmissions: z.boolean().default(true),
+  maxAdmissions: z.number().int().positive().default(50),
+}).catch({
+  allowLateAdmissions: true,
+  maxAdmissions: 50,
+});
+
 export const ZBaseFilter = z.object({
   search: z.string().optional(),
 
@@ -425,9 +433,9 @@ export const ZLiveSession = z.object({
   organizationId: z.string().nullable(),
   moduleVersionId: z.string(),
   joinCode: z.string(),
-  name: z.string().nullable(),
+  name: z.string(),
   status: LiveSessionStatusEnum.default("STAGING"),
-  config: z.record(z.string(), z.any()).nullable(),
+  config: ZSessionConfig,
   startedAt: ZDate.nullable(),
   endedAt: ZDate.nullable(),
   createdAt: ZDate,
@@ -447,7 +455,8 @@ export const ZSessionPlayer = z.object({
   id: z.string(),
   sessionId: z.string(),
   userId: z.string().nullable(),
-  anonymousName: z.string().nullable(),
+  name: z.string(),
+  avatar: z.string().default("avatar-01"),
   score: z.number().int().default(0),
   completionRate: z.number().min(0).max(1).default(0.0),
   joinedAt: ZDate,

@@ -13,15 +13,24 @@ const ROUTES = {
 
   // SIM SUITE
   "sim:module:get:all": () => `/api/sim/modules`,
-  "sim:module-version:get:options": () => `/api/sim/modules/versions`,
   "sim:module-completion:get:all": () => `/api/sim/modules/completions`,
   "sim:collection:get:all": () => `/api/sim/collections`,
   "sim:collection:get:modules": ({ collectionId }: { collectionId: string }) => `/api/sim/collections/${collectionId}/modules`,
+  "sim:session:get:stats": ({ id }: { id: string }) => `/api/sim/sessions/${id}/stats`,
+  "sim:session:get:players": ({ id }: { id: string }) => `/api/sim/sessions/${id}/players`,
+  "sim:module:get:stats": ({ id }: { id: string }) => `/api/sim/modules/${id}/stats`,
+  "sim:session:post:join": ({ id }: { id: string }) => `/api/sim/sessions/${id}/join`,
+  "sim:session:post:leave": ({ id }: { id: string }) => `/api/sim/sessions/${id}/leave`,
 
   // SES SUITE
   "ses:session:get:all": () => `/api/ses/sessions`,
   "ses:session:get:overview": (id: string) => `/api/ses/sessions/${id}/overview`,
+  "ses:session:get:notes": (id: string) => `/api/ses/sessions/${id}/notes`,
+  "ses:session:get:players": (id: string) => `/api/ses/sessions/${id}/players`,
+  "ses:session:get:player-summary": (id: string) => `/api/ses/sessions/${id}/player-summary`,
   "ses:session:post:create": () => `/api/ses/sessions`,
+  "ses:session:post:start": (id: string) => `/api/ses/sessions/${id}/start`,
+  "ses:module-version:get:options": () => `/api/ses/modules-versions/options`,
 
   // EDITOR SUITE
   "editor:collection:get:all": () => `/api/editor/collections`,
@@ -30,7 +39,6 @@ const ROUTES = {
   "editor:collection:post:create": () => `/api/editor/collections`,
   "editor:module:get:all": () => `/api/editor/modules`,
   "editor:module:post:create": () => `/api/editor/modules`,
-  "editor:module-version:get:options": () => `/api/sim/modules/versions`,
 
   // ADMIN SUITE
   "admin:user:get:all": () => `/api/admin/users`,

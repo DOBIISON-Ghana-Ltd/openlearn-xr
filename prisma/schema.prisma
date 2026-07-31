@@ -463,7 +463,8 @@ model SessionPlayer {
   id             String    @id @default(cuid())
   sessionId      String
   userId         String? // Null for anonymous players
-  anonymousName  String? // "Student_042" — generated for anonymous players
+  name           String // Display name
+  avatar         String    @default("avatar-01") // Avatar identifier
   score          Int       @default(0)
   completionRate Float     @default(0.0) // 0.0–1.0 percentage of lab completed
   joinedAt       DateTime  @default(now())

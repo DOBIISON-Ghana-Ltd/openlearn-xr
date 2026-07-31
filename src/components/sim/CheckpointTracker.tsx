@@ -2,7 +2,7 @@
 
 import { cn } from '@/lib/utils/cn';
 import type { SimCheckpointDef } from '@/lib/constants/sims';
-import { useSimStore, type CheckpointState } from '@/store/play/store';
+import { useSimStore, type CheckpointState } from '@/store/sim/store';
 import { CheckCircle2, ChevronLeftIcon, ChevronRightIcon, Circle, XCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 

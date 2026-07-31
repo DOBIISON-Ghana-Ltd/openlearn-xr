@@ -2,7 +2,7 @@
 
 import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group';
 import { Label } from '@/components/ui/label';
-import { useSimStore } from '@/store/play/store';
+import { useSimStore } from '@/store/sim/store';
 
 interface ToggleBlockProps {
   id: string;

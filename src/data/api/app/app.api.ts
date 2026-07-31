@@ -39,17 +39,6 @@ const appUserDeleteMe = {
   },
 } satisfies MutationConfig;
 
-const appUserPatchOnboarding = {
-  type: "mutation",
-  mutationFn: async (body: Infer["AppUserPatchOnboarding"]["body"]) => {
-    const data = await fetcher(
-      () => axios.patch(R["app:user:patch:onboarding"](), body),
-      ZApp.AppUserPatchOnboarding.shape.res
-    );
-    return data;
-  },
-} satisfies MutationConfig;
-
 const appUserRegister = {
   type: "mutation",
   mutationFn: async (body: Infer["AppUserRegister"]["body"]) => {
@@ -386,7 +375,6 @@ const appMediaPostOne = {
 export default {
   "app:user:get:me": appUserGetMe,
   "app:user:delete:me": appUserDeleteMe,
-  "app:user:patch:onboarding": appUserPatchOnboarding,
   "app:user:register": appUserRegister,
   "app:user:login": appUserLogin,
   "app:user:logout": appUserLogout,

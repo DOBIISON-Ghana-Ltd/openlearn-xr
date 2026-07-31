@@ -59,8 +59,8 @@ function Info() {
         alt={org.name}
         className="self-start w-10 aspect-square rounded-sm object-cover"
       />
-      <div className="flex flex-col">
-        <p className="text-sm-m font-normal text-foreground capitalize">{org.name}</p>
+      <div className="flex flex-col min-w-0">
+        <p className="text-sm-m font-normal text-foreground capitalize truncate whitespace-nowrap">{org.name}</p>
         <p className="self-start font-medium text-[9px] text-background px-1 py-0.5 bg-foreground uppercase">{org.subscriptionTier}</p>
       </div>
     </div>

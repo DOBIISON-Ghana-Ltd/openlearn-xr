@@ -39,7 +39,7 @@ export default function NewSessionDialog(props: INewSession) {
   const [open, setOpen] = useState(false);
   const [query, setQuery] = nuqs.getStates("ses:dashboard");
 
-  const { data: moduleVersions } = useApi.query("sim:module-version:get:options");
+  const { data: moduleVersions } = useApi.query("ses:module-version:get:options");
   const { mutate: createSession, isPending } = useApi.mutate("ses:session:post:create");
 
   const moduleItems = (moduleVersions ?? []).map((v) => ({

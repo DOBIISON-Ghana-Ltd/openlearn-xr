@@ -8,6 +8,7 @@ import { BadgeCheckIcon, PlayIcon } from 'lucide-react';
 import { Infer } from '@/data/types.base';
 import { match } from 'ts-pattern';
 import { useACL } from '@/hooks/use-acl';
+import { nuqs } from '@/lib/utils/nuqs';
 
 type IProps = {
   mode: "session" | "module" | "library";
@@ -63,17 +64,19 @@ export default function ModuleCard(props: IProps) {
             </Button>
           ))
           .with("DUAL_SESSION_PLAY", () => (
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-0.5">
               <Button
                 size="sm"
                 className="flex-1 rounded-none"
-                onClick={() => router.push(`${PATHS.SESSION.DASHBOARD}?open=true&moduleId=${id}`)}
+                onClick={() => {
+                  const url = nuqs.getUrl("ses:dashboard", { new: "true", moduleId: id }, PATHS.SESSION.DASHBOARD);
+                  router.push(url);
+                }}
               >
                 Start Session
               </Button>
               <Button
                 size="icon-sm"
-                variant="outline"
                 className="rounded-none shrink-0"
                 onClick={() => router.push(PATHS.SIMS.PLAY(mode, id))}
               >

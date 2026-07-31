@@ -2,7 +2,7 @@
 
 import { Slider } from '@/components/ui/slider';
 import { Label } from '@/components/ui/label';
-import { useSimStore } from '@/store/play/store';
+import { useSimStore } from '@/store/sim/store';
 
 interface SliderBlockProps {
   id: string;

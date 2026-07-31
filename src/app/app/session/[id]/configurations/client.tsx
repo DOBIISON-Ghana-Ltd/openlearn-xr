@@ -6,11 +6,13 @@ interface ClientPageProps {
 
 export default function ClientPage({ sessionId }: ClientPageProps) {
   return (
-    <div className="size-full space-y-5 pb-7">
-      <div className="w-full py-5 px-6 ">
-        <h1 className="text-xl font-semibold text-foreground">
+    <div className="size-full pb-7">
+      <div className="w-full py-5 px-5 ">
+        <h1 className="text-xl font-normal text-foreground">
           Configurations
         </h1>
+      </div>
+      <div className="w-full px-5 space-y-7">
       </div>
     </div>
   );
