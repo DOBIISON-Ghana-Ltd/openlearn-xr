@@ -32,7 +32,6 @@ export async function proxy(request: NextRequest) {
   // --- Route Definitions ---
   const isVerifyPage = pathname.startsWith("/auth/verify");
   const isOnboardingPage = pathname.startsWith("/auth/onboarding");
-  const isIndexPage = pathname === "/";
   const isAuthPage = [
     "/auth/login",
     "/auth/register",
@@ -41,13 +40,10 @@ export async function proxy(request: NextRequest) {
     "/auth/verify-email",
   ].includes(pathname);
 
-  // --- Suite Definitions ---
-  const isAdminSuite = pathname.startsWith("/app/admin");
-  const isEditorSuite = pathname.startsWith("/app/editor");
-  const isSessionSuite = pathname.startsWith("/app/session");
-  const isAppRoute = pathname.startsWith("/app");
-
-  // --- Auth Flow Logic ---
+  /*
+  // =========================================================================
+  // LEGACY AUTH & REDIRECT FLOW LOGIC (Preserved as inspiration for new flow)
+  // =========================================================================
 
   // 1. Handle missing cache but present session cookie (Needs Verification)
   if (!hasAuth && sessionCookie && !isVerifyPage) {
@@ -56,13 +52,12 @@ export async function proxy(request: NextRequest) {
     return NextResponse.redirect(verifyUrl);
   }
 
-  // 2. Redirect logged-in users away from auth/index pages
+  // 2. Redirect logged-in users away from auth/index pages (Disabled so users can freely view landing pages)
   if (hasAuth && (isAuthPage || isVerifyPage || isIndexPage)) {
     return NextResponse.redirect(new URL("/app", request.url));
   }
 
   // 3. Handle Onboarding flow
-  /*
   if (hasAuth) {
     if (!isOnboarded && !isOnboardingPage) {
       const onboardingUrl = new URL("/auth/onboarding", request.url);
@@ -73,23 +68,18 @@ export async function proxy(request: NextRequest) {
       return NextResponse.redirect(new URL("/app", request.url));
     }
   }
-  */
 
-  // --- Suite Authorization Logic ---
+  // 4. Suite Authorization Logic
   if (isAppRoute) {
-    // Admin, Editor, and Session suites are protected.
-    // The rest of /app (Simulation suite) requires NO auth.
     const isProtectedSuite = isAdminSuite || isEditorSuite || isSessionSuite;
 
     if (isProtectedSuite) {
-      // 1. Must be logged in for protected suites
       if (!hasAuth) {
         const loginUrl = new URL("/auth/login", request.url);
         loginUrl.searchParams.set("redirect", pathname + search);
         return NextResponse.redirect(loginUrl);
       }
 
-      // 2. Suite-specific authorization checks
       if (isAdminSuite && !roles.includes("admin")) {
         return NextResponse.redirect(new URL("/not-found", request.url));
       }
@@ -99,14 +89,14 @@ export async function proxy(request: NextRequest) {
       }
     }
   }
+  */
 
   return NextResponse.next();
 }
 
 export const config: ProxyConfig = {
   matcher: [
-    "/",
     "/auth/:path*",
-    "/app/:path*"
+    "/teaching/:path*"
   ]
 };
