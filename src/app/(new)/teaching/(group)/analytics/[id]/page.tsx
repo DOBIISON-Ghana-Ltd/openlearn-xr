@@ -15,7 +15,7 @@ export default async function AnalyticsDetailPage({ params }: PageProps) {
   const { id } = await params;
 
   return (
-    <Suspense fallback={<div className="w-full min-h-screen bg-white" />}>
+    <Suspense fallback={<div className="w-full min-h-screen bg-surface-white" />}>
       <AnalyticsDetailClient sessionId={id} />
     </Suspense>
   );

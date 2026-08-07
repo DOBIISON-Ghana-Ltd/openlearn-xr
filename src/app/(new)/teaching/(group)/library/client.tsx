@@ -2,7 +2,6 @@
 
 import Image from 'next/image';
 import { Search, ChevronDown, Clock, BarChart2, Play } from 'lucide-react';
-import { cn } from '@/lib/utils/cn';
 
 interface LibraryModule {
   id: string;
@@ -30,31 +29,31 @@ export default function TeachingLibraryClient() {
       {/* Top Filter Controls Bar */}
       <div className="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4">
         {/* Search Bar Input */}
-        <div className="relative w-full md:w-[387px] h-[50px] bg-[#f2fafa] border-2 border-[#ddf3f3] rounded-[10px] flex items-center px-4">
+        <div className="relative w-full md:w-[387px] h-[50px] bg-primary-subtle border-2 border-primary-light rounded-[10px] flex items-center px-4">
           <input
             type="text"
             placeholder="Search for topics"
-            className="w-full bg-transparent text-[16px] text-[#4b5563] placeholder-[#6b7280] outline-none font-normal"
+            className="w-full bg-transparent text-normal text-secondary-text placeholder-tertiary outline-none"
           />
-          <Search className="size-5 text-[#6b7280] shrink-0" />
+          <Search className="size-5 text-tertiary shrink-0" />
         </div>
 
         {/* Dropdown Select Filters */}
         <div className="flex items-center gap-6">
           {/* Subject Filter */}
           <div className="flex items-center gap-2">
-            <span className="text-[12px] font-light text-[#849396] tracking-wider uppercase">SUBJECT:</span>
-            <div className="relative bg-[#4b5563] text-[#e0e3e8] rounded-[8px] px-3 py-2 flex items-center justify-between gap-3 w-[138px] cursor-pointer">
-              <span className="text-[14px] font-normal">All Subjects</span>
+            <span className="text-caption text-tertiary tracking-wider uppercase">SUBJECT:</span>
+            <div className="relative bg-dark-card text-[#e0e3e8] rounded-[8px] px-3 py-2 flex items-center justify-between gap-3 w-[138px] cursor-pointer">
+              <span className="text-small">All Subjects</span>
               <ChevronDown className="size-4 shrink-0 text-[#e0e3e8]" />
             </div>
           </div>
 
           {/* Year Filter */}
           <div className="flex items-center gap-2">
-            <span className="text-[12px] font-light text-[#849396] tracking-wider uppercase">YEAR:</span>
-            <div className="relative bg-[#4b5563] text-[#e0e3e8] rounded-[8px] px-3 py-2 flex items-center justify-between gap-3 min-w-[110px] cursor-pointer">
-              <span className="text-[14px] font-normal">All Years</span>
+            <span className="text-caption text-tertiary tracking-wider uppercase">YEAR:</span>
+            <div className="relative bg-dark-card text-[#e0e3e8] rounded-[8px] px-3 py-2 flex items-center justify-between gap-3 min-w-[110px] cursor-pointer">
+              <span className="text-small">All Years</span>
               <ChevronDown className="size-4 shrink-0 text-[#e0e3e8]" />
             </div>
           </div>
@@ -66,7 +65,7 @@ export default function TeachingLibraryClient() {
         {LIBRARY_MODULES.map((item) => (
           <div
             key={item.id}
-            className="group bg-[#f2fafa] border-2 border-[#ddf3f3] rounded-[20px] overflow-hidden flex flex-col relative transition-all duration-200 hover:shadow-md hover:border-[#459d9f]/40 cursor-pointer"
+            className="group bg-primary-subtle border-2 border-primary-light rounded-[20px] overflow-hidden flex flex-col relative transition-all duration-200 hover:shadow-md hover:border-primary-cta/40 cursor-pointer"
           >
             {/* Card Thumbnail Top Section */}
             <div className="relative w-full h-[160px] overflow-hidden">
@@ -79,13 +78,13 @@ export default function TeachingLibraryClient() {
             </div>
 
             {/* Card Bottom Content Section with Frosted Glass Overlay */}
-            <div className="p-4 bg-white/70 backdrop-blur-[5px] flex flex-col justify-between gap-4 flex-1 border-t border-[#ddf3f3]/80">
-              <h3 className="text-[16px] font-normal text-[#111827] leading-snug line-clamp-2">
+            <div className="p-4 bg-surface-white/70 backdrop-blur-[5px] flex flex-col justify-between gap-4 flex-1 border-t border-primary-light/80">
+              <h3 className="text-normal text-primary-text-dark leading-snug line-clamp-2">
                 {item.title}
               </h3>
 
               <div className="pt-3 border-t border-[#3b494c]/10 flex items-center justify-between">
-                <div className="flex items-center gap-4 text-[12px] font-light text-[#849396]">
+                <div className="flex items-center gap-4 text-caption text-tertiary">
                   <div className="flex items-center gap-1">
                     <Clock className="size-3.5" />
                     <span>{item.duration}</span>
@@ -97,7 +96,7 @@ export default function TeachingLibraryClient() {
                   </div>
                 </div>
 
-                <div className="size-6 rounded-full border border-[#3b494c]/30 flex items-center justify-center text-[#3b494c] group-hover:border-[#459d9f] group-hover:text-[#459d9f] transition-colors">
+                <div className="size-6 rounded-full border border-[#3b494c]/30 flex items-center justify-center text-[#3b494c] group-hover:border-primary-cta group-hover:text-primary-cta transition-colors">
                   <Play className="size-3 fill-current ml-0.5" />
                 </div>
               </div>

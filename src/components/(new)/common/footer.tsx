@@ -10,7 +10,7 @@ export default function Footer({ className }: FooterProps) {
   return (
     <footer
       className={cn(
-        'w-full bg-white border-t border-primary-light/60 pt-16 pb-12 transition-all',
+        'w-full bg-surface-white border-t border-primary-light/60 pt-16 pb-12 transition-all',
         className
       )}
     >

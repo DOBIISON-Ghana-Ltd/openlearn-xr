@@ -7,7 +7,7 @@ export default function TeachingGroupLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="flex min-h-screen flex-col bg-white">
+    <div className="flex min-h-screen flex-col bg-surface-white">
       <Header />
       <div className="mx-auto w-full max-w-[1440px] flex flex-col md:flex-row flex-1 min-h-[850px]">
         <TeachingSidebar />

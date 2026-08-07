@@ -30,7 +30,7 @@ export default function HowItWorks({ className }: HowItWorksProps) {
   return (
     <section
       className={cn(
-        'relative w-full min-h-[573px] bg-[#f2fafa] py-16 md:py-20 overflow-hidden flex items-center justify-center',
+        'relative w-full min-h-[573px] bg-primary-subtle py-16 md:py-20 overflow-hidden flex items-center justify-center',
         className
       )}
     >
@@ -55,16 +55,16 @@ export default function HowItWorks({ className }: HowItWorksProps) {
       </div>
 
       {/* Soft gradient blur overlays from Figma */}
-      <div className="pointer-events-none absolute inset-0 bg-linear-to-b from-white via-transparent to-white opacity-80" />
+      <div className="pointer-events-none absolute inset-0 bg-linear-to-b from-surface-white via-transparent to-surface-white opacity-80" />
 
       <div className="relative mx-auto w-full max-w-[1440px] px-6 sm:px-12 lg:px-20 text-center z-10">
         {/* Section Title */}
-        <h2 className="text-2xl sm:text-3xl md:text-[32px] font-semibold text-[#111827] max-w-[1069px] mx-auto tracking-tight">
+        <h2 className="text-h5 sm:text-h4 text-primary-text-dark max-w-[1069px] mx-auto tracking-tight">
           How OpenLearnXR Works
         </h2>
 
         {/* Subtitle */}
-        <p className="mt-4 text-base md:text-[16px] font-normal text-[#08111f] max-w-[769px] mx-auto leading-normal">
+        <p className="mt-4 text-normal text-dark-bg max-w-[769px] mx-auto leading-normal">
           Learn STEM through immersive experiences designed to help you understand, practice, and master complex concepts.
         </p>
 
@@ -76,17 +76,17 @@ export default function HowItWorks({ className }: HowItWorksProps) {
               className="relative flex flex-col items-center text-center w-full max-w-[320px]"
             >
               {/* Number Badge */}
-              <div className="flex items-center justify-center size-[50px] rounded-full bg-[#459d9f] text-white text-[24px] font-semibold mb-4">
+              <div className="flex items-center justify-center size-[50px] rounded-full bg-primary-cta text-primary-text-light text-h5 mb-4">
                 {item.step}
               </div>
 
               {/* Step Title */}
-              <h3 className="text-[20px] font-semibold text-black mb-3">
+              <h3 className="text-h6 text-primary-text-dark mb-3">
                 {item.title}
               </h3>
 
               {/* Step Description */}
-              <p className="text-base md:text-[16px] font-normal text-[#08111f] max-w-[306px] leading-normal">
+              <p className="text-normal text-dark-bg max-w-[306px] leading-normal">
                 {item.description}
               </p>
             </div>

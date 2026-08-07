@@ -4,7 +4,7 @@ import { Logo } from '@/components/(new)/common/logo';
 
 export default function Entrance() {
   return (
-    <div className="relative w-full h-screen min-h-screen bg-white flex items-center overflow-hidden">
+    <div className="relative w-full h-screen min-h-screen bg-surface-white flex items-center overflow-hidden">
       {/* LEFT COLUMN: EXACT FIGMA HERO CONTAINER (NODE 1:1324) */}
       <div className="hidden lg:block relative w-[517px] h-[660px] shrink-0 overflow-hidden ml-6">
         {/* Node 1:1325 Cropped Image Area */}
@@ -17,10 +17,10 @@ export default function Entrance() {
         </div>
 
         {/* Left Edge Soft Blur Pill (Node 1:1326) */}
-        <div className="absolute left-[37px] top-1/2 -translate-y-1/2 w-[69px] h-[801px] bg-white blur-[10px] pointer-events-none" />
+        <div className="absolute left-[37px] top-1/2 -translate-y-1/2 w-[69px] h-[801px] bg-surface-white blur-[10px] pointer-events-none" />
 
         {/* Right Edge Soft Blur Pill (Node 1:1327) */}
-        <div className="absolute left-[385px] top-1/2 -translate-y-1/2 w-[69px] h-[801px] bg-white blur-[10px] pointer-events-none" />
+        <div className="absolute left-[385px] top-1/2 -translate-y-1/2 w-[69px] h-[801px] bg-surface-white blur-[10px] pointer-events-none" />
       </div>
 
       {/* RIGHT COLUMN: CENTERED FORM MATCHING FIGMA NODE 1:1328 */}
@@ -32,7 +32,7 @@ export default function Entrance() {
           </div>
 
           {/* Heading */}
-          <h1 className="text-[20px] font-semibold text-[#111827] text-center">
+          <h1 className="text-h6 text-primary-text-dark text-center">
             Join a Session
           </h1>
 
@@ -42,20 +42,20 @@ export default function Entrance() {
             <input
               type="text"
               placeholder="Enter your full name"
-              className="w-full h-[42px] bg-white border border-[#dadadc] rounded-[8px] px-[17px] py-[12px] text-[14px] text-[#111827] placeholder:text-[#6b7280] focus:outline-none focus:border-[#459d9f] transition-colors"
+              className="w-full h-[42px] bg-surface-white border border-primary-cta/20 rounded-[8px] px-[17px] py-[12px] text-small text-primary-text-dark placeholder:text-tertiary focus:outline-none focus:border-primary-cta transition-colors"
             />
 
             {/* Session Code or Link Input */}
             <input
               type="text"
               placeholder="Enter session code or link"
-              className="w-full h-[42px] bg-white border border-[#dadadc] rounded-[8px] px-[17px] py-[12px] text-[14px] text-[#111827] placeholder:text-[#6b7280] focus:outline-none focus:border-[#459d9f] transition-colors"
+              className="w-full h-[42px] bg-surface-white border border-primary-cta/20 rounded-[8px] px-[17px] py-[12px] text-small text-primary-text-dark placeholder:text-tertiary focus:outline-none focus:border-primary-cta transition-colors"
             />
 
             {/* Join CTA Button */}
             <button
               type="button"
-              className="w-full h-[52px] bg-[#459d9f] hover:bg-[#3b8789] text-white text-[18px] font-semibold rounded-[8px] flex items-center justify-center transition-all cursor-pointer shadow-xs active:scale-98"
+              className="w-full h-[52px] bg-primary-cta hover:bg-primary-hover text-primary-text-light text-button rounded-[8px] flex items-center justify-center transition-all cursor-pointer shadow-xs active:scale-98"
             >
               Join
             </button>

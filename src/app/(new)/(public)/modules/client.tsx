@@ -96,9 +96,9 @@ export default function ModulesClient() {
   const modules = MODULES_DATA[activeSubject]?.[activeTab] || [];
 
   return (
-    <main className="w-full min-h-screen bg-white relative">
+    <main className="w-full min-h-screen bg-surface-white relative">
       {/* Top Year Tabs Bar (Full Width) */}
-      <div className="w-full bg-[#f8fafc] border-b border-[#ddf3f3]">
+      <div className="w-full bg-surface-slate border-b border-primary-light">
         <div className="mx-auto flex h-[63px] w-full max-w-[1440px] items-center justify-center gap-[36px] px-6">
           {(['YEAR 1', 'YEAR 2', 'YEAR 3'] as YearTab[]).map((tab) => (
             <button
@@ -106,10 +106,10 @@ export default function ModulesClient() {
               type="button"
               onClick={() => setActiveTab(tab)}
               className={cn(
-                'h-full px-4 text-[18px] font-normal text-black transition-all border-b-3 flex items-center justify-center cursor-pointer',
+                'h-full px-4 text-large text-primary-text-dark transition-all border-b-3 flex items-center justify-center cursor-pointer',
                 {
-                  'border-[#459d9f] font-semibold': activeTab === tab,
-                  'border-transparent text-gray-700 hover:text-black': activeTab !== tab,
+                  'border-primary-cta font-semibold': activeTab === tab,
+                  'border-transparent text-tertiary hover:text-primary-text-dark': activeTab !== tab,
                 }
               )}
             >
@@ -122,7 +122,7 @@ export default function ModulesClient() {
       {/* Main Layout: Full-bleed Left Sidebar + Right Modules Grid */}
       <div className="mx-auto w-full max-w-[1440px] flex flex-col md:flex-row min-h-[700px]">
         {/* Left Sidebar Strip: Touches top bar and left edge of screen */}
-        <aside className="w-full md:w-[356px] shrink-0 bg-[#f8fafc] pt-12 pb-20 px-6 md:pl-20 md:pr-8 flex flex-col gap-[20px]">
+        <aside className="w-full md:w-[356px] shrink-0 bg-surface-slate pt-12 pb-20 px-6 md:pl-20 md:pr-8 flex flex-col gap-[20px]">
           {/* Chemistry Option */}
           <button
             type="button"
@@ -130,15 +130,15 @@ export default function ModulesClient() {
             className={cn(
               'w-full max-w-[232px] flex items-center gap-[10px] h-[77px] px-[24px] rounded-[20px] transition-all cursor-pointer text-left',
               {
-                'bg-[#459d9f] text-[#f8fafc] shadow-md': activeSubject === 'chemistry',
-                'bg-[#f2fafa] text-[#111827] hover:bg-[#e6f5f5]': activeSubject !== 'chemistry',
+                'bg-primary-cta text-primary-text-light shadow-md': activeSubject === 'chemistry',
+                'bg-primary-subtle text-primary-text-dark hover:bg-primary-light/60': activeSubject !== 'chemistry',
               }
             )}
           >
             <div className="relative size-[40px] shrink-0 overflow-hidden flex items-center justify-center">
               <img src="/(new)/chemistry.png" alt="Chemistry" className="size-full object-contain" />
             </div>
-            <span className="text-[20px] font-semibold">Chemistry</span>
+            <span className="text-h6">Chemistry</span>
           </button>
 
           {/* Physics Option */}
@@ -148,8 +148,8 @@ export default function ModulesClient() {
             className={cn(
               'w-full max-w-[232px] flex items-center gap-[10px] h-[77px] px-[24px] rounded-[20px] transition-all cursor-pointer text-left',
               {
-                'bg-[#459d9f] text-[#f8fafc] shadow-md': activeSubject === 'physics',
-                'bg-[#f2fafa] text-[#111827] hover:bg-[#e6f5f5]': activeSubject !== 'physics',
+                'bg-primary-cta text-primary-text-light shadow-md': activeSubject === 'physics',
+                'bg-primary-subtle text-primary-text-dark hover:bg-primary-light/60': activeSubject !== 'physics',
               }
             )}
           >
@@ -160,7 +160,7 @@ export default function ModulesClient() {
                 className="absolute h-[205%] left-0 top-[-47%] w-[200%] max-w-none"
               />
             </div>
-            <span className="text-[20px] font-semibold">Physics</span>
+            <span className="text-h6">Physics</span>
           </button>
 
           {/* Engineering Option */}
@@ -170,8 +170,8 @@ export default function ModulesClient() {
             className={cn(
               'w-full max-w-[232px] flex items-center gap-[10px] h-[77px] px-[24px] rounded-[20px] transition-all cursor-pointer text-left',
               {
-                'bg-[#459d9f] text-[#f8fafc] shadow-md': activeSubject === 'engineering',
-                'bg-[#f2fafa] text-[#111827] hover:bg-[#e6f5f5]': activeSubject !== 'engineering',
+                'bg-primary-cta text-primary-text-light shadow-md': activeSubject === 'engineering',
+                'bg-primary-subtle text-primary-text-dark hover:bg-primary-light/60': activeSubject !== 'engineering',
               }
             )}
           >
@@ -182,7 +182,7 @@ export default function ModulesClient() {
                 className="absolute h-[205%] left-[-90%] top-[-52%] w-[190%] max-w-none"
               />
             </div>
-            <span className="text-[20px] font-semibold">Engineering</span>
+            <span className="text-h6">Engineering</span>
           </button>
         </aside>
 
@@ -193,7 +193,7 @@ export default function ModulesClient() {
               <Link
                 key={item.id}
                 href={`/simulations?module=${item.id}`}
-                className="group relative flex flex-col justify-between w-full h-[263px] bg-[#f2fafa] border-2 border-[#ddf3f3] rounded-[20px] overflow-hidden transition-all hover:border-[#459d9f] hover:shadow-lg hover:-translate-y-1"
+                className="group relative flex flex-col justify-between w-full h-[263px] bg-primary-subtle border-2 border-primary-light rounded-[20px] overflow-hidden transition-all hover:border-primary-cta hover:shadow-lg hover:-translate-y-1"
               >
                 {/* Background Image / Thumbnail */}
                 <div className="absolute inset-0 z-0">
@@ -207,17 +207,17 @@ export default function ModulesClient() {
                 </div>
 
                 {/* Bottom Glass Overlay Info Area */}
-                <div className="absolute bottom-0 inset-x-0 h-[101px] z-10 backdrop-blur-[5px] bg-gradient-to-t from-[rgb(221,243,243)] via-white/80 to-white/40 p-4 flex flex-col justify-between border-t border-white/50">
-                  <h4 className="text-[16px] font-normal text-[#111827] leading-snug line-clamp-2">
+                <div className="absolute bottom-0 inset-x-0 h-[101px] z-10 backdrop-blur-[5px] bg-gradient-to-t from-primary-light via-surface-white/80 to-surface-white/40 p-4 flex flex-col justify-between border-t border-surface-white/50">
+                  <h4 className="text-normal text-primary-text-dark leading-snug line-clamp-2">
                     {item.title}
                   </h4>
 
                   <div className="flex items-center justify-between mt-auto">
                     <span
-                      className={cn('text-[14px] font-normal', {
-                        'text-[#22c55e]': item.status === 'Completed',
-                        'text-[#f59e0b]': item.status === '40% Progress',
-                        'text-[#9ca3af]': item.status === 'Not Started',
+                      className={cn('text-small', {
+                        'text-success': item.status === 'Completed',
+                        'text-warning': item.status === '40% Progress',
+                        'text-disable': item.status === 'Not Started',
                       })}
                     >
                       {item.status}

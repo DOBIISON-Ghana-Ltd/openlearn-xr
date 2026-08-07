@@ -2,6 +2,8 @@
 
 import Link from 'next/link';
 
+import { cn } from '@/lib/utils/cn';
+
 interface SessionItem {
   id: string;
   title: string;
@@ -45,7 +47,7 @@ export default function AnalyticsClient() {
   return (
     <div className="py-8 px-6 sm:px-10 lg:px-12 flex flex-col gap-6 max-w-[1084px]">
       {/* Full-width Section Title */}
-      <h2 className="text-[24px] font-semibold text-[#4b5563]">Your Sessions</h2>
+      <h2 className="text-h5 text-secondary-text">Your Sessions</h2>
 
       {/* Two-Column Layout: Main Sessions Stream (Left) + Quick Stats Widget (Right) */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
@@ -54,29 +56,29 @@ export default function AnalyticsClient() {
           {ANALYTICS_SESSIONS.map((session) => (
             <div
               key={session.id}
-              className="bg-[#f2fafa] backdrop-blur-[6px] border border-white/80 p-8 rounded-xl flex items-center justify-between gap-4 shadow-xs"
+              className="bg-primary-subtle backdrop-blur-[6px] border border-surface-white/80 p-8 rounded-xl flex items-center justify-between gap-4 shadow-xs"
             >
               <div className="flex flex-col gap-2">
                 <div className="flex items-center gap-4">
-                  <h3 className="text-[18px] font-normal text-[#4b5563]">{session.title}</h3>
+                  <h3 className="text-large text-secondary-text">{session.title}</h3>
                   {session.status === 'Live' ? (
-                    <span className="bg-[#ddf3f3] text-[#459d9f] text-[12px] font-light px-2.5 py-1 rounded-full inline-flex items-center gap-1.5 border border-[#00daf3]/20">
-                      <span className="size-2 rounded-full bg-[#459d9f] animate-pulse" />
+                    <span className="bg-primary-light text-primary-cta text-caption px-2.5 py-1 rounded-full inline-flex items-center gap-1.5 border border-primary-cta/20">
+                      <span className="size-2 rounded-full bg-primary-cta animate-pulse" />
                       Live
                     </span>
                   ) : (
-                    <span className="bg-[#6b7280] text-[#bac9cc] text-[12px] font-light px-3 py-1 rounded-full">
+                    <span className="bg-tertiary text-primary-text-light text-caption px-3 py-1 rounded-full">
                       Completed
                     </span>
                   )}
                 </div>
-                <span className="text-[16px] font-normal text-[#9ca3af]">{session.subjectGrade}</span>
+                <span className="text-normal text-disable">{session.subjectGrade}</span>
                 <span
-                  className={
+                  className={cn(
                     session.status === 'Live'
-                      ? 'text-[12px] font-light text-[#459d9f]'
-                      : 'text-[12px] font-light text-[#6b7280]'
-                  }
+                      ? 'text-caption text-primary-cta'
+                      : 'text-caption text-tertiary'
+                  )}
                 >
                   {session.studentsInfo}
                 </span>
@@ -84,11 +86,11 @@ export default function AnalyticsClient() {
 
               <Link
                 href={`/teaching/analytics/${session.id}`}
-                className={
+                className={cn(
                   session.status === 'Live'
-                    ? 'border border-[#459d9f] text-[#459d9f] hover:bg-[#459d9f] hover:text-white px-6 py-2 rounded-lg text-[16px] font-normal transition-all cursor-pointer shrink-0'
-                    : 'border border-[#3b494c] text-[#6b7280] hover:bg-[#6b7280] hover:text-white px-6 py-2 rounded-lg text-[16px] font-normal transition-all cursor-pointer shrink-0'
-                }
+                    ? 'border border-primary-cta text-primary-cta hover:bg-primary-cta hover:text-primary-text-light px-6 py-2 rounded-lg text-normal transition-all cursor-pointer shrink-0'
+                    : 'border border-tertiary text-tertiary hover:bg-tertiary hover:text-primary-text-light px-6 py-2 rounded-lg text-normal transition-all cursor-pointer shrink-0'
+                )}
               >
                 View Analytics
               </Link>
@@ -98,23 +100,23 @@ export default function AnalyticsClient() {
 
         {/* Right Column (5 cols): Quick Stats */}
         <div className="lg:col-span-5 flex flex-col">
-          <div className="bg-[#f2fafa] backdrop-blur-[6px] border border-white/80 p-8 rounded-xl flex flex-col gap-6 shadow-xs">
-            <h3 className="text-[24px] font-semibold text-[#4b5563]">Quick Stats</h3>
+          <div className="bg-primary-subtle backdrop-blur-[6px] border border-surface-white/80 p-8 rounded-xl flex flex-col gap-6 shadow-xs">
+            <h3 className="text-h5 text-secondary-text">Quick Stats</h3>
 
             <div className="flex flex-col gap-3">
-              <div className="bg-[#ddf3f3] border border-[#459d9f]/10 p-4 rounded-lg flex flex-col gap-2">
-                <span className="text-[24px] font-semibold text-[#4b5563]">8</span>
-                <span className="text-[12px] font-light text-[#4b5563]">Sessions This Week</span>
+              <div className="bg-primary-light border border-primary-cta/10 p-4 rounded-lg flex flex-col gap-2">
+                <span className="text-h5 text-secondary-text">8</span>
+                <span className="text-caption text-secondary-text">Sessions This Week</span>
               </div>
 
-              <div className="bg-[#ddf3f3] border border-[#459d9f]/10 p-4 rounded-lg flex flex-col gap-2">
-                <span className="text-[24px] font-semibold text-[#4b5563]">142</span>
-                <span className="text-[12px] font-light text-[#4b5563]">Students Engaged</span>
+              <div className="bg-primary-light border border-primary-cta/10 p-4 rounded-lg flex flex-col gap-2">
+                <span className="text-h5 text-secondary-text">142</span>
+                <span className="text-caption text-secondary-text">Students Engaged</span>
               </div>
 
-              <div className="bg-[#ddf3f3] border border-[#459d9f]/10 p-4 rounded-lg flex flex-col gap-2">
-                <span className="text-[24px] font-semibold text-[#4b5563]">85%</span>
-                <span className="text-[12px] font-light text-[#4b5563]">Avg. Engagement</span>
+              <div className="bg-primary-light border border-primary-cta/10 p-4 rounded-lg flex flex-col gap-2">
+                <span className="text-h5 text-secondary-text">85%</span>
+                <span className="text-caption text-secondary-text">Avg. Engagement</span>
               </div>
             </div>
           </div>

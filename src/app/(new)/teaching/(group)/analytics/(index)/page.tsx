@@ -9,7 +9,7 @@ export const metadata = {
 
 export default function AnalyticsPage() {
   return (
-    <Suspense fallback={<div className="w-full min-h-screen bg-white" />}>
+    <Suspense fallback={<div className="w-full min-h-screen bg-surface-white" />}>
       <AnalyticsClient />
     </Suspense>
   );

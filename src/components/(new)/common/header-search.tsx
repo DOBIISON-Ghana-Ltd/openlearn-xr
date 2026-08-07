@@ -17,7 +17,7 @@ export function HeaderSearch({
   return (
     <div
       className={cn(
-        'relative flex items-center h-[50px] w-[333px] bg-[#f2fafa] border-2 border-[#ddf3f3] rounded-[10px] px-4 transition-colors focus-within:border-[#459d9f]',
+        'relative flex items-center h-[50px] w-[333px] bg-primary-subtle border-2 border-primary-light rounded-[10px] px-4 transition-colors focus-within:border-primary-cta',
         className
       )}
     >
@@ -25,9 +25,9 @@ export function HeaderSearch({
         type="text"
         placeholder={placeholder}
         onChange={(e) => onSearch?.(e.target.value)}
-        className="w-full bg-transparent pr-8 text-[18px] font-normal text-[#111827] placeholder:text-[#6b7280] focus:outline-none"
+        className="w-full bg-transparent pr-8 text-large text-primary-text-dark placeholder:text-tertiary focus:outline-none"
       />
-      <Search className="absolute right-4 size-[24px] shrink-0 text-[#6b7280] pointer-events-none" />
+      <Search className="absolute right-4 size-[24px] shrink-0 text-tertiary pointer-events-none" />
     </div>
   );
 }

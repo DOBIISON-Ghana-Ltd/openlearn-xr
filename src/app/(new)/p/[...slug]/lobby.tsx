@@ -6,7 +6,7 @@ import { Logo } from '@/components/(new)/common/logo';
 
 export default function Lobby() {
   return (
-    <div className="min-h-screen w-full bg-white flex flex-col items-center justify-center p-6 overflow-hidden">
+    <div className="min-h-screen w-full bg-surface-white flex flex-col items-center justify-center p-6 overflow-hidden">
       <div className="w-full max-w-[500px] flex flex-col items-center justify-center text-center">
         {/* OPENLEARNXR Logo */}
         <div className="flex justify-center mb-10">
@@ -14,13 +14,13 @@ export default function Lobby() {
         </div>
 
         {/* Status Heading */}
-        <h1 className="text-[20px] font-semibold text-[#111827] mb-8">
+        <h1 className="text-h6 text-primary-text-dark mb-8">
           Waiting for host to let you in
         </h1>
 
         {/* Animated Teal Spinner Ring */}
         <div className="mb-6 flex justify-center">
-          <Loader2 className="size-8 text-[#459d9f] animate-spin stroke-[2.5]" />
+          <Loader2 className="size-8 text-primary-cta animate-spin stroke-[2.5]" />
         </div>
 
         {/* Student Waiting Illustration from public folder */}

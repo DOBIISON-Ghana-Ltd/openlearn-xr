@@ -31,6 +31,7 @@
 
   /* Surfaces */
   --color-surface-slate: var(--surface-slate);
+  --color-surface-white: var(--surface-white);
 
   /* Dark Theme Surfaces */
   --color-dark-bg: var(--dark-bg);
@@ -51,6 +52,59 @@
   --color-warning: var(--warning);
   --color-error: var(--error);
   --color-status-online: var(--status-online);
+
+  /* Typography Design Tokens */
+  --text-display: 4.5rem;
+  --text-display--line-height: 1.2;
+  --text-display--font-weight: 700;
+
+  --text-h1: 3.5rem;
+  --text-h1--line-height: 1.2;
+  --text-h1--font-weight: 700;
+
+  --text-h2: 3rem;
+  --text-h2--line-height: 1.2;
+  --text-h2--font-weight: 700;
+
+  --text-h3: 2.5rem;
+  --text-h3--line-height: 1.2;
+  --text-h3--font-weight: 600;
+
+  --text-h4: 2rem;
+  --text-h4--line-height: 1.2;
+  --text-h4--font-weight: 600;
+
+  --text-h5: 1.5rem;
+  --text-h5--line-height: 1.2;
+  --text-h5--font-weight: 600;
+
+  --text-h6: 1.25rem;
+  --text-h6--line-height: 1.2;
+  --text-h6--font-weight: 600;
+
+  --text-button: 1.125rem;
+  --text-button--line-height: 1.2;
+  --text-button--font-weight: 600;
+
+  --text-large: 1.125rem;
+  --text-large--line-height: 1.2;
+  --text-large--font-weight: 400;
+
+  --text-normal: 1rem;
+  --text-normal--line-height: 1.2;
+  --text-normal--font-weight: 400;
+
+  --text-small: 0.875rem;
+  --text-small--line-height: 1.2;
+  --text-small--font-weight: 400;
+
+  --text-caption: 0.75rem;
+  --text-caption--line-height: 1.2;
+  --text-caption--font-weight: 300;
+
+  --text-micro: 0.625rem;
+  --text-micro--line-height: 1.2;
+  --text-micro--font-weight: 400;
 
   /* Keyframes & Animations */
   --animate-skeleton: skeleton 2s -1s infinite linear;
@@ -94,6 +148,7 @@
 
   /* Surfaces */
   --surface-slate: #f8fafc;
+  --surface-white: #ffffff;
 
   /* Dark Theme Surfaces */
   --dark-bg: #08111f;
@@ -132,7 +187,7 @@
 }
 
 /* Typography Utility Classes */
-@utility text-display {
+/* @utility text-display {
   font-family: var(--font-sans);
   font-size: 4.5rem;
   font-weight: 700;
@@ -226,4 +281,4 @@
   font-weight: 300;
   line-height: 1.2;
   letter-spacing: 0;
-}
+} */

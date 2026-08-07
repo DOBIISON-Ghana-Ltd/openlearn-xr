@@ -70,34 +70,32 @@ const TAKEAWAYS = [
 
 export default function ExplainFLow() {
   return (
-    <div className={cn('flex-1 bg-white pt-5 pb-8 px-6 lg:px-20 overflow-y-auto w-full min-h-0')}>
-      <div className={cn('w-full max-w-[1280px] mx-auto flex flex-col gap-6')}>
+    <div className="flex-1 bg-surface-white pt-5 pb-8 px-6 lg:px-20 overflow-y-auto w-full min-h-0">
+      <div className="w-full max-w-[1280px] mx-auto flex flex-col gap-6">
         {/* RED BOX 1: Main Section 1 (Title & Intro Subtext) */}
-        <div className={cn('flex flex-col gap-2 w-full max-w-[1024px]')}>
-          <h1 className={cn('text-[36px] sm:text-[48px] font-bold text-[#459d9f] leading-tight')}>
+        <div className="flex flex-col gap-2 w-full max-w-[1024px]">
+          <h1 className="text-h2 text-primary-cta leading-tight">
             Let’s understand what you discovered!
           </h1>
-          <p className={cn('text-[16px] font-normal text-[#111827] leading-normal max-w-[656px]')}>
+          <p className="text-normal text-primary-text-dark leading-normal max-w-[656px]">
             Great job exploring the atom. Here is how the atom is structured and how each part plays its role.
           </p>
         </div>
 
         {/* RED BOX 2: Main Section 2 (2 side-by-side items) */}
-        <div className={cn('flex flex-col xl:flex-row items-start gap-8 w-full')}>
+        <div className="flex flex-col xl:flex-row items-start gap-8 w-full">
           {/* GREEN BOX 1: Left Item - Concept Cards List */}
-          <div className={cn('flex-1 max-w-[952px] w-full flex flex-col gap-5')}>
+          <div className="flex-1 max-w-[952px] w-full flex flex-col gap-5">
             {CONCEPTS.map((concept) => (
               <div
                 key={concept.id}
-                className={cn(
-                  'bg-[#f2fafa] border border-[#ddf3f3] rounded-[20px] p-6 sm:px-8 sm:py-7 flex flex-col sm:flex-row items-center sm:items-start justify-between gap-6 overflow-hidden min-h-[184px] relative'
-                )}
+                className="bg-primary-subtle border border-primary-light rounded-[20px] p-6 sm:px-8 sm:py-7 flex flex-col sm:flex-row items-center sm:items-start justify-between gap-6 overflow-hidden min-h-[184px] relative"
               >
-                <div className={cn('flex-1 flex flex-col justify-center gap-3 max-w-[580px]')}>
-                  <h2 className={cn('text-[24px] font-semibold text-[#111827]')}>{concept.title}</h2>
-                  <p className={cn('text-[16px] font-normal text-[#111827] leading-normal')}>{concept.description}</p>
+                <div className="flex-1 flex flex-col justify-center gap-3 max-w-[580px]">
+                  <h2 className="text-h5 text-primary-text-dark">{concept.title}</h2>
+                  <p className="text-normal text-primary-text-dark leading-normal">{concept.description}</p>
                 </div>
-                <div className={cn('shrink-0 flex items-center justify-center relative')}>
+                <div className="shrink-0 flex items-center justify-center relative">
                   <img
                     src={concept.imageSrc}
                     alt={concept.imageAlt}
@@ -109,31 +107,25 @@ export default function ExplainFLow() {
           </div>
 
           {/* GREEN BOX 2: Right Item - Key Takeaways Sidebar */}
-          <div className={cn('w-full xl:w-[302px] shrink-0')}>
-            <div
-              className={cn(
-                'bg-[#f2fafa] border border-[#ddf3f3] rounded-[20px] p-5 flex flex-col gap-3.5 w-full min-h-[439px]'
-              )}
-            >
-              <h3 className={cn('text-[18px] font-semibold text-[#111827] px-1')}>Key Takeaways</h3>
-              <div className={cn('flex flex-col gap-3.5 w-full')}>
+          <div className="w-full xl:w-[302px] shrink-0">
+            <div className="bg-primary-subtle border border-primary-light rounded-[20px] p-5 flex flex-col gap-3.5 w-full min-h-[439px]">
+              <h3 className="text-button text-primary-text-dark px-1">Key Takeaways</h3>
+              <div className="flex flex-col gap-3.5 w-full">
                 {TAKEAWAYS.map((takeaway) => (
                   <div
                     key={takeaway.id}
-                    className={cn(
-                      'bg-[#f8fafc] border border-[#ddf3f3] rounded-[20px] p-3.5 flex items-start gap-3 min-h-[83px]'
-                    )}
+                    className="bg-surface-slate border border-primary-light rounded-[20px] p-3.5 flex items-start gap-3 min-h-[83px]"
                   >
-                    <div className={cn('size-[42px] shrink-0 flex items-center justify-center mt-1')}>
+                    <div className="size-[42px] shrink-0 flex items-center justify-center mt-1">
                       <img
                         src={takeaway.imageSrc}
                         alt={takeaway.title}
-                        className={cn('size-full object-contain pointer-events-none')}
+                        className="size-full object-contain pointer-events-none"
                       />
                     </div>
-                    <div className={cn('flex flex-col gap-1 flex-1 min-w-0')}>
-                      <h4 className={cn('text-[12px] font-semibold text-[#111827] leading-snug')}>{takeaway.title}</h4>
-                      <p className={cn('text-[12px] font-light text-[#111827] leading-snug')}>{takeaway.description}</p>
+                    <div className="flex flex-col gap-1 flex-1 min-w-0">
+                      <h4 className="text-caption font-semibold text-primary-text-dark leading-snug">{takeaway.title}</h4>
+                      <p className="text-caption text-primary-text-dark leading-snug">{takeaway.description}</p>
                     </div>
                   </div>
                 ))}

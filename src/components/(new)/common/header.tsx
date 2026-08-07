@@ -11,7 +11,7 @@ export default function Header({ children, className }: HeaderProps) {
   return (
     <header
       className={cn(
-        'sticky top-0 z-50 w-full h-[101px] backdrop-blur-[5px] bg-white/90 transition-all flex items-center',
+        'sticky top-0 z-50 w-full h-[101px] bg-surface-white flex items-center',
         className
       )}
     >
@@ -27,19 +27,19 @@ export default function Header({ children, className }: HeaderProps) {
           <nav className="hidden md:flex items-center gap-7.5">
             <Link
               href="/modules"
-              className="text-base font-normal text-black hover:text-[#459d9f] transition-colors"
+              className="text-normal text-primary-text-dark hover:text-primary-cta transition-colors"
             >
               Simulations
             </Link>
             <Link
               href="/teaching"
-              className="text-base font-normal text-black hover:text-[#459d9f] transition-colors"
+              className="text-normal text-primary-text-dark hover:text-primary-cta transition-colors"
             >
               Teaching
             </Link>
             <Link
               href="/licensing"
-              className="text-base font-normal text-black hover:text-[#459d9f] transition-colors"
+              className="text-normal text-primary-text-dark hover:text-primary-cta transition-colors"
             >
               Licensing
             </Link>
@@ -47,7 +47,7 @@ export default function Header({ children, className }: HeaderProps) {
 
           <Link
             href="/auth/login"
-            className="inline-flex items-center justify-center bg-[#459d9f] hover:bg-[#3b8789] text-[#f8fafc] text-[18px] font-semibold px-[20px] py-[10px] rounded-[10px] transition-colors"
+            className="inline-flex items-center justify-center bg-primary-cta hover:bg-primary-hover text-primary-text-light text-button px-[20px] py-[10px] rounded-[10px] transition-colors"
           >
             Sign in
           </Link>
