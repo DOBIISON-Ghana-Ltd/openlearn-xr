@@ -38,10 +38,12 @@ export type ModuleMinAggregateOutputType = {
   id: string | null
   collectionId: string | null
   title: string | null
+  image: string | null
   slug: string | null
+  duration: string | null
+  difficulty: string | null
   description: string | null
   orderIndex: number | null
-  publishedVersionId: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -50,10 +52,12 @@ export type ModuleMaxAggregateOutputType = {
   id: string | null
   collectionId: string | null
   title: string | null
+  image: string | null
   slug: string | null
+  duration: string | null
+  difficulty: string | null
   description: string | null
   orderIndex: number | null
-  publishedVersionId: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -62,10 +66,12 @@ export type ModuleCountAggregateOutputType = {
   id: number
   collectionId: number
   title: number
+  image: number
   slug: number
+  duration: number
+  difficulty: number
   description: number
   orderIndex: number
-  publishedVersionId: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -84,10 +90,12 @@ export type ModuleMinAggregateInputType = {
   id?: true
   collectionId?: true
   title?: true
+  image?: true
   slug?: true
+  duration?: true
+  difficulty?: true
   description?: true
   orderIndex?: true
-  publishedVersionId?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -96,10 +104,12 @@ export type ModuleMaxAggregateInputType = {
   id?: true
   collectionId?: true
   title?: true
+  image?: true
   slug?: true
+  duration?: true
+  difficulty?: true
   description?: true
   orderIndex?: true
-  publishedVersionId?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -108,10 +118,12 @@ export type ModuleCountAggregateInputType = {
   id?: true
   collectionId?: true
   title?: true
+  image?: true
   slug?: true
+  duration?: true
+  difficulty?: true
   description?: true
   orderIndex?: true
-  publishedVersionId?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -207,10 +219,12 @@ export type ModuleGroupByOutputType = {
   id: string
   collectionId: string
   title: string
+  image: string | null
   slug: string
+  duration: string | null
+  difficulty: string
   description: string
   orderIndex: number
-  publishedVersionId: string | null
   createdAt: Date
   updatedAt: Date
   _count: ModuleCountAggregateOutputType | null
@@ -242,15 +256,16 @@ export type ModuleWhereInput = {
   id?: Prisma.StringFilter<"Module"> | string
   collectionId?: Prisma.StringFilter<"Module"> | string
   title?: Prisma.StringFilter<"Module"> | string
+  image?: Prisma.StringNullableFilter<"Module"> | string | null
   slug?: Prisma.StringFilter<"Module"> | string
+  duration?: Prisma.StringNullableFilter<"Module"> | string | null
+  difficulty?: Prisma.StringFilter<"Module"> | string
   description?: Prisma.StringFilter<"Module"> | string
   orderIndex?: Prisma.IntFilter<"Module"> | number
-  publishedVersionId?: Prisma.StringNullableFilter<"Module"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Module"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Module"> | Date | string
   collection?: Prisma.XOR<Prisma.CollectionScalarRelationFilter, Prisma.CollectionWhereInput>
   versions?: Prisma.ModuleVersionListRelationFilter
-  publishedVersion?: Prisma.XOR<Prisma.ModuleVersionNullableScalarRelationFilter, Prisma.ModuleVersionWhereInput> | null
   completions?: Prisma.ModuleCompletionListRelationFilter
 }
 
@@ -258,45 +273,49 @@ export type ModuleOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   collectionId?: Prisma.SortOrder
   title?: Prisma.SortOrder
+  image?: Prisma.SortOrderInput | Prisma.SortOrder
   slug?: Prisma.SortOrder
+  duration?: Prisma.SortOrderInput | Prisma.SortOrder
+  difficulty?: Prisma.SortOrder
   description?: Prisma.SortOrder
   orderIndex?: Prisma.SortOrder
-  publishedVersionId?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   collection?: Prisma.CollectionOrderByWithRelationInput
   versions?: Prisma.ModuleVersionOrderByRelationAggregateInput
-  publishedVersion?: Prisma.ModuleVersionOrderByWithRelationInput
   completions?: Prisma.ModuleCompletionOrderByRelationAggregateInput
 }
 
 export type ModuleWhereUniqueInput = Prisma.AtLeast<{
   id?: string
   slug?: string
-  publishedVersionId?: string
   AND?: Prisma.ModuleWhereInput | Prisma.ModuleWhereInput[]
   OR?: Prisma.ModuleWhereInput[]
   NOT?: Prisma.ModuleWhereInput | Prisma.ModuleWhereInput[]
   collectionId?: Prisma.StringFilter<"Module"> | string
   title?: Prisma.StringFilter<"Module"> | string
+  image?: Prisma.StringNullableFilter<"Module"> | string | null
+  duration?: Prisma.StringNullableFilter<"Module"> | string | null
+  difficulty?: Prisma.StringFilter<"Module"> | string
   description?: Prisma.StringFilter<"Module"> | string
   orderIndex?: Prisma.IntFilter<"Module"> | number
   createdAt?: Prisma.DateTimeFilter<"Module"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Module"> | Date | string
   collection?: Prisma.XOR<Prisma.CollectionScalarRelationFilter, Prisma.CollectionWhereInput>
   versions?: Prisma.ModuleVersionListRelationFilter
-  publishedVersion?: Prisma.XOR<Prisma.ModuleVersionNullableScalarRelationFilter, Prisma.ModuleVersionWhereInput> | null
   completions?: Prisma.ModuleCompletionListRelationFilter
-}, "id" | "slug" | "publishedVersionId">
+}, "id" | "slug">
 
 export type ModuleOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   collectionId?: Prisma.SortOrder
   title?: Prisma.SortOrder
+  image?: Prisma.SortOrderInput | Prisma.SortOrder
   slug?: Prisma.SortOrder
+  duration?: Prisma.SortOrderInput | Prisma.SortOrder
+  difficulty?: Prisma.SortOrder
   description?: Prisma.SortOrder
   orderIndex?: Prisma.SortOrder
-  publishedVersionId?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.ModuleCountOrderByAggregateInput
@@ -313,10 +332,12 @@ export type ModuleScalarWhereWithAggregatesInput = {
   id?: Prisma.StringWithAggregatesFilter<"Module"> | string
   collectionId?: Prisma.StringWithAggregatesFilter<"Module"> | string
   title?: Prisma.StringWithAggregatesFilter<"Module"> | string
+  image?: Prisma.StringNullableWithAggregatesFilter<"Module"> | string | null
   slug?: Prisma.StringWithAggregatesFilter<"Module"> | string
+  duration?: Prisma.StringNullableWithAggregatesFilter<"Module"> | string | null
+  difficulty?: Prisma.StringWithAggregatesFilter<"Module"> | string
   description?: Prisma.StringWithAggregatesFilter<"Module"> | string
   orderIndex?: Prisma.IntWithAggregatesFilter<"Module"> | number
-  publishedVersionId?: Prisma.StringNullableWithAggregatesFilter<"Module"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Module"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Module"> | Date | string
 }
@@ -324,14 +345,16 @@ export type ModuleScalarWhereWithAggregatesInput = {
 export type ModuleCreateInput = {
   id?: string
   title: string
+  image?: string | null
   slug: string
+  duration?: string | null
+  difficulty: string
   description: string
   orderIndex: number
   createdAt?: Date | string
   updatedAt?: Date | string
   collection: Prisma.CollectionCreateNestedOneWithoutModulesInput
   versions?: Prisma.ModuleVersionCreateNestedManyWithoutModuleInput
-  publishedVersion?: Prisma.ModuleVersionCreateNestedOneWithoutPublishedForInput
   completions?: Prisma.ModuleCompletionCreateNestedManyWithoutModuleInput
 }
 
@@ -339,10 +362,12 @@ export type ModuleUncheckedCreateInput = {
   id?: string
   collectionId: string
   title: string
+  image?: string | null
   slug: string
+  duration?: string | null
+  difficulty: string
   description: string
   orderIndex: number
-  publishedVersionId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   versions?: Prisma.ModuleVersionUncheckedCreateNestedManyWithoutModuleInput
@@ -352,14 +377,16 @@ export type ModuleUncheckedCreateInput = {
 export type ModuleUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   slug?: Prisma.StringFieldUpdateOperationsInput | string
+  duration?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  difficulty?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   orderIndex?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   collection?: Prisma.CollectionUpdateOneRequiredWithoutModulesNestedInput
   versions?: Prisma.ModuleVersionUpdateManyWithoutModuleNestedInput
-  publishedVersion?: Prisma.ModuleVersionUpdateOneWithoutPublishedForNestedInput
   completions?: Prisma.ModuleCompletionUpdateManyWithoutModuleNestedInput
 }
 
@@ -367,10 +394,12 @@ export type ModuleUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   collectionId?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   slug?: Prisma.StringFieldUpdateOperationsInput | string
+  duration?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  difficulty?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   orderIndex?: Prisma.IntFieldUpdateOperationsInput | number
-  publishedVersionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   versions?: Prisma.ModuleVersionUncheckedUpdateManyWithoutModuleNestedInput
@@ -381,10 +410,12 @@ export type ModuleCreateManyInput = {
   id?: string
   collectionId: string
   title: string
+  image?: string | null
   slug: string
+  duration?: string | null
+  difficulty: string
   description: string
   orderIndex: number
-  publishedVersionId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -392,7 +423,10 @@ export type ModuleCreateManyInput = {
 export type ModuleUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   slug?: Prisma.StringFieldUpdateOperationsInput | string
+  duration?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  difficulty?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   orderIndex?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -403,10 +437,12 @@ export type ModuleUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   collectionId?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   slug?: Prisma.StringFieldUpdateOperationsInput | string
+  duration?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  difficulty?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   orderIndex?: Prisma.IntFieldUpdateOperationsInput | number
-  publishedVersionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -425,10 +461,12 @@ export type ModuleCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   collectionId?: Prisma.SortOrder
   title?: Prisma.SortOrder
+  image?: Prisma.SortOrder
   slug?: Prisma.SortOrder
+  duration?: Prisma.SortOrder
+  difficulty?: Prisma.SortOrder
   description?: Prisma.SortOrder
   orderIndex?: Prisma.SortOrder
-  publishedVersionId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -441,10 +479,12 @@ export type ModuleMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   collectionId?: Prisma.SortOrder
   title?: Prisma.SortOrder
+  image?: Prisma.SortOrder
   slug?: Prisma.SortOrder
+  duration?: Prisma.SortOrder
+  difficulty?: Prisma.SortOrder
   description?: Prisma.SortOrder
   orderIndex?: Prisma.SortOrder
-  publishedVersionId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -453,10 +493,12 @@ export type ModuleMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   collectionId?: Prisma.SortOrder
   title?: Prisma.SortOrder
+  image?: Prisma.SortOrder
   slug?: Prisma.SortOrder
+  duration?: Prisma.SortOrder
+  difficulty?: Prisma.SortOrder
   description?: Prisma.SortOrder
   orderIndex?: Prisma.SortOrder
-  publishedVersionId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -468,11 +510,6 @@ export type ModuleSumOrderByAggregateInput = {
 export type ModuleScalarRelationFilter = {
   is?: Prisma.ModuleWhereInput
   isNot?: Prisma.ModuleWhereInput
-}
-
-export type ModuleNullableScalarRelationFilter = {
-  is?: Prisma.ModuleWhereInput | null
-  isNot?: Prisma.ModuleWhereInput | null
 }
 
 export type ModuleCreateNestedManyWithoutCollectionInput = {
@@ -523,44 +560,12 @@ export type ModuleCreateNestedOneWithoutVersionsInput = {
   connect?: Prisma.ModuleWhereUniqueInput
 }
 
-export type ModuleCreateNestedOneWithoutPublishedVersionInput = {
-  create?: Prisma.XOR<Prisma.ModuleCreateWithoutPublishedVersionInput, Prisma.ModuleUncheckedCreateWithoutPublishedVersionInput>
-  connectOrCreate?: Prisma.ModuleCreateOrConnectWithoutPublishedVersionInput
-  connect?: Prisma.ModuleWhereUniqueInput
-}
-
-export type ModuleUncheckedCreateNestedOneWithoutPublishedVersionInput = {
-  create?: Prisma.XOR<Prisma.ModuleCreateWithoutPublishedVersionInput, Prisma.ModuleUncheckedCreateWithoutPublishedVersionInput>
-  connectOrCreate?: Prisma.ModuleCreateOrConnectWithoutPublishedVersionInput
-  connect?: Prisma.ModuleWhereUniqueInput
-}
-
 export type ModuleUpdateOneRequiredWithoutVersionsNestedInput = {
   create?: Prisma.XOR<Prisma.ModuleCreateWithoutVersionsInput, Prisma.ModuleUncheckedCreateWithoutVersionsInput>
   connectOrCreate?: Prisma.ModuleCreateOrConnectWithoutVersionsInput
   upsert?: Prisma.ModuleUpsertWithoutVersionsInput
   connect?: Prisma.ModuleWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.ModuleUpdateToOneWithWhereWithoutVersionsInput, Prisma.ModuleUpdateWithoutVersionsInput>, Prisma.ModuleUncheckedUpdateWithoutVersionsInput>
-}
-
-export type ModuleUpdateOneWithoutPublishedVersionNestedInput = {
-  create?: Prisma.XOR<Prisma.ModuleCreateWithoutPublishedVersionInput, Prisma.ModuleUncheckedCreateWithoutPublishedVersionInput>
-  connectOrCreate?: Prisma.ModuleCreateOrConnectWithoutPublishedVersionInput
-  upsert?: Prisma.ModuleUpsertWithoutPublishedVersionInput
-  disconnect?: Prisma.ModuleWhereInput | boolean
-  delete?: Prisma.ModuleWhereInput | boolean
-  connect?: Prisma.ModuleWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.ModuleUpdateToOneWithWhereWithoutPublishedVersionInput, Prisma.ModuleUpdateWithoutPublishedVersionInput>, Prisma.ModuleUncheckedUpdateWithoutPublishedVersionInput>
-}
-
-export type ModuleUncheckedUpdateOneWithoutPublishedVersionNestedInput = {
-  create?: Prisma.XOR<Prisma.ModuleCreateWithoutPublishedVersionInput, Prisma.ModuleUncheckedCreateWithoutPublishedVersionInput>
-  connectOrCreate?: Prisma.ModuleCreateOrConnectWithoutPublishedVersionInput
-  upsert?: Prisma.ModuleUpsertWithoutPublishedVersionInput
-  disconnect?: Prisma.ModuleWhereInput | boolean
-  delete?: Prisma.ModuleWhereInput | boolean
-  connect?: Prisma.ModuleWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.ModuleUpdateToOneWithWhereWithoutPublishedVersionInput, Prisma.ModuleUpdateWithoutPublishedVersionInput>, Prisma.ModuleUncheckedUpdateWithoutPublishedVersionInput>
 }
 
 export type ModuleCreateNestedOneWithoutCompletionsInput = {
@@ -580,23 +585,27 @@ export type ModuleUpdateOneRequiredWithoutCompletionsNestedInput = {
 export type ModuleCreateWithoutCollectionInput = {
   id?: string
   title: string
+  image?: string | null
   slug: string
+  duration?: string | null
+  difficulty: string
   description: string
   orderIndex: number
   createdAt?: Date | string
   updatedAt?: Date | string
   versions?: Prisma.ModuleVersionCreateNestedManyWithoutModuleInput
-  publishedVersion?: Prisma.ModuleVersionCreateNestedOneWithoutPublishedForInput
   completions?: Prisma.ModuleCompletionCreateNestedManyWithoutModuleInput
 }
 
 export type ModuleUncheckedCreateWithoutCollectionInput = {
   id?: string
   title: string
+  image?: string | null
   slug: string
+  duration?: string | null
+  difficulty: string
   description: string
   orderIndex: number
-  publishedVersionId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   versions?: Prisma.ModuleVersionUncheckedCreateNestedManyWithoutModuleInput
@@ -636,10 +645,12 @@ export type ModuleScalarWhereInput = {
   id?: Prisma.StringFilter<"Module"> | string
   collectionId?: Prisma.StringFilter<"Module"> | string
   title?: Prisma.StringFilter<"Module"> | string
+  image?: Prisma.StringNullableFilter<"Module"> | string | null
   slug?: Prisma.StringFilter<"Module"> | string
+  duration?: Prisma.StringNullableFilter<"Module"> | string | null
+  difficulty?: Prisma.StringFilter<"Module"> | string
   description?: Prisma.StringFilter<"Module"> | string
   orderIndex?: Prisma.IntFilter<"Module"> | number
-  publishedVersionId?: Prisma.StringNullableFilter<"Module"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Module"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Module"> | Date | string
 }
@@ -647,13 +658,15 @@ export type ModuleScalarWhereInput = {
 export type ModuleCreateWithoutVersionsInput = {
   id?: string
   title: string
+  image?: string | null
   slug: string
+  duration?: string | null
+  difficulty: string
   description: string
   orderIndex: number
   createdAt?: Date | string
   updatedAt?: Date | string
   collection: Prisma.CollectionCreateNestedOneWithoutModulesInput
-  publishedVersion?: Prisma.ModuleVersionCreateNestedOneWithoutPublishedForInput
   completions?: Prisma.ModuleCompletionCreateNestedManyWithoutModuleInput
 }
 
@@ -661,10 +674,12 @@ export type ModuleUncheckedCreateWithoutVersionsInput = {
   id?: string
   collectionId: string
   title: string
+  image?: string | null
   slug: string
+  duration?: string | null
+  difficulty: string
   description: string
   orderIndex: number
-  publishedVersionId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   completions?: Prisma.ModuleCompletionUncheckedCreateNestedManyWithoutModuleInput
@@ -673,37 +688,6 @@ export type ModuleUncheckedCreateWithoutVersionsInput = {
 export type ModuleCreateOrConnectWithoutVersionsInput = {
   where: Prisma.ModuleWhereUniqueInput
   create: Prisma.XOR<Prisma.ModuleCreateWithoutVersionsInput, Prisma.ModuleUncheckedCreateWithoutVersionsInput>
-}
-
-export type ModuleCreateWithoutPublishedVersionInput = {
-  id?: string
-  title: string
-  slug: string
-  description: string
-  orderIndex: number
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  collection: Prisma.CollectionCreateNestedOneWithoutModulesInput
-  versions?: Prisma.ModuleVersionCreateNestedManyWithoutModuleInput
-  completions?: Prisma.ModuleCompletionCreateNestedManyWithoutModuleInput
-}
-
-export type ModuleUncheckedCreateWithoutPublishedVersionInput = {
-  id?: string
-  collectionId: string
-  title: string
-  slug: string
-  description: string
-  orderIndex: number
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  versions?: Prisma.ModuleVersionUncheckedCreateNestedManyWithoutModuleInput
-  completions?: Prisma.ModuleCompletionUncheckedCreateNestedManyWithoutModuleInput
-}
-
-export type ModuleCreateOrConnectWithoutPublishedVersionInput = {
-  where: Prisma.ModuleWhereUniqueInput
-  create: Prisma.XOR<Prisma.ModuleCreateWithoutPublishedVersionInput, Prisma.ModuleUncheckedCreateWithoutPublishedVersionInput>
 }
 
 export type ModuleUpsertWithoutVersionsInput = {
@@ -720,13 +704,15 @@ export type ModuleUpdateToOneWithWhereWithoutVersionsInput = {
 export type ModuleUpdateWithoutVersionsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   slug?: Prisma.StringFieldUpdateOperationsInput | string
+  duration?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  difficulty?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   orderIndex?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   collection?: Prisma.CollectionUpdateOneRequiredWithoutModulesNestedInput
-  publishedVersion?: Prisma.ModuleVersionUpdateOneWithoutPublishedForNestedInput
   completions?: Prisma.ModuleCompletionUpdateManyWithoutModuleNestedInput
 }
 
@@ -734,73 +720,42 @@ export type ModuleUncheckedUpdateWithoutVersionsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   collectionId?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   slug?: Prisma.StringFieldUpdateOperationsInput | string
-  description?: Prisma.StringFieldUpdateOperationsInput | string
-  orderIndex?: Prisma.IntFieldUpdateOperationsInput | number
-  publishedVersionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  completions?: Prisma.ModuleCompletionUncheckedUpdateManyWithoutModuleNestedInput
-}
-
-export type ModuleUpsertWithoutPublishedVersionInput = {
-  update: Prisma.XOR<Prisma.ModuleUpdateWithoutPublishedVersionInput, Prisma.ModuleUncheckedUpdateWithoutPublishedVersionInput>
-  create: Prisma.XOR<Prisma.ModuleCreateWithoutPublishedVersionInput, Prisma.ModuleUncheckedCreateWithoutPublishedVersionInput>
-  where?: Prisma.ModuleWhereInput
-}
-
-export type ModuleUpdateToOneWithWhereWithoutPublishedVersionInput = {
-  where?: Prisma.ModuleWhereInput
-  data: Prisma.XOR<Prisma.ModuleUpdateWithoutPublishedVersionInput, Prisma.ModuleUncheckedUpdateWithoutPublishedVersionInput>
-}
-
-export type ModuleUpdateWithoutPublishedVersionInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  title?: Prisma.StringFieldUpdateOperationsInput | string
-  slug?: Prisma.StringFieldUpdateOperationsInput | string
+  duration?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  difficulty?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   orderIndex?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  collection?: Prisma.CollectionUpdateOneRequiredWithoutModulesNestedInput
-  versions?: Prisma.ModuleVersionUpdateManyWithoutModuleNestedInput
-  completions?: Prisma.ModuleCompletionUpdateManyWithoutModuleNestedInput
-}
-
-export type ModuleUncheckedUpdateWithoutPublishedVersionInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  collectionId?: Prisma.StringFieldUpdateOperationsInput | string
-  title?: Prisma.StringFieldUpdateOperationsInput | string
-  slug?: Prisma.StringFieldUpdateOperationsInput | string
-  description?: Prisma.StringFieldUpdateOperationsInput | string
-  orderIndex?: Prisma.IntFieldUpdateOperationsInput | number
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  versions?: Prisma.ModuleVersionUncheckedUpdateManyWithoutModuleNestedInput
   completions?: Prisma.ModuleCompletionUncheckedUpdateManyWithoutModuleNestedInput
 }
 
 export type ModuleCreateWithoutCompletionsInput = {
   id?: string
   title: string
+  image?: string | null
   slug: string
+  duration?: string | null
+  difficulty: string
   description: string
   orderIndex: number
   createdAt?: Date | string
   updatedAt?: Date | string
   collection: Prisma.CollectionCreateNestedOneWithoutModulesInput
   versions?: Prisma.ModuleVersionCreateNestedManyWithoutModuleInput
-  publishedVersion?: Prisma.ModuleVersionCreateNestedOneWithoutPublishedForInput
 }
 
 export type ModuleUncheckedCreateWithoutCompletionsInput = {
   id?: string
   collectionId: string
   title: string
+  image?: string | null
   slug: string
+  duration?: string | null
+  difficulty: string
   description: string
   orderIndex: number
-  publishedVersionId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   versions?: Prisma.ModuleVersionUncheckedCreateNestedManyWithoutModuleInput
@@ -825,24 +780,28 @@ export type ModuleUpdateToOneWithWhereWithoutCompletionsInput = {
 export type ModuleUpdateWithoutCompletionsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   slug?: Prisma.StringFieldUpdateOperationsInput | string
+  duration?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  difficulty?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   orderIndex?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   collection?: Prisma.CollectionUpdateOneRequiredWithoutModulesNestedInput
   versions?: Prisma.ModuleVersionUpdateManyWithoutModuleNestedInput
-  publishedVersion?: Prisma.ModuleVersionUpdateOneWithoutPublishedForNestedInput
 }
 
 export type ModuleUncheckedUpdateWithoutCompletionsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   collectionId?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   slug?: Prisma.StringFieldUpdateOperationsInput | string
+  duration?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  difficulty?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   orderIndex?: Prisma.IntFieldUpdateOperationsInput | number
-  publishedVersionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   versions?: Prisma.ModuleVersionUncheckedUpdateManyWithoutModuleNestedInput
@@ -851,10 +810,12 @@ export type ModuleUncheckedUpdateWithoutCompletionsInput = {
 export type ModuleCreateManyCollectionInput = {
   id?: string
   title: string
+  image?: string | null
   slug: string
+  duration?: string | null
+  difficulty: string
   description: string
   orderIndex: number
-  publishedVersionId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -862,23 +823,27 @@ export type ModuleCreateManyCollectionInput = {
 export type ModuleUpdateWithoutCollectionInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   slug?: Prisma.StringFieldUpdateOperationsInput | string
+  duration?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  difficulty?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   orderIndex?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   versions?: Prisma.ModuleVersionUpdateManyWithoutModuleNestedInput
-  publishedVersion?: Prisma.ModuleVersionUpdateOneWithoutPublishedForNestedInput
   completions?: Prisma.ModuleCompletionUpdateManyWithoutModuleNestedInput
 }
 
 export type ModuleUncheckedUpdateWithoutCollectionInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   slug?: Prisma.StringFieldUpdateOperationsInput | string
+  duration?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  difficulty?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   orderIndex?: Prisma.IntFieldUpdateOperationsInput | number
-  publishedVersionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   versions?: Prisma.ModuleVersionUncheckedUpdateManyWithoutModuleNestedInput
@@ -888,10 +853,12 @@ export type ModuleUncheckedUpdateWithoutCollectionInput = {
 export type ModuleUncheckedUpdateManyWithoutCollectionInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   slug?: Prisma.StringFieldUpdateOperationsInput | string
+  duration?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  difficulty?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   orderIndex?: Prisma.IntFieldUpdateOperationsInput | number
-  publishedVersionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -940,15 +907,16 @@ export type ModuleSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   id?: boolean
   collectionId?: boolean
   title?: boolean
+  image?: boolean
   slug?: boolean
+  duration?: boolean
+  difficulty?: boolean
   description?: boolean
   orderIndex?: boolean
-  publishedVersionId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   collection?: boolean | Prisma.CollectionDefaultArgs<ExtArgs>
   versions?: boolean | Prisma.Module$versionsArgs<ExtArgs>
-  publishedVersion?: boolean | Prisma.Module$publishedVersionArgs<ExtArgs>
   completions?: boolean | Prisma.Module$completionsArgs<ExtArgs>
   _count?: boolean | Prisma.ModuleCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["module"]>
@@ -957,57 +925,58 @@ export type ModuleSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extens
   id?: boolean
   collectionId?: boolean
   title?: boolean
+  image?: boolean
   slug?: boolean
+  duration?: boolean
+  difficulty?: boolean
   description?: boolean
   orderIndex?: boolean
-  publishedVersionId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   collection?: boolean | Prisma.CollectionDefaultArgs<ExtArgs>
-  publishedVersion?: boolean | Prisma.Module$publishedVersionArgs<ExtArgs>
 }, ExtArgs["result"]["module"]>
 
 export type ModuleSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   collectionId?: boolean
   title?: boolean
+  image?: boolean
   slug?: boolean
+  duration?: boolean
+  difficulty?: boolean
   description?: boolean
   orderIndex?: boolean
-  publishedVersionId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   collection?: boolean | Prisma.CollectionDefaultArgs<ExtArgs>
-  publishedVersion?: boolean | Prisma.Module$publishedVersionArgs<ExtArgs>
 }, ExtArgs["result"]["module"]>
 
 export type ModuleSelectScalar = {
   id?: boolean
   collectionId?: boolean
   title?: boolean
+  image?: boolean
   slug?: boolean
+  duration?: boolean
+  difficulty?: boolean
   description?: boolean
   orderIndex?: boolean
-  publishedVersionId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type ModuleOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "collectionId" | "title" | "slug" | "description" | "orderIndex" | "publishedVersionId" | "createdAt" | "updatedAt", ExtArgs["result"]["module"]>
+export type ModuleOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "collectionId" | "title" | "image" | "slug" | "duration" | "difficulty" | "description" | "orderIndex" | "createdAt" | "updatedAt", ExtArgs["result"]["module"]>
 export type ModuleInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   collection?: boolean | Prisma.CollectionDefaultArgs<ExtArgs>
   versions?: boolean | Prisma.Module$versionsArgs<ExtArgs>
-  publishedVersion?: boolean | Prisma.Module$publishedVersionArgs<ExtArgs>
   completions?: boolean | Prisma.Module$completionsArgs<ExtArgs>
   _count?: boolean | Prisma.ModuleCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type ModuleIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   collection?: boolean | Prisma.CollectionDefaultArgs<ExtArgs>
-  publishedVersion?: boolean | Prisma.Module$publishedVersionArgs<ExtArgs>
 }
 export type ModuleIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   collection?: boolean | Prisma.CollectionDefaultArgs<ExtArgs>
-  publishedVersion?: boolean | Prisma.Module$publishedVersionArgs<ExtArgs>
 }
 
 export type $ModulePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1015,17 +984,18 @@ export type $ModulePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
   objects: {
     collection: Prisma.$CollectionPayload<ExtArgs>
     versions: Prisma.$ModuleVersionPayload<ExtArgs>[]
-    publishedVersion: Prisma.$ModuleVersionPayload<ExtArgs> | null
     completions: Prisma.$ModuleCompletionPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     collectionId: string
     title: string
+    image: string | null
     slug: string
+    duration: string | null
+    difficulty: string
     description: string
     orderIndex: number
-    publishedVersionId: string | null
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["module"]>
@@ -1424,7 +1394,6 @@ export interface Prisma__ModuleClient<T, Null = never, ExtArgs extends runtime.T
   readonly [Symbol.toStringTag]: "PrismaPromise"
   collection<T extends Prisma.CollectionDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.CollectionDefaultArgs<ExtArgs>>): Prisma.Prisma__CollectionClient<runtime.Types.Result.GetResult<Prisma.$CollectionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   versions<T extends Prisma.Module$versionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Module$versionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ModuleVersionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  publishedVersion<T extends Prisma.Module$publishedVersionArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Module$publishedVersionArgs<ExtArgs>>): Prisma.Prisma__ModuleVersionClient<runtime.Types.Result.GetResult<Prisma.$ModuleVersionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   completions<T extends Prisma.Module$completionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Module$completionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ModuleCompletionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -1458,10 +1427,12 @@ export interface ModuleFieldRefs {
   readonly id: Prisma.FieldRef<"Module", 'String'>
   readonly collectionId: Prisma.FieldRef<"Module", 'String'>
   readonly title: Prisma.FieldRef<"Module", 'String'>
+  readonly image: Prisma.FieldRef<"Module", 'String'>
   readonly slug: Prisma.FieldRef<"Module", 'String'>
+  readonly duration: Prisma.FieldRef<"Module", 'String'>
+  readonly difficulty: Prisma.FieldRef<"Module", 'String'>
   readonly description: Prisma.FieldRef<"Module", 'String'>
   readonly orderIndex: Prisma.FieldRef<"Module", 'Int'>
-  readonly publishedVersionId: Prisma.FieldRef<"Module", 'String'>
   readonly createdAt: Prisma.FieldRef<"Module", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Module", 'DateTime'>
 }
@@ -1886,25 +1857,6 @@ export type Module$versionsArgs<ExtArgs extends runtime.Types.Extensions.Interna
   take?: number
   skip?: number
   distinct?: Prisma.ModuleVersionScalarFieldEnum | Prisma.ModuleVersionScalarFieldEnum[]
-}
-
-/**
- * Module.publishedVersion
- */
-export type Module$publishedVersionArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the ModuleVersion
-   */
-  select?: Prisma.ModuleVersionSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the ModuleVersion
-   */
-  omit?: Prisma.ModuleVersionOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.ModuleVersionInclude<ExtArgs> | null
-  where?: Prisma.ModuleVersionWhereInput
 }
 
 /**

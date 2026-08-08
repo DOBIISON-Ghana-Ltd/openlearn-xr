@@ -44,7 +44,7 @@ const SesSessionGetAll = ZApi({
         }).extend({
           collection: ZCollection.pick({
             name: true,
-            level: true
+            grade: true
           }),
         }),
       }),

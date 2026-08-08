@@ -45,6 +45,8 @@ export type ModuleCheckpointMinAggregateOutputType = {
   question: string | null
   correctAnswer: number | null
   points: number | null
+  explanation: string | null
+  hint: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -56,6 +58,8 @@ export type ModuleCheckpointMaxAggregateOutputType = {
   question: string | null
   correctAnswer: number | null
   points: number | null
+  explanation: string | null
+  hint: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -68,6 +72,8 @@ export type ModuleCheckpointCountAggregateOutputType = {
   options: number
   correctAnswer: number
   points: number
+  explanation: number
+  hint: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -93,6 +99,8 @@ export type ModuleCheckpointMinAggregateInputType = {
   question?: true
   correctAnswer?: true
   points?: true
+  explanation?: true
+  hint?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -104,6 +112,8 @@ export type ModuleCheckpointMaxAggregateInputType = {
   question?: true
   correctAnswer?: true
   points?: true
+  explanation?: true
+  hint?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -116,6 +126,8 @@ export type ModuleCheckpointCountAggregateInputType = {
   options?: true
   correctAnswer?: true
   points?: true
+  explanation?: true
+  hint?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -215,6 +227,8 @@ export type ModuleCheckpointGroupByOutputType = {
   options: string[]
   correctAnswer: number
   points: number
+  explanation: string
+  hint: string
   createdAt: Date
   updatedAt: Date
   _count: ModuleCheckpointCountAggregateOutputType | null
@@ -250,6 +264,8 @@ export type ModuleCheckpointWhereInput = {
   options?: Prisma.StringNullableListFilter<"ModuleCheckpoint">
   correctAnswer?: Prisma.IntFilter<"ModuleCheckpoint"> | number
   points?: Prisma.IntFilter<"ModuleCheckpoint"> | number
+  explanation?: Prisma.StringFilter<"ModuleCheckpoint"> | string
+  hint?: Prisma.StringFilter<"ModuleCheckpoint"> | string
   createdAt?: Prisma.DateTimeFilter<"ModuleCheckpoint"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"ModuleCheckpoint"> | Date | string
   moduleVersion?: Prisma.XOR<Prisma.ModuleVersionScalarRelationFilter, Prisma.ModuleVersionWhereInput>
@@ -264,6 +280,8 @@ export type ModuleCheckpointOrderByWithRelationInput = {
   options?: Prisma.SortOrder
   correctAnswer?: Prisma.SortOrder
   points?: Prisma.SortOrder
+  explanation?: Prisma.SortOrder
+  hint?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   moduleVersion?: Prisma.ModuleVersionOrderByWithRelationInput
@@ -281,6 +299,8 @@ export type ModuleCheckpointWhereUniqueInput = Prisma.AtLeast<{
   options?: Prisma.StringNullableListFilter<"ModuleCheckpoint">
   correctAnswer?: Prisma.IntFilter<"ModuleCheckpoint"> | number
   points?: Prisma.IntFilter<"ModuleCheckpoint"> | number
+  explanation?: Prisma.StringFilter<"ModuleCheckpoint"> | string
+  hint?: Prisma.StringFilter<"ModuleCheckpoint"> | string
   createdAt?: Prisma.DateTimeFilter<"ModuleCheckpoint"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"ModuleCheckpoint"> | Date | string
   moduleVersion?: Prisma.XOR<Prisma.ModuleVersionScalarRelationFilter, Prisma.ModuleVersionWhereInput>
@@ -295,6 +315,8 @@ export type ModuleCheckpointOrderByWithAggregationInput = {
   options?: Prisma.SortOrder
   correctAnswer?: Prisma.SortOrder
   points?: Prisma.SortOrder
+  explanation?: Prisma.SortOrder
+  hint?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.ModuleCheckpointCountOrderByAggregateInput
@@ -315,6 +337,8 @@ export type ModuleCheckpointScalarWhereWithAggregatesInput = {
   options?: Prisma.StringNullableListFilter<"ModuleCheckpoint">
   correctAnswer?: Prisma.IntWithAggregatesFilter<"ModuleCheckpoint"> | number
   points?: Prisma.IntWithAggregatesFilter<"ModuleCheckpoint"> | number
+  explanation?: Prisma.StringWithAggregatesFilter<"ModuleCheckpoint"> | string
+  hint?: Prisma.StringWithAggregatesFilter<"ModuleCheckpoint"> | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"ModuleCheckpoint"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"ModuleCheckpoint"> | Date | string
 }
@@ -326,6 +350,8 @@ export type ModuleCheckpointCreateInput = {
   options?: Prisma.ModuleCheckpointCreateoptionsInput | string[]
   correctAnswer: number
   points?: number
+  explanation: string
+  hint: string
   createdAt?: Date | string
   updatedAt?: Date | string
   moduleVersion: Prisma.ModuleVersionCreateNestedOneWithoutCheckpointsInput
@@ -340,6 +366,8 @@ export type ModuleCheckpointUncheckedCreateInput = {
   options?: Prisma.ModuleCheckpointCreateoptionsInput | string[]
   correctAnswer: number
   points?: number
+  explanation: string
+  hint: string
   createdAt?: Date | string
   updatedAt?: Date | string
   sessionCheckpoints?: Prisma.SessionCheckpointUncheckedCreateNestedManyWithoutCheckpointInput
@@ -352,6 +380,8 @@ export type ModuleCheckpointUpdateInput = {
   options?: Prisma.ModuleCheckpointUpdateoptionsInput | string[]
   correctAnswer?: Prisma.IntFieldUpdateOperationsInput | number
   points?: Prisma.IntFieldUpdateOperationsInput | number
+  explanation?: Prisma.StringFieldUpdateOperationsInput | string
+  hint?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   moduleVersion?: Prisma.ModuleVersionUpdateOneRequiredWithoutCheckpointsNestedInput
@@ -366,6 +396,8 @@ export type ModuleCheckpointUncheckedUpdateInput = {
   options?: Prisma.ModuleCheckpointUpdateoptionsInput | string[]
   correctAnswer?: Prisma.IntFieldUpdateOperationsInput | number
   points?: Prisma.IntFieldUpdateOperationsInput | number
+  explanation?: Prisma.StringFieldUpdateOperationsInput | string
+  hint?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   sessionCheckpoints?: Prisma.SessionCheckpointUncheckedUpdateManyWithoutCheckpointNestedInput
@@ -379,6 +411,8 @@ export type ModuleCheckpointCreateManyInput = {
   options?: Prisma.ModuleCheckpointCreateoptionsInput | string[]
   correctAnswer: number
   points?: number
+  explanation: string
+  hint: string
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -390,6 +424,8 @@ export type ModuleCheckpointUpdateManyMutationInput = {
   options?: Prisma.ModuleCheckpointUpdateoptionsInput | string[]
   correctAnswer?: Prisma.IntFieldUpdateOperationsInput | number
   points?: Prisma.IntFieldUpdateOperationsInput | number
+  explanation?: Prisma.StringFieldUpdateOperationsInput | string
+  hint?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -402,6 +438,8 @@ export type ModuleCheckpointUncheckedUpdateManyInput = {
   options?: Prisma.ModuleCheckpointUpdateoptionsInput | string[]
   correctAnswer?: Prisma.IntFieldUpdateOperationsInput | number
   points?: Prisma.IntFieldUpdateOperationsInput | number
+  explanation?: Prisma.StringFieldUpdateOperationsInput | string
+  hint?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -424,6 +462,8 @@ export type ModuleCheckpointCountOrderByAggregateInput = {
   options?: Prisma.SortOrder
   correctAnswer?: Prisma.SortOrder
   points?: Prisma.SortOrder
+  explanation?: Prisma.SortOrder
+  hint?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -441,6 +481,8 @@ export type ModuleCheckpointMaxOrderByAggregateInput = {
   question?: Prisma.SortOrder
   correctAnswer?: Prisma.SortOrder
   points?: Prisma.SortOrder
+  explanation?: Prisma.SortOrder
+  hint?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -452,6 +494,8 @@ export type ModuleCheckpointMinOrderByAggregateInput = {
   question?: Prisma.SortOrder
   correctAnswer?: Prisma.SortOrder
   points?: Prisma.SortOrder
+  explanation?: Prisma.SortOrder
+  hint?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -539,6 +583,8 @@ export type ModuleCheckpointCreateWithoutModuleVersionInput = {
   options?: Prisma.ModuleCheckpointCreateoptionsInput | string[]
   correctAnswer: number
   points?: number
+  explanation: string
+  hint: string
   createdAt?: Date | string
   updatedAt?: Date | string
   sessionCheckpoints?: Prisma.SessionCheckpointCreateNestedManyWithoutCheckpointInput
@@ -551,6 +597,8 @@ export type ModuleCheckpointUncheckedCreateWithoutModuleVersionInput = {
   options?: Prisma.ModuleCheckpointCreateoptionsInput | string[]
   correctAnswer: number
   points?: number
+  explanation: string
+  hint: string
   createdAt?: Date | string
   updatedAt?: Date | string
   sessionCheckpoints?: Prisma.SessionCheckpointUncheckedCreateNestedManyWithoutCheckpointInput
@@ -593,6 +641,8 @@ export type ModuleCheckpointScalarWhereInput = {
   options?: Prisma.StringNullableListFilter<"ModuleCheckpoint">
   correctAnswer?: Prisma.IntFilter<"ModuleCheckpoint"> | number
   points?: Prisma.IntFilter<"ModuleCheckpoint"> | number
+  explanation?: Prisma.StringFilter<"ModuleCheckpoint"> | string
+  hint?: Prisma.StringFilter<"ModuleCheckpoint"> | string
   createdAt?: Prisma.DateTimeFilter<"ModuleCheckpoint"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"ModuleCheckpoint"> | Date | string
 }
@@ -604,6 +654,8 @@ export type ModuleCheckpointCreateWithoutSessionCheckpointsInput = {
   options?: Prisma.ModuleCheckpointCreateoptionsInput | string[]
   correctAnswer: number
   points?: number
+  explanation: string
+  hint: string
   createdAt?: Date | string
   updatedAt?: Date | string
   moduleVersion: Prisma.ModuleVersionCreateNestedOneWithoutCheckpointsInput
@@ -617,6 +669,8 @@ export type ModuleCheckpointUncheckedCreateWithoutSessionCheckpointsInput = {
   options?: Prisma.ModuleCheckpointCreateoptionsInput | string[]
   correctAnswer: number
   points?: number
+  explanation: string
+  hint: string
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -644,6 +698,8 @@ export type ModuleCheckpointUpdateWithoutSessionCheckpointsInput = {
   options?: Prisma.ModuleCheckpointUpdateoptionsInput | string[]
   correctAnswer?: Prisma.IntFieldUpdateOperationsInput | number
   points?: Prisma.IntFieldUpdateOperationsInput | number
+  explanation?: Prisma.StringFieldUpdateOperationsInput | string
+  hint?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   moduleVersion?: Prisma.ModuleVersionUpdateOneRequiredWithoutCheckpointsNestedInput
@@ -657,6 +713,8 @@ export type ModuleCheckpointUncheckedUpdateWithoutSessionCheckpointsInput = {
   options?: Prisma.ModuleCheckpointUpdateoptionsInput | string[]
   correctAnswer?: Prisma.IntFieldUpdateOperationsInput | number
   points?: Prisma.IntFieldUpdateOperationsInput | number
+  explanation?: Prisma.StringFieldUpdateOperationsInput | string
+  hint?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -668,6 +726,8 @@ export type ModuleCheckpointCreateManyModuleVersionInput = {
   options?: Prisma.ModuleCheckpointCreateoptionsInput | string[]
   correctAnswer: number
   points?: number
+  explanation: string
+  hint: string
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -679,6 +739,8 @@ export type ModuleCheckpointUpdateWithoutModuleVersionInput = {
   options?: Prisma.ModuleCheckpointUpdateoptionsInput | string[]
   correctAnswer?: Prisma.IntFieldUpdateOperationsInput | number
   points?: Prisma.IntFieldUpdateOperationsInput | number
+  explanation?: Prisma.StringFieldUpdateOperationsInput | string
+  hint?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   sessionCheckpoints?: Prisma.SessionCheckpointUpdateManyWithoutCheckpointNestedInput
@@ -691,6 +753,8 @@ export type ModuleCheckpointUncheckedUpdateWithoutModuleVersionInput = {
   options?: Prisma.ModuleCheckpointUpdateoptionsInput | string[]
   correctAnswer?: Prisma.IntFieldUpdateOperationsInput | number
   points?: Prisma.IntFieldUpdateOperationsInput | number
+  explanation?: Prisma.StringFieldUpdateOperationsInput | string
+  hint?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   sessionCheckpoints?: Prisma.SessionCheckpointUncheckedUpdateManyWithoutCheckpointNestedInput
@@ -703,6 +767,8 @@ export type ModuleCheckpointUncheckedUpdateManyWithoutModuleVersionInput = {
   options?: Prisma.ModuleCheckpointUpdateoptionsInput | string[]
   correctAnswer?: Prisma.IntFieldUpdateOperationsInput | number
   points?: Prisma.IntFieldUpdateOperationsInput | number
+  explanation?: Prisma.StringFieldUpdateOperationsInput | string
+  hint?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -746,6 +812,8 @@ export type ModuleCheckpointSelect<ExtArgs extends runtime.Types.Extensions.Inte
   options?: boolean
   correctAnswer?: boolean
   points?: boolean
+  explanation?: boolean
+  hint?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   moduleVersion?: boolean | Prisma.ModuleVersionDefaultArgs<ExtArgs>
@@ -761,6 +829,8 @@ export type ModuleCheckpointSelectCreateManyAndReturn<ExtArgs extends runtime.Ty
   options?: boolean
   correctAnswer?: boolean
   points?: boolean
+  explanation?: boolean
+  hint?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   moduleVersion?: boolean | Prisma.ModuleVersionDefaultArgs<ExtArgs>
@@ -774,6 +844,8 @@ export type ModuleCheckpointSelectUpdateManyAndReturn<ExtArgs extends runtime.Ty
   options?: boolean
   correctAnswer?: boolean
   points?: boolean
+  explanation?: boolean
+  hint?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   moduleVersion?: boolean | Prisma.ModuleVersionDefaultArgs<ExtArgs>
@@ -787,11 +859,13 @@ export type ModuleCheckpointSelectScalar = {
   options?: boolean
   correctAnswer?: boolean
   points?: boolean
+  explanation?: boolean
+  hint?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type ModuleCheckpointOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "moduleVersionId" | "orderIndex" | "question" | "options" | "correctAnswer" | "points" | "createdAt" | "updatedAt", ExtArgs["result"]["moduleCheckpoint"]>
+export type ModuleCheckpointOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "moduleVersionId" | "orderIndex" | "question" | "options" | "correctAnswer" | "points" | "explanation" | "hint" | "createdAt" | "updatedAt", ExtArgs["result"]["moduleCheckpoint"]>
 export type ModuleCheckpointInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   moduleVersion?: boolean | Prisma.ModuleVersionDefaultArgs<ExtArgs>
   sessionCheckpoints?: boolean | Prisma.ModuleCheckpoint$sessionCheckpointsArgs<ExtArgs>
@@ -818,6 +892,8 @@ export type $ModuleCheckpointPayload<ExtArgs extends runtime.Types.Extensions.In
     options: string[]
     correctAnswer: number
     points: number
+    explanation: string
+    hint: string
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["moduleCheckpoint"]>
@@ -1252,6 +1328,8 @@ export interface ModuleCheckpointFieldRefs {
   readonly options: Prisma.FieldRef<"ModuleCheckpoint", 'String[]'>
   readonly correctAnswer: Prisma.FieldRef<"ModuleCheckpoint", 'Int'>
   readonly points: Prisma.FieldRef<"ModuleCheckpoint", 'Int'>
+  readonly explanation: Prisma.FieldRef<"ModuleCheckpoint", 'String'>
+  readonly hint: Prisma.FieldRef<"ModuleCheckpoint", 'String'>
   readonly createdAt: Prisma.FieldRef<"ModuleCheckpoint", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"ModuleCheckpoint", 'DateTime'>
 }

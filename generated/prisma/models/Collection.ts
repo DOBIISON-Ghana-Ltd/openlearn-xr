@@ -29,7 +29,7 @@ export type CollectionMinAggregateOutputType = {
   name: string | null
   slug: string | null
   description: string | null
-  level: string | null
+  grade: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -39,7 +39,7 @@ export type CollectionMaxAggregateOutputType = {
   name: string | null
   slug: string | null
   description: string | null
-  level: string | null
+  grade: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -49,7 +49,7 @@ export type CollectionCountAggregateOutputType = {
   name: number
   slug: number
   description: number
-  level: number
+  grade: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -61,7 +61,7 @@ export type CollectionMinAggregateInputType = {
   name?: true
   slug?: true
   description?: true
-  level?: true
+  grade?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -71,7 +71,7 @@ export type CollectionMaxAggregateInputType = {
   name?: true
   slug?: true
   description?: true
-  level?: true
+  grade?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -81,7 +81,7 @@ export type CollectionCountAggregateInputType = {
   name?: true
   slug?: true
   description?: true
-  level?: true
+  grade?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -164,7 +164,7 @@ export type CollectionGroupByOutputType = {
   name: string
   slug: string
   description: string | null
-  level: string | null
+  grade: string
   createdAt: Date
   updatedAt: Date
   _count: CollectionCountAggregateOutputType | null
@@ -195,7 +195,7 @@ export type CollectionWhereInput = {
   name?: Prisma.StringFilter<"Collection"> | string
   slug?: Prisma.StringFilter<"Collection"> | string
   description?: Prisma.StringNullableFilter<"Collection"> | string | null
-  level?: Prisma.StringNullableFilter<"Collection"> | string | null
+  grade?: Prisma.StringFilter<"Collection"> | string
   createdAt?: Prisma.DateTimeFilter<"Collection"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Collection"> | Date | string
   mediaFiles?: Prisma.CollectionMediaListRelationFilter
@@ -208,7 +208,7 @@ export type CollectionOrderByWithRelationInput = {
   name?: Prisma.SortOrder
   slug?: Prisma.SortOrder
   description?: Prisma.SortOrderInput | Prisma.SortOrder
-  level?: Prisma.SortOrderInput | Prisma.SortOrder
+  grade?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   mediaFiles?: Prisma.CollectionMediaOrderByRelationAggregateInput
@@ -224,7 +224,7 @@ export type CollectionWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.CollectionWhereInput | Prisma.CollectionWhereInput[]
   name?: Prisma.StringFilter<"Collection"> | string
   description?: Prisma.StringNullableFilter<"Collection"> | string | null
-  level?: Prisma.StringNullableFilter<"Collection"> | string | null
+  grade?: Prisma.StringFilter<"Collection"> | string
   createdAt?: Prisma.DateTimeFilter<"Collection"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Collection"> | Date | string
   mediaFiles?: Prisma.CollectionMediaListRelationFilter
@@ -237,7 +237,7 @@ export type CollectionOrderByWithAggregationInput = {
   name?: Prisma.SortOrder
   slug?: Prisma.SortOrder
   description?: Prisma.SortOrderInput | Prisma.SortOrder
-  level?: Prisma.SortOrderInput | Prisma.SortOrder
+  grade?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.CollectionCountOrderByAggregateInput
@@ -253,7 +253,7 @@ export type CollectionScalarWhereWithAggregatesInput = {
   name?: Prisma.StringWithAggregatesFilter<"Collection"> | string
   slug?: Prisma.StringWithAggregatesFilter<"Collection"> | string
   description?: Prisma.StringNullableWithAggregatesFilter<"Collection"> | string | null
-  level?: Prisma.StringNullableWithAggregatesFilter<"Collection"> | string | null
+  grade?: Prisma.StringWithAggregatesFilter<"Collection"> | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Collection"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Collection"> | Date | string
 }
@@ -263,7 +263,7 @@ export type CollectionCreateInput = {
   name: string
   slug: string
   description?: string | null
-  level?: string | null
+  grade: string
   createdAt?: Date | string
   updatedAt?: Date | string
   mediaFiles?: Prisma.CollectionMediaCreateNestedManyWithoutCollectionInput
@@ -276,7 +276,7 @@ export type CollectionUncheckedCreateInput = {
   name: string
   slug: string
   description?: string | null
-  level?: string | null
+  grade: string
   createdAt?: Date | string
   updatedAt?: Date | string
   mediaFiles?: Prisma.CollectionMediaUncheckedCreateNestedManyWithoutCollectionInput
@@ -289,7 +289,7 @@ export type CollectionUpdateInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  level?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  grade?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   mediaFiles?: Prisma.CollectionMediaUpdateManyWithoutCollectionNestedInput
@@ -302,7 +302,7 @@ export type CollectionUncheckedUpdateInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  level?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  grade?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   mediaFiles?: Prisma.CollectionMediaUncheckedUpdateManyWithoutCollectionNestedInput
@@ -315,7 +315,7 @@ export type CollectionCreateManyInput = {
   name: string
   slug: string
   description?: string | null
-  level?: string | null
+  grade: string
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -325,7 +325,7 @@ export type CollectionUpdateManyMutationInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  level?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  grade?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -335,7 +335,7 @@ export type CollectionUncheckedUpdateManyInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  level?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  grade?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -345,7 +345,7 @@ export type CollectionCountOrderByAggregateInput = {
   name?: Prisma.SortOrder
   slug?: Prisma.SortOrder
   description?: Prisma.SortOrder
-  level?: Prisma.SortOrder
+  grade?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -355,7 +355,7 @@ export type CollectionMaxOrderByAggregateInput = {
   name?: Prisma.SortOrder
   slug?: Prisma.SortOrder
   description?: Prisma.SortOrder
-  level?: Prisma.SortOrder
+  grade?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -365,7 +365,7 @@ export type CollectionMinOrderByAggregateInput = {
   name?: Prisma.SortOrder
   slug?: Prisma.SortOrder
   description?: Prisma.SortOrder
-  level?: Prisma.SortOrder
+  grade?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -422,7 +422,7 @@ export type CollectionCreateWithoutMediaFilesInput = {
   name: string
   slug: string
   description?: string | null
-  level?: string | null
+  grade: string
   createdAt?: Date | string
   updatedAt?: Date | string
   modules?: Prisma.ModuleCreateNestedManyWithoutCollectionInput
@@ -434,7 +434,7 @@ export type CollectionUncheckedCreateWithoutMediaFilesInput = {
   name: string
   slug: string
   description?: string | null
-  level?: string | null
+  grade: string
   createdAt?: Date | string
   updatedAt?: Date | string
   modules?: Prisma.ModuleUncheckedCreateNestedManyWithoutCollectionInput
@@ -462,7 +462,7 @@ export type CollectionUpdateWithoutMediaFilesInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  level?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  grade?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   modules?: Prisma.ModuleUpdateManyWithoutCollectionNestedInput
@@ -474,7 +474,7 @@ export type CollectionUncheckedUpdateWithoutMediaFilesInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  level?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  grade?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   modules?: Prisma.ModuleUncheckedUpdateManyWithoutCollectionNestedInput
@@ -486,7 +486,7 @@ export type CollectionCreateWithoutModulesInput = {
   name: string
   slug: string
   description?: string | null
-  level?: string | null
+  grade: string
   createdAt?: Date | string
   updatedAt?: Date | string
   mediaFiles?: Prisma.CollectionMediaCreateNestedManyWithoutCollectionInput
@@ -498,7 +498,7 @@ export type CollectionUncheckedCreateWithoutModulesInput = {
   name: string
   slug: string
   description?: string | null
-  level?: string | null
+  grade: string
   createdAt?: Date | string
   updatedAt?: Date | string
   mediaFiles?: Prisma.CollectionMediaUncheckedCreateNestedManyWithoutCollectionInput
@@ -526,7 +526,7 @@ export type CollectionUpdateWithoutModulesInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  level?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  grade?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   mediaFiles?: Prisma.CollectionMediaUpdateManyWithoutCollectionNestedInput
@@ -538,7 +538,7 @@ export type CollectionUncheckedUpdateWithoutModulesInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  level?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  grade?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   mediaFiles?: Prisma.CollectionMediaUncheckedUpdateManyWithoutCollectionNestedInput
@@ -550,7 +550,7 @@ export type CollectionCreateWithoutProgressInput = {
   name: string
   slug: string
   description?: string | null
-  level?: string | null
+  grade: string
   createdAt?: Date | string
   updatedAt?: Date | string
   mediaFiles?: Prisma.CollectionMediaCreateNestedManyWithoutCollectionInput
@@ -562,7 +562,7 @@ export type CollectionUncheckedCreateWithoutProgressInput = {
   name: string
   slug: string
   description?: string | null
-  level?: string | null
+  grade: string
   createdAt?: Date | string
   updatedAt?: Date | string
   mediaFiles?: Prisma.CollectionMediaUncheckedCreateNestedManyWithoutCollectionInput
@@ -590,7 +590,7 @@ export type CollectionUpdateWithoutProgressInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  level?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  grade?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   mediaFiles?: Prisma.CollectionMediaUpdateManyWithoutCollectionNestedInput
@@ -602,7 +602,7 @@ export type CollectionUncheckedUpdateWithoutProgressInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  level?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  grade?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   mediaFiles?: Prisma.CollectionMediaUncheckedUpdateManyWithoutCollectionNestedInput
@@ -663,7 +663,7 @@ export type CollectionSelect<ExtArgs extends runtime.Types.Extensions.InternalAr
   name?: boolean
   slug?: boolean
   description?: boolean
-  level?: boolean
+  grade?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   mediaFiles?: boolean | Prisma.Collection$mediaFilesArgs<ExtArgs>
@@ -677,7 +677,7 @@ export type CollectionSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ex
   name?: boolean
   slug?: boolean
   description?: boolean
-  level?: boolean
+  grade?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["collection"]>
@@ -687,7 +687,7 @@ export type CollectionSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Ex
   name?: boolean
   slug?: boolean
   description?: boolean
-  level?: boolean
+  grade?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["collection"]>
@@ -697,12 +697,12 @@ export type CollectionSelectScalar = {
   name?: boolean
   slug?: boolean
   description?: boolean
-  level?: boolean
+  grade?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type CollectionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "slug" | "description" | "level" | "createdAt" | "updatedAt", ExtArgs["result"]["collection"]>
+export type CollectionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "slug" | "description" | "grade" | "createdAt" | "updatedAt", ExtArgs["result"]["collection"]>
 export type CollectionInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   mediaFiles?: boolean | Prisma.Collection$mediaFilesArgs<ExtArgs>
   modules?: boolean | Prisma.Collection$modulesArgs<ExtArgs>
@@ -724,7 +724,7 @@ export type $CollectionPayload<ExtArgs extends runtime.Types.Extensions.Internal
     name: string
     slug: string
     description: string | null
-    level: string | null
+    grade: string
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["collection"]>
@@ -1157,7 +1157,7 @@ export interface CollectionFieldRefs {
   readonly name: Prisma.FieldRef<"Collection", 'String'>
   readonly slug: Prisma.FieldRef<"Collection", 'String'>
   readonly description: Prisma.FieldRef<"Collection", 'String'>
-  readonly level: Prisma.FieldRef<"Collection", 'String'>
+  readonly grade: Prisma.FieldRef<"Collection", 'String'>
   readonly createdAt: Prisma.FieldRef<"Collection", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Collection", 'DateTime'>
 }

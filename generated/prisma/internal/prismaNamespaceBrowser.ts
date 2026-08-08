@@ -259,7 +259,7 @@ export const CollectionScalarFieldEnum = {
   name: 'name',
   slug: 'slug',
   description: 'description',
-  level: 'level',
+  grade: 'grade',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -294,10 +294,12 @@ export const ModuleScalarFieldEnum = {
   id: 'id',
   collectionId: 'collectionId',
   title: 'title',
+  image: 'image',
   slug: 'slug',
+  duration: 'duration',
+  difficulty: 'difficulty',
   description: 'description',
   orderIndex: 'orderIndex',
-  publishedVersionId: 'publishedVersionId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -331,6 +333,8 @@ export const ModuleCheckpointScalarFieldEnum = {
   options: 'options',
   correctAnswer: 'correctAnswer',
   points: 'points',
+  explanation: 'explanation',
+  hint: 'hint',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const

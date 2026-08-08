@@ -129,6 +129,8 @@ export const SubscriptionStatusEnum = z.enum(["ACTIVE", "PAST_DUE", "CANCELED", 
 
 export const MediaStatusEnum = z.enum(["active", "deleted", "uploading", "processing", "ready", "failed"]);
 
+export const ModuleDifficultyEnum = z.enum(["EAZY", "MEDIUM", "HARD"]);
+
 export const ModuleVersionStatusEnum = z.enum(["DRAFT", "PUBLISHED", "ARCHIVED"]);
 
 export const ModuleProgressPlayModeEnum = z.enum(["free", "controlled"]);
@@ -138,6 +140,31 @@ export const GamificationLogActionEnum = z.enum(["XP_EARNED", "XP_DEDUCTED", "ST
 export const LiveSessionStatusEnum = z.enum(["STAGING", "ACTIVE", "COMPLETED", "CANCELLED"]);
 
 export const EmailLogStatusEnum = z.enum(["QUEUED", "SENT", "FAILED", "BOUNCED"]);
+
+export const ZNote = z.object({
+  overview: z.object({
+    objectives: z.string().array()
+  }),
+  engage: z.object({
+    curiosityQuestion: z.string(),
+    preAssessment: z.object({
+      question: z.string(),
+      options: z.string().array(),
+      answer: z.number()
+    }).array(),
+  }),
+  explanation: z.object({
+    items: z.object({
+      name: z.string(),
+      image: z.string(),
+      description: z.string()
+    }).array(),
+    keyTakeaways: z.object({
+      phrase: z.string(),
+      description: z.string()
+    }).array()
+  })
+})
 
 // ==========================================
 // BETTER AUTH CORE
@@ -302,7 +329,7 @@ export const ZCollection = z.object({
   name: z.string().min(1, "Collection name is required"),
   slug: z.string(),
   description: z.string().nullable(),
-  level: z.string(),
+  grade: z.string(),
   createdAt: ZDate,
   updatedAt: ZDate,
 });
@@ -341,10 +368,12 @@ export const ZModule = z.object({
   id: z.string(),
   collectionId: z.string(),
   title: z.string().min(1, "Title is required"),
+  image: z.string().nullable(),
   slug: z.string(),
+  duration: z.string().nullable(),
+  difficulty: ModuleDifficultyEnum,
   description: z.string(),
   orderIndex: z.number().int(),
-  publishedVersionId: z.string().nullable(),
   createdAt: ZDate,
   updatedAt: ZDate,
 });
@@ -356,7 +385,7 @@ export const ZModuleVersion = z.object({
   branchedFromId: z.string().nullable(),
   status: ModuleVersionStatusEnum.default("DRAFT"),
   interactiveConfig: z.record(z.string(), z.any()),
-  notes: z.record(z.string(), z.any()).nullable(),
+  notes: ZNote.nullable(),
   changeNote: z.string().nullable(),
   createdById: z.string(),
   publishedAt: ZDate.nullable(),
@@ -372,6 +401,8 @@ export const ZModuleCheckpoint = z.object({
   options: z.array(z.string()),
   correctAnswer: z.number().int(),
   points: z.number().int().default(10),
+  explanation: z.string(),
+  hint: z.string(),
   createdAt: ZDate,
   updatedAt: ZDate,
 });

@@ -267,7 +267,6 @@ export type ModuleVersionWhereInput = {
   module?: Prisma.XOR<Prisma.ModuleScalarRelationFilter, Prisma.ModuleWhereInput>
   branchedFrom?: Prisma.XOR<Prisma.ModuleVersionNullableScalarRelationFilter, Prisma.ModuleVersionWhereInput> | null
   branches?: Prisma.ModuleVersionListRelationFilter
-  publishedFor?: Prisma.XOR<Prisma.ModuleNullableScalarRelationFilter, Prisma.ModuleWhereInput> | null
   checkpoints?: Prisma.ModuleCheckpointListRelationFilter
   editorChat?: Prisma.XOR<Prisma.EditorChatNullableScalarRelationFilter, Prisma.EditorChatWhereInput> | null
   sessions?: Prisma.LiveSessionListRelationFilter
@@ -291,7 +290,6 @@ export type ModuleVersionOrderByWithRelationInput = {
   module?: Prisma.ModuleOrderByWithRelationInput
   branchedFrom?: Prisma.ModuleVersionOrderByWithRelationInput
   branches?: Prisma.ModuleVersionOrderByRelationAggregateInput
-  publishedFor?: Prisma.ModuleOrderByWithRelationInput
   checkpoints?: Prisma.ModuleCheckpointOrderByRelationAggregateInput
   editorChat?: Prisma.EditorChatOrderByWithRelationInput
   sessions?: Prisma.LiveSessionOrderByRelationAggregateInput
@@ -319,7 +317,6 @@ export type ModuleVersionWhereUniqueInput = Prisma.AtLeast<{
   module?: Prisma.XOR<Prisma.ModuleScalarRelationFilter, Prisma.ModuleWhereInput>
   branchedFrom?: Prisma.XOR<Prisma.ModuleVersionNullableScalarRelationFilter, Prisma.ModuleVersionWhereInput> | null
   branches?: Prisma.ModuleVersionListRelationFilter
-  publishedFor?: Prisma.XOR<Prisma.ModuleNullableScalarRelationFilter, Prisma.ModuleWhereInput> | null
   checkpoints?: Prisma.ModuleCheckpointListRelationFilter
   editorChat?: Prisma.XOR<Prisma.EditorChatNullableScalarRelationFilter, Prisma.EditorChatWhereInput> | null
   sessions?: Prisma.LiveSessionListRelationFilter
@@ -379,7 +376,6 @@ export type ModuleVersionCreateInput = {
   module: Prisma.ModuleCreateNestedOneWithoutVersionsInput
   branchedFrom?: Prisma.ModuleVersionCreateNestedOneWithoutBranchesInput
   branches?: Prisma.ModuleVersionCreateNestedManyWithoutBranchedFromInput
-  publishedFor?: Prisma.ModuleCreateNestedOneWithoutPublishedVersionInput
   checkpoints?: Prisma.ModuleCheckpointCreateNestedManyWithoutModuleVersionInput
   editorChat?: Prisma.EditorChatCreateNestedOneWithoutModuleVersionInput
   sessions?: Prisma.LiveSessionCreateNestedManyWithoutModuleVersionInput
@@ -401,7 +397,6 @@ export type ModuleVersionUncheckedCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   branches?: Prisma.ModuleVersionUncheckedCreateNestedManyWithoutBranchedFromInput
-  publishedFor?: Prisma.ModuleUncheckedCreateNestedOneWithoutPublishedVersionInput
   checkpoints?: Prisma.ModuleCheckpointUncheckedCreateNestedManyWithoutModuleVersionInput
   editorChat?: Prisma.EditorChatUncheckedCreateNestedOneWithoutModuleVersionInput
   sessions?: Prisma.LiveSessionUncheckedCreateNestedManyWithoutModuleVersionInput
@@ -423,7 +418,6 @@ export type ModuleVersionUpdateInput = {
   module?: Prisma.ModuleUpdateOneRequiredWithoutVersionsNestedInput
   branchedFrom?: Prisma.ModuleVersionUpdateOneWithoutBranchesNestedInput
   branches?: Prisma.ModuleVersionUpdateManyWithoutBranchedFromNestedInput
-  publishedFor?: Prisma.ModuleUpdateOneWithoutPublishedVersionNestedInput
   checkpoints?: Prisma.ModuleCheckpointUpdateManyWithoutModuleVersionNestedInput
   editorChat?: Prisma.EditorChatUpdateOneWithoutModuleVersionNestedInput
   sessions?: Prisma.LiveSessionUpdateManyWithoutModuleVersionNestedInput
@@ -445,7 +439,6 @@ export type ModuleVersionUncheckedUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   branches?: Prisma.ModuleVersionUncheckedUpdateManyWithoutBranchedFromNestedInput
-  publishedFor?: Prisma.ModuleUncheckedUpdateOneWithoutPublishedVersionNestedInput
   checkpoints?: Prisma.ModuleCheckpointUncheckedUpdateManyWithoutModuleVersionNestedInput
   editorChat?: Prisma.EditorChatUncheckedUpdateOneWithoutModuleVersionNestedInput
   sessions?: Prisma.LiveSessionUncheckedUpdateManyWithoutModuleVersionNestedInput
@@ -507,13 +500,13 @@ export type ModuleVersionListRelationFilter = {
   none?: Prisma.ModuleVersionWhereInput
 }
 
+export type ModuleVersionOrderByRelationAggregateInput = {
+  _count?: Prisma.SortOrder
+}
+
 export type ModuleVersionNullableScalarRelationFilter = {
   is?: Prisma.ModuleVersionWhereInput | null
   isNot?: Prisma.ModuleVersionWhereInput | null
-}
-
-export type ModuleVersionOrderByRelationAggregateInput = {
-  _count?: Prisma.SortOrder
 }
 
 export type ModuleVersionModuleIdVersionNumberCompoundUniqueInput = {
@@ -591,12 +584,6 @@ export type ModuleVersionCreateNestedManyWithoutModuleInput = {
   connect?: Prisma.ModuleVersionWhereUniqueInput | Prisma.ModuleVersionWhereUniqueInput[]
 }
 
-export type ModuleVersionCreateNestedOneWithoutPublishedForInput = {
-  create?: Prisma.XOR<Prisma.ModuleVersionCreateWithoutPublishedForInput, Prisma.ModuleVersionUncheckedCreateWithoutPublishedForInput>
-  connectOrCreate?: Prisma.ModuleVersionCreateOrConnectWithoutPublishedForInput
-  connect?: Prisma.ModuleVersionWhereUniqueInput
-}
-
 export type ModuleVersionUncheckedCreateNestedManyWithoutModuleInput = {
   create?: Prisma.XOR<Prisma.ModuleVersionCreateWithoutModuleInput, Prisma.ModuleVersionUncheckedCreateWithoutModuleInput> | Prisma.ModuleVersionCreateWithoutModuleInput[] | Prisma.ModuleVersionUncheckedCreateWithoutModuleInput[]
   connectOrCreate?: Prisma.ModuleVersionCreateOrConnectWithoutModuleInput | Prisma.ModuleVersionCreateOrConnectWithoutModuleInput[]
@@ -616,16 +603,6 @@ export type ModuleVersionUpdateManyWithoutModuleNestedInput = {
   update?: Prisma.ModuleVersionUpdateWithWhereUniqueWithoutModuleInput | Prisma.ModuleVersionUpdateWithWhereUniqueWithoutModuleInput[]
   updateMany?: Prisma.ModuleVersionUpdateManyWithWhereWithoutModuleInput | Prisma.ModuleVersionUpdateManyWithWhereWithoutModuleInput[]
   deleteMany?: Prisma.ModuleVersionScalarWhereInput | Prisma.ModuleVersionScalarWhereInput[]
-}
-
-export type ModuleVersionUpdateOneWithoutPublishedForNestedInput = {
-  create?: Prisma.XOR<Prisma.ModuleVersionCreateWithoutPublishedForInput, Prisma.ModuleVersionUncheckedCreateWithoutPublishedForInput>
-  connectOrCreate?: Prisma.ModuleVersionCreateOrConnectWithoutPublishedForInput
-  upsert?: Prisma.ModuleVersionUpsertWithoutPublishedForInput
-  disconnect?: Prisma.ModuleVersionWhereInput | boolean
-  delete?: Prisma.ModuleVersionWhereInput | boolean
-  connect?: Prisma.ModuleVersionWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.ModuleVersionUpdateToOneWithWhereWithoutPublishedForInput, Prisma.ModuleVersionUpdateWithoutPublishedForInput>, Prisma.ModuleVersionUncheckedUpdateWithoutPublishedForInput>
 }
 
 export type ModuleVersionUncheckedUpdateManyWithoutModuleNestedInput = {
@@ -772,7 +749,6 @@ export type ModuleVersionCreateWithoutEditorChatInput = {
   module: Prisma.ModuleCreateNestedOneWithoutVersionsInput
   branchedFrom?: Prisma.ModuleVersionCreateNestedOneWithoutBranchesInput
   branches?: Prisma.ModuleVersionCreateNestedManyWithoutBranchedFromInput
-  publishedFor?: Prisma.ModuleCreateNestedOneWithoutPublishedVersionInput
   checkpoints?: Prisma.ModuleCheckpointCreateNestedManyWithoutModuleVersionInput
   sessions?: Prisma.LiveSessionCreateNestedManyWithoutModuleVersionInput
   completions?: Prisma.ModuleCompletionCreateNestedManyWithoutLastPlayedVersionInput
@@ -793,7 +769,6 @@ export type ModuleVersionUncheckedCreateWithoutEditorChatInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   branches?: Prisma.ModuleVersionUncheckedCreateNestedManyWithoutBranchedFromInput
-  publishedFor?: Prisma.ModuleUncheckedCreateNestedOneWithoutPublishedVersionInput
   checkpoints?: Prisma.ModuleCheckpointUncheckedCreateNestedManyWithoutModuleVersionInput
   sessions?: Prisma.LiveSessionUncheckedCreateNestedManyWithoutModuleVersionInput
   completions?: Prisma.ModuleCompletionUncheckedCreateNestedManyWithoutLastPlayedVersionInput
@@ -830,7 +805,6 @@ export type ModuleVersionUpdateWithoutEditorChatInput = {
   module?: Prisma.ModuleUpdateOneRequiredWithoutVersionsNestedInput
   branchedFrom?: Prisma.ModuleVersionUpdateOneWithoutBranchesNestedInput
   branches?: Prisma.ModuleVersionUpdateManyWithoutBranchedFromNestedInput
-  publishedFor?: Prisma.ModuleUpdateOneWithoutPublishedVersionNestedInput
   checkpoints?: Prisma.ModuleCheckpointUpdateManyWithoutModuleVersionNestedInput
   sessions?: Prisma.LiveSessionUpdateManyWithoutModuleVersionNestedInput
   completions?: Prisma.ModuleCompletionUpdateManyWithoutLastPlayedVersionNestedInput
@@ -851,7 +825,6 @@ export type ModuleVersionUncheckedUpdateWithoutEditorChatInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   branches?: Prisma.ModuleVersionUncheckedUpdateManyWithoutBranchedFromNestedInput
-  publishedFor?: Prisma.ModuleUncheckedUpdateOneWithoutPublishedVersionNestedInput
   checkpoints?: Prisma.ModuleCheckpointUncheckedUpdateManyWithoutModuleVersionNestedInput
   sessions?: Prisma.LiveSessionUncheckedUpdateManyWithoutModuleVersionNestedInput
   completions?: Prisma.ModuleCompletionUncheckedUpdateManyWithoutLastPlayedVersionNestedInput
@@ -871,7 +844,6 @@ export type ModuleVersionCreateWithoutModuleInput = {
   updatedAt?: Date | string
   branchedFrom?: Prisma.ModuleVersionCreateNestedOneWithoutBranchesInput
   branches?: Prisma.ModuleVersionCreateNestedManyWithoutBranchedFromInput
-  publishedFor?: Prisma.ModuleCreateNestedOneWithoutPublishedVersionInput
   checkpoints?: Prisma.ModuleCheckpointCreateNestedManyWithoutModuleVersionInput
   editorChat?: Prisma.EditorChatCreateNestedOneWithoutModuleVersionInput
   sessions?: Prisma.LiveSessionCreateNestedManyWithoutModuleVersionInput
@@ -892,7 +864,6 @@ export type ModuleVersionUncheckedCreateWithoutModuleInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   branches?: Prisma.ModuleVersionUncheckedCreateNestedManyWithoutBranchedFromInput
-  publishedFor?: Prisma.ModuleUncheckedCreateNestedOneWithoutPublishedVersionInput
   checkpoints?: Prisma.ModuleCheckpointUncheckedCreateNestedManyWithoutModuleVersionInput
   editorChat?: Prisma.EditorChatUncheckedCreateNestedOneWithoutModuleVersionInput
   sessions?: Prisma.LiveSessionUncheckedCreateNestedManyWithoutModuleVersionInput
@@ -908,53 +879,6 @@ export type ModuleVersionCreateOrConnectWithoutModuleInput = {
 export type ModuleVersionCreateManyModuleInputEnvelope = {
   data: Prisma.ModuleVersionCreateManyModuleInput | Prisma.ModuleVersionCreateManyModuleInput[]
   skipDuplicates?: boolean
-}
-
-export type ModuleVersionCreateWithoutPublishedForInput = {
-  id?: string
-  versionNumber: number
-  status?: string
-  interactiveConfig: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  notes?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  changeNote?: string | null
-  createdById: string
-  publishedAt?: Date | string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  module: Prisma.ModuleCreateNestedOneWithoutVersionsInput
-  branchedFrom?: Prisma.ModuleVersionCreateNestedOneWithoutBranchesInput
-  branches?: Prisma.ModuleVersionCreateNestedManyWithoutBranchedFromInput
-  checkpoints?: Prisma.ModuleCheckpointCreateNestedManyWithoutModuleVersionInput
-  editorChat?: Prisma.EditorChatCreateNestedOneWithoutModuleVersionInput
-  sessions?: Prisma.LiveSessionCreateNestedManyWithoutModuleVersionInput
-  completions?: Prisma.ModuleCompletionCreateNestedManyWithoutLastPlayedVersionInput
-  playAttempts?: Prisma.PlayAttemptCreateNestedManyWithoutModuleVersionInput
-}
-
-export type ModuleVersionUncheckedCreateWithoutPublishedForInput = {
-  id?: string
-  moduleId: string
-  versionNumber: number
-  branchedFromId?: string | null
-  status?: string
-  interactiveConfig: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  notes?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  changeNote?: string | null
-  createdById: string
-  publishedAt?: Date | string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  branches?: Prisma.ModuleVersionUncheckedCreateNestedManyWithoutBranchedFromInput
-  checkpoints?: Prisma.ModuleCheckpointUncheckedCreateNestedManyWithoutModuleVersionInput
-  editorChat?: Prisma.EditorChatUncheckedCreateNestedOneWithoutModuleVersionInput
-  sessions?: Prisma.LiveSessionUncheckedCreateNestedManyWithoutModuleVersionInput
-  completions?: Prisma.ModuleCompletionUncheckedCreateNestedManyWithoutLastPlayedVersionInput
-  playAttempts?: Prisma.PlayAttemptUncheckedCreateNestedManyWithoutModuleVersionInput
-}
-
-export type ModuleVersionCreateOrConnectWithoutPublishedForInput = {
-  where: Prisma.ModuleVersionWhereUniqueInput
-  create: Prisma.XOR<Prisma.ModuleVersionCreateWithoutPublishedForInput, Prisma.ModuleVersionUncheckedCreateWithoutPublishedForInput>
 }
 
 export type ModuleVersionUpsertWithWhereUniqueWithoutModuleInput = {
@@ -991,59 +915,6 @@ export type ModuleVersionScalarWhereInput = {
   updatedAt?: Prisma.DateTimeFilter<"ModuleVersion"> | Date | string
 }
 
-export type ModuleVersionUpsertWithoutPublishedForInput = {
-  update: Prisma.XOR<Prisma.ModuleVersionUpdateWithoutPublishedForInput, Prisma.ModuleVersionUncheckedUpdateWithoutPublishedForInput>
-  create: Prisma.XOR<Prisma.ModuleVersionCreateWithoutPublishedForInput, Prisma.ModuleVersionUncheckedCreateWithoutPublishedForInput>
-  where?: Prisma.ModuleVersionWhereInput
-}
-
-export type ModuleVersionUpdateToOneWithWhereWithoutPublishedForInput = {
-  where?: Prisma.ModuleVersionWhereInput
-  data: Prisma.XOR<Prisma.ModuleVersionUpdateWithoutPublishedForInput, Prisma.ModuleVersionUncheckedUpdateWithoutPublishedForInput>
-}
-
-export type ModuleVersionUpdateWithoutPublishedForInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  versionNumber?: Prisma.IntFieldUpdateOperationsInput | number
-  status?: Prisma.StringFieldUpdateOperationsInput | string
-  interactiveConfig?: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  notes?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  changeNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdById?: Prisma.StringFieldUpdateOperationsInput | string
-  publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  module?: Prisma.ModuleUpdateOneRequiredWithoutVersionsNestedInput
-  branchedFrom?: Prisma.ModuleVersionUpdateOneWithoutBranchesNestedInput
-  branches?: Prisma.ModuleVersionUpdateManyWithoutBranchedFromNestedInput
-  checkpoints?: Prisma.ModuleCheckpointUpdateManyWithoutModuleVersionNestedInput
-  editorChat?: Prisma.EditorChatUpdateOneWithoutModuleVersionNestedInput
-  sessions?: Prisma.LiveSessionUpdateManyWithoutModuleVersionNestedInput
-  completions?: Prisma.ModuleCompletionUpdateManyWithoutLastPlayedVersionNestedInput
-  playAttempts?: Prisma.PlayAttemptUpdateManyWithoutModuleVersionNestedInput
-}
-
-export type ModuleVersionUncheckedUpdateWithoutPublishedForInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  moduleId?: Prisma.StringFieldUpdateOperationsInput | string
-  versionNumber?: Prisma.IntFieldUpdateOperationsInput | number
-  branchedFromId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  status?: Prisma.StringFieldUpdateOperationsInput | string
-  interactiveConfig?: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  notes?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  changeNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdById?: Prisma.StringFieldUpdateOperationsInput | string
-  publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  branches?: Prisma.ModuleVersionUncheckedUpdateManyWithoutBranchedFromNestedInput
-  checkpoints?: Prisma.ModuleCheckpointUncheckedUpdateManyWithoutModuleVersionNestedInput
-  editorChat?: Prisma.EditorChatUncheckedUpdateOneWithoutModuleVersionNestedInput
-  sessions?: Prisma.LiveSessionUncheckedUpdateManyWithoutModuleVersionNestedInput
-  completions?: Prisma.ModuleCompletionUncheckedUpdateManyWithoutLastPlayedVersionNestedInput
-  playAttempts?: Prisma.PlayAttemptUncheckedUpdateManyWithoutModuleVersionNestedInput
-}
-
 export type ModuleVersionCreateWithoutBranchesInput = {
   id?: string
   versionNumber: number
@@ -1057,7 +928,6 @@ export type ModuleVersionCreateWithoutBranchesInput = {
   updatedAt?: Date | string
   module: Prisma.ModuleCreateNestedOneWithoutVersionsInput
   branchedFrom?: Prisma.ModuleVersionCreateNestedOneWithoutBranchesInput
-  publishedFor?: Prisma.ModuleCreateNestedOneWithoutPublishedVersionInput
   checkpoints?: Prisma.ModuleCheckpointCreateNestedManyWithoutModuleVersionInput
   editorChat?: Prisma.EditorChatCreateNestedOneWithoutModuleVersionInput
   sessions?: Prisma.LiveSessionCreateNestedManyWithoutModuleVersionInput
@@ -1078,7 +948,6 @@ export type ModuleVersionUncheckedCreateWithoutBranchesInput = {
   publishedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  publishedFor?: Prisma.ModuleUncheckedCreateNestedOneWithoutPublishedVersionInput
   checkpoints?: Prisma.ModuleCheckpointUncheckedCreateNestedManyWithoutModuleVersionInput
   editorChat?: Prisma.EditorChatUncheckedCreateNestedOneWithoutModuleVersionInput
   sessions?: Prisma.LiveSessionUncheckedCreateNestedManyWithoutModuleVersionInput
@@ -1104,7 +973,6 @@ export type ModuleVersionCreateWithoutBranchedFromInput = {
   updatedAt?: Date | string
   module: Prisma.ModuleCreateNestedOneWithoutVersionsInput
   branches?: Prisma.ModuleVersionCreateNestedManyWithoutBranchedFromInput
-  publishedFor?: Prisma.ModuleCreateNestedOneWithoutPublishedVersionInput
   checkpoints?: Prisma.ModuleCheckpointCreateNestedManyWithoutModuleVersionInput
   editorChat?: Prisma.EditorChatCreateNestedOneWithoutModuleVersionInput
   sessions?: Prisma.LiveSessionCreateNestedManyWithoutModuleVersionInput
@@ -1125,7 +993,6 @@ export type ModuleVersionUncheckedCreateWithoutBranchedFromInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   branches?: Prisma.ModuleVersionUncheckedCreateNestedManyWithoutBranchedFromInput
-  publishedFor?: Prisma.ModuleUncheckedCreateNestedOneWithoutPublishedVersionInput
   checkpoints?: Prisma.ModuleCheckpointUncheckedCreateNestedManyWithoutModuleVersionInput
   editorChat?: Prisma.EditorChatUncheckedCreateNestedOneWithoutModuleVersionInput
   sessions?: Prisma.LiveSessionUncheckedCreateNestedManyWithoutModuleVersionInput
@@ -1167,7 +1034,6 @@ export type ModuleVersionUpdateWithoutBranchesInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   module?: Prisma.ModuleUpdateOneRequiredWithoutVersionsNestedInput
   branchedFrom?: Prisma.ModuleVersionUpdateOneWithoutBranchesNestedInput
-  publishedFor?: Prisma.ModuleUpdateOneWithoutPublishedVersionNestedInput
   checkpoints?: Prisma.ModuleCheckpointUpdateManyWithoutModuleVersionNestedInput
   editorChat?: Prisma.EditorChatUpdateOneWithoutModuleVersionNestedInput
   sessions?: Prisma.LiveSessionUpdateManyWithoutModuleVersionNestedInput
@@ -1188,7 +1054,6 @@ export type ModuleVersionUncheckedUpdateWithoutBranchesInput = {
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  publishedFor?: Prisma.ModuleUncheckedUpdateOneWithoutPublishedVersionNestedInput
   checkpoints?: Prisma.ModuleCheckpointUncheckedUpdateManyWithoutModuleVersionNestedInput
   editorChat?: Prisma.EditorChatUncheckedUpdateOneWithoutModuleVersionNestedInput
   sessions?: Prisma.LiveSessionUncheckedUpdateManyWithoutModuleVersionNestedInput
@@ -1226,7 +1091,6 @@ export type ModuleVersionCreateWithoutCheckpointsInput = {
   module: Prisma.ModuleCreateNestedOneWithoutVersionsInput
   branchedFrom?: Prisma.ModuleVersionCreateNestedOneWithoutBranchesInput
   branches?: Prisma.ModuleVersionCreateNestedManyWithoutBranchedFromInput
-  publishedFor?: Prisma.ModuleCreateNestedOneWithoutPublishedVersionInput
   editorChat?: Prisma.EditorChatCreateNestedOneWithoutModuleVersionInput
   sessions?: Prisma.LiveSessionCreateNestedManyWithoutModuleVersionInput
   completions?: Prisma.ModuleCompletionCreateNestedManyWithoutLastPlayedVersionInput
@@ -1247,7 +1111,6 @@ export type ModuleVersionUncheckedCreateWithoutCheckpointsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   branches?: Prisma.ModuleVersionUncheckedCreateNestedManyWithoutBranchedFromInput
-  publishedFor?: Prisma.ModuleUncheckedCreateNestedOneWithoutPublishedVersionInput
   editorChat?: Prisma.EditorChatUncheckedCreateNestedOneWithoutModuleVersionInput
   sessions?: Prisma.LiveSessionUncheckedCreateNestedManyWithoutModuleVersionInput
   completions?: Prisma.ModuleCompletionUncheckedCreateNestedManyWithoutLastPlayedVersionInput
@@ -1284,7 +1147,6 @@ export type ModuleVersionUpdateWithoutCheckpointsInput = {
   module?: Prisma.ModuleUpdateOneRequiredWithoutVersionsNestedInput
   branchedFrom?: Prisma.ModuleVersionUpdateOneWithoutBranchesNestedInput
   branches?: Prisma.ModuleVersionUpdateManyWithoutBranchedFromNestedInput
-  publishedFor?: Prisma.ModuleUpdateOneWithoutPublishedVersionNestedInput
   editorChat?: Prisma.EditorChatUpdateOneWithoutModuleVersionNestedInput
   sessions?: Prisma.LiveSessionUpdateManyWithoutModuleVersionNestedInput
   completions?: Prisma.ModuleCompletionUpdateManyWithoutLastPlayedVersionNestedInput
@@ -1305,7 +1167,6 @@ export type ModuleVersionUncheckedUpdateWithoutCheckpointsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   branches?: Prisma.ModuleVersionUncheckedUpdateManyWithoutBranchedFromNestedInput
-  publishedFor?: Prisma.ModuleUncheckedUpdateOneWithoutPublishedVersionNestedInput
   editorChat?: Prisma.EditorChatUncheckedUpdateOneWithoutModuleVersionNestedInput
   sessions?: Prisma.LiveSessionUncheckedUpdateManyWithoutModuleVersionNestedInput
   completions?: Prisma.ModuleCompletionUncheckedUpdateManyWithoutLastPlayedVersionNestedInput
@@ -1326,7 +1187,6 @@ export type ModuleVersionCreateWithoutCompletionsInput = {
   module: Prisma.ModuleCreateNestedOneWithoutVersionsInput
   branchedFrom?: Prisma.ModuleVersionCreateNestedOneWithoutBranchesInput
   branches?: Prisma.ModuleVersionCreateNestedManyWithoutBranchedFromInput
-  publishedFor?: Prisma.ModuleCreateNestedOneWithoutPublishedVersionInput
   checkpoints?: Prisma.ModuleCheckpointCreateNestedManyWithoutModuleVersionInput
   editorChat?: Prisma.EditorChatCreateNestedOneWithoutModuleVersionInput
   sessions?: Prisma.LiveSessionCreateNestedManyWithoutModuleVersionInput
@@ -1347,7 +1207,6 @@ export type ModuleVersionUncheckedCreateWithoutCompletionsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   branches?: Prisma.ModuleVersionUncheckedCreateNestedManyWithoutBranchedFromInput
-  publishedFor?: Prisma.ModuleUncheckedCreateNestedOneWithoutPublishedVersionInput
   checkpoints?: Prisma.ModuleCheckpointUncheckedCreateNestedManyWithoutModuleVersionInput
   editorChat?: Prisma.EditorChatUncheckedCreateNestedOneWithoutModuleVersionInput
   sessions?: Prisma.LiveSessionUncheckedCreateNestedManyWithoutModuleVersionInput
@@ -1384,7 +1243,6 @@ export type ModuleVersionUpdateWithoutCompletionsInput = {
   module?: Prisma.ModuleUpdateOneRequiredWithoutVersionsNestedInput
   branchedFrom?: Prisma.ModuleVersionUpdateOneWithoutBranchesNestedInput
   branches?: Prisma.ModuleVersionUpdateManyWithoutBranchedFromNestedInput
-  publishedFor?: Prisma.ModuleUpdateOneWithoutPublishedVersionNestedInput
   checkpoints?: Prisma.ModuleCheckpointUpdateManyWithoutModuleVersionNestedInput
   editorChat?: Prisma.EditorChatUpdateOneWithoutModuleVersionNestedInput
   sessions?: Prisma.LiveSessionUpdateManyWithoutModuleVersionNestedInput
@@ -1405,7 +1263,6 @@ export type ModuleVersionUncheckedUpdateWithoutCompletionsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   branches?: Prisma.ModuleVersionUncheckedUpdateManyWithoutBranchedFromNestedInput
-  publishedFor?: Prisma.ModuleUncheckedUpdateOneWithoutPublishedVersionNestedInput
   checkpoints?: Prisma.ModuleCheckpointUncheckedUpdateManyWithoutModuleVersionNestedInput
   editorChat?: Prisma.EditorChatUncheckedUpdateOneWithoutModuleVersionNestedInput
   sessions?: Prisma.LiveSessionUncheckedUpdateManyWithoutModuleVersionNestedInput
@@ -1426,7 +1283,6 @@ export type ModuleVersionCreateWithoutSessionsInput = {
   module: Prisma.ModuleCreateNestedOneWithoutVersionsInput
   branchedFrom?: Prisma.ModuleVersionCreateNestedOneWithoutBranchesInput
   branches?: Prisma.ModuleVersionCreateNestedManyWithoutBranchedFromInput
-  publishedFor?: Prisma.ModuleCreateNestedOneWithoutPublishedVersionInput
   checkpoints?: Prisma.ModuleCheckpointCreateNestedManyWithoutModuleVersionInput
   editorChat?: Prisma.EditorChatCreateNestedOneWithoutModuleVersionInput
   completions?: Prisma.ModuleCompletionCreateNestedManyWithoutLastPlayedVersionInput
@@ -1447,7 +1303,6 @@ export type ModuleVersionUncheckedCreateWithoutSessionsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   branches?: Prisma.ModuleVersionUncheckedCreateNestedManyWithoutBranchedFromInput
-  publishedFor?: Prisma.ModuleUncheckedCreateNestedOneWithoutPublishedVersionInput
   checkpoints?: Prisma.ModuleCheckpointUncheckedCreateNestedManyWithoutModuleVersionInput
   editorChat?: Prisma.EditorChatUncheckedCreateNestedOneWithoutModuleVersionInput
   completions?: Prisma.ModuleCompletionUncheckedCreateNestedManyWithoutLastPlayedVersionInput
@@ -1484,7 +1339,6 @@ export type ModuleVersionUpdateWithoutSessionsInput = {
   module?: Prisma.ModuleUpdateOneRequiredWithoutVersionsNestedInput
   branchedFrom?: Prisma.ModuleVersionUpdateOneWithoutBranchesNestedInput
   branches?: Prisma.ModuleVersionUpdateManyWithoutBranchedFromNestedInput
-  publishedFor?: Prisma.ModuleUpdateOneWithoutPublishedVersionNestedInput
   checkpoints?: Prisma.ModuleCheckpointUpdateManyWithoutModuleVersionNestedInput
   editorChat?: Prisma.EditorChatUpdateOneWithoutModuleVersionNestedInput
   completions?: Prisma.ModuleCompletionUpdateManyWithoutLastPlayedVersionNestedInput
@@ -1505,7 +1359,6 @@ export type ModuleVersionUncheckedUpdateWithoutSessionsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   branches?: Prisma.ModuleVersionUncheckedUpdateManyWithoutBranchedFromNestedInput
-  publishedFor?: Prisma.ModuleUncheckedUpdateOneWithoutPublishedVersionNestedInput
   checkpoints?: Prisma.ModuleCheckpointUncheckedUpdateManyWithoutModuleVersionNestedInput
   editorChat?: Prisma.EditorChatUncheckedUpdateOneWithoutModuleVersionNestedInput
   completions?: Prisma.ModuleCompletionUncheckedUpdateManyWithoutLastPlayedVersionNestedInput
@@ -1526,7 +1379,6 @@ export type ModuleVersionCreateWithoutPlayAttemptsInput = {
   module: Prisma.ModuleCreateNestedOneWithoutVersionsInput
   branchedFrom?: Prisma.ModuleVersionCreateNestedOneWithoutBranchesInput
   branches?: Prisma.ModuleVersionCreateNestedManyWithoutBranchedFromInput
-  publishedFor?: Prisma.ModuleCreateNestedOneWithoutPublishedVersionInput
   checkpoints?: Prisma.ModuleCheckpointCreateNestedManyWithoutModuleVersionInput
   editorChat?: Prisma.EditorChatCreateNestedOneWithoutModuleVersionInput
   sessions?: Prisma.LiveSessionCreateNestedManyWithoutModuleVersionInput
@@ -1547,7 +1399,6 @@ export type ModuleVersionUncheckedCreateWithoutPlayAttemptsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   branches?: Prisma.ModuleVersionUncheckedCreateNestedManyWithoutBranchedFromInput
-  publishedFor?: Prisma.ModuleUncheckedCreateNestedOneWithoutPublishedVersionInput
   checkpoints?: Prisma.ModuleCheckpointUncheckedCreateNestedManyWithoutModuleVersionInput
   editorChat?: Prisma.EditorChatUncheckedCreateNestedOneWithoutModuleVersionInput
   sessions?: Prisma.LiveSessionUncheckedCreateNestedManyWithoutModuleVersionInput
@@ -1584,7 +1435,6 @@ export type ModuleVersionUpdateWithoutPlayAttemptsInput = {
   module?: Prisma.ModuleUpdateOneRequiredWithoutVersionsNestedInput
   branchedFrom?: Prisma.ModuleVersionUpdateOneWithoutBranchesNestedInput
   branches?: Prisma.ModuleVersionUpdateManyWithoutBranchedFromNestedInput
-  publishedFor?: Prisma.ModuleUpdateOneWithoutPublishedVersionNestedInput
   checkpoints?: Prisma.ModuleCheckpointUpdateManyWithoutModuleVersionNestedInput
   editorChat?: Prisma.EditorChatUpdateOneWithoutModuleVersionNestedInput
   sessions?: Prisma.LiveSessionUpdateManyWithoutModuleVersionNestedInput
@@ -1605,7 +1455,6 @@ export type ModuleVersionUncheckedUpdateWithoutPlayAttemptsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   branches?: Prisma.ModuleVersionUncheckedUpdateManyWithoutBranchedFromNestedInput
-  publishedFor?: Prisma.ModuleUncheckedUpdateOneWithoutPublishedVersionNestedInput
   checkpoints?: Prisma.ModuleCheckpointUncheckedUpdateManyWithoutModuleVersionNestedInput
   editorChat?: Prisma.EditorChatUncheckedUpdateOneWithoutModuleVersionNestedInput
   sessions?: Prisma.LiveSessionUncheckedUpdateManyWithoutModuleVersionNestedInput
@@ -1639,7 +1488,6 @@ export type ModuleVersionUpdateWithoutModuleInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   branchedFrom?: Prisma.ModuleVersionUpdateOneWithoutBranchesNestedInput
   branches?: Prisma.ModuleVersionUpdateManyWithoutBranchedFromNestedInput
-  publishedFor?: Prisma.ModuleUpdateOneWithoutPublishedVersionNestedInput
   checkpoints?: Prisma.ModuleCheckpointUpdateManyWithoutModuleVersionNestedInput
   editorChat?: Prisma.EditorChatUpdateOneWithoutModuleVersionNestedInput
   sessions?: Prisma.LiveSessionUpdateManyWithoutModuleVersionNestedInput
@@ -1660,7 +1508,6 @@ export type ModuleVersionUncheckedUpdateWithoutModuleInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   branches?: Prisma.ModuleVersionUncheckedUpdateManyWithoutBranchedFromNestedInput
-  publishedFor?: Prisma.ModuleUncheckedUpdateOneWithoutPublishedVersionNestedInput
   checkpoints?: Prisma.ModuleCheckpointUncheckedUpdateManyWithoutModuleVersionNestedInput
   editorChat?: Prisma.EditorChatUncheckedUpdateOneWithoutModuleVersionNestedInput
   sessions?: Prisma.LiveSessionUncheckedUpdateManyWithoutModuleVersionNestedInput
@@ -1709,7 +1556,6 @@ export type ModuleVersionUpdateWithoutBranchedFromInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   module?: Prisma.ModuleUpdateOneRequiredWithoutVersionsNestedInput
   branches?: Prisma.ModuleVersionUpdateManyWithoutBranchedFromNestedInput
-  publishedFor?: Prisma.ModuleUpdateOneWithoutPublishedVersionNestedInput
   checkpoints?: Prisma.ModuleCheckpointUpdateManyWithoutModuleVersionNestedInput
   editorChat?: Prisma.EditorChatUpdateOneWithoutModuleVersionNestedInput
   sessions?: Prisma.LiveSessionUpdateManyWithoutModuleVersionNestedInput
@@ -1730,7 +1576,6 @@ export type ModuleVersionUncheckedUpdateWithoutBranchedFromInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   branches?: Prisma.ModuleVersionUncheckedUpdateManyWithoutBranchedFromNestedInput
-  publishedFor?: Prisma.ModuleUncheckedUpdateOneWithoutPublishedVersionNestedInput
   checkpoints?: Prisma.ModuleCheckpointUncheckedUpdateManyWithoutModuleVersionNestedInput
   editorChat?: Prisma.EditorChatUncheckedUpdateOneWithoutModuleVersionNestedInput
   sessions?: Prisma.LiveSessionUncheckedUpdateManyWithoutModuleVersionNestedInput
@@ -1835,7 +1680,6 @@ export type ModuleVersionSelect<ExtArgs extends runtime.Types.Extensions.Interna
   module?: boolean | Prisma.ModuleDefaultArgs<ExtArgs>
   branchedFrom?: boolean | Prisma.ModuleVersion$branchedFromArgs<ExtArgs>
   branches?: boolean | Prisma.ModuleVersion$branchesArgs<ExtArgs>
-  publishedFor?: boolean | Prisma.ModuleVersion$publishedForArgs<ExtArgs>
   checkpoints?: boolean | Prisma.ModuleVersion$checkpointsArgs<ExtArgs>
   editorChat?: boolean | Prisma.ModuleVersion$editorChatArgs<ExtArgs>
   sessions?: boolean | Prisma.ModuleVersion$sessionsArgs<ExtArgs>
@@ -1898,7 +1742,6 @@ export type ModuleVersionInclude<ExtArgs extends runtime.Types.Extensions.Intern
   module?: boolean | Prisma.ModuleDefaultArgs<ExtArgs>
   branchedFrom?: boolean | Prisma.ModuleVersion$branchedFromArgs<ExtArgs>
   branches?: boolean | Prisma.ModuleVersion$branchesArgs<ExtArgs>
-  publishedFor?: boolean | Prisma.ModuleVersion$publishedForArgs<ExtArgs>
   checkpoints?: boolean | Prisma.ModuleVersion$checkpointsArgs<ExtArgs>
   editorChat?: boolean | Prisma.ModuleVersion$editorChatArgs<ExtArgs>
   sessions?: boolean | Prisma.ModuleVersion$sessionsArgs<ExtArgs>
@@ -1921,7 +1764,6 @@ export type $ModuleVersionPayload<ExtArgs extends runtime.Types.Extensions.Inter
     module: Prisma.$ModulePayload<ExtArgs>
     branchedFrom: Prisma.$ModuleVersionPayload<ExtArgs> | null
     branches: Prisma.$ModuleVersionPayload<ExtArgs>[]
-    publishedFor: Prisma.$ModulePayload<ExtArgs> | null
     checkpoints: Prisma.$ModuleCheckpointPayload<ExtArgs>[]
     editorChat: Prisma.$EditorChatPayload<ExtArgs> | null
     sessions: Prisma.$LiveSessionPayload<ExtArgs>[]
@@ -2338,7 +2180,6 @@ export interface Prisma__ModuleVersionClient<T, Null = never, ExtArgs extends ru
   module<T extends Prisma.ModuleDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ModuleDefaultArgs<ExtArgs>>): Prisma.Prisma__ModuleClient<runtime.Types.Result.GetResult<Prisma.$ModulePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   branchedFrom<T extends Prisma.ModuleVersion$branchedFromArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ModuleVersion$branchedFromArgs<ExtArgs>>): Prisma.Prisma__ModuleVersionClient<runtime.Types.Result.GetResult<Prisma.$ModuleVersionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   branches<T extends Prisma.ModuleVersion$branchesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ModuleVersion$branchesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ModuleVersionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  publishedFor<T extends Prisma.ModuleVersion$publishedForArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ModuleVersion$publishedForArgs<ExtArgs>>): Prisma.Prisma__ModuleClient<runtime.Types.Result.GetResult<Prisma.$ModulePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   checkpoints<T extends Prisma.ModuleVersion$checkpointsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ModuleVersion$checkpointsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ModuleCheckpointPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   editorChat<T extends Prisma.ModuleVersion$editorChatArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ModuleVersion$editorChatArgs<ExtArgs>>): Prisma.Prisma__EditorChatClient<runtime.Types.Result.GetResult<Prisma.$EditorChatPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   sessions<T extends Prisma.ModuleVersion$sessionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ModuleVersion$sessionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LiveSessionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -2826,25 +2667,6 @@ export type ModuleVersion$branchesArgs<ExtArgs extends runtime.Types.Extensions.
   take?: number
   skip?: number
   distinct?: Prisma.ModuleVersionScalarFieldEnum | Prisma.ModuleVersionScalarFieldEnum[]
-}
-
-/**
- * ModuleVersion.publishedFor
- */
-export type ModuleVersion$publishedForArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the Module
-   */
-  select?: Prisma.ModuleSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the Module
-   */
-  omit?: Prisma.ModuleOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.ModuleInclude<ExtArgs> | null
-  where?: Prisma.ModuleWhereInput
 }
 
 /**

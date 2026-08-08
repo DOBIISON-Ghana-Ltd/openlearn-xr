@@ -40,7 +40,7 @@ export default function ModuleCard(props: IProps) {
       <div className="flex flex-col gap-1">
         <div className="flex items-center">
           <p className="text-xs-m text-muted-foreground font-normal">
-            {`${module.collection.name} • ${module.collection.level}`}
+            {`${module.collection.name} • ${module.collection.grade}`}
           </p>
         </div>
         {match(buttonVariant)

@@ -45,7 +45,7 @@ const SimModuleGetAll = ZApi({
       }).extend({
         collection: ZCollection.pick({
           name: true,
-          level: true
+          grade: true
         })
       }),
     })
@@ -86,7 +86,7 @@ const SimCollectionGetAll = ZApi({
     ZCollection.pick({
       id: true,
       name: true,
-      level: true,
+      grade: true,
     }).extend({
       _count: z.object({
         modules: z.number().int(),
@@ -105,7 +105,7 @@ const SimCollectionGetModules = ZApi({
   res: ZCollection.pick({
     id: true,
     name: true,
-    level: true,
+    grade: true,
   }).extend({
     modules: SimModuleGetAll.shape.res,
   }),

@@ -42,7 +42,7 @@ export const GET = apiHandler(async (req) => {
   }
 
   if (query?.grade && query.grade !== "all") {
-    collectionWhere.level = { contains: query.grade, mode: "insensitive" };
+    collectionWhere.grade = { contains: query.grade, mode: "insensitive" };
   }
 
   if (Object.keys(collectionWhere).length > 0) {
@@ -70,7 +70,7 @@ export const GET = apiHandler(async (req) => {
           collection: {
             select: {
               name: true,
-              level: true,
+              grade: true,
             },
           },
         },
