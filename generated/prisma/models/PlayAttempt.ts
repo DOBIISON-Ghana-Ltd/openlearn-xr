@@ -27,12 +27,10 @@ export type AggregatePlayAttempt = {
 }
 
 export type PlayAttemptAvgAggregateOutputType = {
-  currentCheckpointIndex: number | null
   accumulatedPoints: number | null
 }
 
 export type PlayAttemptSumAggregateOutputType = {
-  currentCheckpointIndex: number | null
   accumulatedPoints: number | null
 }
 
@@ -42,7 +40,7 @@ export type PlayAttemptMinAggregateOutputType = {
   sessionId: string | null
   moduleVersionId: string | null
   playMode: string | null
-  currentCheckpointIndex: number | null
+  currentCheckpointId: string | null
   accumulatedPoints: number | null
   sessionPlayerId: string | null
   createdAt: Date | null
@@ -55,7 +53,7 @@ export type PlayAttemptMaxAggregateOutputType = {
   sessionId: string | null
   moduleVersionId: string | null
   playMode: string | null
-  currentCheckpointIndex: number | null
+  currentCheckpointId: string | null
   accumulatedPoints: number | null
   sessionPlayerId: string | null
   createdAt: Date | null
@@ -68,7 +66,7 @@ export type PlayAttemptCountAggregateOutputType = {
   sessionId: number
   moduleVersionId: number
   playMode: number
-  currentCheckpointIndex: number
+  currentCheckpointId: number
   accumulatedPoints: number
   sessionPlayerId: number
   createdAt: number
@@ -78,12 +76,10 @@ export type PlayAttemptCountAggregateOutputType = {
 
 
 export type PlayAttemptAvgAggregateInputType = {
-  currentCheckpointIndex?: true
   accumulatedPoints?: true
 }
 
 export type PlayAttemptSumAggregateInputType = {
-  currentCheckpointIndex?: true
   accumulatedPoints?: true
 }
 
@@ -93,7 +89,7 @@ export type PlayAttemptMinAggregateInputType = {
   sessionId?: true
   moduleVersionId?: true
   playMode?: true
-  currentCheckpointIndex?: true
+  currentCheckpointId?: true
   accumulatedPoints?: true
   sessionPlayerId?: true
   createdAt?: true
@@ -106,7 +102,7 @@ export type PlayAttemptMaxAggregateInputType = {
   sessionId?: true
   moduleVersionId?: true
   playMode?: true
-  currentCheckpointIndex?: true
+  currentCheckpointId?: true
   accumulatedPoints?: true
   sessionPlayerId?: true
   createdAt?: true
@@ -119,7 +115,7 @@ export type PlayAttemptCountAggregateInputType = {
   sessionId?: true
   moduleVersionId?: true
   playMode?: true
-  currentCheckpointIndex?: true
+  currentCheckpointId?: true
   accumulatedPoints?: true
   sessionPlayerId?: true
   createdAt?: true
@@ -219,7 +215,7 @@ export type PlayAttemptGroupByOutputType = {
   sessionId: string | null
   moduleVersionId: string
   playMode: string
-  currentCheckpointIndex: number
+  currentCheckpointId: string | null
   accumulatedPoints: number
   sessionPlayerId: string | null
   createdAt: Date
@@ -255,7 +251,7 @@ export type PlayAttemptWhereInput = {
   sessionId?: Prisma.StringNullableFilter<"PlayAttempt"> | string | null
   moduleVersionId?: Prisma.StringFilter<"PlayAttempt"> | string
   playMode?: Prisma.StringFilter<"PlayAttempt"> | string
-  currentCheckpointIndex?: Prisma.IntFilter<"PlayAttempt"> | number
+  currentCheckpointId?: Prisma.StringNullableFilter<"PlayAttempt"> | string | null
   accumulatedPoints?: Prisma.IntFilter<"PlayAttempt"> | number
   sessionPlayerId?: Prisma.StringNullableFilter<"PlayAttempt"> | string | null
   createdAt?: Prisma.DateTimeFilter<"PlayAttempt"> | Date | string
@@ -264,6 +260,7 @@ export type PlayAttemptWhereInput = {
   session?: Prisma.XOR<Prisma.LiveSessionNullableScalarRelationFilter, Prisma.LiveSessionWhereInput> | null
   moduleVersion?: Prisma.XOR<Prisma.ModuleVersionScalarRelationFilter, Prisma.ModuleVersionWhereInput>
   sessionPlayer?: Prisma.XOR<Prisma.SessionPlayerNullableScalarRelationFilter, Prisma.SessionPlayerWhereInput> | null
+  currentCheckpoint?: Prisma.XOR<Prisma.ModuleCheckpointNullableScalarRelationFilter, Prisma.ModuleCheckpointWhereInput> | null
 }
 
 export type PlayAttemptOrderByWithRelationInput = {
@@ -272,7 +269,7 @@ export type PlayAttemptOrderByWithRelationInput = {
   sessionId?: Prisma.SortOrderInput | Prisma.SortOrder
   moduleVersionId?: Prisma.SortOrder
   playMode?: Prisma.SortOrder
-  currentCheckpointIndex?: Prisma.SortOrder
+  currentCheckpointId?: Prisma.SortOrderInput | Prisma.SortOrder
   accumulatedPoints?: Prisma.SortOrder
   sessionPlayerId?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -281,6 +278,7 @@ export type PlayAttemptOrderByWithRelationInput = {
   session?: Prisma.LiveSessionOrderByWithRelationInput
   moduleVersion?: Prisma.ModuleVersionOrderByWithRelationInput
   sessionPlayer?: Prisma.SessionPlayerOrderByWithRelationInput
+  currentCheckpoint?: Prisma.ModuleCheckpointOrderByWithRelationInput
 }
 
 export type PlayAttemptWhereUniqueInput = Prisma.AtLeast<{
@@ -293,7 +291,7 @@ export type PlayAttemptWhereUniqueInput = Prisma.AtLeast<{
   sessionId?: Prisma.StringNullableFilter<"PlayAttempt"> | string | null
   moduleVersionId?: Prisma.StringFilter<"PlayAttempt"> | string
   playMode?: Prisma.StringFilter<"PlayAttempt"> | string
-  currentCheckpointIndex?: Prisma.IntFilter<"PlayAttempt"> | number
+  currentCheckpointId?: Prisma.StringNullableFilter<"PlayAttempt"> | string | null
   accumulatedPoints?: Prisma.IntFilter<"PlayAttempt"> | number
   createdAt?: Prisma.DateTimeFilter<"PlayAttempt"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"PlayAttempt"> | Date | string
@@ -301,6 +299,7 @@ export type PlayAttemptWhereUniqueInput = Prisma.AtLeast<{
   session?: Prisma.XOR<Prisma.LiveSessionNullableScalarRelationFilter, Prisma.LiveSessionWhereInput> | null
   moduleVersion?: Prisma.XOR<Prisma.ModuleVersionScalarRelationFilter, Prisma.ModuleVersionWhereInput>
   sessionPlayer?: Prisma.XOR<Prisma.SessionPlayerNullableScalarRelationFilter, Prisma.SessionPlayerWhereInput> | null
+  currentCheckpoint?: Prisma.XOR<Prisma.ModuleCheckpointNullableScalarRelationFilter, Prisma.ModuleCheckpointWhereInput> | null
 }, "id" | "sessionPlayerId">
 
 export type PlayAttemptOrderByWithAggregationInput = {
@@ -309,7 +308,7 @@ export type PlayAttemptOrderByWithAggregationInput = {
   sessionId?: Prisma.SortOrderInput | Prisma.SortOrder
   moduleVersionId?: Prisma.SortOrder
   playMode?: Prisma.SortOrder
-  currentCheckpointIndex?: Prisma.SortOrder
+  currentCheckpointId?: Prisma.SortOrderInput | Prisma.SortOrder
   accumulatedPoints?: Prisma.SortOrder
   sessionPlayerId?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -330,7 +329,7 @@ export type PlayAttemptScalarWhereWithAggregatesInput = {
   sessionId?: Prisma.StringNullableWithAggregatesFilter<"PlayAttempt"> | string | null
   moduleVersionId?: Prisma.StringWithAggregatesFilter<"PlayAttempt"> | string
   playMode?: Prisma.StringWithAggregatesFilter<"PlayAttempt"> | string
-  currentCheckpointIndex?: Prisma.IntWithAggregatesFilter<"PlayAttempt"> | number
+  currentCheckpointId?: Prisma.StringNullableWithAggregatesFilter<"PlayAttempt"> | string | null
   accumulatedPoints?: Prisma.IntWithAggregatesFilter<"PlayAttempt"> | number
   sessionPlayerId?: Prisma.StringNullableWithAggregatesFilter<"PlayAttempt"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"PlayAttempt"> | Date | string
@@ -340,7 +339,6 @@ export type PlayAttemptScalarWhereWithAggregatesInput = {
 export type PlayAttemptCreateInput = {
   id?: string
   playMode: string
-  currentCheckpointIndex?: number
   accumulatedPoints?: number
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -348,6 +346,7 @@ export type PlayAttemptCreateInput = {
   session?: Prisma.LiveSessionCreateNestedOneWithoutPlayAttemptsInput
   moduleVersion: Prisma.ModuleVersionCreateNestedOneWithoutPlayAttemptsInput
   sessionPlayer?: Prisma.SessionPlayerCreateNestedOneWithoutPlayAttemptInput
+  currentCheckpoint?: Prisma.ModuleCheckpointCreateNestedOneWithoutPlayAttemptsInput
 }
 
 export type PlayAttemptUncheckedCreateInput = {
@@ -356,7 +355,7 @@ export type PlayAttemptUncheckedCreateInput = {
   sessionId?: string | null
   moduleVersionId: string
   playMode: string
-  currentCheckpointIndex?: number
+  currentCheckpointId?: string | null
   accumulatedPoints?: number
   sessionPlayerId?: string | null
   createdAt?: Date | string
@@ -366,7 +365,6 @@ export type PlayAttemptUncheckedCreateInput = {
 export type PlayAttemptUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   playMode?: Prisma.StringFieldUpdateOperationsInput | string
-  currentCheckpointIndex?: Prisma.IntFieldUpdateOperationsInput | number
   accumulatedPoints?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -374,6 +372,7 @@ export type PlayAttemptUpdateInput = {
   session?: Prisma.LiveSessionUpdateOneWithoutPlayAttemptsNestedInput
   moduleVersion?: Prisma.ModuleVersionUpdateOneRequiredWithoutPlayAttemptsNestedInput
   sessionPlayer?: Prisma.SessionPlayerUpdateOneWithoutPlayAttemptNestedInput
+  currentCheckpoint?: Prisma.ModuleCheckpointUpdateOneWithoutPlayAttemptsNestedInput
 }
 
 export type PlayAttemptUncheckedUpdateInput = {
@@ -382,7 +381,7 @@ export type PlayAttemptUncheckedUpdateInput = {
   sessionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   moduleVersionId?: Prisma.StringFieldUpdateOperationsInput | string
   playMode?: Prisma.StringFieldUpdateOperationsInput | string
-  currentCheckpointIndex?: Prisma.IntFieldUpdateOperationsInput | number
+  currentCheckpointId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   accumulatedPoints?: Prisma.IntFieldUpdateOperationsInput | number
   sessionPlayerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -395,7 +394,7 @@ export type PlayAttemptCreateManyInput = {
   sessionId?: string | null
   moduleVersionId: string
   playMode: string
-  currentCheckpointIndex?: number
+  currentCheckpointId?: string | null
   accumulatedPoints?: number
   sessionPlayerId?: string | null
   createdAt?: Date | string
@@ -405,7 +404,6 @@ export type PlayAttemptCreateManyInput = {
 export type PlayAttemptUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   playMode?: Prisma.StringFieldUpdateOperationsInput | string
-  currentCheckpointIndex?: Prisma.IntFieldUpdateOperationsInput | number
   accumulatedPoints?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -417,7 +415,7 @@ export type PlayAttemptUncheckedUpdateManyInput = {
   sessionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   moduleVersionId?: Prisma.StringFieldUpdateOperationsInput | string
   playMode?: Prisma.StringFieldUpdateOperationsInput | string
-  currentCheckpointIndex?: Prisma.IntFieldUpdateOperationsInput | number
+  currentCheckpointId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   accumulatedPoints?: Prisma.IntFieldUpdateOperationsInput | number
   sessionPlayerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -445,7 +443,7 @@ export type PlayAttemptCountOrderByAggregateInput = {
   sessionId?: Prisma.SortOrder
   moduleVersionId?: Prisma.SortOrder
   playMode?: Prisma.SortOrder
-  currentCheckpointIndex?: Prisma.SortOrder
+  currentCheckpointId?: Prisma.SortOrder
   accumulatedPoints?: Prisma.SortOrder
   sessionPlayerId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -453,7 +451,6 @@ export type PlayAttemptCountOrderByAggregateInput = {
 }
 
 export type PlayAttemptAvgOrderByAggregateInput = {
-  currentCheckpointIndex?: Prisma.SortOrder
   accumulatedPoints?: Prisma.SortOrder
 }
 
@@ -463,7 +460,7 @@ export type PlayAttemptMaxOrderByAggregateInput = {
   sessionId?: Prisma.SortOrder
   moduleVersionId?: Prisma.SortOrder
   playMode?: Prisma.SortOrder
-  currentCheckpointIndex?: Prisma.SortOrder
+  currentCheckpointId?: Prisma.SortOrder
   accumulatedPoints?: Prisma.SortOrder
   sessionPlayerId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -476,7 +473,7 @@ export type PlayAttemptMinOrderByAggregateInput = {
   sessionId?: Prisma.SortOrder
   moduleVersionId?: Prisma.SortOrder
   playMode?: Prisma.SortOrder
-  currentCheckpointIndex?: Prisma.SortOrder
+  currentCheckpointId?: Prisma.SortOrder
   accumulatedPoints?: Prisma.SortOrder
   sessionPlayerId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -484,7 +481,6 @@ export type PlayAttemptMinOrderByAggregateInput = {
 }
 
 export type PlayAttemptSumOrderByAggregateInput = {
-  currentCheckpointIndex?: Prisma.SortOrder
   accumulatedPoints?: Prisma.SortOrder
 }
 
@@ -572,6 +568,48 @@ export type PlayAttemptUncheckedUpdateManyWithoutModuleVersionNestedInput = {
   deleteMany?: Prisma.PlayAttemptScalarWhereInput | Prisma.PlayAttemptScalarWhereInput[]
 }
 
+export type PlayAttemptCreateNestedManyWithoutCurrentCheckpointInput = {
+  create?: Prisma.XOR<Prisma.PlayAttemptCreateWithoutCurrentCheckpointInput, Prisma.PlayAttemptUncheckedCreateWithoutCurrentCheckpointInput> | Prisma.PlayAttemptCreateWithoutCurrentCheckpointInput[] | Prisma.PlayAttemptUncheckedCreateWithoutCurrentCheckpointInput[]
+  connectOrCreate?: Prisma.PlayAttemptCreateOrConnectWithoutCurrentCheckpointInput | Prisma.PlayAttemptCreateOrConnectWithoutCurrentCheckpointInput[]
+  createMany?: Prisma.PlayAttemptCreateManyCurrentCheckpointInputEnvelope
+  connect?: Prisma.PlayAttemptWhereUniqueInput | Prisma.PlayAttemptWhereUniqueInput[]
+}
+
+export type PlayAttemptUncheckedCreateNestedManyWithoutCurrentCheckpointInput = {
+  create?: Prisma.XOR<Prisma.PlayAttemptCreateWithoutCurrentCheckpointInput, Prisma.PlayAttemptUncheckedCreateWithoutCurrentCheckpointInput> | Prisma.PlayAttemptCreateWithoutCurrentCheckpointInput[] | Prisma.PlayAttemptUncheckedCreateWithoutCurrentCheckpointInput[]
+  connectOrCreate?: Prisma.PlayAttemptCreateOrConnectWithoutCurrentCheckpointInput | Prisma.PlayAttemptCreateOrConnectWithoutCurrentCheckpointInput[]
+  createMany?: Prisma.PlayAttemptCreateManyCurrentCheckpointInputEnvelope
+  connect?: Prisma.PlayAttemptWhereUniqueInput | Prisma.PlayAttemptWhereUniqueInput[]
+}
+
+export type PlayAttemptUpdateManyWithoutCurrentCheckpointNestedInput = {
+  create?: Prisma.XOR<Prisma.PlayAttemptCreateWithoutCurrentCheckpointInput, Prisma.PlayAttemptUncheckedCreateWithoutCurrentCheckpointInput> | Prisma.PlayAttemptCreateWithoutCurrentCheckpointInput[] | Prisma.PlayAttemptUncheckedCreateWithoutCurrentCheckpointInput[]
+  connectOrCreate?: Prisma.PlayAttemptCreateOrConnectWithoutCurrentCheckpointInput | Prisma.PlayAttemptCreateOrConnectWithoutCurrentCheckpointInput[]
+  upsert?: Prisma.PlayAttemptUpsertWithWhereUniqueWithoutCurrentCheckpointInput | Prisma.PlayAttemptUpsertWithWhereUniqueWithoutCurrentCheckpointInput[]
+  createMany?: Prisma.PlayAttemptCreateManyCurrentCheckpointInputEnvelope
+  set?: Prisma.PlayAttemptWhereUniqueInput | Prisma.PlayAttemptWhereUniqueInput[]
+  disconnect?: Prisma.PlayAttemptWhereUniqueInput | Prisma.PlayAttemptWhereUniqueInput[]
+  delete?: Prisma.PlayAttemptWhereUniqueInput | Prisma.PlayAttemptWhereUniqueInput[]
+  connect?: Prisma.PlayAttemptWhereUniqueInput | Prisma.PlayAttemptWhereUniqueInput[]
+  update?: Prisma.PlayAttemptUpdateWithWhereUniqueWithoutCurrentCheckpointInput | Prisma.PlayAttemptUpdateWithWhereUniqueWithoutCurrentCheckpointInput[]
+  updateMany?: Prisma.PlayAttemptUpdateManyWithWhereWithoutCurrentCheckpointInput | Prisma.PlayAttemptUpdateManyWithWhereWithoutCurrentCheckpointInput[]
+  deleteMany?: Prisma.PlayAttemptScalarWhereInput | Prisma.PlayAttemptScalarWhereInput[]
+}
+
+export type PlayAttemptUncheckedUpdateManyWithoutCurrentCheckpointNestedInput = {
+  create?: Prisma.XOR<Prisma.PlayAttemptCreateWithoutCurrentCheckpointInput, Prisma.PlayAttemptUncheckedCreateWithoutCurrentCheckpointInput> | Prisma.PlayAttemptCreateWithoutCurrentCheckpointInput[] | Prisma.PlayAttemptUncheckedCreateWithoutCurrentCheckpointInput[]
+  connectOrCreate?: Prisma.PlayAttemptCreateOrConnectWithoutCurrentCheckpointInput | Prisma.PlayAttemptCreateOrConnectWithoutCurrentCheckpointInput[]
+  upsert?: Prisma.PlayAttemptUpsertWithWhereUniqueWithoutCurrentCheckpointInput | Prisma.PlayAttemptUpsertWithWhereUniqueWithoutCurrentCheckpointInput[]
+  createMany?: Prisma.PlayAttemptCreateManyCurrentCheckpointInputEnvelope
+  set?: Prisma.PlayAttemptWhereUniqueInput | Prisma.PlayAttemptWhereUniqueInput[]
+  disconnect?: Prisma.PlayAttemptWhereUniqueInput | Prisma.PlayAttemptWhereUniqueInput[]
+  delete?: Prisma.PlayAttemptWhereUniqueInput | Prisma.PlayAttemptWhereUniqueInput[]
+  connect?: Prisma.PlayAttemptWhereUniqueInput | Prisma.PlayAttemptWhereUniqueInput[]
+  update?: Prisma.PlayAttemptUpdateWithWhereUniqueWithoutCurrentCheckpointInput | Prisma.PlayAttemptUpdateWithWhereUniqueWithoutCurrentCheckpointInput[]
+  updateMany?: Prisma.PlayAttemptUpdateManyWithWhereWithoutCurrentCheckpointInput | Prisma.PlayAttemptUpdateManyWithWhereWithoutCurrentCheckpointInput[]
+  deleteMany?: Prisma.PlayAttemptScalarWhereInput | Prisma.PlayAttemptScalarWhereInput[]
+}
+
 export type PlayAttemptCreateNestedManyWithoutSessionInput = {
   create?: Prisma.XOR<Prisma.PlayAttemptCreateWithoutSessionInput, Prisma.PlayAttemptUncheckedCreateWithoutSessionInput> | Prisma.PlayAttemptCreateWithoutSessionInput[] | Prisma.PlayAttemptUncheckedCreateWithoutSessionInput[]
   connectOrCreate?: Prisma.PlayAttemptCreateOrConnectWithoutSessionInput | Prisma.PlayAttemptCreateOrConnectWithoutSessionInput[]
@@ -649,13 +687,13 @@ export type PlayAttemptUncheckedUpdateOneWithoutSessionPlayerNestedInput = {
 export type PlayAttemptCreateWithoutUserInput = {
   id?: string
   playMode: string
-  currentCheckpointIndex?: number
   accumulatedPoints?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   session?: Prisma.LiveSessionCreateNestedOneWithoutPlayAttemptsInput
   moduleVersion: Prisma.ModuleVersionCreateNestedOneWithoutPlayAttemptsInput
   sessionPlayer?: Prisma.SessionPlayerCreateNestedOneWithoutPlayAttemptInput
+  currentCheckpoint?: Prisma.ModuleCheckpointCreateNestedOneWithoutPlayAttemptsInput
 }
 
 export type PlayAttemptUncheckedCreateWithoutUserInput = {
@@ -663,7 +701,7 @@ export type PlayAttemptUncheckedCreateWithoutUserInput = {
   sessionId?: string | null
   moduleVersionId: string
   playMode: string
-  currentCheckpointIndex?: number
+  currentCheckpointId?: string | null
   accumulatedPoints?: number
   sessionPlayerId?: string | null
   createdAt?: Date | string
@@ -705,7 +743,7 @@ export type PlayAttemptScalarWhereInput = {
   sessionId?: Prisma.StringNullableFilter<"PlayAttempt"> | string | null
   moduleVersionId?: Prisma.StringFilter<"PlayAttempt"> | string
   playMode?: Prisma.StringFilter<"PlayAttempt"> | string
-  currentCheckpointIndex?: Prisma.IntFilter<"PlayAttempt"> | number
+  currentCheckpointId?: Prisma.StringNullableFilter<"PlayAttempt"> | string | null
   accumulatedPoints?: Prisma.IntFilter<"PlayAttempt"> | number
   sessionPlayerId?: Prisma.StringNullableFilter<"PlayAttempt"> | string | null
   createdAt?: Prisma.DateTimeFilter<"PlayAttempt"> | Date | string
@@ -715,13 +753,13 @@ export type PlayAttemptScalarWhereInput = {
 export type PlayAttemptCreateWithoutModuleVersionInput = {
   id?: string
   playMode: string
-  currentCheckpointIndex?: number
   accumulatedPoints?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   user?: Prisma.UserCreateNestedOneWithoutPlayAttemptsInput
   session?: Prisma.LiveSessionCreateNestedOneWithoutPlayAttemptsInput
   sessionPlayer?: Prisma.SessionPlayerCreateNestedOneWithoutPlayAttemptInput
+  currentCheckpoint?: Prisma.ModuleCheckpointCreateNestedOneWithoutPlayAttemptsInput
 }
 
 export type PlayAttemptUncheckedCreateWithoutModuleVersionInput = {
@@ -729,7 +767,7 @@ export type PlayAttemptUncheckedCreateWithoutModuleVersionInput = {
   userId?: string | null
   sessionId?: string | null
   playMode: string
-  currentCheckpointIndex?: number
+  currentCheckpointId?: string | null
   accumulatedPoints?: number
   sessionPlayerId?: string | null
   createdAt?: Date | string
@@ -762,16 +800,66 @@ export type PlayAttemptUpdateManyWithWhereWithoutModuleVersionInput = {
   data: Prisma.XOR<Prisma.PlayAttemptUpdateManyMutationInput, Prisma.PlayAttemptUncheckedUpdateManyWithoutModuleVersionInput>
 }
 
+export type PlayAttemptCreateWithoutCurrentCheckpointInput = {
+  id?: string
+  playMode: string
+  accumulatedPoints?: number
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  user?: Prisma.UserCreateNestedOneWithoutPlayAttemptsInput
+  session?: Prisma.LiveSessionCreateNestedOneWithoutPlayAttemptsInput
+  moduleVersion: Prisma.ModuleVersionCreateNestedOneWithoutPlayAttemptsInput
+  sessionPlayer?: Prisma.SessionPlayerCreateNestedOneWithoutPlayAttemptInput
+}
+
+export type PlayAttemptUncheckedCreateWithoutCurrentCheckpointInput = {
+  id?: string
+  userId?: string | null
+  sessionId?: string | null
+  moduleVersionId: string
+  playMode: string
+  accumulatedPoints?: number
+  sessionPlayerId?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type PlayAttemptCreateOrConnectWithoutCurrentCheckpointInput = {
+  where: Prisma.PlayAttemptWhereUniqueInput
+  create: Prisma.XOR<Prisma.PlayAttemptCreateWithoutCurrentCheckpointInput, Prisma.PlayAttemptUncheckedCreateWithoutCurrentCheckpointInput>
+}
+
+export type PlayAttemptCreateManyCurrentCheckpointInputEnvelope = {
+  data: Prisma.PlayAttemptCreateManyCurrentCheckpointInput | Prisma.PlayAttemptCreateManyCurrentCheckpointInput[]
+  skipDuplicates?: boolean
+}
+
+export type PlayAttemptUpsertWithWhereUniqueWithoutCurrentCheckpointInput = {
+  where: Prisma.PlayAttemptWhereUniqueInput
+  update: Prisma.XOR<Prisma.PlayAttemptUpdateWithoutCurrentCheckpointInput, Prisma.PlayAttemptUncheckedUpdateWithoutCurrentCheckpointInput>
+  create: Prisma.XOR<Prisma.PlayAttemptCreateWithoutCurrentCheckpointInput, Prisma.PlayAttemptUncheckedCreateWithoutCurrentCheckpointInput>
+}
+
+export type PlayAttemptUpdateWithWhereUniqueWithoutCurrentCheckpointInput = {
+  where: Prisma.PlayAttemptWhereUniqueInput
+  data: Prisma.XOR<Prisma.PlayAttemptUpdateWithoutCurrentCheckpointInput, Prisma.PlayAttemptUncheckedUpdateWithoutCurrentCheckpointInput>
+}
+
+export type PlayAttemptUpdateManyWithWhereWithoutCurrentCheckpointInput = {
+  where: Prisma.PlayAttemptScalarWhereInput
+  data: Prisma.XOR<Prisma.PlayAttemptUpdateManyMutationInput, Prisma.PlayAttemptUncheckedUpdateManyWithoutCurrentCheckpointInput>
+}
+
 export type PlayAttemptCreateWithoutSessionInput = {
   id?: string
   playMode: string
-  currentCheckpointIndex?: number
   accumulatedPoints?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   user?: Prisma.UserCreateNestedOneWithoutPlayAttemptsInput
   moduleVersion: Prisma.ModuleVersionCreateNestedOneWithoutPlayAttemptsInput
   sessionPlayer?: Prisma.SessionPlayerCreateNestedOneWithoutPlayAttemptInput
+  currentCheckpoint?: Prisma.ModuleCheckpointCreateNestedOneWithoutPlayAttemptsInput
 }
 
 export type PlayAttemptUncheckedCreateWithoutSessionInput = {
@@ -779,7 +867,7 @@ export type PlayAttemptUncheckedCreateWithoutSessionInput = {
   userId?: string | null
   moduleVersionId: string
   playMode: string
-  currentCheckpointIndex?: number
+  currentCheckpointId?: string | null
   accumulatedPoints?: number
   sessionPlayerId?: string | null
   createdAt?: Date | string
@@ -815,13 +903,13 @@ export type PlayAttemptUpdateManyWithWhereWithoutSessionInput = {
 export type PlayAttemptCreateWithoutSessionPlayerInput = {
   id?: string
   playMode: string
-  currentCheckpointIndex?: number
   accumulatedPoints?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   user?: Prisma.UserCreateNestedOneWithoutPlayAttemptsInput
   session?: Prisma.LiveSessionCreateNestedOneWithoutPlayAttemptsInput
   moduleVersion: Prisma.ModuleVersionCreateNestedOneWithoutPlayAttemptsInput
+  currentCheckpoint?: Prisma.ModuleCheckpointCreateNestedOneWithoutPlayAttemptsInput
 }
 
 export type PlayAttemptUncheckedCreateWithoutSessionPlayerInput = {
@@ -830,7 +918,7 @@ export type PlayAttemptUncheckedCreateWithoutSessionPlayerInput = {
   sessionId?: string | null
   moduleVersionId: string
   playMode: string
-  currentCheckpointIndex?: number
+  currentCheckpointId?: string | null
   accumulatedPoints?: number
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -855,13 +943,13 @@ export type PlayAttemptUpdateToOneWithWhereWithoutSessionPlayerInput = {
 export type PlayAttemptUpdateWithoutSessionPlayerInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   playMode?: Prisma.StringFieldUpdateOperationsInput | string
-  currentCheckpointIndex?: Prisma.IntFieldUpdateOperationsInput | number
   accumulatedPoints?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneWithoutPlayAttemptsNestedInput
   session?: Prisma.LiveSessionUpdateOneWithoutPlayAttemptsNestedInput
   moduleVersion?: Prisma.ModuleVersionUpdateOneRequiredWithoutPlayAttemptsNestedInput
+  currentCheckpoint?: Prisma.ModuleCheckpointUpdateOneWithoutPlayAttemptsNestedInput
 }
 
 export type PlayAttemptUncheckedUpdateWithoutSessionPlayerInput = {
@@ -870,7 +958,7 @@ export type PlayAttemptUncheckedUpdateWithoutSessionPlayerInput = {
   sessionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   moduleVersionId?: Prisma.StringFieldUpdateOperationsInput | string
   playMode?: Prisma.StringFieldUpdateOperationsInput | string
-  currentCheckpointIndex?: Prisma.IntFieldUpdateOperationsInput | number
+  currentCheckpointId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   accumulatedPoints?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -881,7 +969,7 @@ export type PlayAttemptCreateManyUserInput = {
   sessionId?: string | null
   moduleVersionId: string
   playMode: string
-  currentCheckpointIndex?: number
+  currentCheckpointId?: string | null
   accumulatedPoints?: number
   sessionPlayerId?: string | null
   createdAt?: Date | string
@@ -891,13 +979,13 @@ export type PlayAttemptCreateManyUserInput = {
 export type PlayAttemptUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   playMode?: Prisma.StringFieldUpdateOperationsInput | string
-  currentCheckpointIndex?: Prisma.IntFieldUpdateOperationsInput | number
   accumulatedPoints?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   session?: Prisma.LiveSessionUpdateOneWithoutPlayAttemptsNestedInput
   moduleVersion?: Prisma.ModuleVersionUpdateOneRequiredWithoutPlayAttemptsNestedInput
   sessionPlayer?: Prisma.SessionPlayerUpdateOneWithoutPlayAttemptNestedInput
+  currentCheckpoint?: Prisma.ModuleCheckpointUpdateOneWithoutPlayAttemptsNestedInput
 }
 
 export type PlayAttemptUncheckedUpdateWithoutUserInput = {
@@ -905,7 +993,7 @@ export type PlayAttemptUncheckedUpdateWithoutUserInput = {
   sessionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   moduleVersionId?: Prisma.StringFieldUpdateOperationsInput | string
   playMode?: Prisma.StringFieldUpdateOperationsInput | string
-  currentCheckpointIndex?: Prisma.IntFieldUpdateOperationsInput | number
+  currentCheckpointId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   accumulatedPoints?: Prisma.IntFieldUpdateOperationsInput | number
   sessionPlayerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -917,7 +1005,7 @@ export type PlayAttemptUncheckedUpdateManyWithoutUserInput = {
   sessionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   moduleVersionId?: Prisma.StringFieldUpdateOperationsInput | string
   playMode?: Prisma.StringFieldUpdateOperationsInput | string
-  currentCheckpointIndex?: Prisma.IntFieldUpdateOperationsInput | number
+  currentCheckpointId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   accumulatedPoints?: Prisma.IntFieldUpdateOperationsInput | number
   sessionPlayerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -929,7 +1017,7 @@ export type PlayAttemptCreateManyModuleVersionInput = {
   userId?: string | null
   sessionId?: string | null
   playMode: string
-  currentCheckpointIndex?: number
+  currentCheckpointId?: string | null
   accumulatedPoints?: number
   sessionPlayerId?: string | null
   createdAt?: Date | string
@@ -939,13 +1027,13 @@ export type PlayAttemptCreateManyModuleVersionInput = {
 export type PlayAttemptUpdateWithoutModuleVersionInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   playMode?: Prisma.StringFieldUpdateOperationsInput | string
-  currentCheckpointIndex?: Prisma.IntFieldUpdateOperationsInput | number
   accumulatedPoints?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneWithoutPlayAttemptsNestedInput
   session?: Prisma.LiveSessionUpdateOneWithoutPlayAttemptsNestedInput
   sessionPlayer?: Prisma.SessionPlayerUpdateOneWithoutPlayAttemptNestedInput
+  currentCheckpoint?: Prisma.ModuleCheckpointUpdateOneWithoutPlayAttemptsNestedInput
 }
 
 export type PlayAttemptUncheckedUpdateWithoutModuleVersionInput = {
@@ -953,7 +1041,7 @@ export type PlayAttemptUncheckedUpdateWithoutModuleVersionInput = {
   userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sessionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   playMode?: Prisma.StringFieldUpdateOperationsInput | string
-  currentCheckpointIndex?: Prisma.IntFieldUpdateOperationsInput | number
+  currentCheckpointId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   accumulatedPoints?: Prisma.IntFieldUpdateOperationsInput | number
   sessionPlayerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -965,7 +1053,55 @@ export type PlayAttemptUncheckedUpdateManyWithoutModuleVersionInput = {
   userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sessionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   playMode?: Prisma.StringFieldUpdateOperationsInput | string
-  currentCheckpointIndex?: Prisma.IntFieldUpdateOperationsInput | number
+  currentCheckpointId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  accumulatedPoints?: Prisma.IntFieldUpdateOperationsInput | number
+  sessionPlayerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type PlayAttemptCreateManyCurrentCheckpointInput = {
+  id?: string
+  userId?: string | null
+  sessionId?: string | null
+  moduleVersionId: string
+  playMode: string
+  accumulatedPoints?: number
+  sessionPlayerId?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type PlayAttemptUpdateWithoutCurrentCheckpointInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  playMode?: Prisma.StringFieldUpdateOperationsInput | string
+  accumulatedPoints?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  user?: Prisma.UserUpdateOneWithoutPlayAttemptsNestedInput
+  session?: Prisma.LiveSessionUpdateOneWithoutPlayAttemptsNestedInput
+  moduleVersion?: Prisma.ModuleVersionUpdateOneRequiredWithoutPlayAttemptsNestedInput
+  sessionPlayer?: Prisma.SessionPlayerUpdateOneWithoutPlayAttemptNestedInput
+}
+
+export type PlayAttemptUncheckedUpdateWithoutCurrentCheckpointInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sessionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  moduleVersionId?: Prisma.StringFieldUpdateOperationsInput | string
+  playMode?: Prisma.StringFieldUpdateOperationsInput | string
+  accumulatedPoints?: Prisma.IntFieldUpdateOperationsInput | number
+  sessionPlayerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type PlayAttemptUncheckedUpdateManyWithoutCurrentCheckpointInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sessionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  moduleVersionId?: Prisma.StringFieldUpdateOperationsInput | string
+  playMode?: Prisma.StringFieldUpdateOperationsInput | string
   accumulatedPoints?: Prisma.IntFieldUpdateOperationsInput | number
   sessionPlayerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -977,7 +1113,7 @@ export type PlayAttemptCreateManySessionInput = {
   userId?: string | null
   moduleVersionId: string
   playMode: string
-  currentCheckpointIndex?: number
+  currentCheckpointId?: string | null
   accumulatedPoints?: number
   sessionPlayerId?: string | null
   createdAt?: Date | string
@@ -987,13 +1123,13 @@ export type PlayAttemptCreateManySessionInput = {
 export type PlayAttemptUpdateWithoutSessionInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   playMode?: Prisma.StringFieldUpdateOperationsInput | string
-  currentCheckpointIndex?: Prisma.IntFieldUpdateOperationsInput | number
   accumulatedPoints?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneWithoutPlayAttemptsNestedInput
   moduleVersion?: Prisma.ModuleVersionUpdateOneRequiredWithoutPlayAttemptsNestedInput
   sessionPlayer?: Prisma.SessionPlayerUpdateOneWithoutPlayAttemptNestedInput
+  currentCheckpoint?: Prisma.ModuleCheckpointUpdateOneWithoutPlayAttemptsNestedInput
 }
 
 export type PlayAttemptUncheckedUpdateWithoutSessionInput = {
@@ -1001,7 +1137,7 @@ export type PlayAttemptUncheckedUpdateWithoutSessionInput = {
   userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   moduleVersionId?: Prisma.StringFieldUpdateOperationsInput | string
   playMode?: Prisma.StringFieldUpdateOperationsInput | string
-  currentCheckpointIndex?: Prisma.IntFieldUpdateOperationsInput | number
+  currentCheckpointId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   accumulatedPoints?: Prisma.IntFieldUpdateOperationsInput | number
   sessionPlayerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1013,7 +1149,7 @@ export type PlayAttemptUncheckedUpdateManyWithoutSessionInput = {
   userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   moduleVersionId?: Prisma.StringFieldUpdateOperationsInput | string
   playMode?: Prisma.StringFieldUpdateOperationsInput | string
-  currentCheckpointIndex?: Prisma.IntFieldUpdateOperationsInput | number
+  currentCheckpointId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   accumulatedPoints?: Prisma.IntFieldUpdateOperationsInput | number
   sessionPlayerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1028,7 +1164,7 @@ export type PlayAttemptSelect<ExtArgs extends runtime.Types.Extensions.InternalA
   sessionId?: boolean
   moduleVersionId?: boolean
   playMode?: boolean
-  currentCheckpointIndex?: boolean
+  currentCheckpointId?: boolean
   accumulatedPoints?: boolean
   sessionPlayerId?: boolean
   createdAt?: boolean
@@ -1037,6 +1173,7 @@ export type PlayAttemptSelect<ExtArgs extends runtime.Types.Extensions.InternalA
   session?: boolean | Prisma.PlayAttempt$sessionArgs<ExtArgs>
   moduleVersion?: boolean | Prisma.ModuleVersionDefaultArgs<ExtArgs>
   sessionPlayer?: boolean | Prisma.PlayAttempt$sessionPlayerArgs<ExtArgs>
+  currentCheckpoint?: boolean | Prisma.PlayAttempt$currentCheckpointArgs<ExtArgs>
 }, ExtArgs["result"]["playAttempt"]>
 
 export type PlayAttemptSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -1045,7 +1182,7 @@ export type PlayAttemptSelectCreateManyAndReturn<ExtArgs extends runtime.Types.E
   sessionId?: boolean
   moduleVersionId?: boolean
   playMode?: boolean
-  currentCheckpointIndex?: boolean
+  currentCheckpointId?: boolean
   accumulatedPoints?: boolean
   sessionPlayerId?: boolean
   createdAt?: boolean
@@ -1054,6 +1191,7 @@ export type PlayAttemptSelectCreateManyAndReturn<ExtArgs extends runtime.Types.E
   session?: boolean | Prisma.PlayAttempt$sessionArgs<ExtArgs>
   moduleVersion?: boolean | Prisma.ModuleVersionDefaultArgs<ExtArgs>
   sessionPlayer?: boolean | Prisma.PlayAttempt$sessionPlayerArgs<ExtArgs>
+  currentCheckpoint?: boolean | Prisma.PlayAttempt$currentCheckpointArgs<ExtArgs>
 }, ExtArgs["result"]["playAttempt"]>
 
 export type PlayAttemptSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -1062,7 +1200,7 @@ export type PlayAttemptSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.E
   sessionId?: boolean
   moduleVersionId?: boolean
   playMode?: boolean
-  currentCheckpointIndex?: boolean
+  currentCheckpointId?: boolean
   accumulatedPoints?: boolean
   sessionPlayerId?: boolean
   createdAt?: boolean
@@ -1071,6 +1209,7 @@ export type PlayAttemptSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.E
   session?: boolean | Prisma.PlayAttempt$sessionArgs<ExtArgs>
   moduleVersion?: boolean | Prisma.ModuleVersionDefaultArgs<ExtArgs>
   sessionPlayer?: boolean | Prisma.PlayAttempt$sessionPlayerArgs<ExtArgs>
+  currentCheckpoint?: boolean | Prisma.PlayAttempt$currentCheckpointArgs<ExtArgs>
 }, ExtArgs["result"]["playAttempt"]>
 
 export type PlayAttemptSelectScalar = {
@@ -1079,31 +1218,34 @@ export type PlayAttemptSelectScalar = {
   sessionId?: boolean
   moduleVersionId?: boolean
   playMode?: boolean
-  currentCheckpointIndex?: boolean
+  currentCheckpointId?: boolean
   accumulatedPoints?: boolean
   sessionPlayerId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type PlayAttemptOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "sessionId" | "moduleVersionId" | "playMode" | "currentCheckpointIndex" | "accumulatedPoints" | "sessionPlayerId" | "createdAt" | "updatedAt", ExtArgs["result"]["playAttempt"]>
+export type PlayAttemptOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "sessionId" | "moduleVersionId" | "playMode" | "currentCheckpointId" | "accumulatedPoints" | "sessionPlayerId" | "createdAt" | "updatedAt", ExtArgs["result"]["playAttempt"]>
 export type PlayAttemptInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.PlayAttempt$userArgs<ExtArgs>
   session?: boolean | Prisma.PlayAttempt$sessionArgs<ExtArgs>
   moduleVersion?: boolean | Prisma.ModuleVersionDefaultArgs<ExtArgs>
   sessionPlayer?: boolean | Prisma.PlayAttempt$sessionPlayerArgs<ExtArgs>
+  currentCheckpoint?: boolean | Prisma.PlayAttempt$currentCheckpointArgs<ExtArgs>
 }
 export type PlayAttemptIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.PlayAttempt$userArgs<ExtArgs>
   session?: boolean | Prisma.PlayAttempt$sessionArgs<ExtArgs>
   moduleVersion?: boolean | Prisma.ModuleVersionDefaultArgs<ExtArgs>
   sessionPlayer?: boolean | Prisma.PlayAttempt$sessionPlayerArgs<ExtArgs>
+  currentCheckpoint?: boolean | Prisma.PlayAttempt$currentCheckpointArgs<ExtArgs>
 }
 export type PlayAttemptIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.PlayAttempt$userArgs<ExtArgs>
   session?: boolean | Prisma.PlayAttempt$sessionArgs<ExtArgs>
   moduleVersion?: boolean | Prisma.ModuleVersionDefaultArgs<ExtArgs>
   sessionPlayer?: boolean | Prisma.PlayAttempt$sessionPlayerArgs<ExtArgs>
+  currentCheckpoint?: boolean | Prisma.PlayAttempt$currentCheckpointArgs<ExtArgs>
 }
 
 export type $PlayAttemptPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1113,6 +1255,7 @@ export type $PlayAttemptPayload<ExtArgs extends runtime.Types.Extensions.Interna
     session: Prisma.$LiveSessionPayload<ExtArgs> | null
     moduleVersion: Prisma.$ModuleVersionPayload<ExtArgs>
     sessionPlayer: Prisma.$SessionPlayerPayload<ExtArgs> | null
+    currentCheckpoint: Prisma.$ModuleCheckpointPayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1120,7 +1263,7 @@ export type $PlayAttemptPayload<ExtArgs extends runtime.Types.Extensions.Interna
     sessionId: string | null
     moduleVersionId: string
     playMode: string
-    currentCheckpointIndex: number
+    currentCheckpointId: string | null
     accumulatedPoints: number
     sessionPlayerId: string | null
     createdAt: Date
@@ -1523,6 +1666,7 @@ export interface Prisma__PlayAttemptClient<T, Null = never, ExtArgs extends runt
   session<T extends Prisma.PlayAttempt$sessionArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.PlayAttempt$sessionArgs<ExtArgs>>): Prisma.Prisma__LiveSessionClient<runtime.Types.Result.GetResult<Prisma.$LiveSessionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   moduleVersion<T extends Prisma.ModuleVersionDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ModuleVersionDefaultArgs<ExtArgs>>): Prisma.Prisma__ModuleVersionClient<runtime.Types.Result.GetResult<Prisma.$ModuleVersionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   sessionPlayer<T extends Prisma.PlayAttempt$sessionPlayerArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.PlayAttempt$sessionPlayerArgs<ExtArgs>>): Prisma.Prisma__SessionPlayerClient<runtime.Types.Result.GetResult<Prisma.$SessionPlayerPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  currentCheckpoint<T extends Prisma.PlayAttempt$currentCheckpointArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.PlayAttempt$currentCheckpointArgs<ExtArgs>>): Prisma.Prisma__ModuleCheckpointClient<runtime.Types.Result.GetResult<Prisma.$ModuleCheckpointPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1557,7 +1701,7 @@ export interface PlayAttemptFieldRefs {
   readonly sessionId: Prisma.FieldRef<"PlayAttempt", 'String'>
   readonly moduleVersionId: Prisma.FieldRef<"PlayAttempt", 'String'>
   readonly playMode: Prisma.FieldRef<"PlayAttempt", 'String'>
-  readonly currentCheckpointIndex: Prisma.FieldRef<"PlayAttempt", 'Int'>
+  readonly currentCheckpointId: Prisma.FieldRef<"PlayAttempt", 'String'>
   readonly accumulatedPoints: Prisma.FieldRef<"PlayAttempt", 'Int'>
   readonly sessionPlayerId: Prisma.FieldRef<"PlayAttempt", 'String'>
   readonly createdAt: Prisma.FieldRef<"PlayAttempt", 'DateTime'>
@@ -2017,6 +2161,25 @@ export type PlayAttempt$sessionPlayerArgs<ExtArgs extends runtime.Types.Extensio
    */
   include?: Prisma.SessionPlayerInclude<ExtArgs> | null
   where?: Prisma.SessionPlayerWhereInput
+}
+
+/**
+ * PlayAttempt.currentCheckpoint
+ */
+export type PlayAttempt$currentCheckpointArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ModuleCheckpoint
+   */
+  select?: Prisma.ModuleCheckpointSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the ModuleCheckpoint
+   */
+  omit?: Prisma.ModuleCheckpointOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ModuleCheckpointInclude<ExtArgs> | null
+  where?: Prisma.ModuleCheckpointWhereInput
 }
 
 /**

@@ -1,33 +1,28 @@
 'use client';
 
-import { Search } from 'lucide-react';
-import { cn } from '@/lib/utils/cn';
+import { nuqs } from '@/lib/utils/nuqs';
+import { useDebouncedCallback } from '@mantine/hooks';
+import { SearchIcon } from 'lucide-react';
 
-interface HeaderSearchProps {
-  placeholder?: string;
-  onSearch?: (value: string) => void;
-  className?: string;
-}
+export function HeaderSearch() {
+  const [state, setState] = nuqs.getStates("sim:modules", { history: "push" });
 
-export function HeaderSearch({
-  placeholder = 'Search for topics',
-  onSearch,
-  className,
-}: HeaderSearchProps) {
+  const handleSearch = useDebouncedCallback((val: string) => {
+    setState({
+      search: val ? val : null
+    });
+  }, 300);
+
   return (
-    <div
-      className={cn(
-        'relative flex items-center h-[50px] w-[333px] bg-primary-subtle border-2 border-primary-light rounded-[10px] px-4 transition-colors focus-within:border-primary-cta',
-        className
-      )}
-    >
+    <div className='relative flex items-center h-12 w-84 bg-primary-subtle border-2 border-primary-light rounded-[10px] px-4 transition-colors focus-within:border-primary-cta'>
       <input
         type="text"
-        placeholder={placeholder}
-        onChange={(e) => onSearch?.(e.target.value)}
+        placeholder='Search for topics'
+        defaultValue={state.search}
+        onChange={(e) => handleSearch(e.target.value)}
         className="w-full bg-transparent pr-8 text-large text-primary-text-dark placeholder:text-tertiary focus:outline-none"
       />
-      <Search className="absolute right-4 size-[24px] shrink-0 text-tertiary pointer-events-none" />
+      <SearchIcon className="absolute right-4 size-6 shrink-0 text-tertiary pointer-events-none" />
     </div>
   );
 }

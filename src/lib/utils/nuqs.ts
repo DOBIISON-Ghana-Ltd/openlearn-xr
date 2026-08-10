@@ -38,9 +38,8 @@ const parsers = {
   // SIM SUITE (Simulation Dashboard & Library)
   "sim:modules": {
     search: parseAsString.withDefault(''),
-    status: parseAsString.withDefault('all'),
-    subject: parseAsString.withDefault('all'),
-    grade: parseAsString.withDefault('all'),
+    subject: parseAsString.withDefault('chemistry'),
+    grade: parseAsString.withDefault('year 1'),
   },
   "sim:library": {
     collectionId: parseAsString.withDefault(''),
@@ -103,7 +102,7 @@ export const nuqs = {
     route?: string
   ): string {
     return createSerializer(parsers[key])(
-      route || PATHS.SIMS.DASHBOARD, 
+      route || PATHS.SIMS.DASHBOARD,
       data as any
     )
   },

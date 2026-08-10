@@ -426,6 +426,7 @@ export const ZModuleCompletion = z.object({
   moduleId: z.string(),
   lastPlayedVersionId: z.string().nullable(),
   highScore: z.number().int().default(0),
+  lastScore: z.number().int().default(0),
   totalPlays: z.number().int().default(0),
   lastPlayedAt: ZDate.nullable(),
   createdAt: ZDate,

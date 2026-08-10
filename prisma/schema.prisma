@@ -353,6 +353,7 @@ model ModuleCheckpoint {
 
   moduleVersion      ModuleVersion       @relation(fields: [moduleVersionId], references: [id], onDelete: Cascade)
   sessionCheckpoints SessionCheckpoint[]
+  playAttempts       PlayAttempt[]
 
   @@index([moduleVersionId])
   @@map("module_checkpoint")
@@ -384,6 +385,7 @@ model ModuleCompletion {
   moduleId            String
   lastPlayedVersionId String?
   highScore           Int       @default(0)
+  lastScore           Int       @default(0)
   totalPlays          Int       @default(0)
   lastPlayedAt        DateTime?
   createdAt           DateTime  @default(now())
@@ -539,8 +541,8 @@ model PlayAttempt {
   playMode        String // "session" | "library" | "free"
 
   // State
-  currentCheckpointIndex Int @default(0) // Tracks which checkpoint index is next
-  accumulatedPoints      Int @default(0) // Staged points during this attempt
+  currentCheckpointId String? // Tracks which checkpoint id is active
+  accumulatedPoints   Int     @default(0) // Staged points during this attempt
 
   // Session details
   sessionPlayerId String? @unique // Links directly to the session leaderboard record
@@ -548,10 +550,11 @@ model PlayAttempt {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  user          User?          @relation(fields: [userId], references: [id], onDelete: Cascade)
-  session       LiveSession?   @relation(fields: [sessionId], references: [id], onDelete: Cascade)
-  moduleVersion ModuleVersion  @relation(fields: [moduleVersionId], references: [id], onDelete: Cascade)
-  sessionPlayer SessionPlayer? @relation(fields: [sessionPlayerId], references: [id], onDelete: SetNull)
+  user              User?             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  session           LiveSession?      @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  moduleVersion     ModuleVersion     @relation(fields: [moduleVersionId], references: [id], onDelete: Cascade)
+  sessionPlayer     SessionPlayer?    @relation(fields: [sessionPlayerId], references: [id], onDelete: SetNull)
+  currentCheckpoint ModuleCheckpoint? @relation(fields: [currentCheckpointId], references: [id], onDelete: SetNull)
 
   @@index([userId, moduleVersionId])
   @@map("play_attempt")

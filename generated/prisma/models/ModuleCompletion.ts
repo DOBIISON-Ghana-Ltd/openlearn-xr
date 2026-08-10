@@ -28,11 +28,13 @@ export type AggregateModuleCompletion = {
 
 export type ModuleCompletionAvgAggregateOutputType = {
   highScore: number | null
+  lastScore: number | null
   totalPlays: number | null
 }
 
 export type ModuleCompletionSumAggregateOutputType = {
   highScore: number | null
+  lastScore: number | null
   totalPlays: number | null
 }
 
@@ -42,6 +44,7 @@ export type ModuleCompletionMinAggregateOutputType = {
   moduleId: string | null
   lastPlayedVersionId: string | null
   highScore: number | null
+  lastScore: number | null
   totalPlays: number | null
   lastPlayedAt: Date | null
   createdAt: Date | null
@@ -54,6 +57,7 @@ export type ModuleCompletionMaxAggregateOutputType = {
   moduleId: string | null
   lastPlayedVersionId: string | null
   highScore: number | null
+  lastScore: number | null
   totalPlays: number | null
   lastPlayedAt: Date | null
   createdAt: Date | null
@@ -66,6 +70,7 @@ export type ModuleCompletionCountAggregateOutputType = {
   moduleId: number
   lastPlayedVersionId: number
   highScore: number
+  lastScore: number
   totalPlays: number
   lastPlayedAt: number
   createdAt: number
@@ -76,11 +81,13 @@ export type ModuleCompletionCountAggregateOutputType = {
 
 export type ModuleCompletionAvgAggregateInputType = {
   highScore?: true
+  lastScore?: true
   totalPlays?: true
 }
 
 export type ModuleCompletionSumAggregateInputType = {
   highScore?: true
+  lastScore?: true
   totalPlays?: true
 }
 
@@ -90,6 +97,7 @@ export type ModuleCompletionMinAggregateInputType = {
   moduleId?: true
   lastPlayedVersionId?: true
   highScore?: true
+  lastScore?: true
   totalPlays?: true
   lastPlayedAt?: true
   createdAt?: true
@@ -102,6 +110,7 @@ export type ModuleCompletionMaxAggregateInputType = {
   moduleId?: true
   lastPlayedVersionId?: true
   highScore?: true
+  lastScore?: true
   totalPlays?: true
   lastPlayedAt?: true
   createdAt?: true
@@ -114,6 +123,7 @@ export type ModuleCompletionCountAggregateInputType = {
   moduleId?: true
   lastPlayedVersionId?: true
   highScore?: true
+  lastScore?: true
   totalPlays?: true
   lastPlayedAt?: true
   createdAt?: true
@@ -213,6 +223,7 @@ export type ModuleCompletionGroupByOutputType = {
   moduleId: string
   lastPlayedVersionId: string | null
   highScore: number
+  lastScore: number
   totalPlays: number
   lastPlayedAt: Date | null
   createdAt: Date
@@ -248,6 +259,7 @@ export type ModuleCompletionWhereInput = {
   moduleId?: Prisma.StringFilter<"ModuleCompletion"> | string
   lastPlayedVersionId?: Prisma.StringNullableFilter<"ModuleCompletion"> | string | null
   highScore?: Prisma.IntFilter<"ModuleCompletion"> | number
+  lastScore?: Prisma.IntFilter<"ModuleCompletion"> | number
   totalPlays?: Prisma.IntFilter<"ModuleCompletion"> | number
   lastPlayedAt?: Prisma.DateTimeNullableFilter<"ModuleCompletion"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"ModuleCompletion"> | Date | string
@@ -263,6 +275,7 @@ export type ModuleCompletionOrderByWithRelationInput = {
   moduleId?: Prisma.SortOrder
   lastPlayedVersionId?: Prisma.SortOrderInput | Prisma.SortOrder
   highScore?: Prisma.SortOrder
+  lastScore?: Prisma.SortOrder
   totalPlays?: Prisma.SortOrder
   lastPlayedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -282,6 +295,7 @@ export type ModuleCompletionWhereUniqueInput = Prisma.AtLeast<{
   moduleId?: Prisma.StringFilter<"ModuleCompletion"> | string
   lastPlayedVersionId?: Prisma.StringNullableFilter<"ModuleCompletion"> | string | null
   highScore?: Prisma.IntFilter<"ModuleCompletion"> | number
+  lastScore?: Prisma.IntFilter<"ModuleCompletion"> | number
   totalPlays?: Prisma.IntFilter<"ModuleCompletion"> | number
   lastPlayedAt?: Prisma.DateTimeNullableFilter<"ModuleCompletion"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"ModuleCompletion"> | Date | string
@@ -297,6 +311,7 @@ export type ModuleCompletionOrderByWithAggregationInput = {
   moduleId?: Prisma.SortOrder
   lastPlayedVersionId?: Prisma.SortOrderInput | Prisma.SortOrder
   highScore?: Prisma.SortOrder
+  lastScore?: Prisma.SortOrder
   totalPlays?: Prisma.SortOrder
   lastPlayedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -317,6 +332,7 @@ export type ModuleCompletionScalarWhereWithAggregatesInput = {
   moduleId?: Prisma.StringWithAggregatesFilter<"ModuleCompletion"> | string
   lastPlayedVersionId?: Prisma.StringNullableWithAggregatesFilter<"ModuleCompletion"> | string | null
   highScore?: Prisma.IntWithAggregatesFilter<"ModuleCompletion"> | number
+  lastScore?: Prisma.IntWithAggregatesFilter<"ModuleCompletion"> | number
   totalPlays?: Prisma.IntWithAggregatesFilter<"ModuleCompletion"> | number
   lastPlayedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"ModuleCompletion"> | Date | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"ModuleCompletion"> | Date | string
@@ -326,6 +342,7 @@ export type ModuleCompletionScalarWhereWithAggregatesInput = {
 export type ModuleCompletionCreateInput = {
   id?: string
   highScore?: number
+  lastScore?: number
   totalPlays?: number
   lastPlayedAt?: Date | string | null
   createdAt?: Date | string
@@ -341,6 +358,7 @@ export type ModuleCompletionUncheckedCreateInput = {
   moduleId: string
   lastPlayedVersionId?: string | null
   highScore?: number
+  lastScore?: number
   totalPlays?: number
   lastPlayedAt?: Date | string | null
   createdAt?: Date | string
@@ -350,6 +368,7 @@ export type ModuleCompletionUncheckedCreateInput = {
 export type ModuleCompletionUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   highScore?: Prisma.IntFieldUpdateOperationsInput | number
+  lastScore?: Prisma.IntFieldUpdateOperationsInput | number
   totalPlays?: Prisma.IntFieldUpdateOperationsInput | number
   lastPlayedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -365,6 +384,7 @@ export type ModuleCompletionUncheckedUpdateInput = {
   moduleId?: Prisma.StringFieldUpdateOperationsInput | string
   lastPlayedVersionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   highScore?: Prisma.IntFieldUpdateOperationsInput | number
+  lastScore?: Prisma.IntFieldUpdateOperationsInput | number
   totalPlays?: Prisma.IntFieldUpdateOperationsInput | number
   lastPlayedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -377,6 +397,7 @@ export type ModuleCompletionCreateManyInput = {
   moduleId: string
   lastPlayedVersionId?: string | null
   highScore?: number
+  lastScore?: number
   totalPlays?: number
   lastPlayedAt?: Date | string | null
   createdAt?: Date | string
@@ -386,6 +407,7 @@ export type ModuleCompletionCreateManyInput = {
 export type ModuleCompletionUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   highScore?: Prisma.IntFieldUpdateOperationsInput | number
+  lastScore?: Prisma.IntFieldUpdateOperationsInput | number
   totalPlays?: Prisma.IntFieldUpdateOperationsInput | number
   lastPlayedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -398,6 +420,7 @@ export type ModuleCompletionUncheckedUpdateManyInput = {
   moduleId?: Prisma.StringFieldUpdateOperationsInput | string
   lastPlayedVersionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   highScore?: Prisma.IntFieldUpdateOperationsInput | number
+  lastScore?: Prisma.IntFieldUpdateOperationsInput | number
   totalPlays?: Prisma.IntFieldUpdateOperationsInput | number
   lastPlayedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -425,6 +448,7 @@ export type ModuleCompletionCountOrderByAggregateInput = {
   moduleId?: Prisma.SortOrder
   lastPlayedVersionId?: Prisma.SortOrder
   highScore?: Prisma.SortOrder
+  lastScore?: Prisma.SortOrder
   totalPlays?: Prisma.SortOrder
   lastPlayedAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -433,6 +457,7 @@ export type ModuleCompletionCountOrderByAggregateInput = {
 
 export type ModuleCompletionAvgOrderByAggregateInput = {
   highScore?: Prisma.SortOrder
+  lastScore?: Prisma.SortOrder
   totalPlays?: Prisma.SortOrder
 }
 
@@ -442,6 +467,7 @@ export type ModuleCompletionMaxOrderByAggregateInput = {
   moduleId?: Prisma.SortOrder
   lastPlayedVersionId?: Prisma.SortOrder
   highScore?: Prisma.SortOrder
+  lastScore?: Prisma.SortOrder
   totalPlays?: Prisma.SortOrder
   lastPlayedAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -454,6 +480,7 @@ export type ModuleCompletionMinOrderByAggregateInput = {
   moduleId?: Prisma.SortOrder
   lastPlayedVersionId?: Prisma.SortOrder
   highScore?: Prisma.SortOrder
+  lastScore?: Prisma.SortOrder
   totalPlays?: Prisma.SortOrder
   lastPlayedAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -462,6 +489,7 @@ export type ModuleCompletionMinOrderByAggregateInput = {
 
 export type ModuleCompletionSumOrderByAggregateInput = {
   highScore?: Prisma.SortOrder
+  lastScore?: Prisma.SortOrder
   totalPlays?: Prisma.SortOrder
 }
 
@@ -594,6 +622,7 @@ export type ModuleCompletionUncheckedUpdateManyWithoutLastPlayedVersionNestedInp
 export type ModuleCompletionCreateWithoutUserInput = {
   id?: string
   highScore?: number
+  lastScore?: number
   totalPlays?: number
   lastPlayedAt?: Date | string | null
   createdAt?: Date | string
@@ -607,6 +636,7 @@ export type ModuleCompletionUncheckedCreateWithoutUserInput = {
   moduleId: string
   lastPlayedVersionId?: string | null
   highScore?: number
+  lastScore?: number
   totalPlays?: number
   lastPlayedAt?: Date | string | null
   createdAt?: Date | string
@@ -648,6 +678,7 @@ export type ModuleCompletionScalarWhereInput = {
   moduleId?: Prisma.StringFilter<"ModuleCompletion"> | string
   lastPlayedVersionId?: Prisma.StringNullableFilter<"ModuleCompletion"> | string | null
   highScore?: Prisma.IntFilter<"ModuleCompletion"> | number
+  lastScore?: Prisma.IntFilter<"ModuleCompletion"> | number
   totalPlays?: Prisma.IntFilter<"ModuleCompletion"> | number
   lastPlayedAt?: Prisma.DateTimeNullableFilter<"ModuleCompletion"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"ModuleCompletion"> | Date | string
@@ -657,6 +688,7 @@ export type ModuleCompletionScalarWhereInput = {
 export type ModuleCompletionCreateWithoutModuleInput = {
   id?: string
   highScore?: number
+  lastScore?: number
   totalPlays?: number
   lastPlayedAt?: Date | string | null
   createdAt?: Date | string
@@ -670,6 +702,7 @@ export type ModuleCompletionUncheckedCreateWithoutModuleInput = {
   userId: string
   lastPlayedVersionId?: string | null
   highScore?: number
+  lastScore?: number
   totalPlays?: number
   lastPlayedAt?: Date | string | null
   createdAt?: Date | string
@@ -705,6 +738,7 @@ export type ModuleCompletionUpdateManyWithWhereWithoutModuleInput = {
 export type ModuleCompletionCreateWithoutLastPlayedVersionInput = {
   id?: string
   highScore?: number
+  lastScore?: number
   totalPlays?: number
   lastPlayedAt?: Date | string | null
   createdAt?: Date | string
@@ -718,6 +752,7 @@ export type ModuleCompletionUncheckedCreateWithoutLastPlayedVersionInput = {
   userId: string
   moduleId: string
   highScore?: number
+  lastScore?: number
   totalPlays?: number
   lastPlayedAt?: Date | string | null
   createdAt?: Date | string
@@ -755,6 +790,7 @@ export type ModuleCompletionCreateManyUserInput = {
   moduleId: string
   lastPlayedVersionId?: string | null
   highScore?: number
+  lastScore?: number
   totalPlays?: number
   lastPlayedAt?: Date | string | null
   createdAt?: Date | string
@@ -764,6 +800,7 @@ export type ModuleCompletionCreateManyUserInput = {
 export type ModuleCompletionUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   highScore?: Prisma.IntFieldUpdateOperationsInput | number
+  lastScore?: Prisma.IntFieldUpdateOperationsInput | number
   totalPlays?: Prisma.IntFieldUpdateOperationsInput | number
   lastPlayedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -777,6 +814,7 @@ export type ModuleCompletionUncheckedUpdateWithoutUserInput = {
   moduleId?: Prisma.StringFieldUpdateOperationsInput | string
   lastPlayedVersionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   highScore?: Prisma.IntFieldUpdateOperationsInput | number
+  lastScore?: Prisma.IntFieldUpdateOperationsInput | number
   totalPlays?: Prisma.IntFieldUpdateOperationsInput | number
   lastPlayedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -788,6 +826,7 @@ export type ModuleCompletionUncheckedUpdateManyWithoutUserInput = {
   moduleId?: Prisma.StringFieldUpdateOperationsInput | string
   lastPlayedVersionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   highScore?: Prisma.IntFieldUpdateOperationsInput | number
+  lastScore?: Prisma.IntFieldUpdateOperationsInput | number
   totalPlays?: Prisma.IntFieldUpdateOperationsInput | number
   lastPlayedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -799,6 +838,7 @@ export type ModuleCompletionCreateManyModuleInput = {
   userId: string
   lastPlayedVersionId?: string | null
   highScore?: number
+  lastScore?: number
   totalPlays?: number
   lastPlayedAt?: Date | string | null
   createdAt?: Date | string
@@ -808,6 +848,7 @@ export type ModuleCompletionCreateManyModuleInput = {
 export type ModuleCompletionUpdateWithoutModuleInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   highScore?: Prisma.IntFieldUpdateOperationsInput | number
+  lastScore?: Prisma.IntFieldUpdateOperationsInput | number
   totalPlays?: Prisma.IntFieldUpdateOperationsInput | number
   lastPlayedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -821,6 +862,7 @@ export type ModuleCompletionUncheckedUpdateWithoutModuleInput = {
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   lastPlayedVersionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   highScore?: Prisma.IntFieldUpdateOperationsInput | number
+  lastScore?: Prisma.IntFieldUpdateOperationsInput | number
   totalPlays?: Prisma.IntFieldUpdateOperationsInput | number
   lastPlayedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -832,6 +874,7 @@ export type ModuleCompletionUncheckedUpdateManyWithoutModuleInput = {
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   lastPlayedVersionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   highScore?: Prisma.IntFieldUpdateOperationsInput | number
+  lastScore?: Prisma.IntFieldUpdateOperationsInput | number
   totalPlays?: Prisma.IntFieldUpdateOperationsInput | number
   lastPlayedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -843,6 +886,7 @@ export type ModuleCompletionCreateManyLastPlayedVersionInput = {
   userId: string
   moduleId: string
   highScore?: number
+  lastScore?: number
   totalPlays?: number
   lastPlayedAt?: Date | string | null
   createdAt?: Date | string
@@ -852,6 +896,7 @@ export type ModuleCompletionCreateManyLastPlayedVersionInput = {
 export type ModuleCompletionUpdateWithoutLastPlayedVersionInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   highScore?: Prisma.IntFieldUpdateOperationsInput | number
+  lastScore?: Prisma.IntFieldUpdateOperationsInput | number
   totalPlays?: Prisma.IntFieldUpdateOperationsInput | number
   lastPlayedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -865,6 +910,7 @@ export type ModuleCompletionUncheckedUpdateWithoutLastPlayedVersionInput = {
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   moduleId?: Prisma.StringFieldUpdateOperationsInput | string
   highScore?: Prisma.IntFieldUpdateOperationsInput | number
+  lastScore?: Prisma.IntFieldUpdateOperationsInput | number
   totalPlays?: Prisma.IntFieldUpdateOperationsInput | number
   lastPlayedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -876,6 +922,7 @@ export type ModuleCompletionUncheckedUpdateManyWithoutLastPlayedVersionInput = {
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   moduleId?: Prisma.StringFieldUpdateOperationsInput | string
   highScore?: Prisma.IntFieldUpdateOperationsInput | number
+  lastScore?: Prisma.IntFieldUpdateOperationsInput | number
   totalPlays?: Prisma.IntFieldUpdateOperationsInput | number
   lastPlayedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -890,6 +937,7 @@ export type ModuleCompletionSelect<ExtArgs extends runtime.Types.Extensions.Inte
   moduleId?: boolean
   lastPlayedVersionId?: boolean
   highScore?: boolean
+  lastScore?: boolean
   totalPlays?: boolean
   lastPlayedAt?: boolean
   createdAt?: boolean
@@ -905,6 +953,7 @@ export type ModuleCompletionSelectCreateManyAndReturn<ExtArgs extends runtime.Ty
   moduleId?: boolean
   lastPlayedVersionId?: boolean
   highScore?: boolean
+  lastScore?: boolean
   totalPlays?: boolean
   lastPlayedAt?: boolean
   createdAt?: boolean
@@ -920,6 +969,7 @@ export type ModuleCompletionSelectUpdateManyAndReturn<ExtArgs extends runtime.Ty
   moduleId?: boolean
   lastPlayedVersionId?: boolean
   highScore?: boolean
+  lastScore?: boolean
   totalPlays?: boolean
   lastPlayedAt?: boolean
   createdAt?: boolean
@@ -935,13 +985,14 @@ export type ModuleCompletionSelectScalar = {
   moduleId?: boolean
   lastPlayedVersionId?: boolean
   highScore?: boolean
+  lastScore?: boolean
   totalPlays?: boolean
   lastPlayedAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type ModuleCompletionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "moduleId" | "lastPlayedVersionId" | "highScore" | "totalPlays" | "lastPlayedAt" | "createdAt" | "updatedAt", ExtArgs["result"]["moduleCompletion"]>
+export type ModuleCompletionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "moduleId" | "lastPlayedVersionId" | "highScore" | "lastScore" | "totalPlays" | "lastPlayedAt" | "createdAt" | "updatedAt", ExtArgs["result"]["moduleCompletion"]>
 export type ModuleCompletionInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   module?: boolean | Prisma.ModuleDefaultArgs<ExtArgs>
@@ -971,6 +1022,7 @@ export type $ModuleCompletionPayload<ExtArgs extends runtime.Types.Extensions.In
     moduleId: string
     lastPlayedVersionId: string | null
     highScore: number
+    lastScore: number
     totalPlays: number
     lastPlayedAt: Date | null
     createdAt: Date
@@ -1406,6 +1458,7 @@ export interface ModuleCompletionFieldRefs {
   readonly moduleId: Prisma.FieldRef<"ModuleCompletion", 'String'>
   readonly lastPlayedVersionId: Prisma.FieldRef<"ModuleCompletion", 'String'>
   readonly highScore: Prisma.FieldRef<"ModuleCompletion", 'Int'>
+  readonly lastScore: Prisma.FieldRef<"ModuleCompletion", 'Int'>
   readonly totalPlays: Prisma.FieldRef<"ModuleCompletion", 'Int'>
   readonly lastPlayedAt: Prisma.FieldRef<"ModuleCompletion", 'DateTime'>
   readonly createdAt: Prisma.FieldRef<"ModuleCompletion", 'DateTime'>

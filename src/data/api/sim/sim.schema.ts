@@ -7,49 +7,111 @@ import {
   ZModuleVersion,
   ZLiveSession,
   ZSessionPlayer,
+  ZModuleCheckpoint,
 } from "@/data/schema.base";
 
 // ---------------------------------------------------------------------------
-// GET /api/sim/sessions/[id]/stats — session status & config
+// GET /api/sim/modules — all modules
 // ---------------------------------------------------------------------------
-const SimSessionGetStats = ZApi({
-  params: ZLiveSession.pick({
-    id: true,
-  }),
-  res: ZLiveSession.pick({
-    id: true,
-    name: true,
-    status: true,
-    config: true,
-  }),
-});
-
 const SimModuleGetAll = ZApi({
   query: z.object({
     search: z.string().optional(),
-    status: z.string().optional(),
     subject: z.string().optional(),
     grade: z.string().optional(),
   }).optional(),
-  res: z.array(
-    ZModuleVersion.pick({
-      id: true,
-      versionNumber: true,
-      status: true,
-    }).extend({
-      _count: z.object({
-        checkpoints: z.number().int(),
-      }).optional(),
-      module: ZModule.pick({
-        title: true,
-      }).extend({
-        collection: ZCollection.pick({
-          name: true,
-          grade: true
-        })
-      }),
+  res: z.object({
+    id: ZModuleVersion.shape.id,
+    module: z.object({
+      title: ZModule.shape.title,
+      slug: ZModule.shape.slug,
+      collection: z.object({
+        name: ZCollection.shape.name,
+        grade: ZCollection.shape.grade
+      })
     })
-  ),
+  }).array()
+});
+
+const SimModuleGetOne = ZApi({
+  params: z.object({
+    id: z.string(),
+  }),
+  query: z.object({
+    mode: z.enum(["module", "session"]).optional(),
+  }),
+  res: z.object({
+    notes: ZModuleVersion.shape.notes,
+    module: z.object({
+      title: ZModule.shape.title,
+      duration: ZModule.shape.duration,
+      difficulty: ZModule.shape.difficulty,
+      description: ZModule.shape.description,
+      collection: z.object({
+        name: ZCollection.shape.name,
+        grade: ZCollection.shape.grade
+      })
+    })
+  })
+});
+
+const SimCheckpointGetOne = ZApi({
+  params: z.object({
+    playId: z.string() // moduleVersionId or sessionId
+  }),
+  query: z.object({
+    mode: z.enum(["module:local", "module:remote", "session"]),
+    checkpointId: z.string().optional(),
+    playerId: z.string().optional(),
+  }),
+  res: z.object({
+    checkpoint: z.object({
+      question: ZModuleCheckpoint.shape.question,
+      options: ZModuleCheckpoint.shape.options,
+      points: ZModuleCheckpoint.shape.points,
+      orderIndex: ZModuleCheckpoint.shape.orderIndex,
+      hint: ZModuleCheckpoint.shape.hint,
+    }),
+    meta: z.object({
+      checkpointId: z.string().nullable(),
+      currentCheckpointIndex: z.number().int(),
+      totalCheckpoints: z.number().int(),
+      accumulatedPoints: z.number().int(),
+    }),
+  }),
+});
+
+const SimCheckpointPostAnswer = ZApi({
+  params: z.object({
+    playId: z.string() // moduleVersionId or sessionId
+  }),
+  body: z.object({
+    mode: z.enum(["module:local", "module:remote", "session"]),
+    checkpointId: z.string().optional(),
+    sessionPlayerId: z.string().optional(),
+    selectedIndex: z.number().int(),
+  }),
+  res: z.object({
+    isCorrect: z.boolean(),
+    correctAnswer: z.number().int(),
+    explanation: z.string(),
+    pointsAwarded: z.number().int(),
+    nextCheckpointId: z.string(),
+    moduleId: z.string().optional(),
+  }),
+});
+
+const SimGeneralGetScore = ZApi({
+  params: z.object({
+    playId: z.string(),
+  }),
+  query: z.object({
+    mode: z.enum(["module:local", "module:remote", "session"]),
+    playerId: z.string().optional(),
+  }),
+  res: z.object({
+    score: z.number().int(),
+    moduleId: z.string().optional(),
+  }),
 });
 
 // ---------------------------------------------------------------------------
@@ -112,6 +174,21 @@ const SimCollectionGetModules = ZApi({
 });
 
 // ---------------------------------------------------------------------------
+// GET /api/sim/sessions/[id]/stats — session status & config
+// ---------------------------------------------------------------------------
+const SimSessionGetStats = ZApi({
+  params: ZLiveSession.pick({
+    id: true,
+  }),
+  res: ZLiveSession.pick({
+    id: true,
+    name: true,
+    status: true,
+    config: true,
+  }),
+});
+
+// ---------------------------------------------------------------------------
 // GET /api/sim/modules/[id]/stats — module status & title
 // ---------------------------------------------------------------------------
 const SimModuleGetStats = ZApi({
@@ -154,9 +231,12 @@ const SimSessionGetPlayers = ZApi({
   }),
   res: z.array(
     ZSessionPlayer.pick({
+      id: true,
       name: true,
       avatar: true,
       joinedAt: true,
+      score: true,
+      completedAt: true
     })
   ),
 });
@@ -175,6 +255,10 @@ const SimSessionPostLeave = ZApi({
 
 const schema = {
   SimModuleGetAll,
+  SimModuleGetOne,
+  SimCheckpointGetOne,
+  SimCheckpointPostAnswer,
+  SimGeneralGetScore,
   SimModuleCompletionGetAll,
   SimCollectionGetAll,
   SimCollectionGetModules,

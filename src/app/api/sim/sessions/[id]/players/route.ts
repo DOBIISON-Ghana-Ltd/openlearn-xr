@@ -10,9 +10,12 @@ export const GET = apiHandler<{ id: string }>(async (req, ctx) => {
   const players = await prisma.sessionPlayer.findMany({
     where: { sessionId: id },
     select: {
+      id: true,
       name: true,
       avatar: true,
       joinedAt: true,
+      score: true,
+      completedAt: true,
     },
     orderBy: { joinedAt: "asc" },
   });

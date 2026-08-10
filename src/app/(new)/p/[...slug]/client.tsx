@@ -27,7 +27,7 @@ export default function ClientPage({ mode, id }: IClientPage) {
       {match(state)
         .with({ mode: "session", flow: "entrance" }, () => <Entrance />)
         .with({ mode: "session", flow: "lobby" }, () => <Lobby />)
-        .with({ mode: "session", flow: "active" }, { mode: "module" }, () => <FLow />)
+        .with({ mode: "session", flow: "active" }, { mode: "module" }, () => <FLow {...{ mode, id: id || "" }} />)
         .exhaustive()
       }
     </React.Fragment>

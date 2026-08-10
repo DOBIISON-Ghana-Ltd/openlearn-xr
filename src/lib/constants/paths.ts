@@ -1,6 +1,8 @@
 export const PATHS = {
   // MARKETING ROUTES
   HOME: '/',
+  MODULES: '/modules',
+  PLAY: (mode: string, id?: string) => `/p/${mode}/${id}`,
   LICENSING: '/licensing',
   CONTACT: '/contact',
   LEGAL: {

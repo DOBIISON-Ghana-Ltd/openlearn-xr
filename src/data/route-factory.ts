@@ -13,6 +13,10 @@ const ROUTES = {
 
   // SIM SUITE
   "sim:module:get:all": () => `/api/sim/modules`,
+  "sim:module:get:one": ({ id }: { id: string }) => `/api/sim/modules/${id}`,
+  "sim:checkpoint:get:one": ({ playId }: { playId: string }) => `/api/sim/checkpoints/${playId}`,
+  "sim:checkpoint:post:answer": ({ playId }: { playId: string }) => `/api/sim/checkpoints/${playId}/answer`,
+  "sim:general:get:score": ({ playId }: { playId: string }) => `/api/sim/${playId}/score`,
   "sim:module-completion:get:all": () => `/api/sim/modules/completions`,
   "sim:collection:get:all": () => `/api/sim/collections`,
   "sim:collection:get:modules": ({ collectionId }: { collectionId: string }) => `/api/sim/collections/${collectionId}/modules`,

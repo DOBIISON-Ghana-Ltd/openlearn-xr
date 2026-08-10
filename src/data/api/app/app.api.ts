@@ -16,15 +16,24 @@ const appUserGetMe = {
   type: "query",
   queryKey: () => [...QUERY_KEYS["app:user:get:me"]],
   queryFn: async () => {
-    const res = await fetcher(
-      () => axios.get(R["app:user:get:me"]()),
-      ZApp.AppUserGetMe.shape.res
-    );
-    return res;
+    try {
+      const res = await fetcher(
+        () => axios.get(R["app:user:get:me"]()),
+        ZApp.AppUserGetMe.shape.res
+      );
+      return res;
+    } catch (err) {
+      if (err instanceof ApiError && err.status === 401) {
+        return null;
+      }
+      throw err;
+    }
   },
   options: {
     refetchInterval: 1000 * 60 * 5, // 5 minutes
     refetchIntervalInBackground: true,
+    retry: false,
+    staleTime: 1000 * 60 * 5,
   },
 } satisfies QueryConfig;
 

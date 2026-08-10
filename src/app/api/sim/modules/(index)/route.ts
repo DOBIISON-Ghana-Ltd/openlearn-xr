@@ -4,30 +4,14 @@ import ZSim from "@/data/api/sim/sim.schema";
 import { apiHandler } from "@/lib/utils/api-handler";
 
 export const GET = apiHandler(async (req) => {
-  const { searchParams } = req.nextUrl;
-  const search = searchParams.get("search") ?? undefined;
-  const status = searchParams.get("status") ?? undefined;
-  const subject = searchParams.get("subject") ?? undefined;
-  const grade = searchParams.get("grade") ?? undefined;
-
-  const query = ZSim.SimModuleGetAll.shape.query.parse({
-    search,
-    status,
-    subject,
-    grade,
-  });
+  const query = ZSim.SimModuleGetAll.shape.query.parse(
+    Object.fromEntries(req.nextUrl.searchParams)
+  );
+  console.log({ query })
 
   const whereClause: any = {
-    status: { in: ["DRAFT", "PUBLISHED"] },
+    status: { in: ["PUBLISHED"] },
   };
-
-  if (query?.status && query.status !== "all") {
-    if (query.status === "available" || query.status === "PUBLISHED") {
-      whereClause.status = "PUBLISHED";
-    } else if (query.status === "coming-soon" || query.status === "DRAFT") {
-      whereClause.status = "DRAFT";
-    }
-  }
 
   const moduleWhere: any = {};
 
@@ -57,16 +41,10 @@ export const GET = apiHandler(async (req) => {
     where: whereClause,
     select: {
       id: true,
-      versionNumber: true,
-      status: true,
-      _count: {
-        select: {
-          checkpoints: true,
-        },
-      },
       module: {
         select: {
           title: true,
+          slug: true,
           collection: {
             select: {
               name: true,
