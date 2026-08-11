@@ -7,16 +7,11 @@ import useApi from '@/data/hooks/use-api';
 import { nuqs } from '@/lib/utils/nuqs';
 import { Infer } from '@/data/types.base';
 import { PATHS } from '@/lib/constants/paths';
-import { match } from 'ts-pattern';
+import { match, P } from 'ts-pattern';
 
 export default function ModulesClient() {
   const [state] = nuqs.getStates("sim:modules");
   const { data, isLoading } = useApi.query("sim:module:get:all", state);
-
-  const uiState: { hasData: boolean, isLoading: boolean } = {
-    hasData: data && data.length > 0,
-    isLoading
-  }
 
   return (
     <div className="w-full min-h-screen bg-surface-white relative flex">
@@ -24,10 +19,10 @@ export default function ModulesClient() {
       <section className="flex-1">
         <GradeSelector />
         <div className="py-12 px-6 sm:px-10 lg:px-12">
-          {match(uiState)
+          {match({ data, isLoading })
             .with({ isLoading: true }, () => <Content.Loading />)
-            .with({ hasData: false, isLoading: false }, () => <Content.Empty />)
-            .with({ hasData: true, isLoading: false }, () => <Content data={data} />)
+            .with({ data: P.nullish, isLoading: false }, () => <Content.Empty />)
+            .with({ data: P.select(P.nonNullable) }, (data) => <Content data={data} />)
             .exhaustive()
           }
         </div>

@@ -8,7 +8,7 @@ export default function GoogleAuthButton() {
   const [params] = nuqs.getStates("app:login");
 
   const handleGoogleLogin = async () => {
-    const callbackPath = params.redirect || PATHS.SIMS.DASHBOARD;
+    const callbackPath = params.redirect || PATHS.MODULES;
 
     await authClient.signIn.social({
       provider: "google",

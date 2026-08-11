@@ -2,7 +2,7 @@ import { Suspense } from 'react';
 import TeachingDashboardClient from './client';
 
 export const metadata = {
-  title: 'Teacher Dashboard — OpenLearnXR',
+  title: 'Teacher Dashboard',
   description:
     'Manage live 3D science lab sessions, track student engagement stats, view schedules, and launch curriculum-aligned SHS simulations.',
 };

@@ -2,7 +2,7 @@ import { Suspense } from 'react';
 import TeachingLibraryClient from './client';
 
 export const metadata = {
-  title: 'Teaching Library — OpenLearnXR',
+  title: 'Teaching Library',
   description:
     'Browse curriculum-aligned SHS science lab modules, search by topic, and filter by subject or year group.',
 };

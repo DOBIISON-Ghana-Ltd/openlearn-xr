@@ -177,14 +177,11 @@ const SimCollectionGetModules = ZApi({
 // GET /api/sim/sessions/[id]/stats — session status & config
 // ---------------------------------------------------------------------------
 const SimSessionGetStats = ZApi({
-  params: ZLiveSession.pick({
-    id: true,
+  params: z.object({
+    playId: ZLiveSession.shape.joinCode,
   }),
   res: ZLiveSession.pick({
-    id: true,
-    name: true,
     status: true,
-    config: true,
   }),
 });
 
@@ -209,17 +206,17 @@ const SimModuleGetStats = ZApi({
 // POST /api/sim/sessions/[id]/join — join a session
 // ---------------------------------------------------------------------------
 const SimSessionPostJoin = ZApi({
-  params: ZLiveSession.pick({
-    id: true,
-  }),
   body: ZLiveSession.pick({
     joinCode: true,
-    name: true
+    name: true,
+  }).extend({
+    avatar: z.string().optional(),
   }),
   res: z.object({
     playerId: ZSessionPlayer.shape.id,
     sessionId: ZLiveSession.shape.id,
-  })
+    joinCode: ZLiveSession.shape.joinCode,
+  }),
 });
 
 // ---------------------------------------------------------------------------

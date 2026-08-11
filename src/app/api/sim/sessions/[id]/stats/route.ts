@@ -5,15 +5,14 @@ import ZSim from "@/data/api/sim/sim.schema";
 
 export const GET = apiHandler<{ id: string }>(async (req, ctx) => {
   const params = await ctx.params;
-  const { id } = ZSim.SimSessionGetStats.shape.params.parse(params);
+  const { playId } = ZSim.SimSessionGetStats.shape.params.parse({
+    playId: params?.id,
+  });
 
-  const session = await prisma.liveSession.findUnique({
-    where: { id },
+  const session = await prisma.liveSession.findFirst({
+    where: { joinCode: playId },
     select: {
-      id: true,
-      name: true,
       status: true,
-      config: true,
     },
   });
 

@@ -148,7 +148,7 @@ const simCollectionGetModules = {
 
 const simSessionGetStats = {
   type: "query",
-  queryKey: (params: Infer["SimSessionGetStats"]["params"]) => [...QUERY_KEYS["sim:session:get:stats"](params.id)],
+  queryKey: (params: Infer["SimSessionGetStats"]["params"]) => [...QUERY_KEYS["sim:session:get:stats"](params.playId)],
   queryFn: async (params: Infer["SimSessionGetStats"]["params"]) => {
     const data = await fetcher(
       () => axios.get(R["sim:session:get:stats"](params)),
@@ -184,9 +184,9 @@ const simModuleGetStats = {
 
 const simSessionPostJoin = {
   type: "mutation",
-  mutationFn: async (vars: Pick<Infer["SimSessionPostJoin"], "params" | "body">) => {
+  mutationFn: async (vars: Pick<Infer["SimSessionPostJoin"], "body">) => {
     const data = await fetcher(
-      () => axios.post(R["sim:session:post:join"]({ id: vars.params.id }), vars.body),
+      () => axios.post(R["sim:session:post:join"](), vars.body),
       ZSim.SimSessionPostJoin.shape.res
     );
     return data;

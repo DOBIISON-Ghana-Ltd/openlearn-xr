@@ -102,7 +102,7 @@ export const nuqs = {
     route?: string
   ): string {
     return createSerializer(parsers[key])(
-      route || PATHS.SIMS.DASHBOARD,
+      route || PATHS.MODULES,
       data as any
     )
   },

@@ -1,23 +1,32 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import { IStore } from './type';
+import { IStore, ISessionInfo } from './type';
 
 export const simStore = create<IStore>()(
   persist(
     (set, get) => ({
       sessions: {},
 
-      addSession: (s: string, p: string) =>
+      addSession: (joinCode: string, info: ISessionInfo) =>
         set((state) => ({
-          sessions: { ...state.sessions, [s]: p },
+          sessions: {
+            ...state.sessions,
+            [joinCode]: info,
+          },
         })),
-      getSessionPlayer: (s: string) => get().sessions[s],
-      removeSession: (s: string) =>
+
+      getSessionInfo: (joinCode: string) => get().sessions[joinCode],
+
+      getSessionPlayer: (joinCode: string) => get().sessions[joinCode]?.playerId,
+
+      removeSession: (joinCode: string) =>
         set((state) => {
-          const { [s]: _, ...rest } = state.sessions;
+          const { [joinCode]: _, ...rest } = state.sessions;
           return { sessions: rest };
         }),
     }),
     { name: 'simulation-store' }
   )
 );
+
+

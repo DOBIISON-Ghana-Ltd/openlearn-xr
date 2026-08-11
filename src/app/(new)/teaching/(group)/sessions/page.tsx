@@ -2,9 +2,8 @@ import { Suspense } from 'react';
 import SessionsClient from './client';
 
 export const metadata = {
-  title: 'Teaching Sessions — OpenLearnXR',
-  description:
-    'Manage live 3D science lab sessions, view active and upcoming sessions, track student participation, and launch interactive labs.',
+  title: 'Teaching Sessions',
+  description: 'Manage live 3D science lab sessions, view active and upcoming sessions, track student participation, and launch interactive labs.',
 };
 
 export default function SessionsPage() {

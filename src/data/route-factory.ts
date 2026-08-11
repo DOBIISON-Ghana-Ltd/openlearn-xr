@@ -20,10 +20,10 @@ const ROUTES = {
   "sim:module-completion:get:all": () => `/api/sim/modules/completions`,
   "sim:collection:get:all": () => `/api/sim/collections`,
   "sim:collection:get:modules": ({ collectionId }: { collectionId: string }) => `/api/sim/collections/${collectionId}/modules`,
-  "sim:session:get:stats": ({ id }: { id: string }) => `/api/sim/sessions/${id}/stats`,
+  "sim:session:get:stats": ({ playId }: { playId: string }) => `/api/sim/sessions/${playId}/stats`,
   "sim:session:get:players": ({ id }: { id: string }) => `/api/sim/sessions/${id}/players`,
   "sim:module:get:stats": ({ id }: { id: string }) => `/api/sim/modules/${id}/stats`,
-  "sim:session:post:join": ({ id }: { id: string }) => `/api/sim/sessions/${id}/join`,
+  "sim:session:post:join": () => `/api/sim/sessions/join`,
   "sim:session:post:leave": ({ id }: { id: string }) => `/api/sim/sessions/${id}/leave`,
 
   // SES SUITE

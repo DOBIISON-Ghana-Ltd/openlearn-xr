@@ -71,7 +71,7 @@ const appUserLogin = {
     const { error } = await authClient.signIn.email({
       email: body.email,
       password: body.password,
-      callbackURL: body.redirect || PATHS.SIMS.DASHBOARD,
+      callbackURL: body.redirect || PATHS.MODULES,
     });
     if (error)
       throw new ApiError(

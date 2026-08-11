@@ -12,12 +12,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const result = verifyPlayRouteParams(slug);
 
   if (!result.isCorrect) {
-    return { title: 'Not Found | Open Learn XR' };
+    return { title: 'Not Found' };
   }
 
   const { mode, id } = result.data;
   return {
-    title: `Play ${mode.charAt(0).toUpperCase() + mode.slice(1)} | Open Learn XR`,
+    title: `Play ${mode.charAt(0).toUpperCase() + mode.slice(1)}`,
     description: `Play environment for ${mode}${id ? ` ${id}` : ''}`,
   };
 }

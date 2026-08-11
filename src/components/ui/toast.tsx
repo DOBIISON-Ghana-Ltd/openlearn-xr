@@ -10,7 +10,6 @@ import {
 } from "lucide-react";
 import type React from "react";
 import { cn } from "@/lib/utils/cn";
-import { buttonVariants } from "@/components/ui/button";
 
 const TOAST_ICONS = {
   error: CircleAlertIcon,
@@ -95,7 +94,7 @@ function Toasts({
             <Toast.Root
               key={toast.id}
               className={cn(
-                "absolute z-[calc(9999-var(--toast-index))] h-(--toast-calc-height) w-full select-none rounded-lg border bg-[color-mix(in_srgb,var(--popover),var(--color-black)_calc(1%*max(0,var(--toast-index,0))))] not-dark:bg-clip-padding text-popover-foreground shadow-lg/5 [transition:transform_.5s_cubic-bezier(.22,1,.36,1),opacity_.5s,height_.15s,background-color_.5s] before:pointer-events-none before:absolute before:inset-0 before:rounded-[calc(var(--radius-lg)-1px)] before:shadow-[0_1px_--theme(--color-black/4%)] data-expanded:bg-popover dark:bg-[color-mix(in_srgb,var(--popover),var(--color-black)_calc(6%*max(0,var(--toast-index,0))))] dark:data-expanded:bg-popover dark:before:shadow-[0_-1px_--theme(--color-white/6%)]",
+                "absolute z-[calc(9999-var(--toast-index))] h-(--toast-calc-height) w-full select-none rounded-xl border border-primary-cta/20 bg-surface-white text-primary-text-dark shadow-lg shadow-black/5 [transition:transform_.5s_cubic-bezier(.22,1,.36,1),opacity_.5s,height_.15s,background-color_.5s]",
                 // Base positioning using data-position
                 "data-[position*=right]:right-0 data-[position*=right]:left-auto",
                 "data-[position*=left]:right-auto data-[position*=left]:left-0",
@@ -141,31 +140,31 @@ function Toasts({
               swipeDirection={swipeDirection}
               toast={toast}
             >
-              <Toast.Content className="pointer-events-auto flex items-center justify-between gap-1.5 overflow-hidden px-3.5 py-3 text-sm transition-opacity duration-250 data-behind:not-data-expanded:pointer-events-none data-behind:opacity-0 data-expanded:opacity-100">
-                <div className="flex gap-2">
+              <Toast.Content className="pointer-events-auto flex items-center justify-between gap-2 overflow-hidden px-4 py-3.5 text-small transition-opacity duration-250 data-behind:not-data-expanded:pointer-events-none data-behind:opacity-0 data-expanded:opacity-100">
+                <div className="flex gap-2.5 items-start">
                   {Icon && (
                     <div
-                      className="[&>svg]:h-lh [&>svg]:w-4 [&_svg]:pointer-events-none [&_svg]:shrink-0"
+                      className="[&>svg]:size-5 [&_svg]:pointer-events-none [&_svg]:shrink-0 mt-0.5"
                       data-slot="toast-icon"
                     >
-                      <Icon className="in-data-[type=loading]:animate-spin in-data-[type=error]:text-destructive in-data-[type=info]:text-info in-data-[type=success]:text-success in-data-[type=warning]:text-warning in-data-[type=loading]:opacity-80" />
+                      <Icon className="in-data-[type=loading]:animate-spin in-data-[type=error]:text-error in-data-[type=info]:text-primary-cta in-data-[type=success]:text-success in-data-[type=warning]:text-warning in-data-[type=loading]:text-primary-cta" />
                     </div>
                   )}
 
                   <div className="flex flex-col gap-0.5">
                     <Toast.Title
-                      className="font-medium"
+                      className="text-small font-medium text-primary-text-dark"
                       data-slot="toast-title"
                     />
                     <Toast.Description
-                      className="text-muted-foreground"
+                      className="text-caption text-secondary-text"
                       data-slot="toast-description"
                     />
                   </div>
                 </div>
                 {toast.actionProps && (
                   <Toast.Action
-                    className={buttonVariants({ size: "xs" })}
+                    className="text-caption font-medium text-primary-cta hover:text-primary-hover px-2.5 py-1 rounded-md hover:bg-surface-slate transition-colors cursor-pointer shrink-0"
                     data-slot="toast-action"
                   >
                     {toast.actionProps.children}
@@ -215,10 +214,10 @@ function AnchoredToasts({
             >
               <Toast.Root
                 className={cn(
-                  "relative text-balance border bg-popover not-dark:bg-clip-padding text-popover-foreground text-xs transition-[scale,opacity] before:pointer-events-none before:absolute before:inset-0 before:shadow-[0_1px_--theme(--color-black/4%)] data-ending-style:scale-98 data-starting-style:scale-98 data-ending-style:opacity-0 data-starting-style:opacity-0 dark:before:shadow-[0_-1px_--theme(--color-white/6%)]",
+                  "relative text-balance border border-primary-cta/20 bg-surface-white text-primary-text-dark text-caption transition-[scale,opacity] data-ending-style:scale-98 data-starting-style:scale-98 data-ending-style:opacity-0 data-starting-style:opacity-0 shadow-lg shadow-black/5",
                   tooltipStyle
-                    ? "rounded-md shadow-md/5 before:rounded-[calc(var(--radius-md)-1px)]"
-                    : "rounded-lg shadow-lg/5 before:rounded-[calc(var(--radius-lg)-1px)]",
+                    ? "rounded-md"
+                    : "rounded-xl",
                   upsertReplayClassName(toast),
                 )}
                 {...toastData?.rootProps}
@@ -226,35 +225,35 @@ function AnchoredToasts({
                 toast={toast}
               >
                 {tooltipStyle ? (
-                  <Toast.Content className="pointer-events-auto px-2 py-1">
+                  <Toast.Content className="pointer-events-auto px-2.5 py-1.5 text-caption font-medium text-primary-text-dark">
                     <Toast.Title data-slot="toast-title" />
                   </Toast.Content>
                 ) : (
-                  <Toast.Content className="pointer-events-auto flex items-center justify-between gap-1.5 overflow-hidden px-3.5 py-3 text-sm">
-                    <div className="flex gap-2">
+                  <Toast.Content className="pointer-events-auto flex items-center justify-between gap-2 overflow-hidden px-4 py-3.5 text-small">
+                    <div className="flex gap-2.5 items-start">
                       {Icon && (
                         <div
-                          className="[&>svg]:h-lh [&>svg]:w-4 [&_svg]:pointer-events-none [&_svg]:shrink-0"
+                          className="[&>svg]:size-5 [&_svg]:pointer-events-none [&_svg]:shrink-0 mt-0.5"
                           data-slot="toast-icon"
                         >
-                          <Icon className="in-data-[type=loading]:animate-spin in-data-[type=error]:text-destructive in-data-[type=info]:text-info in-data-[type=success]:text-success in-data-[type=warning]:text-warning in-data-[type=loading]:opacity-80" />
+                          <Icon className="in-data-[type=loading]:animate-spin in-data-[type=error]:text-error in-data-[type=info]:text-primary-cta in-data-[type=success]:text-success in-data-[type=warning]:text-warning in-data-[type=loading]:text-primary-cta" />
                         </div>
                       )}
 
                       <div className="flex flex-col gap-0.5">
                         <Toast.Title
-                          className="font-medium"
+                          className="text-small font-medium text-primary-text-dark"
                           data-slot="toast-title"
                         />
                         <Toast.Description
-                          className="text-muted-foreground"
+                          className="text-caption text-secondary-text"
                           data-slot="toast-description"
                         />
                       </div>
                     </div>
                     {toast.actionProps && (
                       <Toast.Action
-                        className={buttonVariants({ size: "xs" })}
+                        className="text-caption font-medium text-primary-cta hover:text-primary-hover px-2.5 py-1 rounded-md hover:bg-surface-slate transition-colors cursor-pointer shrink-0"
                         data-slot="toast-action"
                       >
                         {toast.actionProps.children}
@@ -322,3 +321,4 @@ export function AnchoredToastProvider({
 }
 
 export { Toast as ToastPrimitive };
+

@@ -1,59 +1,44 @@
 import Link from 'next/link';
-import { cn } from '@/lib/utils/cn';
+import { PATHS } from '@/lib/constants/paths';
 import { Logo } from './logo';
+import HeaderProfile from './header-profile';
+
+const NAV_ITEMS = [
+  { label: 'Simulations', href: PATHS.MODULES },
+  { label: 'Teaching', href: PATHS.TEACHING.ROOT },
+  { label: 'Licensing', href: PATHS.LICENSING },
+] as const;
 
 export interface HeaderProps {
   children?: React.ReactNode;
-  className?: string;
 }
 
-export default function Header({ children, className }: HeaderProps) {
+export default function Header({ children }: HeaderProps) {
   return (
-    <header
-      className={cn(
-        'sticky top-0 z-50 w-full h-[101px] bg-surface-white flex items-center',
-        className
-      )}
-    >
-      <div className="mx-auto flex h-full w-full max-w-[1440px] items-center justify-between px-6 sm:px-12 lg:px-20">
-        {/* Left Column: 1st element = Logo, 2nd element = children (Search in public routes) */}
+    <header className="sticky top-0 z-50 w-full h-20 bg-surface-white flex items-center">
+      <div className="mx-auto flex h-full w-full max-w-8xl items-center justify-between px-6 sm:px-12 lg:px-20">
         <div className="flex items-center gap-6 lg:gap-10">
           <Logo />
           {children && <div className="hidden sm:block">{children}</div>}
         </div>
 
-        {/* Right Column: Nav links & Sign in button */}
+        {/* Right Column: Nav links & Sign in / Profile */}
         <div className="flex items-center gap-6 lg:gap-8">
           <nav className="hidden md:flex items-center gap-7.5">
-            <Link
-              href="/modules"
-              className="text-normal text-primary-text-dark hover:text-primary-cta transition-colors"
-            >
-              Simulations
-            </Link>
-            <Link
-              href="/teaching"
-              className="text-normal text-primary-text-dark hover:text-primary-cta transition-colors"
-            >
-              Teaching
-            </Link>
-            <Link
-              href="/licensing"
-              className="text-normal text-primary-text-dark hover:text-primary-cta transition-colors"
-            >
-              Licensing
-            </Link>
+            {NAV_ITEMS.map((item) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                className="text-normal text-primary-text-dark hover:text-primary-cta transition-colors"
+              >
+                {item.label}
+              </Link>
+            ))}
           </nav>
 
-          <Link
-            href="/auth/login"
-            className="inline-flex items-center justify-center bg-primary-cta hover:bg-primary-hover text-primary-text-light text-button px-[20px] py-[10px] rounded-[10px] transition-colors"
-          >
-            Sign in
-          </Link>
+          <HeaderProfile />
         </div>
       </div>
     </header>
   );
-}
-
+};

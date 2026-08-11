@@ -10,6 +10,21 @@ export const PATHS = {
     PRIVACY: '/legal/privacy',
     COOKIES: '/legal/cookies',
   },
+  TEACHING: {
+    ROOT: '/teaching',
+    ANALYTICS: {
+      HOME: '/teaching/analytics',
+      DETAIL: (id: string) => `/teaching/analytics/${id}`,
+    },
+    LIBRARY: '/teaching/library',
+    RESOURCES: '/teaching/resources',
+    SESSIONS: {
+      ROOT: '/teaching/sessions',
+      CREATE: '/teaching/sessions/create',
+      DETAIL: (id: string) => `/teaching/sessions/${id}`,
+    },
+    SETTINGS: '/teaching/settings',
+  },
 
   // AUTH ROUTES
   AUTH: {

@@ -2,9 +2,8 @@ import { Suspense } from 'react';
 import TeachingResourcesClient from './client';
 
 export const metadata = {
-  title: 'Teaching Resources — OpenLearnXR',
-  description:
-    'Access 3D model assets, teaching guides, lab curriculum documents, and Unity simulation packages.',
+  title: 'Teaching Resources',
+  description: 'Access 3D model assets, teaching guides, lab curriculum documents, and Unity simulation packages.',
 };
 
 export default function TeachingResourcesPage() {

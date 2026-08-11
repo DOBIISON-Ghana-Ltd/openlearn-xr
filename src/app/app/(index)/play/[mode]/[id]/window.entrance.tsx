@@ -34,9 +34,12 @@ export default function WindowEntrance(props: IWindowEntrance) {
   });
 
   const onSubmit = (data: IForm) => {
-    mutate({ params: { id }, body: data }, {
-      onSuccess: (data) => {
-        addSession(data.sessionId, data.playerId);
+    mutate({ body: data }, {
+      onSuccess: (resData) => {
+        addSession(resData.joinCode, {
+          sessionId: resData.sessionId,
+          playerId: resData.playerId,
+        });
         setParams({ code: null });
       }
     });

@@ -137,11 +137,11 @@ function Leaderboard(props: ILeaderboard) {
   const { players } = props;
 
   return (
-    <div className="w-full max-w-[540px] flex flex-col gap-3.5 pr-6">
+    <div className="w-full max-w-135 flex flex-col gap-3.5 pr-6">
       {players.map((item, index) => (
         <div key={item.id ?? index} className="flex items-center gap-4 w-full">
           {/* Point Label */}
-          <div className="w-[60px] sm:w-[70px] shrink-0 text-right text-h6 font-bold text-primary-cta">
+          <div className="w-15 sm:w-17.5 shrink-0 text-right text-h6 font-bold text-primary-cta">
             {`${item.score ?? 0}p`}
           </div>
 

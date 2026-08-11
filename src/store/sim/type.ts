@@ -1,7 +1,12 @@
+export type ISessionInfo = {
+  sessionId: string;
+  playerId: string;
+};
 
 export type IStore = {
-  sessions: Record<string, string>;
-  addSession: (session: string, player: string) => void;
-  getSessionPlayer: (session: string) => string | undefined;
-  removeSession: (session: string) => void;
+  sessions: Record<string, ISessionInfo>;
+  addSession: (joinCode: string, info: ISessionInfo) => void;
+  getSessionInfo: (joinCode: string) => ISessionInfo | undefined;
+  getSessionPlayer: (joinCode: string) => string | undefined;
+  removeSession: (joinCode: string) => void;
 };

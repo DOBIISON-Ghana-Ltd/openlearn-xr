@@ -80,7 +80,7 @@ export default function FLow(props: IFlow) {
 
 function Header() {
   return (
-    <header className="bg-surface-slate/70 backdrop-blur-[5px] border-b border-disable/20 px-8 lg:px-[80px] flex items-center justify-between shrink-0 h-[73px] z-20">
+    <header className="bg-surface-slate/70 backdrop-blur-[5px] border-b border-disable/20 px-8 lg:px-20 flex items-center justify-between shrink-0 h-18.25 z-20">
       {/* Left: Exit Lesson */}
       <button
         type="button"
@@ -96,7 +96,7 @@ function Header() {
         {/* Streak Flame */}
         <div className="flex items-center gap-2 text-normal text-primary-text-dark">
           <span>5</span>
-          <Flame className="size-[26px] text-accent-flame fill-accent-flame" />
+          <Flame className="size-6.5 text-accent-flame fill-accent-flame" />
         </div>
 
         {/* Divider */}
@@ -107,7 +107,7 @@ function Header() {
           <span className="text-normal text-primary-text-dark">
             User Name
           </span>
-          <div className="size-[40px] rounded-full bg-primary-text-dark shrink-0" />
+          <div className="size-10 rounded-full bg-primary-text-dark shrink-0" />
         </div>
       </div>
     </header>
@@ -130,14 +130,14 @@ function Footer(props: IFooter) {
   const { next, prev } = props;
 
   return (
-    <footer className="bg-primary-subtle px-8 lg:px-[87px] flex justify-between items-center z-20 shrink-0 h-[92px]">
+    <footer className="bg-primary-subtle px-8 lg:px-22 flex justify-between items-center z-20 shrink-0 h-24">
       {/* Back Button */}
       <button
         type="button"
         onClick={prev.handler}
         disabled={prev.disabled}
         className={cn(
-          'bg-surface-slate text-tertiary text-button w-[239px] h-[60px] rounded-[10px] shadow-[0px_4px_4px_0px_rgba(69,157,159,0.3)] flex items-center justify-center transition-all cursor-pointer',
+          'bg-surface-slate text-tertiary text-button w-60 h-15 rounded-[10px] shadow-[0px_4px_4px_0px_rgba(69,157,159,0.3)] flex items-center justify-center transition-all cursor-pointer',
           {
             'opacity-40 cursor-not-allowed': prev.disabled,
             'active:scale-98 hover:bg-surface-white': !prev.disabled,
@@ -151,7 +151,7 @@ function Footer(props: IFooter) {
       <button
         type="button"
         onClick={next.handler}
-        className="bg-primary-cta text-button text-primary-text-light w-[239px] h-[60px] rounded-[10px] flex items-center justify-center hover:bg-primary-hover transition-all cursor-pointer active:scale-98"
+        className="bg-primary-cta text-button text-primary-text-light w-60 h-15  rounded-[10px] flex items-center justify-center hover:bg-primary-hover transition-all cursor-pointer active:scale-98"
       >
         {next.label}
       </button>

@@ -6,6 +6,10 @@
 @theme inline {
   --font-sans: var(--font-sans);
 
+  /* Container & Max Width Tokens */
+  --container-8xl: 90rem;
+  --container-9xl: 96rem;
+
   /* Primary Palette */
   --color-primary-cta: var(--primary-cta);
   --color-primary-hover: var(--primary-hover);

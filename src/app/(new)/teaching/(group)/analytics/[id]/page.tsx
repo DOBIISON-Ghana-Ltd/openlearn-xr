@@ -2,9 +2,8 @@ import { Suspense } from 'react';
 import AnalyticsDetailClient from './client';
 
 export const metadata = {
-  title: 'Session Performance Analytics — OpenLearnXR',
-  description:
-    'Detailed analytics report for Forces & Motion session including attendance, completion rate, 5E progress, difficulty questions, and student leaderboard.',
+  title: 'Session Performance Analytics',
+  description: 'Detailed analytics report for Forces & Motion session including attendance, completion rate, 5E progress, difficulty questions, and student leaderboard.',
 };
 
 interface PageProps {

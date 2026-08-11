@@ -1,35 +1,97 @@
 'use client';
 
-import React from "react";
-import { match } from "ts-pattern";
-import Lobby from "./lobby";
-import Entrance from "./entrance";
-import FLow from "./flow";
+import React, { useEffect, useState } from 'react';
+import { match } from 'ts-pattern';
+import { Loader2Icon } from 'lucide-react';
+import useApi from '@/data/hooks/use-api';
+import { useStore } from 'zustand';
+import { simStore } from '@/store/sim/store';
+import { useRealtime } from '@/adapters/realtime/client';
+import { QUERY_KEYS } from '@/data/key-factory';
+import Lobby from './lobby';
+import Entrance from './entrance';
+import FLow from './flow';
 
-interface IClientPage {
+export interface IClientPage {
   mode: 'session' | 'module';
   id: string | null;
 }
 
-interface IState {
-  mode: IClientPage["mode"],
-  flow: "lobby" | "entrance" | "active"
-}
+export default function ClientPage(props: IClientPage) {
+  const { mode, id } = props;
+  const [mounted, setMounted] = useState(false);
+  const socket = useRealtime();
 
-export default function ClientPage({ mode, id }: IClientPage) {
-  const state: IState = {
-    mode: mode,
-    flow: "active"
+  const playerId = useStore(simStore, (s) => s.getSessionPlayer(id || ''));
+  const hasPlayer = Boolean(playerId);
+
+  const { data: stats, isLoading, isError, error } = useApi.query(
+    'sim:session:get:stats',
+    { playId: id || '' }, mode === 'session' && Boolean(id)
+  );
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  const isLive = stats?.status === 'STAGING' || stats?.status === 'ACTIVE';
+
+  // Subscribe to realtime session events when joined & live
+  useEffect(() => {
+    if (mode === 'session' && hasPlayer && isLive && id) {
+      const subscription = socket.subscribe(id, {
+        'session:started': () => QUERY_KEYS['sim:session:get:stats'](id),
+        'player:joined': () => QUERY_KEYS['sim:session:get:players'](id),
+        'player:left': () => QUERY_KEYS['sim:session:get:players'](id),
+      });
+
+      return () => {
+        subscription.unbind();
+        subscription.unsubscribe();
+      };
+    }
+  }, [mode, hasPlayer, isLive, id, socket]);
+
+  const loading = !mounted || (mode === 'session' && Boolean(id) && isLoading);
+
+  const matchState = {
+    isLoading: loading,
+    isError: mode === 'session' && isError,
+    mode,
+    hasPlayer,
+    status: stats?.status,
   };
 
   return (
     <React.Fragment>
-      {match(state)
-        .with({ mode: "session", flow: "entrance" }, () => <Entrance />)
-        .with({ mode: "session", flow: "lobby" }, () => <Lobby />)
-        .with({ mode: "session", flow: "active" }, { mode: "module" }, () => <FLow {...{ mode, id: id || "" }} />)
-        .exhaustive()
-      }
+      {match(matchState)
+        .with({ isLoading: true }, () => <ClientPage.Loading />)
+        .with({ isError: true }, () => (<ClientPage.Error message={error?.message} />))
+        .with({ mode: 'session', hasPlayer: true, status: 'ACTIVE' }, { mode: 'module' }, () => (<FLow mode={mode} id={id || ''} />))
+        .with({ mode: 'session', hasPlayer: true, status: 'STAGING' }, () => (<Lobby />))
+        .with({ mode: 'session' }, () => <Entrance {...props} />)
+        .exhaustive()}
     </React.Fragment>
   );
 }
+
+ClientPage.Loading = function Loading() {
+  return (
+    <div className="min-h-dvh w-full flex-center bg-surface-white">
+      <Loader2Icon className="size-8 text-primary-cta animate-spin stroke-[2.5]" />
+    </div>
+  );
+};
+
+type IError = {
+  message?: string;
+};
+ClientPage.Error = function Error({ message }: IError) {
+  return (
+    <div className="min-h-dvh w-full flex-center bg-surface-white p-6">
+      <p className="text-body font-medium text-error text-center">
+        {message || 'An error occurred while loading the session.'}
+      </p>
+    </div>
+  );
+};

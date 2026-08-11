@@ -7,7 +7,6 @@ export const GET = apiHandler(async (req) => {
   const query = ZSim.SimModuleGetAll.shape.query.parse(
     Object.fromEntries(req.nextUrl.searchParams)
   );
-  console.log({ query })
 
   const whereClause: any = {
     status: { in: ["PUBLISHED"] },
