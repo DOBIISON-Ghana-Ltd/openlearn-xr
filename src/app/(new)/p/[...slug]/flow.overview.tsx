@@ -20,7 +20,7 @@ export default function OverviewFLow(props: IOverviewFlow) {
     <div className="flex-1 bg-primary-subtle scroll-y-auto w-full min-h-0">
       {match({ data, isLoading })
         .with({ isLoading: true }, () => <Content.Loading />)
-        .with({ data: P.select(P.nonNullable) }, (data) => <Content data={data} />)
+        .with({ data: P.select(P.nonNullable) }, (data) => <Content data={data} progress={props.progress ?? 0} />)
         .with({ data: P.nullish, isLoading: false }, () => <Content.Error />)
         .exhaustive()
       }
@@ -30,10 +30,11 @@ export default function OverviewFLow(props: IOverviewFlow) {
 
 type IContent = {
   data: IModuleDetail;
+  progress: number;
 };
 
 function Content(props: IContent) {
-  const { data } = props;
+  const { data, progress } = props;
 
   return (
     <div className="w-full pt-5 pb-8 px-8 lg:pl-60 lg:pr-8">
@@ -85,7 +86,7 @@ function Content(props: IContent) {
           {/* Progress Pill */}
           <div className="bg-primary-subtle/70 border border-primary-light rounded-[10px] h-8.75 px-3 flex items-center justify-center">
             <span className="text-normal text-secondary-text">
-              0% Progress
+              {progress}% Progress
             </span>
           </div>
         </div>

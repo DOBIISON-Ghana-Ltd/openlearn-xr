@@ -1,7 +1,8 @@
 import useApi from "@/data/hooks/use-api";
+import { ServerMode } from "@/data/schema.base";
 
 export type IPlayMode = "module" | "session";
-export type IServerMode = "module:local" | "module:remote" | "session";
+export type IServerMode = ServerMode;
 
 export function usePlayServerMode(flowMode: IPlayMode): {
   serverMode: IServerMode;
@@ -17,7 +18,7 @@ export function usePlayServerMode(flowMode: IPlayMode): {
   }
 
   const isAuthenticated = Boolean(me && "id" in me && me.id);
-  const serverMode: IServerMode = isAuthenticated ? "module:remote" : "module:local";
+  const serverMode: IServerMode = isAuthenticated ? "remote" : "local";
 
   return { serverMode, isLoading };
 }

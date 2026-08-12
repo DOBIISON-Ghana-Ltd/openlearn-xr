@@ -27,7 +27,7 @@ export default function ClientPage(props: IClientPage) {
 
   const { data: stats, isLoading, isError, error } = useApi.query(
     'sim:session:get:stats',
-    { playId: id || '' }, mode === 'session' && Boolean(id)
+    { id: id || '' }, mode === 'session' && Boolean(id)
   );
 
   useEffect(() => {
@@ -41,8 +41,10 @@ export default function ClientPage(props: IClientPage) {
     if (mode === 'session' && hasPlayer && isLive && id) {
       const subscription = socket.subscribe(id, {
         'session:started': () => QUERY_KEYS['sim:session:get:stats'](id),
+        'session:ended': () => QUERY_KEYS['sim:session:get:stats'](id),
         'player:joined': () => QUERY_KEYS['sim:session:get:players'](id),
         'player:left': () => QUERY_KEYS['sim:session:get:players'](id),
+        'tab:change': () => QUERY_KEYS['sim:general:get:navigate'](id),
       });
 
       return () => {

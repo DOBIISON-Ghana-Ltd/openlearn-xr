@@ -18,6 +18,8 @@ export interface CollectionProgressRecord {
 
 export interface PlayAttemptRecord {
   moduleVersionId: string;
+  currentTab?: number;
+  progress?: number;
   currentCheckpointId?: string | null;
   accumulatedPoints: number;
   updatedAt: string;

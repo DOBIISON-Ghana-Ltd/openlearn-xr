@@ -8,6 +8,7 @@ import {
   ZLiveSession,
   ZSessionPlayer,
   ZModuleCheckpoint,
+  ServerModeEnum,
 } from "@/data/schema.base";
 
 // ---------------------------------------------------------------------------
@@ -102,11 +103,9 @@ const SimCheckpointPostAnswer = ZApi({
 
 const SimGeneralGetScore = ZApi({
   params: z.object({
+    mode: ServerModeEnum,
     playId: z.string(),
-  }),
-  query: z.object({
-    mode: z.enum(["module:local", "module:remote", "session"]),
-    playerId: z.string().optional(),
+    playerId: z.string(),
   }),
   res: z.object({
     score: z.number().int(),
@@ -178,10 +177,14 @@ const SimCollectionGetModules = ZApi({
 // ---------------------------------------------------------------------------
 const SimSessionGetStats = ZApi({
   params: z.object({
-    playId: ZLiveSession.shape.joinCode,
+    id: ZLiveSession.shape.joinCode,
   }),
   res: ZLiveSession.pick({
     status: true,
+    config: true,
+  }).extend({
+    isHost: z.boolean().optional(),
+    sessionId: ZLiveSession.shape.id.optional(),
   }),
 });
 
@@ -213,10 +216,48 @@ const SimSessionPostJoin = ZApi({
     avatar: z.string().optional(),
   }),
   res: z.object({
-    playerId: ZSessionPlayer.shape.id,
+    playerId: ZSessionPlayer.shape.id.nullable(),
     sessionId: ZLiveSession.shape.id,
     joinCode: ZLiveSession.shape.joinCode,
+    isHost: z.boolean(),
+    config: ZLiveSession.shape.config,
   }),
+});
+
+// ---------------------------------------------------------------------------
+// GET /api/sim/play/[...slug]/navigate — get active navigation state & progress
+// ---------------------------------------------------------------------------
+const SimGeneralGetNavigate = ZApi({
+  params: z.object({
+    mode: ServerModeEnum,
+    playId: z.string(),
+    playerId: z.string(),
+  }),
+  query: z.object({
+    isHost: z.boolean().optional(),
+  }),
+  res: z.object({
+    currentTab: z.number().int(),
+    progress: z.number().int(),
+  }),
+});
+
+// ---------------------------------------------------------------------------
+// POST /api/sim/play/[...slug]/navigate — update active navigation tab
+// ---------------------------------------------------------------------------
+const SimGeneralPostNavigate = ZApi({
+  params: z.object({
+    mode: ServerModeEnum,
+    playId: z.string(),
+    playerId: z.string(),
+  }),
+  query: z.object({
+    isHost: z.boolean().optional(),
+  }),
+  body: z.object({
+    nextTab: z.number().int(),
+  }),
+  res: z.string(),
 });
 
 // ---------------------------------------------------------------------------
@@ -250,20 +291,37 @@ const SimSessionPostLeave = ZApi({
   }),
 });
 
+// ---------------------------------------------------------------------------
+// POST /api/sim/sessions/[id]/end — end a session (host only)
+// ---------------------------------------------------------------------------
+const SimSessionPostEnd = ZApi({
+  params: ZLiveSession.pick({
+    id: true,
+  }),
+  res: z.string(),
+});
+
 const schema = {
   SimModuleGetAll,
   SimModuleGetOne,
+  SimModuleGetStats,
+  SimModuleCompletionGetAll,
+
   SimCheckpointGetOne,
   SimCheckpointPostAnswer,
+
   SimGeneralGetScore,
-  SimModuleCompletionGetAll,
+  SimGeneralGetNavigate,
+  SimGeneralPostNavigate,
+
   SimCollectionGetAll,
   SimCollectionGetModules,
+
   SimSessionGetStats,
-  SimModuleGetStats,
   SimSessionPostJoin,
   SimSessionGetPlayers,
   SimSessionPostLeave,
+  SimSessionPostEnd,
 };
 
 export default schema;

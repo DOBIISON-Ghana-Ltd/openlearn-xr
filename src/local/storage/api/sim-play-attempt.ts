@@ -15,6 +15,8 @@ export async function getPlayAttempt(
 
 export async function upsertPlayAttempt(params: {
   moduleVersionId: string;
+  currentTab?: number;
+  progress?: number;
   currentCheckpointId?: string | null;
   accumulatedPoints?: number;
 }): Promise<PlayAttemptRecord | null> {
@@ -25,6 +27,8 @@ export async function upsertPlayAttempt(params: {
 
     const record: PlayAttemptRecord = {
       moduleVersionId: params.moduleVersionId,
+      currentTab: params.currentTab ?? existing?.currentTab ?? 0,
+      progress: params.progress ?? existing?.progress ?? 0,
       currentCheckpointId: params.currentCheckpointId ?? existing?.currentCheckpointId ?? null,
       accumulatedPoints: params.accumulatedPoints ?? existing?.accumulatedPoints ?? 0,
       updatedAt: now,

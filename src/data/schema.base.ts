@@ -34,6 +34,9 @@ export const ZSessionConfig = z.object({
   allowHints: true
 });
 
+export const ServerModeEnum = z.enum(["local", "remote", "session"]);
+export type ServerMode = z.infer<typeof ServerModeEnum>;
+
 export const ZBaseFilter = z.object({
   search: z.string().optional(),
 
@@ -443,6 +446,8 @@ export const ZPlayAttempt = z.object({
   sessionId: z.string().nullable(),
   moduleVersionId: z.string(),
   playMode: z.enum(["session", "library", "free"]),
+  currentTab: z.number().int().default(0),
+  progress: z.number().int().default(0),
   currentCheckpointIndex: z.number().int().default(0),
   accumulatedPoints: z.number().int().default(0),
   sessionPlayerId: z.string().nullable(),
@@ -472,6 +477,7 @@ export const ZLiveSession = z.object({
   name: z.string(),
   status: LiveSessionStatusEnum.default("STAGING"),
   config: ZSessionConfig,
+  currentTab: z.number().int().default(0),
   startedAt: ZDate.nullable(),
   endedAt: ZDate.nullable(),
   createdAt: ZDate,
@@ -539,6 +545,7 @@ export const ZEmailLog = z.object({
 // ==========================================
 
 const baseSchema = {
+  ServerModeEnum,
   // Utilities
   ZMediaFile,
   ZDate,

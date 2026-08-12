@@ -15,6 +15,7 @@ import { match } from 'ts-pattern';
 import { Loader2Icon } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { PATHS } from '@/lib/constants/paths';
+import { toastManager } from '@/components/ui/toast';
 
 const ZForm = ZSim.SimSessionPostJoin.shape.body;
 type IForm = Infer["SimSessionPostJoin"]["body"];
@@ -37,19 +38,30 @@ export default function Entrance(props: IEntrance) {
   });
 
   const onSubmit = (data: IForm) => {
-    mutate({ body: data }, {
-      onSuccess: (resData) => {
-        addSession(resData.joinCode, {
-          sessionId: resData.sessionId,
-          playerId: resData.playerId,
-        });
-        router.replace(PATHS.PLAY("session", resData.joinCode));
-      },
-      onSettled() {
-        reset(defaultValues);
-      },
-    });
-  }
+    mutate(
+      { body: data },
+      {
+        onError: (err) => {
+          toastManager.add({
+            title: err.message || "Failed to join session. Please try again.",
+            type: "error",
+          });
+        },
+        onSettled(resData, error) {
+          reset(defaultValues);
+          if (resData && !error) {
+            addSession(resData.joinCode, {
+              sessionId: resData.sessionId,
+              playerId: resData.playerId,
+              isHost: resData.isHost,
+              config: resData.config,
+            });
+            router.replace(PATHS.PLAY("session", resData.joinCode));
+          }
+        },
+      }
+    );
+  };
 
   return (
     <div className="relative w-full h-dvh min-h-dvh bg-surface-white flex items-center overflow-hidden">

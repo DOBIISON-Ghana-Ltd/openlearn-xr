@@ -5,8 +5,17 @@ import ZSim from "@/data/api/sim/sim.schema";
 import { triggerSessionEvent } from "@/adapters/realtime/server";
 
 export const POST = apiHandler<{ id: string }>(async (req, ctx) => {
-  const { id: sessionId } = await ctx.params;
+  const { id: playId } = await ctx.params;
   const body = ZSim.SimSessionPostLeave.shape.body.parse(await req.json());
+
+  const liveSession = await prisma.liveSession.findUnique({
+    where: { joinCode: playId },
+    select: { id: true },
+  });
+
+  if (!liveSession) {
+    return JSend.error("Session not found", 404);
+  }
 
   const player = await prisma.sessionPlayer.findUnique({
     where: { id: body.playerId },
@@ -16,12 +25,12 @@ export const POST = apiHandler<{ id: string }>(async (req, ctx) => {
   await prisma.sessionPlayer.deleteMany({
     where: {
       id: body.playerId,
-      sessionId,
+      sessionId: liveSession.id,
     },
   });
 
   if (player) {
-    await triggerSessionEvent(sessionId, "player:left", {
+    await triggerSessionEvent(liveSession.id, "player:left", {
       participantId: player.id,
       name: player.name,
     });

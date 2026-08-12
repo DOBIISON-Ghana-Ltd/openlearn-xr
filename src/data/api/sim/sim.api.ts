@@ -148,7 +148,7 @@ const simCollectionGetModules = {
 
 const simSessionGetStats = {
   type: "query",
-  queryKey: (params: Infer["SimSessionGetStats"]["params"]) => [...QUERY_KEYS["sim:session:get:stats"](params.playId)],
+  queryKey: (params: Infer["SimSessionGetStats"]["params"]) => [...QUERY_KEYS["sim:session:get:stats"](params.id)],
   queryFn: async (params: Infer["SimSessionGetStats"]["params"]) => {
     const data = await fetcher(
       () => axios.get(R["sim:session:get:stats"](params)),
@@ -204,24 +204,77 @@ const simSessionPostLeave = {
   },
 } satisfies MutationConfig;
 
+const simSessionPostEnd = {
+  type: "mutation",
+  mutationFn: async (vars: Pick<Infer["SimSessionPostEnd"], "params">) => {
+    const data = await fetcher(
+      () => axios.post(R["sim:session:post:end"]({ id: vars.params.id }), {}),
+      ZSim.SimSessionPostEnd.shape.res
+    );
+    return data;
+  },
+} satisfies MutationConfig;
+
 const simGeneralGetScore = {
   type: "query",
-  queryKey: ({ params, query }: Pick<Infer["SimGeneralGetScore"], "params" | "query">) =>
-    [...QUERY_KEYS["sim:general:get:score"](params.playId, query)],
-  queryFn: async ({ params, query }: Pick<Infer["SimGeneralGetScore"], "params" | "query">) => {
-    const data = await fetcher(
-      () => axios.get(R["sim:general:get:score"](params), { params: query }),
-      ZSim.SimGeneralGetScore.shape.res
-    );
-
-    if (query.mode === "module:local" && data.moduleId) {
-      const completion = await localDB.getModuleCompletion(data.moduleId);
+  queryKey: ({ params }: Pick<Infer["SimGeneralGetScore"], "params">) =>
+    [...QUERY_KEYS["sim:general:get:score"](params.playId)],
+  queryFn: async ({ params }: Pick<Infer["SimGeneralGetScore"], "params">) => {
+    if (params.mode === "local") {
+      const completion = await localDB.getModuleCompletion(params.playId);
       return { score: completion?.lastScore ?? 0 };
     }
+
+    const data = await fetcher(
+      () => axios.get(R["sim:general:get:score"](params)),
+      ZSim.SimGeneralGetScore.shape.res
+    );
 
     return data;
   },
 } satisfies QueryConfig;
+
+const simGeneralGetNavigate = {
+  type: "query",
+  queryKey: ({ params }: Pick<Infer["SimGeneralGetNavigate"], "params">) =>
+    [...QUERY_KEYS["sim:general:get:navigate"](params.playId)],
+  queryFn: async ({ params, query }: Pick<Infer["SimGeneralGetNavigate"], "params" | "query">) => {
+    if (params.mode === "local") {
+      const attempt = await localDB.getPlayAttempt(params.playId);
+      const currentTab = attempt?.currentTab ?? 0;
+      const progress = attempt?.progress ?? Math.round((currentTab / 5) * 100);
+      return { currentTab, progress };
+    }
+
+    const data = await fetcher(
+      () => axios.get(R["sim:general:get:navigate"](params), { params: query }),
+      ZSim.SimGeneralGetNavigate.shape.res
+    );
+    return data;
+  },
+} satisfies QueryConfig;
+
+const simGeneralPostNavigate = {
+  type: "mutation",
+  mutationFn: async ({ params, query, body }: { params: Infer["SimGeneralPostNavigate"]["params"], query?: Infer["SimGeneralPostNavigate"]["query"], body: Infer["SimGeneralPostNavigate"]["body"] }) => {
+    const progress = Math.round((body.nextTab / 5) * 100);
+
+    if (params.mode === "local") {
+      await localDB.upsertPlayAttempt({
+        moduleVersionId: params.playId,
+        currentTab: body.nextTab,
+        progress,
+      });
+      return "Navigation updated successfully.";
+    }
+
+    const data = await fetcher(
+      () => axios.post(R["sim:general:post:navigate"](params), body, { params: query }),
+      ZSim.SimGeneralPostNavigate.shape.res
+    );
+    return data;
+  },
+} satisfies MutationConfig;
 
 export default {
   "sim:module:get:all": simModuleGetAll,
@@ -229,6 +282,8 @@ export default {
   "sim:checkpoint:get:one": simCheckpointGetOne,
   "sim:checkpoint:post:answer": simCheckpointPostAnswer,
   "sim:general:get:score": simGeneralGetScore,
+  "sim:general:get:navigate": simGeneralGetNavigate,
+  "sim:general:post:navigate": simGeneralPostNavigate,
   "sim:module-completion:get:all": simModuleCompletionGetAll,
   "sim:collection:get:all": simCollectionGetAll,
   "sim:collection:get:modules": simCollectionGetModules,
@@ -237,4 +292,5 @@ export default {
   "sim:module:get:stats": simModuleGetStats,
   "sim:session:post:join": simSessionPostJoin,
   "sim:session:post:leave": simSessionPostLeave,
+  "sim:session:post:end": simSessionPostEnd,
 };

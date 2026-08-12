@@ -427,6 +427,7 @@ model LiveSession {
   joinCode        String    @unique // e.g. "A5F9B"
   name            String? // Optional human name for the session
   status          String    @default("STAGING") // "STAGING" | "ACTIVE" | "COMPLETED" | "CANCELLED"
+  currentTab      Int       @default(0)
   config          Json? // Pre-play config: time limits, anonymous allowed, etc.
   startedAt       DateTime?
   endedAt         DateTime?
@@ -541,6 +542,8 @@ model PlayAttempt {
   playMode        String // "session" | "library" | "free"
 
   // State
+  currentTab          Int     @default(0) // Active tab index (0..5)
+  progress            Int     @default(0) // Progress percentage (0..100)
   currentCheckpointId String? // Tracks which checkpoint id is active
   accumulatedPoints   Int     @default(0) // Staged points during this attempt
 

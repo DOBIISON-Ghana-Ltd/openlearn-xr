@@ -5,10 +5,10 @@ import ZSim from "@/data/api/sim/sim.schema";
 
 export const GET = apiHandler<{ id: string }>(async (req, ctx) => {
   const params = await ctx.params;
-  const { id } = ZSim.SimSessionGetPlayers.shape.params.parse(params);
+  const { id: playId } = ZSim.SimSessionGetPlayers.shape.params.parse(params);
 
   const players = await prisma.sessionPlayer.findMany({
-    where: { sessionId: id },
+    where: { session: { joinCode: playId } },
     select: {
       id: true,
       name: true,

@@ -6,6 +6,8 @@ import { match, P } from 'ts-pattern';
 import { Infer } from '@/data/types.base';
 import useApi from '@/data/hooks/use-api';
 import { usePlayServerMode } from '@/hooks/use-play-mode';
+import { simStore } from '@/store/sim/store';
+import { useStore } from 'zustand';
 
 type IDetail = Infer["SimModuleGetOne"]["res"];
 type IScore = Infer["SimGeneralGetScore"]["res"];
@@ -26,11 +28,16 @@ export default function ResultFLow(props: IResultFlow) {
     query: { mode: props.mode },
   });
 
+  const playerId = useStore(simStore, (s) => s.getSessionPlayer(props.id)) || '';
+
   const { data: playScore, isLoading: ILPlayScore } = useApi.query(
     "sim:general:get:score",
     {
-      params: { playId: props.id },
-      query: { mode: serverMode },
+      params: {
+        mode: serverMode,
+        playId: props.id,
+        playerId,
+      },
     },
     !isModeLoading
   );
