@@ -7,6 +7,9 @@ const isServer = environmentManager.isServer();
 export const axios = primitiveAxios.create({
   baseURL: env.NEXT_PUBLIC_API_URL!,
   withCredentials: true, // Equivalent to credentials: 'include' for the client
+  paramsSerializer: {
+    indexes: null,
+  },
 });
 
 // Interceptor to handle Server-Side header forwarding

@@ -31,7 +31,7 @@ export default {
       queryKey: config.queryKey(vars),
       queryFn: () => config.queryFn(vars),
       ...config.options,
-      enabled
+      enabled: typeof enabled === 'function' ? enabled : Boolean(enabled)
     });
   },
 

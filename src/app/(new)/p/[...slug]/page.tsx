@@ -1,28 +1,21 @@
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import PlayClient from './client';
+import { connection } from 'next/server';
+import ClientPage from './client';
 import { verifyPlayRouteParams } from '@/lib/utils/verify-play-route-params';
 
 type Props = {
   params: Promise<{ slug?: string[] }>;
 };
 
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { slug } = await params;
-  const result = verifyPlayRouteParams(slug);
+export const metadata: Metadata = {
+  title: 'Play Environment',
+  description: 'Interactive science lab simulation and session player.',
+};
 
-  if (!result.isCorrect) {
-    return { title: 'Not Found' };
-  }
+export default async function Page({ params }: Props) {
+  await connection();
 
-  const { mode, id } = result.data;
-  return {
-    title: `Play ${mode.charAt(0).toUpperCase() + mode.slice(1)}`,
-    description: `Play environment for ${mode}${id ? ` ${id}` : ''}`,
-  };
-}
-
-export default async function PlayPage({ params }: Props) {
   const { slug } = await params;
   const result = verifyPlayRouteParams(slug);
 
@@ -32,5 +25,5 @@ export default async function PlayPage({ params }: Props) {
 
   const { mode, id } = result.data;
 
-  return <PlayClient mode={mode} id={id} />;
+  return <ClientPage mode={mode} id={id} />;
 }

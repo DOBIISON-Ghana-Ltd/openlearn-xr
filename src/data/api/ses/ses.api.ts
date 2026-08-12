@@ -7,10 +7,10 @@ import ZSes from "./ses.schema";
 
 const sesSessionGetAll = {
   type: "query",
-  queryKey: () => [...QUERY_KEYS["ses:session:get:all"]],
-  queryFn: async () => {
+  queryKey: (vars?: Infer["SesSessionGetAll"]["query"]) => [...QUERY_KEYS["ses:session:get:all"](vars)],
+  queryFn: async (vars?: Infer["SesSessionGetAll"]["query"]) => {
     const data = await fetcher(
-      () => axios.get(R["ses:session:get:all"]()),
+      () => axios.get(R["ses:session:get:all"](), { params: vars }),
       ZSes.SesSessionGetAll.shape.res
     );
     return data;
@@ -99,8 +99,57 @@ const sesSessionPostStart = {
   },
 } satisfies MutationConfig;
 
+const sesSessionGetRecent = {
+  type: "query",
+  queryKey: () => [...QUERY_KEYS["ses:session:get:recent"]],
+  queryFn: async () => {
+    const data = await fetcher(
+      () => axios.get(R["ses:session:get:recent"]()),
+      ZSes.SesSessionGetRecent.shape.res
+    );
+    return data;
+  },
+} satisfies QueryConfig;
+
+const sesModuleGetAll = {
+  type: "query",
+  queryKey: (query?: Infer["SesModuleGetAll"]["query"]) => [...QUERY_KEYS["ses:module:get:all"](query)],
+  queryFn: async (query?: Infer["SesModuleGetAll"]["query"]) => {
+    const data = await fetcher(
+      () => axios.get(R["ses:module:get:all"](), { params: query }),
+      ZSes.SesModuleGetAll.shape.res
+    );
+    return data;
+  },
+} satisfies QueryConfig;
+
+const sesModuleGetOne = {
+  type: "query",
+  queryKey: (vars: Infer["SesModuleGetOne"]["params"]) => [...QUERY_KEYS["ses:module:get:one"](vars.id)],
+  queryFn: async (vars: Infer["SesModuleGetOne"]["params"]) => {
+    const data = await fetcher(
+      () => axios.get(R["ses:module:get:one"](vars)),
+      ZSes.SesModuleGetOne.shape.res
+    );
+    return data;
+  },
+} satisfies QueryConfig;
+
+const sesSessionGetOne = {
+  type: "query",
+  queryKey: (vars: Infer["SesSessionGetOne"]["params"]) => [...QUERY_KEYS["ses:session:get:one"](vars.code)],
+  queryFn: async (vars: Infer["SesSessionGetOne"]["params"]) => {
+    const data = await fetcher(
+      () => axios.get(R["ses:session:get:one"](vars)),
+      ZSes.SesSessionGetOne.shape.res
+    );
+    return data;
+  },
+} satisfies QueryConfig;
+
 export default {
   "ses:session:get:all": sesSessionGetAll,
+  "ses:session:get:recent": sesSessionGetRecent,
   "ses:session:post:create": sesSessionPostCreate,
   "ses:session:post:start": sesSessionPostStart,
   "ses:session:get:overview": sesSessionGetOverview,
@@ -108,4 +157,7 @@ export default {
   "ses:session:get:players": sesSessionGetPlayers,
   "ses:session:get:player-summary": sesSessionGetPlayerSummary,
   "ses:module-version:get:options": sesModuleVersionGetOptions,
+  "ses:module:get:all": sesModuleGetAll,
+  "ses:module:get:one": sesModuleGetOne,
+  "ses:session:get:one": sesSessionGetOne,
 };

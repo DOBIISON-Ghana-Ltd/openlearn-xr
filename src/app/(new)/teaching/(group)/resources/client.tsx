@@ -35,7 +35,7 @@ const RESOURCES: ResourceItem[] = [
   },
 ];
 
-export default function TeachingResourcesClient() {
+export default function ClientPage() {
   return (
     <div className="py-8 px-6 sm:px-10 lg:px-12 flex flex-col gap-6 max-w-[1084px]">
       <h2 className="text-h5 text-secondary-text">Resource Files</h2>

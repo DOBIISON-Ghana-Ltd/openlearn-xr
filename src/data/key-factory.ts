@@ -19,12 +19,16 @@ export const QUERY_KEYS = {
   "sim:module:get:stats": (id: string) => ["sim", "module", id, "stats"] as const,
 
   // SES SUITE
-  "ses:session:get:all": ["ses", "session", "all"] as const,
+  "ses:session:get:all": (query?: Record<string, any>) => ["ses", "session", "all", query] as const,
+  "ses:session:get:recent": ["ses", "session", "recent"] as const,
   "ses:session:get:overview": (id: string) => ["ses", "session", id, "overview"] as const,
   "ses:session:get:notes": (id: string) => ["ses", "session", id, "notes"] as const,
   "ses:session:get:players": (id: string) => ["ses", "session", id, "players"] as const,
   "ses:session:get:player-summary": (id: string) => ["ses", "session", id, "player-summary"] as const,
   "ses:module-version:get:options": ["ses", "module-version", "options"] as const,
+  "ses:module:get:all": (query?: Record<string, any>) => ["ses", "module", "all", query] as const,
+  "ses:module:get:one": (id: string) => ["ses", "module", id, "one"] as const,
+  "ses:session:get:one": (code: string) => ["ses", "session", code, "one"] as const,
 
   // EDITOR SUITE
   "editor:collection:get:all": ["editor", "collection", "all"] as const,

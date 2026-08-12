@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { cn } from '@/lib/utils/cn';
+import { PATHS } from '@/lib/constants/paths';
 
 export interface HeroProps {
   className?: string;
@@ -43,13 +44,13 @@ export default function Hero({ className }: HeroProps) {
         {/* CTA Buttons */}
         <div className="mt-[34px] flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6">
           <Link
-            href="/modules"
+            href={PATHS.MODULES}
             className="w-full sm:w-auto inline-flex h-12 items-center justify-center bg-primary-cta hover:bg-primary-hover text-primary-text-light text-button px-5 py-2.5 rounded-[10px] shadow-[0px_4px_4px_0px_rgba(69,157,159,0.3)] transition-all active:scale-98"
           >
             Play Simulations
           </Link>
           <Link
-            href="/session/join"
+            href={PATHS.PLAY('session')}
             className="w-full sm:w-auto inline-flex h-12 items-center justify-center bg-surface-slate hover:bg-surface-slate/80 border border-disable/50 text-dark-bg text-button px-5 py-2.5 rounded-[10px] transition-all active:scale-98"
           >
             Join a Session

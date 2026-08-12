@@ -43,7 +43,7 @@ const ANALYTICS_SESSIONS: SessionItem[] = [
   },
 ];
 
-export default function AnalyticsClient() {
+export default function ClientPage() {
   return (
     <div className="py-8 px-6 sm:px-10 lg:px-12 flex flex-col gap-6 max-w-[1084px]">
       {/* Full-width Section Title */}

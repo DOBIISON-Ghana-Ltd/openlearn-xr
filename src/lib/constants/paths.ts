@@ -2,7 +2,7 @@ export const PATHS = {
   // MARKETING ROUTES
   HOME: '/',
   MODULES: '/modules',
-  PLAY: (mode: string, id?: string) => `/p/${mode}/${id}`,
+  PLAY: (mode: string, id?: string) => id ? `/p/${mode}/${id}` : `/p/${mode}`,
   LICENSING: '/licensing',
   CONTACT: '/contact',
   LEGAL: {

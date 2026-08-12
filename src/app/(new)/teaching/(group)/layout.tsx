@@ -12,7 +12,7 @@ export default async function Layout({ children }: { children: React.ReactNode }
     <HydrationBoundary state={dehydrate(queryClient)}>
       <div className="flex min-h-screen flex-col bg-surface-white">
         <Header />
-        <div className="mx-auto w-full max-w-8xl flex flex-col md:flex-row flex-1 min-h-[calc(100dvh-var(--spacing)*20)]">
+        <div className="mx-auto w-full max-w-10xl flex flex-1 min-h-[calc(100dvh-var(--spacing)*20)]">
           <TeachingSidebar />
           <main className="flex-1">{children}</main>
         </div>

@@ -28,6 +28,7 @@ const ROUTES = {
 
   // SES SUITE
   "ses:session:get:all": () => `/api/ses/sessions`,
+  "ses:session:get:recent": () => `/api/ses/sessions/recent`,
   "ses:session:get:overview": (id: string) => `/api/ses/sessions/${id}/overview`,
   "ses:session:get:notes": (id: string) => `/api/ses/sessions/${id}/notes`,
   "ses:session:get:players": (id: string) => `/api/ses/sessions/${id}/players`,
@@ -35,6 +36,9 @@ const ROUTES = {
   "ses:session:post:create": () => `/api/ses/sessions`,
   "ses:session:post:start": (id: string) => `/api/ses/sessions/${id}/start`,
   "ses:module-version:get:options": () => `/api/ses/modules-versions/options`,
+  "ses:module:get:all": () => `/api/ses/modules`,
+  "ses:module:get:one": ({ id }: { id: string }) => `/api/ses/modules/${id}`,
+  "ses:session:get:one": ({ code }: { code: string }) => `/api/ses/sessions/${code}`,
 
   // EDITOR SUITE
   "editor:collection:get:all": () => `/api/editor/collections`,

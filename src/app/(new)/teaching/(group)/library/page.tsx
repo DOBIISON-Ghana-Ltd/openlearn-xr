@@ -1,5 +1,6 @@
-import { Suspense } from 'react';
-import TeachingLibraryClient from './client';
+import { connection } from 'next/server';
+import ClientPage from './client';
+import { verifyRouteGuard } from '@/lib/utils/route-guard';
 
 export const metadata = {
   title: 'Teaching Library',
@@ -7,10 +8,9 @@ export const metadata = {
     'Browse curriculum-aligned SHS science lab modules, search by topic, and filter by subject or year group.',
 };
 
-export default function TeachingLibraryPage() {
-  return (
-    <Suspense fallback={<div className="w-full min-h-screen bg-surface-white" />}>
-      <TeachingLibraryClient />
-    </Suspense>
-  );
+export default async function Page() {
+  await connection();
+  await verifyRouteGuard();
+
+  return <ClientPage />;
 }

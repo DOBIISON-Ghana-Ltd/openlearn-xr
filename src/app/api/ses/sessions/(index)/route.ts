@@ -2,7 +2,7 @@ import { secureApiRoute } from "@/lib/utils/secure-api-route";
 import { JSend } from "@/lib/utils/jsend";
 import ZSes from "@/data/api/ses/ses.schema";
 import prisma from "@/adapters/db/client";
-import { generateJoinCode } from "@/lib/utils/generate-join-code";
+import { joinCode } from "@/lib/utils/generate-join-code";
 
 export const GET = secureApiRoute(async (req, ctx, user, session) => {
   if (!session.activeOrganizationId) {
@@ -12,36 +12,52 @@ export const GET = secureApiRoute(async (req, ctx, user, session) => {
     );
   }
 
+  const query = ZSes.SesSessionGetAll.shape.query.parse(
+    { status: req.nextUrl.searchParams.getAll("status") }
+  );
+
   const sessions = await prisma.liveSession.findMany({
     where: {
+      hostId: user.id,
       organizationId: session.activeOrganizationId,
+      ...(query?.status && query.status.length > 0 ? { status: { in: query.status } } : {}),
     },
     select: {
       id: true,
       name: true,
       status: true,
-      startedAt: true,
-      endedAt: true,
-      host: {
-        select: {
-          name: true,
-          image: true,
-        },
-      },
+      joinCode: true,
+      config: true,
       moduleVersion: {
         select: {
-          versionNumber: true,
           module: {
             select: {
               title: true,
+              image: true,
               collection: {
                 select: {
                   name: true,
-                  level: true,
+                  grade: true,
                 },
               },
             },
           },
+        },
+      },
+      _count: {
+        select: {
+          players: true,
+        },
+      },
+      players: {
+        take: 2,
+        orderBy: [
+          { score: "desc" },
+          { joinedAt: "desc" },
+        ],
+        select: {
+          name: true,
+          avatar: true,
         },
       },
     },
@@ -62,22 +78,20 @@ export const POST = secureApiRoute(async (req, ctx, user, session) => {
   const rawBody = await req.json();
   const body = ZSes.SesSessionPostCreate.shape.body.parse(rawBody);
 
-  const joinCode = generateJoinCode();
+  if (!joinCode.check(body.joinCode)) {
+    return JSend.error("Invalid join code format. Expected format: xxxx-xxxx-xxxx", 400);
+  }
 
-  const createdSession = await prisma.liveSession.create({
+  await prisma.liveSession.create({
     data: {
       name: body.name,
-      moduleVersionId: body.moduleVersionId,
+      moduleVersionId: body.moduleId,
       hostId: user.id,
       organizationId: session.activeOrganizationId,
-      joinCode,
+      joinCode: body.joinCode,
       status: "STAGING",
-    },
-    select: {
-      id: true,
-    },
+      config: body.config
+    }
   });
-
-  const parsedData = ZSes.SesSessionPostCreate.shape.res.parse(createdSession);
-  return JSend.success(parsedData);
+  return JSend.success("Session created successfully");
 });

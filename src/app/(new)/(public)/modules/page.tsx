@@ -1,16 +1,13 @@
 import { connection } from 'next/server';
-import ModulesClient from './client';
+import ClientPage from './client';
 
 export const metadata = {
   title: 'Science Curriculum Modules',
   description: 'Browse GES-aligned high school science modules across Chemistry, Physics, and Engineering for SHS Year 1, Year 2, and Year 3. Track progress and launch 3D interactive simulations.',
 };
 
-export default async function ModulesPage() {
+export default async function Page() {
   await connection();
 
-  return (
-    <ModulesClient />
-  );
+  return <ClientPage />;
 }
-

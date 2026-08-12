@@ -1,5 +1,6 @@
 import { z } from "zod";
 import {
+  LiveSessionStatusEnum,
   ZApi,
   ZCollection,
   ZLiveSession,
@@ -14,33 +15,33 @@ import {
 // POST /api/ses/sessions — create live session
 // ---------------------------------------------------------------------------
 const SesSessionPostCreate = ZApi({
-  body: ZLiveSession.pick({ name: true }).extend({
-    moduleVersionId: z.string(),
-  }),
-  res: ZLiveSession.pick({ id: true }),
+  body: z.object({
+    name: ZLiveSession.shape.name,
+    joinCode: ZLiveSession.shape.joinCode,
+    moduleId: ZModuleVersion.shape.id,
+    config: ZLiveSession.shape.config
+  })
 });
 
 // ---------------------------------------------------------------------------
 // GET /api/ses/sessions — list live sessions
 // ---------------------------------------------------------------------------
 const SesSessionGetAll = ZApi({
+  query: z.object({
+    status: z.array(LiveSessionStatusEnum).optional(),
+  }).optional(),
   res: z.array(
     ZLiveSession.pick({
       id: true,
       name: true,
       status: true,
-      startedAt: true,
-      endedAt: true,
+      joinCode: true,
+      config: true
     }).extend({
-      host: ZUser.pick({
-        name: true,
-        image: true,
-      }),
-      moduleVersion: ZModuleVersion.pick({
-        versionNumber: true,
-      }).extend({
+      moduleVersion: z.object({
         module: ZModule.pick({
           title: true,
+          image: true,
         }).extend({
           collection: ZCollection.pick({
             name: true,
@@ -48,6 +49,15 @@ const SesSessionGetAll = ZApi({
           }),
         }),
       }),
+      _count: z.object({
+        players: z.number()
+      }),
+      players: z.array(
+        ZSessionPlayer.pick({
+          name: true,
+          avatar: true
+        })
+      )
     })
   ),
 });
@@ -143,6 +153,95 @@ const SesSessionGetPlayerSummary = ZApi({
   ),
 });
 
+// ---------------------------------------------------------------------------
+// GET /api/ses/sessions/recent — get recent sessions for current user
+// ---------------------------------------------------------------------------
+const SesSessionGetRecent = ZApi({
+  res: z.array(
+    ZLiveSession.pick({
+      id: true,
+      name: true,
+      status: true,
+      config: true,
+      joinCode: true,
+    }).extend({
+      moduleVersion: z.object({
+        module: ZModule.pick({
+          title: true,
+        }).extend({
+          collection: ZCollection.pick({
+            name: true,
+            grade: true,
+          }),
+        }),
+      }),
+      _count: z.object({
+        players: z.number(),
+      }),
+    })
+  ),
+});
+
+// ---------------------------------------------------------------------------
+// Module card response shape for session creation selection & preview
+// ---------------------------------------------------------------------------
+const SesModuleCard = ZModuleVersion.pick({
+  id: true,
+}).extend({
+  module: ZModule.pick({
+    title: true,
+    duration: true,
+    difficulty: true,
+    image: true,
+  }),
+});
+
+// ---------------------------------------------------------------------------
+// GET /api/ses/modules — get all modules for session creation selection
+// ---------------------------------------------------------------------------
+const SesModuleGetAll = ZApi({
+  query: z.object({
+    search: z.string().optional(),
+    subject: z.string().optional(),
+    grade: z.string().optional(),
+  }).optional(),
+  res: z.array(SesModuleCard),
+});
+
+// ---------------------------------------------------------------------------
+// GET /api/ses/modules/[id] — get single module by id for session configuration preview
+// ---------------------------------------------------------------------------
+const SesModuleGetOne = ZApi({
+  params: z.object({
+    id: z.string(),
+  }),
+  res: SesModuleCard,
+});
+
+// ---------------------------------------------------------------------------
+// GET /api/ses/sessions/[id] — session detail by joinCode
+// ---------------------------------------------------------------------------
+const SesSessionGetOne = ZApi({
+  params: z.object({
+    code: z.string(),
+  }),
+  res: ZLiveSession.pick({
+    id: true,
+    name: true,
+    status: true,
+    config: true,
+  }).extend({
+    players: z.array(
+      ZSessionPlayer.pick({
+        id: true,
+        name: true,
+        avatar: true,
+        joinedAt: true,
+      })
+    ),
+  }),
+});
+
 const schema = {
   SesSessionGetAll,
   SesSessionPostCreate,
@@ -152,6 +251,10 @@ const schema = {
   SesModuleVersionGetOptions,
   SesSessionPostStart,
   SesSessionGetPlayerSummary,
+  SesSessionGetRecent,
+  SesModuleGetAll,
+  SesModuleGetOne,
+  SesSessionGetOne,
 };
 
 export default schema;

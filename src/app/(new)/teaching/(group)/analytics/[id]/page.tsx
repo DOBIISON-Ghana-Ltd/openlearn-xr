@@ -1,5 +1,6 @@
-import { Suspense } from 'react';
-import AnalyticsDetailClient from './client';
+import { connection } from 'next/server';
+import ClientPage from './client';
+import { verifyRouteGuard } from '@/lib/utils/route-guard';
 
 export const metadata = {
   title: 'Session Performance Analytics',
@@ -10,12 +11,10 @@ interface PageProps {
   params: Promise<{ id: string }>;
 }
 
-export default async function AnalyticsDetailPage({ params }: PageProps) {
+export default async function Page({ params }: PageProps) {
+  await connection();
+  await verifyRouteGuard();
   const { id } = await params;
 
-  return (
-    <Suspense fallback={<div className="w-full min-h-screen bg-surface-white" />}>
-      <AnalyticsDetailClient sessionId={id} />
-    </Suspense>
-  );
+  return <ClientPage sessionId={id} />;
 }

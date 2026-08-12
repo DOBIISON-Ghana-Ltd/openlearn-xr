@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { cn } from '@/lib/utils/cn';
+import { PATHS } from '@/lib/constants/paths';
 
 export interface VirtualLabsProps {
   className?: string;
@@ -12,7 +13,7 @@ const SUBJECTS = [
     title: 'Chemistry',
     image: '/(new)/chemistry.png',
     description: 'Experiment with chemical reactions, atomic structure, and molecular bonding safely.',
-    href: '/simulations?subject=chemistry',
+    href: `${PATHS.MODULES}?subject=chemistry`,
     imageStyle: 'scale-110 object-contain',
   },
   {
@@ -20,7 +21,7 @@ const SUBJECTS = [
     title: 'Physics',
     image: '/(new)/physics-engineering.png',
     description: 'Explore mechanics, optics, electricity, and wave physics in interactive 3D environments.',
-    href: '/simulations?subject=physics',
+    href: `${PATHS.MODULES}?subject=physics`,
     imageStyle: 'scale-125 object-center',
   },
   {
@@ -28,7 +29,7 @@ const SUBJECTS = [
     title: 'Engineering',
     image: '/(new)/physics-engineering.png',
     description: 'Build circuit diagrams, test structural designs, and master applied technical concepts.',
-    href: '/simulations?subject=engineering',
+    href: `${PATHS.MODULES}?subject=engineering`,
     imageStyle: 'scale-125 object-right',
   },
 ];
@@ -51,7 +52,7 @@ export default function VirtualLabs({ className }: VirtualLabsProps) {
         <div className="mt-[38px] flex flex-wrap items-center justify-center gap-8 lg:gap-[35px] max-w-5xl mx-auto">
           {/* Chemistry Card */}
           <Link
-            href="/modules?subject=chemistry"
+            href={`${PATHS.MODULES}?subject=chemistry`}
             className="group relative flex flex-col items-center justify-between w-[270px] h-[270px] p-[16px] bg-primary-subtle border-2 border-primary-light rounded-[20px] overflow-hidden transition-all hover:border-primary-cta hover:shadow-lg hover:-translate-y-1"
           >
             <div className="relative size-[192px] overflow-hidden flex items-center justify-center">
@@ -68,7 +69,7 @@ export default function VirtualLabs({ className }: VirtualLabsProps) {
 
           {/* Physics Card (Cropped Atom Icon from Sprite) */}
           <Link
-            href="/modules?subject=physics"
+            href={`${PATHS.MODULES}?subject=physics`}
             className="group relative flex flex-col items-center justify-between w-[270px] h-[270px] p-[16px] bg-primary-subtle border-2 border-primary-light rounded-[20px] overflow-hidden transition-all hover:border-primary-cta hover:shadow-lg hover:-translate-y-1"
           >
             <div className="relative w-[196px] h-[192px] overflow-hidden pointer-events-none flex items-center justify-center">
@@ -85,7 +86,7 @@ export default function VirtualLabs({ className }: VirtualLabsProps) {
 
           {/* Engineering Card (Cropped Gear/Caliper Icon from Sprite) */}
           <Link
-            href="/modules?subject=engineering"
+            href={`${PATHS.MODULES}?subject=engineering`}
             className="group relative flex flex-col items-center justify-between w-[270px] h-[270px] p-[16px] bg-primary-subtle border-2 border-primary-light rounded-[20px] overflow-hidden transition-all hover:border-primary-cta hover:shadow-lg hover:-translate-y-1"
           >
             <div className="relative w-[207px] h-[192px] overflow-hidden pointer-events-none flex items-center justify-center">

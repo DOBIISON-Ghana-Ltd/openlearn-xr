@@ -53,6 +53,11 @@ const parsers = {
     new: parseAsString.withDefault('false'),
     moduleId: parseAsString.withDefault(''),
   },
+  "ses:create": {
+    search: parseAsString.withDefault(''),
+    subject: parseAsString.withDefault('chemistry'),
+    grade: parseAsString.withDefault('year 1'),
+  },
 
   // EDITOR SUITE (Interactive Lab Studio)
   "editor:home": {

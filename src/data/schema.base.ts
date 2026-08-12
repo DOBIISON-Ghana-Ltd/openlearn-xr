@@ -25,9 +25,13 @@ export const ZStorageMetadata = z.object({
 export const ZSessionConfig = z.object({
   allowLateAdmissions: z.boolean().default(true),
   maxAdmissions: z.number().int().positive().default(50),
+  controlMode: z.enum(["tutor-led", "self-paced"]).default("self-paced"),
+  allowHints: z.boolean().default(true)
 }).catch({
   allowLateAdmissions: true,
   maxAdmissions: 50,
+  controlMode: "self-paced",
+  allowHints: true
 });
 
 export const ZBaseFilter = z.object({
@@ -488,7 +492,7 @@ export const ZSessionPlayer = z.object({
   sessionId: z.string(),
   userId: z.string().nullable(),
   name: z.string(),
-  avatar: z.string().default("avatar-01"),
+  avatar: z.enum(avatarKeys).default("avatar-01"),
   score: z.number().int().default(0),
   completionRate: z.number().min(0).max(1).default(0.0),
   joinedAt: ZDate,

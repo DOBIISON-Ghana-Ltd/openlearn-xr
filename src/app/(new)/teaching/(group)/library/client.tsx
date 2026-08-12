@@ -23,7 +23,7 @@ const LIBRARY_MODULES: LibraryModule[] = [
   { id: '9', title: 'Measurement of Physical Quantities', duration: '30m', level: 'Advance', image: '/(new)/module-thumbnail.png' },
 ];
 
-export default function TeachingLibraryClient() {
+export default function ClientPage() {
   return (
     <div className="py-8 px-6 sm:px-10 lg:px-12 flex flex-col gap-8 max-w-[1084px]">
       {/* Top Filter Controls Bar */}

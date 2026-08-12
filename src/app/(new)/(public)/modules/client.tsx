@@ -9,7 +9,7 @@ import { Infer } from '@/data/types.base';
 import { PATHS } from '@/lib/constants/paths';
 import { match, P } from 'ts-pattern';
 
-export default function ModulesClient() {
+export default function ClientPage() {
   const [state] = nuqs.getStates("sim:modules");
   const { data, isLoading } = useApi.query("sim:module:get:all", state);
 

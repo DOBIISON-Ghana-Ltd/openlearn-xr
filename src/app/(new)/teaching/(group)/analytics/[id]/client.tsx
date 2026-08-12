@@ -8,7 +8,7 @@ interface AnalyticsDetailProps {
   sessionId: string;
 }
 
-export default function AnalyticsDetailClient({ sessionId }: AnalyticsDetailProps) {
+export default function ClientPage({ sessionId }: AnalyticsDetailProps) {
   return (
     <div className="py-8 px-6 sm:px-10 lg:px-12 flex flex-col gap-8 max-w-[1100px]">
       {/* Top Header: Back Button + Session Title */}
