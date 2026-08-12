@@ -2,7 +2,7 @@ import prisma from "@/adapters/db/client";
 
 export type PersistCompletionParams = {
   attemptId: string;
-  mode: "module:remote" | "session";
+  mode: "remote" | "session";
   userId?: string | null;
   playId: string; // moduleVersionId or sessionId
   finalScore: number;
@@ -38,7 +38,7 @@ export async function persistAttemptCompletion(params: PersistCompletionParams):
       await prisma.playAttempt.delete({
         where: { id: attemptId },
       });
-    } else if (mode === "module:remote") {
+    } else if (mode === "remote") {
       // 1. Remote Mode: Find ModuleVersion to obtain parent moduleId
       const moduleVersion = await prisma.moduleVersion.findUnique({
         where: { id: playId },

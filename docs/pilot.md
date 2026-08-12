@@ -1,18 +1,18 @@
 Atomic Structure Y1
 {
   "name": "Model Dalton's Atom and Orbitals",
-  "image": "/images/modules/chemistry/atomic-orbitals.jpg",
+  "image": "/module/model_daltons_atom_and_orbitals/image.png",
   "subject": "Chemistry",
   "grade": "Year 1",
   "duration": "30 mins",
   "difficultyLevel": "Medium",
   "notes": {
     "overview": {
-      "description": "Explore the evolution of atomic theory from Dalton's simple sphere to modern quantum numbers, and model the 3D shapes of s and p-orbitals.[cite: 6]",
+      "description": "Explore the evolution of atomic theory from Dalton's simple sphere to modern quantum numbers, and model the 3D shapes of s and p-orbitals.",
       "objectives": [
-        "Identify the main postulates of Dalton's atomic theory and explain its weaknesses.[cite: 6]",
-        "Describe J. J. Thompson's and Rutherford's experiments and identify the weaknesses in their atomic models.[cite: 6]",
-        "Model the shapes of s and p-orbitals and explain the importance of quantum numbers.[cite: 6]"
+        "Identify the main postulates of Dalton's atomic theory and explain its weaknesses.",
+        "Describe J. J. Thompson's and Rutherford's experiments and identify the weaknesses in their atomic models.",
+        "Model the shapes of s and p-orbitals and explain the importance of quantum numbers."
       ]
     },
     "engage": {
@@ -74,32 +74,32 @@ Atomic Structure Y1
       "items": [
         {
           "name": "Dalton's Atom Model",
-          "image": "/assets/models/dalton_sphere.png",
-          "description": "Constructed as a simple sphere with no internal structure, representing indivisible matter as initially proposed by Dalton.[cite: 6]"
+          "image": "/module/model_daltons_atom_and_orbitals/explanation-01.png",
+          "description": "Constructed as a simple sphere with no internal structure, representing indivisible matter as initially proposed by Dalton."
         },
         {
           "name": "s-orbital",
-          "image": "/assets/models/s_orbital.png",
-          "description": "A spherical region around the nucleus modelled using a single balloon, representing where an s-electron is likely found.[cite: 6]"
+          "image": "/module/model_daltons_atom_and_orbitals/explanation-02.png",
+          "description": "A spherical region around the nucleus modelled using a single balloon, representing where an s-electron is likely found."
         },
         {
           "name": "p-orbital",
-          "image": "/assets/models/p_orbital.png",
-          "description": "A dumbbell-shaped orbital aligned along an axis, modelled practically using two balloons joined at their knots.[cite: 6]"
+          "image": "/module/model_daltons_atom_and_orbitals/explanation-03.png",
+          "description": "A dumbbell-shaped orbital aligned along an axis, modelled practically using two balloons joined at their knots."
         }
       ],
       "keyTakeaways": [
         {
           "phrase": "Atomic Theory Evolution",
-          "description": "Discoveries of subatomic particles via cathode ray and alpha scattering experiments revealed weaknesses in Dalton's and Thompson's early models.[cite: 6]"
+          "description": "Discoveries of subatomic particles via cathode ray and alpha scattering experiments revealed weaknesses in Dalton's and Thompson's early models."
         },
         {
           "phrase": "Quantum Numbers",
-          "description": "The principal, angular momentum (azimuthal), magnetic, and spin quantum numbers describe the complex electron structure of the atom.[cite: 6]"
+          "description": "The principal, angular momentum (azimuthal), magnetic, and spin quantum numbers describe the complex electron structure of the atom."
         },
         {
           "phrase": "Aufbau Principle",
-          "description": "Electrons fill atomic orbitals of the lowest available energy levels before occupying higher levels.[cite: 6]"
+          "description": "Electrons fill atomic orbitals of the lowest available energy levels before occupying higher levels."
         }
       ]
     }
@@ -115,7 +115,7 @@ Atomic Structure Y1
       ],
       "answer": 1,
       "hint": "Think about the earliest model of the atom before subatomic particles were discovered.",
-      "explanation": "Dalton's atomic theory originally modeled the atom simply as an indivisible sphere with no internal structure, as electrons and protons had not yet been discovered.[cite: 6]"
+      "explanation": "Dalton's atomic theory originally modeled the atom simply as an indivisible sphere with no internal structure, as electrons and protons had not yet been discovered."
     },
     {
       "question": "What was the primary conclusion drawn from Rutherford's alpha particles scattering experiment?",
@@ -127,7 +127,7 @@ Atomic Structure Y1
       ],
       "answer": 2,
       "hint": "Consider what happened to the few alpha particles that bounced straight back from the gold foil.",
-      "explanation": "Rutherford's alpha particle scattering experiment provided evidence that the atom is mostly empty space with a dense, positively charged nucleus at the center, highlighting critical weaknesses in Thompson's model.[cite: 6]"
+      "explanation": "Rutherford's alpha particle scattering experiment provided evidence that the atom is mostly empty space with a dense, positively charged nucleus at the center, highlighting critical weaknesses in Thompson's model."
     },
     {
       "question": "Which specific quantum number describes the 3D shape of an atomic orbital (such as s or p)?",
@@ -139,7 +139,7 @@ Atomic Structure Y1
       ],
       "answer": 1,
       "hint": "This quantum number is often represented by the letter 'l'.",
-      "explanation": "The angular momentum or azimuthal quantum number dictates the shape of the electron orbital, distinguishing between the spherical s-orbitals and dumbbell-shaped p-orbitals.[cite: 6]"
+      "explanation": "The angular momentum or azimuthal quantum number dictates the shape of the electron orbital, distinguishing between the spherical s-orbitals and dumbbell-shaped p-orbitals."
     },
     {
       "question": "When physically modelling atomic orbitals in the lab, how many inflated balloons (joined at their knots) are typically used to represent a single p-orbital?",
@@ -151,7 +151,7 @@ Atomic Structure Y1
       ],
       "answer": 1,
       "hint": "Think of the characteristic dumbbell shape of this specific orbital.",
-      "explanation": "A single p-orbital has a two-lobed, dumbbell shape and is effectively modelled using two inflated balloons joined at their knots.[cite: 6]"
+      "explanation": "A single p-orbital has a two-lobed, dumbbell shape and is effectively modelled using two inflated balloons joined at their knots."
     },
     {
       "question": "Which principle or rule dictates the specific order in which atomic orbitals are filled with electrons?",
@@ -163,7 +163,7 @@ Atomic Structure Y1
       ],
       "answer": 2,
       "hint": "This term comes from a German word meaning 'building up'.",
-      "explanation": "The Aufbau principle, along with Pauli's exclusion principle and Hund's rule of maximum multiplicity, is applied to write the correct electron configuration and determine the order in which orbitals are filled.[cite: 6]"
+      "explanation": "The Aufbau principle, along with Pauli's exclusion principle and Hund's rule of maximum multiplicity, is applied to write the correct electron configuration and determine the order in which orbitals are filled."
     }
   ],
   "simulation": "An interactive 3D virtual laboratory where the user can build and inspect different historical atomic models and electron orbitals. The central workbench features a stand where the user can select an atomic model to display (Dalton's Sphere, Thompson's Plum Pudding, or Rutherford's Nucleus). A secondary holographic display allows the user to select and view the 3D shapes of specific atomic orbitals. A toggle switch allows the user to overlay quantum number labels on the active orbital.",
@@ -205,22 +205,21 @@ Atomic Structure Y1
 }
 
 
-
-Chemical Bonding 
+Chemical Bonding
 {
   "name": "Chemical Bonding",
-  "image": "/images/modules/chemistry/chemical-bonding.jpg",
+  "image": "/module/chemical_bonding/image.png",
   "subject": "Chemistry",
   "grade": "Year 2",
   "duration": "30 mins",
   "difficultyLevel": "Hard",
   "notes": {
     "overview": {
-      "description": "Explore the role of modelling, evidence, and theory in explaining the structure, bonding, and properties of molecular compounds.[cite: 6]",
+      "description": "Explore the role of modelling, evidence, and theory in explaining the structure, bonding, and properties of molecular compounds.",
       "objectives": [
-        "Predict the shape and bond angles for species using the VSEPR theory.[cite: 6]",
-        "Distinguish between sigma and pi bonds and describe their formation.[cite: 6]",
-        "Explain hybridization and use molecular models to identify various types of hybrid orbitals.[cite: 6]"
+        "Predict the shape and bond angles for species using the VSEPR theory.",
+        "Distinguish between sigma and pi bonds and describe their formation.",
+        "Explain hybridization and use molecular models to identify various types of hybrid orbitals."
       ]
     },
     "engage": {
@@ -282,32 +281,32 @@ Chemical Bonding
       "items": [
         {
           "name": "Molecular Models",
-          "image": "/assets/models/ball_and_stick.png",
-          "description": "Physical representations used to identify and explain various types of hybridization and molecular shapes.[cite: 6]"
+          "image": "/module/chemical_bonding/explanation-01.png",
+          "description": "Physical representations used to identify and explain various types of hybridization and molecular shapes."
         },
         {
           "name": "Sigma (σ) Bond",
-          "image": "/assets/models/sigma_bond.png",
-          "description": "A strong covalent bond formed by the direct, co-axial overlap of atomic orbitals.[cite: 6]"
+          "image": "/module/chemical_bonding/explanation-02.png",
+          "description": "A strong covalent bond formed by the direct, co-axial overlap of atomic orbitals."
         },
         {
           "name": "Pi (π) Bond",
-          "image": "/assets/models/pi_bond.png",
-          "description": "A covalent bond formed by the lateral or sideway overlap of atomic orbitals.[cite: 6]"
+          "image": "/module/chemical_bonding/explanation-03.png",
+          "description": "A covalent bond formed by the lateral or sideway overlap of atomic orbitals."
         }
       ],
       "keyTakeaways": [
         {
           "phrase": "VSEPR Theory",
-          "description": "Valence Shell Electron Pair Repulsion theory states that electron pairs around a central atom repel each other, dictating the 3D shape of the molecule.[cite: 6]"
+          "description": "Valence Shell Electron Pair Repulsion theory states that electron pairs around a central atom repel each other, dictating the 3D shape of the molecule."
         },
         {
           "phrase": "Hybridization",
-          "description": "The mixing of atomic orbitals of different energy and shape to obtain a set of new hybrid orbitals (e.g., sp, sp2, sp3, sp3d) of equivalent energy.[cite: 6]"
+          "description": "The mixing of atomic orbitals of different energy and shape to obtain a set of new hybrid orbitals (e.g., sp, sp2, sp3, sp3d) of equivalent energy."
         },
         {
           "phrase": "Giant Covalent Structures",
-          "description": "Substances like diamond, graphite, and silicon (IV) oxide form large network structures with distinct bonding patterns and physical properties.[cite: 6]"
+          "description": "Substances like diamond, graphite, and silicon (IV) oxide form large network structures with distinct bonding patterns and physical properties."
         }
       ]
     }
@@ -323,7 +322,7 @@ Chemical Bonding
       ],
       "answer": 1,
       "hint": "The three electron pairs will repel each other equally in a 2D plane.",
-      "explanation": "According to VSEPR theory, 3 negative charge centres around a central atom will position themselves as far apart as possible, resulting in a trigonal planar shape with 120-degree bond angles.[cite: 6]"
+      "explanation": "According to VSEPR theory, 3 negative charge centres around a central atom will position themselves as far apart as possible, resulting in a trigonal planar shape with 120-degree bond angles."
     },
     {
       "question": "Which type of hybridization is associated with a linear molecular geometry, such as in BeCl2?",
@@ -335,7 +334,7 @@ Chemical Bonding
       ],
       "answer": 0,
       "hint": "It involves the mixing of one s orbital and one p orbital.",
-      "explanation": "Linear molecules like BeCl2 exhibit sp hybridization, where the two sp hybrid orbitals are oriented 180 degrees apart to minimize repulsion.[cite: 6]"
+      "explanation": "Linear molecules like BeCl2 exhibit sp hybridization, where the two sp hybrid orbitals are oriented 180 degrees apart to minimize repulsion."
     },
     {
       "question": "What is the primary difference in orbital overlap between a sigma bond and a pi bond?",
@@ -347,7 +346,7 @@ Chemical Bonding
       ],
       "answer": 2,
       "hint": "Think about the geometric orientation of the overlapping lobes.",
-      "explanation": "Sigma bonds are formed by the linear, co-axial overlap of atomic orbitals, providing a strong bond. Pi bonds are formed by the lateral or sideway overlap of parallel p-orbitals.[cite: 6]"
+      "explanation": "Sigma bonds are formed by the linear, co-axial overlap of atomic orbitals, providing a strong bond. Pi bonds are formed by the lateral or sideway overlap of parallel p-orbitals."
     },
     {
       "question": "When atomic orbitals mix to form sp3d2 hybridization, what molecular shape is predicted for the resulting molecule (e.g., SF6)?",
@@ -359,7 +358,7 @@ Chemical Bonding
       ],
       "answer": 2,
       "hint": "It involves a total of 6 hybrid orbitals.",
-      "explanation": "The mixing of one s, three p, and two d orbitals yields six sp3d2 hybrid orbitals, which orient themselves in an octahedral geometry to minimize repulsion.[cite: 6]"
+      "explanation": "The mixing of one s, three p, and two d orbitals yields six sp3d2 hybrid orbitals, which orient themselves in an octahedral geometry to minimize repulsion."
     },
     {
       "question": "Based on their structure and bonding, how does the molecular model of diamond compare to graphite?",
@@ -371,10 +370,10 @@ Chemical Bonding
       ],
       "answer": 2,
       "hint": "Consider why graphite can conduct electricity but diamond cannot.",
-      "explanation": "Diamond's structure consists of sp3 hybridized carbon atoms bonded in a rigid tetrahedral 3D network. Graphite consists of layers of sp2 hybridized carbons with delocalized pi electrons between the layers.[cite: 6]"
+      "explanation": "Diamond's structure consists of sp3 hybridized carbon atoms bonded in a rigid tetrahedral 3D network. Graphite consists of layers of sp2 hybridized carbons with delocalized pi electrons between the layers."
     }
   ],
-  "simulation": "An interactive 3D molecular modeling workbench. The user can select from a dropdown list of target molecules (BeCl2, BCl3, CH4, PCl5, SF6). Upon selection, the 3D model snaps into the correct geometry determined by VSEPR theory. The user can toggle overlays to view the specific hybrid orbitals (sp, sp2, sp3, sp3d, sp3d2) or display the distinct bond angles between the atoms.[cite: 6]",
+  "simulation": "An interactive 3D molecular modeling workbench. The user can select from a dropdown list of target molecules (BeCl2, BCl3, CH4, PCl5, SF6). Upon selection, the 3D model snaps into the correct geometry determined by VSEPR theory. The user can toggle overlays to view the specific hybrid orbitals (sp, sp2, sp3, sp3d, sp3d2) or display the distinct bond angles between the atoms.",
   "controls": [
     {
       "label": "Select Molecule",
@@ -408,25 +407,21 @@ Chemical Bonding
 }
 
 
-
-
-
-
 Enthalpy Changes
 {
   "name": "Determine Enthalpy Changes",
-  "image": "/images/modules/chemistry/enthalpy-changes.jpg",
+  "image": "/module/determine_enthalpy_changes/image.png",
   "subject": "Chemistry",
   "grade": "Year 2",
   "duration": "30 mins",
   "difficultyLevel": "Hard",
   "notes": {
     "overview": {
-      "description": "Investigate the energy changes that occur during chemical reactions by determining standard enthalpy changes using calorimetry.[cite: 6]",
+      "description": "Investigate the energy changes that occur during chemical reactions by determining standard enthalpy changes using calorimetry.",
       "objectives": [
-        "Explain standard enthalpy changes such as combustion, neutralization, and solution.[cite: 6]",
-        "Perform calorimetry experiments to determine the calorific value of common foods and fuels.[cite: 6]",
-        "Calculate enthalpy changes using the relationship ΔH = mcΔT and interpret the results.[cite: 6]"
+        "Explain standard enthalpy changes such as combustion, neutralization, and solution.",
+        "Perform calorimetry experiments to determine the calorific value of common foods and fuels.",
+        "Calculate enthalpy changes using the relationship ΔH = mcΔT and interpret the results."
       ]
     },
     "engage": {
@@ -488,32 +483,32 @@ Enthalpy Changes
       "items": [
         {
           "name": "Calorimetry Setup",
-          "image": "/assets/models/calorimeter.png",
-          "description": "An insulated container used to measure the temperature change of a liquid during a chemical reaction, minimizing heat loss to the surroundings.[cite: 6]"
+          "image": "/module/determine_enthalpy_changes/explanation-01.png",
+          "description": "An insulated container used to measure the temperature change of a liquid during a chemical reaction, minimizing heat loss to the surroundings."
         },
         {
           "name": "Digital Thermometer",
-          "image": "/assets/models/thermometer.png",
-          "description": "Used to accurately measure the initial and final temperatures (ΔT) of the reacting system to determine energy changes.[cite: 6]"
+          "image": "/module/determine_enthalpy_changes/explanation-02.png",
+          "description": "Used to accurately measure the initial and final temperatures (ΔT) of the reacting system to determine energy changes."
         },
         {
           "name": "Chemical Reagents",
-          "image": "/assets/models/reagents.png",
-          "description": "Reactants such as HCl and NaOH for neutralization, or NH4Cl for heat of solution, used to study specific enthalpy changes.[cite: 6]"
+          "image": "/module/determine_enthalpy_changes/explanation-03.png",
+          "description": "Reactants such as HCl and NaOH for neutralization, or NH4Cl for heat of solution, used to study specific enthalpy changes."
         }
       ],
       "keyTakeaways": [
         {
           "phrase": "Exothermic vs Endothermic",
-          "description": "Exothermic reactions release heat causing a temperature rise, while endothermic reactions absorb heat causing a temperature drop.[cite: 6]"
+          "description": "Exothermic reactions release heat causing a temperature rise, while endothermic reactions absorb heat causing a temperature drop."
         },
         {
           "phrase": "Calculating Enthalpy Change",
-          "description": "Heat transfer is calculated using ΔH = mcΔT, where 'm' is mass, 'c' is specific heat capacity, and 'ΔT' is the temperature change.[cite: 6]"
+          "description": "Heat transfer is calculated using ΔH = mcΔT, where 'm' is mass, 'c' is specific heat capacity, and 'ΔT' is the temperature change."
         },
         {
           "phrase": "Hess's Law",
-          "description": "The total enthalpy change of a reaction is constant and can be found using energy cycles, regardless of the route taken.[cite: 6]"
+          "description": "The total enthalpy change of a reaction is constant and can be found using energy cycles, regardless of the route taken."
         }
       ]
     }
@@ -529,7 +524,7 @@ Enthalpy Changes
       ],
       "answer": 0,
       "hint": "Think about where the heat is going if the surrounding water gets warmer.",
-      "explanation": "An increase in the solution's temperature means the reaction released heat into the surroundings, indicating an exothermic process like neutralization.[cite: 6]"
+      "explanation": "An increase in the solution's temperature means the reaction released heat into the surroundings, indicating an exothermic process like neutralization."
     },
     {
       "question": "Which of the following variables is absolutely required to calculate the enthalpy change using the formula ΔH = mcΔT?",
@@ -541,7 +536,7 @@ Enthalpy Changes
       ],
       "answer": 0,
       "hint": "The 'c' in the equation represents an intensive property of the substance being heated or cooled.",
-      "explanation": "The specific heat capacity (c) is essential, along with the mass (m) and temperature change (ΔT), to accurately calculate enthalpy changes from experimental results.[cite: 6]"
+      "explanation": "The specific heat capacity (c) is essential, along with the mass (m) and temperature change (ΔT), to accurately calculate enthalpy changes from experimental results."
     },
     {
       "question": "According to the curriculum, calculating the enthalpy of solution can be experimentally demonstrated by dissolving which of the following pairs of solutes?",
@@ -553,7 +548,7 @@ Enthalpy Changes
       ],
       "answer": 0,
       "hint": "Enthalpy of solution involves dissolving solid salts into a solvent like water.",
-      "explanation": "The curriculum specifies determining the enthalpy of solution using solid solutes such as NH4Cl and CaCl2.[cite: 6]"
+      "explanation": "The curriculum specifies determining the enthalpy of solution using solid solutes such as NH4Cl and CaCl2."
     },
     {
       "question": "What is the primary application of Hess's law of constant heat summation in thermochemistry?",
@@ -565,7 +560,7 @@ Enthalpy Changes
       ],
       "answer": 0,
       "hint": "It relies on constructing energy cycle diagrams to find indirect pathways.",
-      "explanation": "Hess's Law is applied to construct simple energy cycle diagrams and calculate relevant enthalpy changes that are difficult or impossible to determine by direct experiment.[cite: 6]"
+      "explanation": "Hess's Law is applied to construct simple energy cycle diagrams and calculate relevant enthalpy changes that are difficult or impossible to determine by direct experiment."
     },
     {
       "question": "When designing a calorimetry experiment to determine the enthalpy change of combustion, which of the following items would be appropriate to test?",
@@ -577,10 +572,10 @@ Enthalpy Changes
       ],
       "answer": 0,
       "hint": "Combustion requires burning a fuel or an energy-dense biological source.",
-      "explanation": "The curriculum states that the enthalpy change of combustion can be experimentally determined for alcohols and common food substances, such as maize or groundnut.[cite: 6]"
+      "explanation": "The curriculum states that the enthalpy change of combustion can be experimentally determined for alcohols and common food substances, such as maize or groundnut."
     }
   ],
-  "simulation": "An interactive 3D calorimetry setup featuring an insulated calorimeter cup, a digital thermometer, and a stirring rod on a lab bench. The user can select a specific reaction type from a control menu, such as 'Neutralization (HCl + NaOH)' or 'Solution (NH4Cl + H2O)'. A slider adjusts the mass or volume of the reactants. When the 'Initiate Reaction' toggle is engaged, the reactants mix, and the digital thermometer animates to show a real-time temperature increase or decrease. A side panel records the initial temperature, final temperature, and the total mass, allowing the user to practice calculating ΔH = mcΔT.[cite: 6]",
+  "simulation": "An interactive 3D calorimetry setup featuring an insulated calorimeter cup, a digital thermometer, and a stirring rod on a lab bench. The user can select a specific reaction type from a control menu, such as 'Neutralization (HCl + NaOH)' or 'Solution (NH4Cl + H2O)'. A slider adjusts the mass or volume of the reactants. When the 'Initiate Reaction' toggle is engaged, the reactants mix, and the digital thermometer animates to show a real-time temperature increase or decrease. A side panel records the initial temperature, final temperature, and the total mass, allowing the user to practice calculating ΔH = mcΔT.",
   "controls": [
     {
       "label": "Select Reaction Type",
@@ -612,22 +607,21 @@ Enthalpy Changes
 }
 
 
-
 Series and Parallel Connections of Capacitors
 {
   "name": "Series and Parallel Connections of Capacitors",
-  "image": "/images/modules/physics/capacitors-series-parallel.jpg",
+  "image": "/module/series_and_parallel_connections_of_capacitors/image.png",
   "subject": "Physics",
   "grade": "Year 2",
   "duration": "30 mins",
   "difficultyLevel": "Medium",
   "notes": {
     "overview": {
-      "description": "Explore the relationships between potential difference, total charges, and effective capacitance when capacitors are arranged in series and parallel circuits.[cite: 7]",
+      "description": "Explore the relationships between potential difference, total charges, and effective capacitance when capacitors are arranged in series and parallel circuits.",
       "objectives": [
-        "Determine the effective capacitance of a number of capacitors arranged in series and parallel.[cite: 7]",
-        "Explain series and parallel connections using a laboratory set or science kit.[cite: 7]",
-        "Analyze the relationship with respect to potential difference, total charges, and capacitance in different circuit configurations.[cite: 7]"
+        "Determine the effective capacitance of a number of capacitors arranged in series and parallel.",
+        "Explain series and parallel connections using a laboratory set or science kit.",
+        "Analyze the relationship with respect to potential difference, total charges, and capacitance in different circuit configurations."
       ]
     },
     "engage": {
@@ -689,32 +683,32 @@ Series and Parallel Connections of Capacitors
       "items": [
         {
           "name": "Science Kit",
-          "image": "/assets/models/science_kit.png",
-          "description": "A practical laboratory set used to safely arrange and securely connect capacitors in different circuit configurations.[cite: 7]"
+          "image": "/module/series_and_parallel_connections_of_capacitors/explanation-01.png",
+          "description": "A practical laboratory set used to safely arrange and securely connect capacitors in different circuit configurations."
         },
         {
           "name": "Capacitor Component",
-          "image": "/assets/models/capacitor.png",
-          "description": "An electronic component that stores electrical charge, which can be wired end-to-end (series) or side-by-side (parallel).[cite: 7]"
+          "image": "/module/series_and_parallel_connections_of_capacitors/explanation-02.png",
+          "description": "An electronic component that stores electrical charge, which can be wired end-to-end (series) or side-by-side (parallel)."
         },
         {
           "name": "DC Power Source",
-          "image": "/assets/models/battery.png",
-          "description": "Provides the electrical potential difference necessary to push and store total charges across the capacitor network.[cite: 7]"
+          "image": "/module/series_and_parallel_connections_of_capacitors/explanation-03.png",
+          "description": "Provides the electrical potential difference necessary to push and store total charges across the capacitor network."
         }
       ],
       "keyTakeaways": [
         {
           "phrase": "Series Connections",
-          "description": "The overall effective capacitance decreases. The total charge is identical across all capacitors, while the potential difference is divided among them.[cite: 7]"
+          "description": "The overall effective capacitance decreases. The total charge is identical across all capacitors, while the potential difference is divided among them."
         },
         {
           "phrase": "Parallel Connections",
-          "description": "The overall effective capacitance increases. The potential difference is identical across all capacitors, while the total charge is the sum of individual charges.[cite: 7]"
+          "description": "The overall effective capacitance increases. The potential difference is identical across all capacitors, while the total charge is the sum of individual charges."
         },
         {
           "phrase": "Mathematical Relationships",
-          "description": "For parallel circuits, effective capacitance is the direct sum. For series, the reciprocal of the effective capacitance is the sum of the individual reciprocals.[cite: 7]"
+          "description": "For parallel circuits, effective capacitance is the direct sum. For series, the reciprocal of the effective capacitance is the sum of the individual reciprocals."
         }
       ]
     }
@@ -730,7 +724,7 @@ Series and Parallel Connections of Capacitors
       ],
       "answer": 0,
       "hint": "Think of joining them side-by-side to effectively increase the overall plate area.",
-      "explanation": "In a parallel connection, the effective capacitance is determined by directly adding the individual capacitances together, increasing the total capacity.[cite: 7]"
+      "explanation": "In a parallel connection, the effective capacitance is determined by directly adding the individual capacitances together, increasing the total capacity."
     },
     {
       "question": "What electrical property is identical across all capacitors when they are connected strictly in a series circuit?",
@@ -742,7 +736,7 @@ Series and Parallel Connections of Capacitors
       ],
       "answer": 1,
       "hint": "Think about the flow of electrons through a single, continuous path without any branches.",
-      "explanation": "For series connections, the total charge is identical on each individual capacitor because there is only one path for the electrons to flow, while the potential difference is divided.[cite: 7]"
+      "explanation": "For series connections, the total charge is identical on each individual capacitor because there is only one path for the electrons to flow, while the potential difference is divided."
     },
     {
       "question": "If you connect a 2 μF capacitor and a 3 μF capacitor in parallel using a science kit, what is the resulting effective capacitance?",
@@ -754,7 +748,7 @@ Series and Parallel Connections of Capacitors
       ],
       "answer": 1,
       "hint": "Use the direct addition rule for this specific configuration.",
-      "explanation": "For capacitors arranged in parallel, the total effective capacitance is calculated using C_total = C1 + C2. Therefore, 2 μF + 3 μF equals 5 μF.[cite: 7]"
+      "explanation": "For capacitors arranged in parallel, the total effective capacitance is calculated using C_total = C1 + C2. Therefore, 2 μF + 3 μF equals 5 μF."
     },
     {
       "question": "According to the curriculum, what hands-on equipment should ideally be used to experientially explain series and parallel connections?",
@@ -766,7 +760,7 @@ Series and Parallel Connections of Capacitors
       ],
       "answer": 0,
       "hint": "It is a standard package containing components used to quickly build and test circuits.",
-      "explanation": "The curriculum specifies using a laboratory set or science kit to experientially determine and explain the effective capacitance of series and parallel connections.[cite: 7]"
+      "explanation": "The curriculum specifies using a laboratory set or science kit to experientially determine and explain the effective capacitance of series and parallel connections."
     },
     {
       "question": "In a parallel circuit, how does the potential difference across each individual capacitor compare to the total source voltage?",
@@ -778,10 +772,10 @@ Series and Parallel Connections of Capacitors
       ],
       "answer": 0,
       "hint": "Each component has its own direct, unblocked path to the positive and negative terminals of the power source.",
-      "explanation": "In a parallel connection, the potential difference (voltage) across each individual capacitor is exactly the same as the total source voltage because each is connected directly to the source terminals.[cite: 7]"
+      "explanation": "In a parallel connection, the potential difference (voltage) across each individual capacitor is exactly the same as the total source voltage because each is connected directly to the source terminals."
     }
   ],
-  "simulation": "A 3D virtual electronics breadboard featuring a DC power supply and two swappable capacitors. The user can use a toggle switch to immediately alter the circuit wiring between 'Series' and 'Parallel' configurations. A digital multimeter overlays the circuit, allowing the user to select whether it displays the Effective Capacitance, Total Charge, or Potential Difference. Changing the configuration instantly updates the digital readouts, physically demonstrating the mathematical relationships of the circuit.[cite: 7]",
+  "simulation": "A 3D virtual electronics breadboard featuring a DC power supply and two swappable capacitors. The user can use a toggle switch to immediately alter the circuit wiring between 'Series' and 'Parallel' configurations. A digital multimeter overlays the circuit, allowing the user to select whether it displays the Effective Capacitance, Total Charge, or Potential Difference. Changing the configuration instantly updates the digital readouts, physically demonstrating the mathematical relationships of the circuit.",
   "controls": [
     {
       "label": "Circuit Configuration",
@@ -824,23 +818,21 @@ Series and Parallel Connections of Capacitors
 }
 
 
-
-
 Forces and Motion
 {
   "name": "Forces and Motion - Coefficient of Friction",
-  "image": "/images/modules/physics/coefficient-of-friction.jpg",
+  "image": "/module/forces_and_motion_coefficient_of_friction/image.png",
   "subject": "Physics",
   "grade": "Year 2",
   "duration": "30 mins",
   "difficultyLevel": "Medium",
   "notes": {
     "overview": {
-      "description": "Investigate the forces that oppose motion by performing practical experiments to determine the coefficient of friction.[cite: 7]",
+      "description": "Investigate the forces that oppose motion by performing practical experiments to determine the coefficient of friction.",
       "objectives": [
-        "Identify the effects, applications, and factors that affect friction.[cite: 7]",
-        "Distinguish between static and dynamic friction.[cite: 7]",
-        "Determine the coefficient of friction using wooden blocks and a spring balance.[cite: 7]"
+        "Identify the effects, applications, and factors that affect friction.",
+        "Distinguish between static and dynamic friction.",
+        "Determine the coefficient of friction using wooden blocks and a spring balance."
       ]
     },
     "engage": {
@@ -902,32 +894,32 @@ Forces and Motion
       "items": [
         {
           "name": "Spring Balance",
-          "image": "/assets/models/spring_balance.png",
-          "description": "An instrument used to measure the pulling force required to move the wooden block across the plane.[cite: 7]"
+          "image": "/module/forces_and_motion_coefficient_of_friction/explanation-01.png",
+          "description": "An instrument used to measure the pulling force required to move the wooden block across the plane."
         },
         {
           "name": "Wooden Block",
-          "image": "/assets/models/wooden_block.png",
-          "description": "A mass with a hook attached, used to vary the normal reaction by stacking different masses on top.[cite: 7]"
+          "image": "/module/forces_and_motion_coefficient_of_friction/explanation-02.png",
+          "description": "A mass with a hook attached, used to vary the normal reaction by stacking different masses on top."
         },
         {
           "name": "Horizontal Plane",
-          "image": "/assets/models/horizontal_board.png",
-          "description": "The surface (wooden, plastic, or metallic) on which the block slides. Can be modified with oil or powder to test different conditions.[cite: 7]"
+          "image": "/module/forces_and_motion_coefficient_of_friction/explanation-03.png",
+          "description": "The surface (wooden, plastic, or metallic) on which the block slides. Can be modified with oil or powder to test different conditions."
         }
       ],
       "keyTakeaways": [
         {
           "phrase": "Static vs. Dynamic Friction",
-          "description": "Static friction is the force to overcome before motion starts, while dynamic friction opposes objects already in steady motion.[cite: 7]"
+          "description": "Static friction is the force to overcome before motion starts, while dynamic friction opposes objects already in steady motion."
         },
         {
           "phrase": "Coefficient of Friction",
-          "description": "A numerical value representing the ratio of frictional force to the normal reaction force between two surfaces.[cite: 7]"
+          "description": "A numerical value representing the ratio of frictional force to the normal reaction force between two surfaces."
         },
         {
           "phrase": "Factors Affecting Friction",
-          "description": "Friction depends on the nature of the surfaces in contact (e.g., using oil or grease) and the normal reaction, but not the surface area.[cite: 7]"
+          "description": "Friction depends on the nature of the surfaces in contact (e.g., using oil or grease) and the normal reaction, but not the surface area."
         }
       ]
     }
@@ -943,7 +935,7 @@ Forces and Motion
       ],
       "answer": 2,
       "hint": "Normal reaction is proportional to the total mass pressing down on the surface.",
-      "explanation": "Doubling the mass doubles the downward gravitational force, which in turn doubles the normal reaction force pressing the surfaces together.[cite: 7]"
+      "explanation": "Doubling the mass doubles the downward gravitational force, which in turn doubles the normal reaction force pressing the surfaces together."
     },
     {
       "question": "Which of the following best describes the difference between static and dynamic friction?",
@@ -955,7 +947,7 @@ Forces and Motion
       ],
       "answer": 0,
       "hint": "Think about what the words 'static' (still) and 'dynamic' (moving) mean.",
-      "explanation": "Static friction must be overcome to start moving an object from rest, whereas dynamic friction acts on objects that are already in continuous motion.[cite: 7]"
+      "explanation": "Static friction must be overcome to start moving an object from rest, whereas dynamic friction acts on objects that are already in continuous motion."
     },
     {
       "question": "According to the curriculum, what materials can be used to investigate how surface conditions affect the coefficient of friction?",
@@ -967,7 +959,7 @@ Forces and Motion
       ],
       "answer": 1,
       "hint": "These substances are often used to reduce friction between moving parts.",
-      "explanation": "The physics curriculum specifies using powder, oil, or grease on wooden, plastic, or metallic boards to study the factors that affect friction.[cite: 7]"
+      "explanation": "The physics curriculum specifies using powder, oil, or grease on wooden, plastic, or metallic boards to study the factors that affect friction."
     },
     {
       "question": "What is the primary purpose of the spring balance in the friction experiment?",
@@ -979,7 +971,7 @@ Forces and Motion
       ],
       "answer": 2,
       "hint": "A spring balance measures force in Newtons.",
-      "explanation": "A spring balance is attached to the wooden block to accurately measure the pulling force (tension) required to initiate and maintain the block's sliding motion.[cite: 7]"
+      "explanation": "A spring balance is attached to the wooden block to accurately measure the pulling force (tension) required to initiate and maintain the block's sliding motion."
     },
     {
       "question": "If you pull a wooden block across a board at a steady, constant speed, the reading on the spring balance represents which force?",
@@ -991,7 +983,7 @@ Forces and Motion
       ],
       "answer": 1,
       "hint": "The block is already moving steadily, not starting from rest.",
-      "explanation": "When an object moves at a constant speed, the applied pulling force perfectly balances the opposing dynamic frictional force.[cite: 7]"
+      "explanation": "When an object moves at a constant speed, the applied pulling force perfectly balances the opposing dynamic frictional force."
     }
   ],
   "simulation": "A 3D interactive physics lab setup featuring a horizontal wooden board and a wooden block with a hook. A digital spring balance is connected to the hook to pull the block. The user can adjust the mass of the block to observe changes in the normal force. Additionally, the user can change the surface condition by selecting 'Dry Wood', 'Powdered', or 'Oiled' from a dropdown menu. A 'Pull' toggle initiates a motorized pull, outputting the peak static force and the steady dynamic force on the digital display.",
@@ -1026,23 +1018,21 @@ Forces and Motion
 }
 
 
-
-
 Simple Harmonic Motion
 {
   "name": "Simple Harmonic Motion",
-  "image": "/images/modules/physics/simple-harmonic-motion.jpg",
+  "image": "/module/simple_harmonic_motion/image.png",
   "subject": "Physics",
   "grade": "Year 1",
   "duration": "30 mins",
   "difficultyLevel": "Hard",
   "notes": {
     "overview": {
-      "description": "Explore the principles of simple harmonic motion and conduct a practical experiment to determine the acceleration due to gravity.[cite: 7]",
+      "description": "Explore the principles of simple harmonic motion and conduct a practical experiment to determine the acceleration due to gravity.",
       "objectives": [
-        "Use the concept of simple harmonic motion to determine acceleration due to gravity.[cite: 7]",
-        "Measure the period of a simple pendulum at various lengths.[cite: 7]",
-        "Communicate findings clearly and coherently.[cite: 7]"
+        "Use the concept of simple harmonic motion to determine acceleration due to gravity.",
+        "Measure the period of a simple pendulum at various lengths.",
+        "Communicate findings clearly and coherently."
       ]
     },
     "engage": {
@@ -1104,24 +1094,24 @@ Simple Harmonic Motion
       "items": [
         {
           "name": "Retort Stand and Pendulum Bob",
-          "image": "/assets/models/pendulum.png",
-          "description": "The basic laboratory setup for a simple pendulum, allowing the spherical bob to swing freely in simple harmonic motion.[cite: 7]"
+          "image": "/module/simple_harmonic_motion/explanation-01.png",
+          "description": "The basic laboratory setup for a simple pendulum, allowing the spherical bob to swing freely in simple harmonic motion."
         },
         {
           "name": "Stopwatch",
-          "image": "/assets/models/stopwatch.png",
-          "description": "A timing device used to accurately measure the time taken for multiple oscillations to calculate the average period.[cite: 7]"
+          "image": "/module/simple_harmonic_motion/explanation-02.png",
+          "description": "A timing device used to accurately measure the time taken for multiple oscillations to calculate the average period."
         },
         {
           "name": "Meter Rule",
-          "image": "/assets/models/meter_rule.png",
-          "description": "Used to measure the exact length of the pendulum string from the suspension point to the center of the bob.[cite: 7]"
+          "image": "/module/simple_harmonic_motion/explanation-03.png",
+          "description": "Used to measure the exact length of the pendulum string from the suspension point to the center of the bob."
         }
       ],
       "keyTakeaways": [
         {
           "phrase": "Simple Harmonic Motion (SHM)",
-          "description": "A type of periodic motion where the restoring force is directly proportional to the displacement and acts in the direction opposite to that of displacement.[cite: 7]"
+          "description": "A type of periodic motion where the restoring force is directly proportional to the displacement and acts in the direction opposite to that of displacement."
         },
         {
           "phrase": "Period of a Pendulum",
@@ -1129,7 +1119,7 @@ Simple Harmonic Motion
         },
         {
           "phrase": "Determining 'g'",
-          "description": "By measuring the period (T) for various lengths (l) and graphing T² against l, the acceleration due to gravity (g) can be calculated from the slope.[cite: 7]"
+          "description": "By measuring the period (T) for various lengths (l) and graphing T² against l, the acceleration due to gravity (g) can be calculated from the slope."
         }
       ]
     }
@@ -1145,7 +1135,7 @@ Simple Harmonic Motion
       ],
       "answer": 1,
       "hint": "The period is proportional to the square root of the length.",
-      "explanation": "Since T = 2π√(l/g), multiplying the length 'l' by 4 increases 'T' by a factor of √4, which equals 2. Therefore, the period doubles.[cite: 7]"
+      "explanation": "Since T = 2π√(l/g), multiplying the length 'l' by 4 increases 'T' by a factor of √4, which equals 2. Therefore, the period doubles."
     },
     {
       "question": "In an experiment to determine 'g', a student plots a graph of T² on the y-axis against l on the x-axis. What does the mathematical slope (gradient) of this graph represent?",
@@ -1157,7 +1147,7 @@ Simple Harmonic Motion
       ],
       "answer": 1,
       "hint": "Rearrange the period formula to solve for T² as a function of l.",
-      "explanation": "Squaring the period formula gives T² = (4π²/g)l. This takes the form of a straight line equation y = mx, where the slope 'm' is 4π²/g.[cite: 7]"
+      "explanation": "Squaring the period formula gives T² = (4π²/g)l. This takes the form of a straight line equation y = mx, where the slope 'm' is 4π²/g."
     },
     {
       "question": "Which of the following conditions is absolutely necessary for a simple pendulum to perfectly execute simple harmonic motion?",
@@ -1169,7 +1159,7 @@ Simple Harmonic Motion
       ],
       "answer": 2,
       "hint": "The restoring force must be strictly proportional to displacement.",
-      "explanation": "For the restoring force to be mathematically proportional to the displacement, the angle of swing (amplitude) must be small (typically less than 10 degrees) so that sin(θ) ≈ θ.[cite: 7]"
+      "explanation": "For the restoring force to be mathematically proportional to the displacement, the angle of swing (amplitude) must be small (typically less than 10 degrees) so that sin(θ) ≈ θ."
     },
     {
       "question": "What is the primary objective of studying simple harmonic motion in this specific curriculum module?",
@@ -1181,7 +1171,7 @@ Simple Harmonic Motion
       ],
       "answer": 1,
       "hint": "Refer to the main curriculum goal for this kinematic topic.",
-      "explanation": "The physics curriculum explicitly states that the learning outcome is to 'Use the concept of simple harmonic motion to determine acceleration due to gravity.'[cite: 7]"
+      "explanation": "The physics curriculum explicitly states that the learning outcome is to 'Use the concept of simple harmonic motion to determine acceleration due to gravity.'"
     },
     {
       "question": "Where is the acceleration of a pendulum bob at its maximum magnitude during simple harmonic motion?",
@@ -1193,7 +1183,7 @@ Simple Harmonic Motion
       ],
       "answer": 1,
       "hint": "Acceleration is proportional to displacement from the center.",
-      "explanation": "In simple harmonic motion, acceleration is directly proportional to displacement. Therefore, it has its greatest magnitude at the maximum displacement (the highest points of the swing).[cite: 7]"
+      "explanation": "In simple harmonic motion, acceleration is directly proportional to displacement. Therefore, it has its greatest magnitude at the maximum displacement (the highest points of the swing)."
     }
   ],
   "simulation": "A 3D interactive physics laboratory featuring a simple pendulum attached to a retort stand. The user can adjust the length of the string via a slider. A digital stopwatch is mounted on the screen to track the time for 10 complete oscillations. When the user toggles 'Release Pendulum', the bob swings from a fixed small angle of 5 degrees. The user records the time, changes the length, and repeats the process to gather data for determining the acceleration due to gravity.",
@@ -1221,3 +1211,4 @@ Simple Harmonic Motion
     }
   ]
 }
+

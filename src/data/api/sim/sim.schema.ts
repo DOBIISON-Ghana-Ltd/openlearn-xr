@@ -60,7 +60,7 @@ const SimCheckpointGetOne = ZApi({
     playId: z.string() // moduleVersionId or sessionId
   }),
   query: z.object({
-    mode: z.enum(["module:local", "module:remote", "session"]),
+    mode: ServerModeEnum,
     checkpointId: z.string().optional(),
     playerId: z.string().optional(),
   }),
@@ -86,7 +86,7 @@ const SimCheckpointPostAnswer = ZApi({
     playId: z.string() // moduleVersionId or sessionId
   }),
   body: z.object({
-    mode: z.enum(["module:local", "module:remote", "session"]),
+    mode: ServerModeEnum,
     checkpointId: z.string().optional(),
     sessionPlayerId: z.string().optional(),
     selectedIndex: z.number().int(),
@@ -234,7 +234,7 @@ const SimGeneralGetNavigate = ZApi({
     playerId: z.string(),
   }),
   query: z.object({
-    isHost: z.boolean().optional(),
+    isHost: z.stringbool().optional(),
   }),
   res: z.object({
     currentTab: z.number().int(),
@@ -252,7 +252,7 @@ const SimGeneralPostNavigate = ZApi({
     playerId: z.string(),
   }),
   query: z.object({
-    isHost: z.boolean().optional(),
+    isHost: z.stringbool().optional(),
   }),
   body: z.object({
     nextTab: z.number().int(),

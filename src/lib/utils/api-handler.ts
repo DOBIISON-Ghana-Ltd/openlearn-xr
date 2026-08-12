@@ -12,6 +12,7 @@ type RouteHandler<TParams = any> = (
  * Parses and handles errors globally, returning a standardized JSend response.
  */
 export function handleApiError(error: any) {
+  console.log(error);
   // 1. Zod Validation Errors
   if (error instanceof z.ZodError) {
     const errorDetails = JSON.stringify(error.flatten());

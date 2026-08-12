@@ -34,7 +34,7 @@ const simCheckpointGetOne = {
   type: "query",
   queryKey: ({ params, query }: Pick<Infer["SimCheckpointGetOne"], "params" | "query">) => [...QUERY_KEYS["sim:checkpoint:get:one"](params.playId, query)],
   queryFn: async ({ params, query }: Pick<Infer["SimCheckpointGetOne"], "params" | "query">) => {
-    if (query.mode === "module:local") {
+    if (query.mode === "local") {
       const localAttempt = await localDB.getPlayAttempt(params.playId);
       if (localAttempt?.currentCheckpointId) {
         query.checkpointId = localAttempt.currentCheckpointId;
@@ -46,7 +46,7 @@ const simCheckpointGetOne = {
       ZSim.SimCheckpointGetOne.shape.res
     );
 
-    if (query.mode === "module:local" && res.meta?.checkpointId) {
+    if (query.mode === "local" && res.meta?.checkpointId) {
       await localDB.upsertPlayAttempt({
         moduleVersionId: params.playId,
         currentCheckpointId: res.meta.checkpointId,
@@ -68,7 +68,7 @@ const simCheckpointPostAnswer = {
   mutationFn: async ({ params, body }: Pick<Infer["SimCheckpointPostAnswer"], "params" | "body">) => {
     let localAttempt = null;
 
-    if (body.mode === "module:local") {
+    if (body.mode === "local") {
       localAttempt = await localDB.getPlayAttempt(params.playId);
       if (localAttempt?.currentCheckpointId) {
         body.checkpointId = localAttempt.currentCheckpointId;
@@ -80,7 +80,7 @@ const simCheckpointPostAnswer = {
       ZSim.SimCheckpointPostAnswer.shape.res
     );
 
-    if (body.mode === "module:local") {
+    if (body.mode === "local") {
       const updatedPoints = (localAttempt?.accumulatedPoints ?? 0) + (res.isCorrect ? res.pointsAwarded : 0);
 
       if (!res.nextCheckpointId && res.moduleId) {

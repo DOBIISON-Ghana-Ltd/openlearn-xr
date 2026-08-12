@@ -232,26 +232,6 @@ function Header(props: IHeader) {
             </>
           ))}
       </button>
-
-      {/* Right: Streak & User Profile */}
-      <div className="flex items-center gap-6">
-        {/* Streak Flame */}
-        <div className="flex items-center gap-2 text-normal text-primary-text-dark">
-          <span>5</span>
-          <Flame className="size-6.5 text-accent-flame fill-accent-flame" />
-        </div>
-
-        {/* Divider */}
-        <div className="w-px h-8 bg-disable/40" />
-
-        {/* User Profile */}
-        <div className="flex items-center gap-3">
-          <span className="text-normal text-primary-text-dark">
-            User Name
-          </span>
-          <div className="size-10 rounded-full bg-primary-text-dark shrink-0" />
-        </div>
-      </div>
     </header>
   );
 }
@@ -264,6 +244,7 @@ type IFooter = {
 
 function Footer(props: IFooter) {
   const { id, mode, tabIndex } = props;
+  const router = useRouter();
   const queryClient = useQueryClient();
   const { serverMode } = usePlayServerMode(mode);
   const sessionInfo = useStore(simStore, (s) => s.getSessionInfo(id));
@@ -271,6 +252,14 @@ function Footer(props: IFooter) {
   const { mutate: navigate, isPending } = useApi.mutate("sim:general:post:navigate");
 
   if (sessionInfo?.config.controlMode === "tutor-led" && !sessionInfo.isHost) {
+    return null;
+  }
+
+  const isLastTab = tabIndex === TAB_FLOW.length - 1;
+  const isHost = sessionInfo?.isHost ?? false;
+
+  // On session mode result page: if not host, no button is shown
+  if (isLastTab && mode === "session" && !isHost) {
     return null;
   }
 
@@ -283,12 +272,15 @@ function Footer(props: IFooter) {
   const activeTab = TAB_FLOW[tabIndex] || TAB_FLOW[0];
   const isPrevDisabled = tabIndex === 0 || isPending;
 
+  const [navTarget, setNavTarget] = useState<number | null>(null);
+
   const handleNavigate = (nextTab: number) => {
     if (nextTab < 0 || nextTab >= TAB_FLOW.length) return;
+    setNavTarget(nextTab);
     navigate(
       {
         params: navParams,
-        query: { isHost: sessionInfo?.isHost ?? false },
+        query: { isHost },
         body: { nextTab },
       },
       {
@@ -297,32 +289,66 @@ function Footer(props: IFooter) {
             queryKey: QUERY_KEYS["sim:general:get:navigate"](id),
           });
         },
+        onSettled: () => {
+          setNavTarget(null);
+        },
       }
     );
   };
 
+  const isLeftPending = isPending && navTarget !== null && navTarget < tabIndex;
+  const isRightPending = isPending && navTarget !== null && navTarget > tabIndex;
+
+  let leftButtonLabel: React.ReactNode = activeTab.backLabel;
+  let leftButtonOnClick = () => handleNavigate(tabIndex - 1);
+  let leftButtonDisabled = isPrevDisabled || isPending;
+
+  let rightButtonLabel: React.ReactNode = activeTab.nextLabel;
+  let rightButtonOnClick = () => handleNavigate(tabIndex + 1);
+
+  if (isLastTab) {
+    if (mode === "session" && isHost) {
+      const sessionId = sessionInfo?.sessionId || id;
+      leftButtonLabel = "Go to Dashboard";
+      leftButtonOnClick = () => router.push(PATHS.SESSION.DASHBOARD);
+      leftButtonDisabled = isPending;
+
+      rightButtonLabel = "View Analytics";
+      rightButtonOnClick = () => router.push(PATHS.SESSION.ONE.ANALYTICS(sessionId));
+    } else if (mode !== "session") {
+      leftButtonLabel = "Retake Lesson";
+      leftButtonOnClick = () => handleNavigate(0);
+      leftButtonDisabled = isPending;
+
+      rightButtonLabel = "Back to Modules";
+      rightButtonOnClick = () => router.push(PATHS.MODULES);
+    }
+  }
+
   return (
     <footer className="bg-primary-subtle px-8 lg:px-22 flex justify-between items-center z-20 shrink-0 h-24">
-      {/* Back Button */}
+      {/* Back / Left Action Button */}
       <button
         type="button"
-        onClick={() => handleNavigate(tabIndex - 1)}
-        disabled={isPrevDisabled}
+        onClick={leftButtonOnClick}
+        disabled={leftButtonDisabled}
         className={cn(
           'bg-surface-slate text-tertiary text-button w-60 h-15 rounded-[10px] shadow-[0px_4px_4px_0px_rgba(69,157,159,0.3)] flex items-center justify-center transition-all cursor-pointer',
           {
-            'opacity-40 cursor-not-allowed': isPrevDisabled,
-            'active:scale-98 hover:bg-surface-white': !isPrevDisabled,
+            'opacity-40 cursor-not-allowed': leftButtonDisabled,
+            'active:scale-98 hover:bg-surface-white': !leftButtonDisabled,
           }
         )}
       >
-        {activeTab.backLabel}
+        {match(isLeftPending)
+          .with(true, () => <Loader2Icon className="size-5 animate-spin text-tertiary" />)
+          .otherwise(() => leftButtonLabel)}
       </button>
 
-      {/* Primary Action Button */}
+      {/* Primary / Right Action Button */}
       <button
         type="button"
-        onClick={() => handleNavigate(tabIndex + 1)}
+        onClick={rightButtonOnClick}
         disabled={isPending}
         className={cn(
           'bg-primary-cta text-button text-primary-text-light w-60 h-15 rounded-[10px] flex items-center justify-center hover:bg-primary-hover transition-all cursor-pointer active:scale-98',
@@ -331,10 +357,9 @@ function Footer(props: IFooter) {
           }
         )}
       >
-        {match(isPending)
+        {match(isRightPending)
           .with(true, () => <Loader2Icon className="size-5 animate-spin text-primary-text-light" />)
-          .otherwise(() => activeTab.nextLabel)
-        }
+          .otherwise(() => rightButtonLabel)}
       </button>
     </footer>
   );
