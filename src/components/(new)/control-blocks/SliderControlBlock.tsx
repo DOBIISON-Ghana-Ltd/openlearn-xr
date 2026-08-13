@@ -19,7 +19,7 @@ export default function SliderControlBlock({
 }: SliderControlBlockProps) {
   const min = control.min ?? 0;
   const max = control.max ?? 100;
-  const step = control.step ?? 1;
+  const step = control.step ?? (max - min <= 5 ? 0.05 : 1);
 
   const range = max - min;
   const percentage =
@@ -47,7 +47,7 @@ export default function SliderControlBlock({
           )}
         </div>
         <span className="text-small text-primary-text-dark font-semibold bg-primary-subtle px-2 py-0.5 rounded-md border border-primary-cta/20">
-          {value}
+          {typeof value === "number" && step < 1 ? Number(value).toFixed(2) : value}
         </span>
       </div>
 

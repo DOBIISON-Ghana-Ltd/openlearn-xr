@@ -1,5 +1,5 @@
 import { LocalSimulationConfig } from "../../type";
-import Model from "./model";
+import Model from "./model.v0";
 
 export type IValueMap = {
   block_mass: number;

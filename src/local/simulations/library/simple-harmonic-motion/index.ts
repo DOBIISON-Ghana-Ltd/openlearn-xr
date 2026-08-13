@@ -1,5 +1,5 @@
 import { LocalSimulationConfig } from "../../type";
-import Model from "./model";
+import Model from "./model.v0";
 
 export type IValueMap = {
   pendulum_length: number;
@@ -21,7 +21,8 @@ export const config: LocalSimulationConfig = {
       value: 0.5,
       defaultValue: 0.5,
       min: 0.1,
-      max: 2.0
+      max: 2.0,
+      step: 0.05
     },
     {
       id: "release_pendulum",

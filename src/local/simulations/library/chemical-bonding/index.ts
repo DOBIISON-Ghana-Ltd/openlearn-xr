@@ -1,5 +1,5 @@
 import { LocalSimulationConfig } from "../../type";
-import Model from "./model";
+import Model from "./model.v0";
 
 export type IValueMap = {
   select_molecule: "BeCl2 (Linear)" | "BCl3 (Trigonal Planar)" | "CH4 (Tetrahedral)" | "PCl5 (Trigonal Bipyramidal)" | "SF6 (Octahedral)";

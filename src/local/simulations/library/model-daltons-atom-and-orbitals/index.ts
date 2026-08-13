@@ -1,5 +1,5 @@
 import { LocalSimulationConfig } from "../../type";
-import Model from "./model";
+import Model from "./model.v0";
 
 export type IValueMap = {
   atom_model: "Dalton's Sphere" | "Thompson's Model" | "Rutherford's Model";
