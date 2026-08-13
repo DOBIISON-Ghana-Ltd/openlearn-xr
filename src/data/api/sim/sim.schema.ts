@@ -24,7 +24,7 @@ const SimModuleGetAll = ZApi({
     id: ZModuleVersion.shape.id,
     module: z.object({
       title: ZModule.shape.title,
-      slug: ZModule.shape.slug,
+      image: ZModule.shape.image,
       collection: z.object({
         name: ZCollection.shape.name,
         grade: ZCollection.shape.grade
@@ -301,10 +301,27 @@ const SimSessionPostEnd = ZApi({
   res: z.string(),
 });
 
+// ---------------------------------------------------------------------------
+// GET /api/sim/modules/[id]/slug — resolve module slug by id
+// ---------------------------------------------------------------------------
+const SimModuleGetSlug = ZApi({
+  params: z.object({
+    id: z.string(),
+  }),
+  query: z.object({
+    mode: z.enum(["module", "session"]).optional(),
+  }).optional(),
+  res: ZModule.pick({
+    title: true,
+    slug: true,
+  }),
+});
+
 const schema = {
   SimModuleGetAll,
   SimModuleGetOne,
   SimModuleGetStats,
+  SimModuleGetSlug,
   SimModuleCompletionGetAll,
 
   SimCheckpointGetOne,

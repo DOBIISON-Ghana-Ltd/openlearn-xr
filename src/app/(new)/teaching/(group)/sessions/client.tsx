@@ -1,6 +1,6 @@
 'use client';
 
-import Image from 'next/image';
+import ImageWithFallback from '@/components/(new)/image-with-fallback';
 import Link from 'next/link';
 import { Presentation, Pencil, Trash2, ChevronLeft, ChevronRight, Users } from 'lucide-react';
 import { match, P } from 'ts-pattern';
@@ -189,9 +189,9 @@ function RecentActivity() {
 type ISessionItem = Infer["SesSessionGetAll"]["res"][number];
 
 function SessionCard({ data }: { data: ISessionItem }) {
-  const module = data.moduleVersion.module;
-  const title = data.name || module.title;
-  const subtitle = `${module.collection.name} • ${module.collection.grade}`;
+  const { title: moduleTitle, image } = data.moduleVersion.module;
+  const title = data.name || moduleTitle;
+  const subtitle = `${data.moduleVersion.module.collection.name} • ${data.moduleVersion.module.collection.grade}`;
   const joinedCount = data._count.players;
   const maxAdmissions = data.config.maxAdmissions;
   const players = data.players || [];
@@ -202,10 +202,12 @@ function SessionCard({ data }: { data: ISessionItem }) {
 
       {/* Thumbnail Image with Gradient Overlay */}
       <div className="relative w-full md:w-48 h-32 rounded-lg overflow-hidden shrink-0">
-        <Image
-          src={"/(new)/module-thumbnail.png"}
+        <ImageWithFallback
+          src={image}
+          fallbackSrc="/(new)/module-thumbnail.png"
           alt={title}
           fill
+          sizes="(max-width: 768px) 100vw, 192px"
           className="object-cover"
         />
         <div className="absolute inset-0 bg-linear-to-t from-black/80 to-transparent" />

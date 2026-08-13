@@ -1,7 +1,7 @@
 Atomic Structure Y1
 {
   "name": "Model Dalton's Atom and Orbitals",
-  "image": "/module/model_daltons_atom_and_orbitals/image.png",
+  "image": "/module/model-daltons-atom-and-orbitals/image.png",
   "subject": "Chemistry",
   "grade": "Year 1",
   "duration": "30 mins",
@@ -74,17 +74,17 @@ Atomic Structure Y1
       "items": [
         {
           "name": "Dalton's Atom Model",
-          "image": "/module/model_daltons_atom_and_orbitals/explanation-01.png",
+          "image": "/module/model-daltons-atom-and-orbitals/explanation-01.png",
           "description": "Constructed as a simple sphere with no internal structure, representing indivisible matter as initially proposed by Dalton."
         },
         {
           "name": "s-orbital",
-          "image": "/module/model_daltons_atom_and_orbitals/explanation-02.png",
+          "image": "/module/model-daltons-atom-and-orbitals/explanation-02.png",
           "description": "A spherical region around the nucleus modelled using a single balloon, representing where an s-electron is likely found."
         },
         {
           "name": "p-orbital",
-          "image": "/module/model_daltons_atom_and_orbitals/explanation-03.png",
+          "image": "/module/model-daltons-atom-and-orbitals/explanation-03.png",
           "description": "A dumbbell-shaped orbital aligned along an axis, modelled practically using two balloons joined at their knots."
         }
       ],
@@ -208,7 +208,7 @@ Atomic Structure Y1
 Chemical Bonding
 {
   "name": "Chemical Bonding",
-  "image": "/module/chemical_bonding/image.png",
+  "image": "/module/chemical-bonding/image.png",
   "subject": "Chemistry",
   "grade": "Year 2",
   "duration": "30 mins",
@@ -281,17 +281,17 @@ Chemical Bonding
       "items": [
         {
           "name": "Molecular Models",
-          "image": "/module/chemical_bonding/explanation-01.png",
+          "image": "/module/chemical-bonding/explanation-01.png",
           "description": "Physical representations used to identify and explain various types of hybridization and molecular shapes."
         },
         {
           "name": "Sigma (σ) Bond",
-          "image": "/module/chemical_bonding/explanation-02.png",
+          "image": "/module/chemical-bonding/explanation-02.png",
           "description": "A strong covalent bond formed by the direct, co-axial overlap of atomic orbitals."
         },
         {
           "name": "Pi (π) Bond",
-          "image": "/module/chemical_bonding/explanation-03.png",
+          "image": "/module/chemical-bonding/explanation-03.png",
           "description": "A covalent bond formed by the lateral or sideway overlap of atomic orbitals."
         }
       ],
@@ -410,7 +410,7 @@ Chemical Bonding
 Enthalpy Changes
 {
   "name": "Determine Enthalpy Changes",
-  "image": "/module/determine_enthalpy_changes/image.png",
+  "image": "/module/determine-enthalpy-changes/image.png",
   "subject": "Chemistry",
   "grade": "Year 2",
   "duration": "30 mins",
@@ -483,17 +483,17 @@ Enthalpy Changes
       "items": [
         {
           "name": "Calorimetry Setup",
-          "image": "/module/determine_enthalpy_changes/explanation-01.png",
+          "image": "/module/determine-enthalpy-changes/explanation-01.png",
           "description": "An insulated container used to measure the temperature change of a liquid during a chemical reaction, minimizing heat loss to the surroundings."
         },
         {
           "name": "Digital Thermometer",
-          "image": "/module/determine_enthalpy_changes/explanation-02.png",
+          "image": "/module/determine-enthalpy-changes/explanation-02.png",
           "description": "Used to accurately measure the initial and final temperatures (ΔT) of the reacting system to determine energy changes."
         },
         {
           "name": "Chemical Reagents",
-          "image": "/module/determine_enthalpy_changes/explanation-03.png",
+          "image": "/module/determine-enthalpy-changes/explanation-03.png",
           "description": "Reactants such as HCl and NaOH for neutralization, or NH4Cl for heat of solution, used to study specific enthalpy changes."
         }
       ],
@@ -610,7 +610,7 @@ Enthalpy Changes
 Series and Parallel Connections of Capacitors
 {
   "name": "Series and Parallel Connections of Capacitors",
-  "image": "/module/series_and_parallel_connections_of_capacitors/image.png",
+  "image": "/module/series-and-parallel-connections-of-capacitors/image.png",
   "subject": "Physics",
   "grade": "Year 2",
   "duration": "30 mins",
@@ -683,17 +683,17 @@ Series and Parallel Connections of Capacitors
       "items": [
         {
           "name": "Science Kit",
-          "image": "/module/series_and_parallel_connections_of_capacitors/explanation-01.png",
+          "image": "/module/series-and-parallel-connections-of-capacitors/explanation-01.png",
           "description": "A practical laboratory set used to safely arrange and securely connect capacitors in different circuit configurations."
         },
         {
           "name": "Capacitor Component",
-          "image": "/module/series_and_parallel_connections_of_capacitors/explanation-02.png",
+          "image": "/module/series-and-parallel-connections-of-capacitors/explanation-02.png",
           "description": "An electronic component that stores electrical charge, which can be wired end-to-end (series) or side-by-side (parallel)."
         },
         {
           "name": "DC Power Source",
-          "image": "/module/series_and_parallel_connections_of_capacitors/explanation-03.png",
+          "image": "/module/series-and-parallel-connections-of-capacitors/explanation-03.png",
           "description": "Provides the electrical potential difference necessary to push and store total charges across the capacitor network."
         }
       ],
@@ -821,7 +821,7 @@ Series and Parallel Connections of Capacitors
 Forces and Motion
 {
   "name": "Forces and Motion - Coefficient of Friction",
-  "image": "/module/forces_and_motion_coefficient_of_friction/image.png",
+  "image": "/module/forces-and-motion-coefficient-of-friction/image.png",
   "subject": "Physics",
   "grade": "Year 2",
   "duration": "30 mins",
@@ -894,17 +894,17 @@ Forces and Motion
       "items": [
         {
           "name": "Spring Balance",
-          "image": "/module/forces_and_motion_coefficient_of_friction/explanation-01.png",
+          "image": "/module/forces-and-motion-coefficient-of-friction/explanation-01.png",
           "description": "An instrument used to measure the pulling force required to move the wooden block across the plane."
         },
         {
           "name": "Wooden Block",
-          "image": "/module/forces_and_motion_coefficient_of_friction/explanation-02.png",
+          "image": "/module/forces-and-motion-coefficient-of-friction/explanation-02.png",
           "description": "A mass with a hook attached, used to vary the normal reaction by stacking different masses on top."
         },
         {
           "name": "Horizontal Plane",
-          "image": "/module/forces_and_motion_coefficient_of_friction/explanation-03.png",
+          "image": "/module/forces-and-motion-coefficient-of-friction/explanation-03.png",
           "description": "The surface (wooden, plastic, or metallic) on which the block slides. Can be modified with oil or powder to test different conditions."
         }
       ],
@@ -1021,7 +1021,7 @@ Forces and Motion
 Simple Harmonic Motion
 {
   "name": "Simple Harmonic Motion",
-  "image": "/module/simple_harmonic_motion/image.png",
+  "image": "/module/simple-harmonic-motion/image.png",
   "subject": "Physics",
   "grade": "Year 1",
   "duration": "30 mins",
@@ -1094,17 +1094,17 @@ Simple Harmonic Motion
       "items": [
         {
           "name": "Retort Stand and Pendulum Bob",
-          "image": "/module/simple_harmonic_motion/explanation-01.png",
+          "image": "/module/simple-harmonic-motion/explanation-01.png",
           "description": "The basic laboratory setup for a simple pendulum, allowing the spherical bob to swing freely in simple harmonic motion."
         },
         {
           "name": "Stopwatch",
-          "image": "/module/simple_harmonic_motion/explanation-02.png",
+          "image": "/module/simple-harmonic-motion/explanation-02.png",
           "description": "A timing device used to accurately measure the time taken for multiple oscillations to calculate the average period."
         },
         {
           "name": "Meter Rule",
-          "image": "/module/simple_harmonic_motion/explanation-03.png",
+          "image": "/module/simple-harmonic-motion/explanation-03.png",
           "description": "Used to measure the exact length of the pendulum string from the suspension point to the center of the bob."
         }
       ],
@@ -1211,4 +1211,351 @@ Simple Harmonic Motion
     }
   ]
 }
+Energy Forms and Changes
+{
+  "name": "Energy Forms and Changes",
+  "image": "/module/energy-forms-and-changes/image.png",
+  "subject": "Physics",
+  "grade": "Year 2",
+  "duration": "25 mins",
+  "difficultyLevel": "Easy",
+  "notes": {
+    "overview": {
+      "description": "Explore the different forms of energy and how energy is conserved and transferred between objects in a system.",
+      "objectives": [
+        "Identify and describe various forms of energy (mechanical, electrical, thermal, light, chemical).",
+        "Explain the law of conservation of energy and how energy transforms from one form to another.",
+        "Observe and analyze energy transfer in simple mechanical and electrical systems."
+      ]
+    },
+    "engage": {
+      "curiosityQuestion": "When you ride a bicycle, your body burns calories (chemical energy) to move the pedals. Where does all that energy eventually go?",
+      "preAssessment": [
+        {
+          "question": "Which of the following is considered a form of mechanical energy?",
+          "options": [
+            "Heat from a fire",
+            "Motion of a turning wheel",
+            "Electricity in a wire",
+            "I don't know"
+          ],
+          "answer": 1
+        },
+        {
+          "question": "What does a generator primarily do in an energy system?",
+          "options": [
+            "Creates energy from nothing",
+            "Converts mechanical energy into electrical energy",
+            "Stores chemical energy",
+            "I don't know"
+          ],
+          "answer": 1
+        },
+        {
+          "question": "The Law of Conservation of Energy states that:",
+          "options": [
+            "Energy can be created but not destroyed",
+            "Energy cannot be created or destroyed, only transformed",
+            "Total energy in a system always decreases over time",
+            "I don't know"
+          ],
+          "answer": 1
+        },
+        {
+          "question": "When a light bulb is turned on, electrical energy is transformed primarily into:",
+          "options": [
+            "Light and thermal (heat) energy",
+            "Chemical and mechanical energy",
+            "Sound and light energy",
+            "I don't know"
+          ],
+          "answer": 0
+        },
+        {
+          "question": "Which type of energy is stored in the food we eat?",
+          "options": [
+            "Thermal energy",
+            "Electrical energy",
+            "Chemical energy",
+            "I don't know"
+          ],
+          "answer": 2
+        }
+      ]
+    },
+    "explanation": {
+      "items": [
+        {
+          "name": "Energy Source (Bicyclist)",
+          "image": "/module/energy-forms-and-changes/explanation-01.png",
+          "description": "Represents the input of chemical energy (from food) being converted into mechanical energy by pedaling."
+        },
+        {
+          "name": "Generator",
+          "image": "/module/energy-forms-and-changes/explanation-02.png",
+          "description": "A device that takes the mechanical energy from the turning wheel and transforms it into electrical energy."
+        },
+        {
+          "name": "Energy Output (Fan/Bulb)",
+          "image": "/module/energy-forms-and-changes/explanation-03.png",
+          "description": "Receives the electrical energy and converts it into the final useful form, such as mechanical motion (fan) or light (bulb)."
+        }
+      ],
+      "keyTakeaways": [
+        {
+          "phrase": "Energy Transformation",
+          "description": "Energy constantly changes forms. For example, chemical energy in muscles becomes mechanical energy to pedal a bike."
+        },
+        {
+          "phrase": "Conservation of Energy",
+          "description": "In any closed system, the total amount of energy remains constant; it just shifts from one form (like mechanical) to another (like electrical)."
+        },
+        {
+          "phrase": "Energy Symbols",
+          "description": "Simulations use symbols to track energy types: Mechanical (grey), Electrical (blue), Thermal (red), Light (yellow), and Chemical (green)."
+        }
+      ]
+    }
+  },
+  "checkpointQuestions": [
+    {
+      "question": "In the bicycle-generator-fan system, what is the initial source of energy?",
+      "options": [
+        "Mechanical energy from the spinning wheel",
+        "Electrical energy from the generator",
+        "Chemical energy from the bicyclist",
+        "Thermal energy from the belt"
+      ],
+      "answer": 2,
+      "hint": "Think about what is powering the motion of the pedals in the first place.",
+      "explanation": "The bicyclist uses chemical energy stored in their body (from food) to pedal the bicycle, starting the chain of energy transfers."
+    },
+    {
+      "question": "As the bicyclist pedals and turns the generator, what energy transformation occurs inside the generator?",
+      "options": [
+        "Chemical energy to Light energy",
+        "Mechanical energy to Electrical energy",
+        "Electrical energy to Thermal energy",
+        "Thermal energy to Mechanical energy"
+      ],
+      "answer": 1,
+      "hint": "The generator takes the spinning motion and turns it into current flowing through the wire.",
+      "explanation": "A generator works by converting the kinetic (mechanical) energy of the spinning wheel into electrical energy that flows out through the wires."
+    },
+    {
+      "question": "What happens to some of the energy during these transformations, which explains why the bicyclist eventually gets tired and sweats?",
+      "options": [
+        "It is destroyed completely.",
+        "It turns into chemical energy in the generator.",
+        "It is lost as thermal (heat) energy to the surroundings.",
+        "It turns into pure light energy."
+      ],
+      "answer": 2,
+      "hint": "No machine is 100% efficient; some energy always escapes in a form you can feel as warmth.",
+      "explanation": "Due to friction and inefficiencies in the human body and the mechanical parts, some chemical and mechanical energy is converted into thermal (heat) energy, which dissipates into the environment."
+    },
+    {
+      "question": "If you replace the fan with a light bulb in the system, what is the final primary energy output?",
+      "options": [
+        "Chemical energy",
+        "Mechanical energy",
+        "Light energy",
+        "Sound energy"
+      ],
+      "answer": 2,
+      "hint": "Think about the purpose of a light bulb.",
+      "explanation": "A light bulb is designed to take electrical energy and transform it primarily into light energy (along with some thermal energy)."
+    },
+    {
+      "question": "Which of the following best summarizes the Law of Conservation of Energy demonstrated in the system?",
+      "options": [
+        "The generator creates more energy than the bicyclist puts in.",
+        "The total amount of energy tracked (chemical, mechanical, electrical, thermal) remains constant throughout the transfers.",
+        "Energy is destroyed when it turns into heat.",
+        "The fan uses up the energy so it no longer exists."
+      ],
+      "answer": 1,
+      "hint": "Energy simply changes 'costumes' but the total 'count' stays the same.",
+      "explanation": "The Law of Conservation of Energy states that energy cannot be created or destroyed. In the simulation, you can track the exact 'chunks' of energy as they change forms from chemical, to mechanical, to electrical, to light or heat, but the total amount is conserved."
+    }
+  ],
+  "simulation": "PhET Embed",
+  "controls": []
+}
 
+
+
+
+
+
+Geometric Optics
+{
+  "name": "Geometric Optics",
+  "image": "/module/geometric-optics/image.png",
+  "subject": "Physics",
+  "grade": "Year 1",
+  "duration": "30 mins",
+  "difficultyLevel": "Medium",
+  "notes": {
+    "overview": {
+      "description": "Explore the processes involved in image formation using spherical mirrors and lenses, and understand the characteristics of these images through ray tracing.",
+      "objectives": [
+        "Describe the processes involved in image formation in spherical mirrors and their characteristics using ray tracing.",
+        "Determine the position and characteristics of images formed by spherical mirrors.",
+        "Distinguish between images formed by converging and diverging mirrors."
+      ]
+    },
+    "engage": {
+      "curiosityQuestion": "Have you ever wondered why your reflection looks upside down in a spoon but upright in a makeup mirror?",
+      "preAssessment": [
+        {
+          "question": "What type of image cannot be projected onto a physical screen?",
+          "options": [
+            "Virtual image",
+            "Real image",
+            "Magnified image",
+            "I don't know"
+          ],
+          "answer": 0
+        },
+        {
+          "question": "The point where parallel rays of light converge after reflecting off a concave mirror is called the:",
+          "options": [
+            "Center of curvature",
+            "Pole",
+            "Principal focus",
+            "I don't know"
+          ],
+          "answer": 2
+        },
+        {
+          "question": "A mirror that curves inward, like the inside of a bowl, is known as a:",
+          "options": [
+            "Convex mirror",
+            "Concave mirror",
+            "Plane mirror",
+            "I don't know"
+          ],
+          "answer": 1
+        },
+        {
+          "question": "Which ray passes through the principal focus after reflecting from a concave mirror?",
+          "options": [
+            "A ray parallel to the principal axis",
+            "A ray passing through the center of curvature",
+            "A ray striking the pole",
+            "I don't know"
+          ],
+          "answer": 0
+        },
+        {
+          "question": "What is the mathematical relationship between the radius of curvature and the focal length of a spherical mirror?",
+          "options": [
+            "Radius is half the focal length",
+            "Radius is twice the focal length",
+            "They are exactly equal",
+            "I don't know"
+          ],
+          "answer": 1
+        }
+      ]
+    },
+    "explanation": {
+      "items": [
+        {
+          "name": "Spherical Mirror/Lens",
+          "image": "/module/geometric-optics/explanation-01.png",
+          "description": "Optical devices that reflect or refract light rays to form real or virtual images depending on their curvature."
+        },
+        {
+          "name": "Object (Pencil)",
+          "image": "/module/geometric-optics/explanation-02.png",
+          "description": "The source of light rays that are traced to determine the size, orientation, and position of the resulting image."
+        },
+        {
+          "name": "Ray Tracing",
+          "image": "/module/geometric-optics/explanation-03.png",
+          "description": "Lines showing the path of light, including principal and marginal rays, used to visually predict image formation."
+        }
+      ],
+      "keyTakeaways": [
+        {
+          "phrase": "Image Characteristics",
+          "description": "Images formed by spherical mirrors can be real (inverted and projectable) or virtual (upright and non-projectable)."
+        },
+        {
+          "phrase": "Principal Focus",
+          "description": "The specific point on the principal axis where rays parallel to the axis converge after reflection or refraction."
+        },
+        {
+          "phrase": "Magnification",
+          "description": "Determines how much larger or smaller the image is compared to the original object, calculated using the mirror and magnification formulas."
+        }
+      ]
+    }
+  },
+  "checkpointQuestions": [
+    {
+      "question": "When an object is placed exactly at the center of curvature of a concave mirror, what are the characteristics of the image formed?",
+      "options": [
+        "Real, inverted, and same size",
+        "Virtual, upright, and magnified",
+        "Real, inverted, and diminished",
+        "Virtual, inverted, and same size"
+      ],
+      "answer": 0,
+      "hint": "Think about ray tracing when the object is at point C.",
+      "explanation": "Ray tracing shows that an object at the center of curvature of a concave mirror forms an image at the exact same position, which is real, inverted, and the same size as the object."
+    },
+    {
+      "question": "What type of image is always formed by a convex (diverging) mirror regardless of the object's distance from the mirror?",
+      "options": [
+        "Real, inverted, and magnified",
+        "Virtual, upright, and diminished",
+        "Real, upright, and diminished",
+        "Virtual, inverted, and magnified"
+      ],
+      "answer": 1,
+      "hint": "Think about the passenger-side mirror on a car.",
+      "explanation": "A convex mirror always diverges light rays, meaning they only appear to intersect behind the mirror, forming a virtual, upright, and diminished image."
+    },
+    {
+      "question": "Which principal ray is typically used as a standard rule to locate an image in a spherical mirror?",
+      "options": [
+        "A ray parallel to the principal axis that reflects through the focal point.",
+        "A ray that reflects parallel to the mirror surface.",
+        "A ray that bends away from the normal.",
+        "A ray that stops at the pole."
+      ],
+      "answer": 0,
+      "hint": "It's one of the primary rules for drawing ray diagrams.",
+      "explanation": "A standard principal ray used in ray tracing travels parallel to the principal axis and reflects through the principal focus (or appears to originate from it in a convex mirror)."
+    },
+    {
+      "question": "If the focal length of a concave mirror is 15 cm, what is its radius of curvature?",
+      "options": [
+        "7.5 cm",
+        "15 cm",
+        "30 cm",
+        "45 cm"
+      ],
+      "answer": 2,
+      "hint": "The radius of curvature is twice the focal length.",
+      "explanation": "The radius of curvature is geometrically twice the distance of the focal length from the pole of the mirror (R = 2f). Therefore, 2 x 15 cm = 30 cm."
+    },
+    {
+      "question": "In the context of geometric optics, what does a \"virtual\" image mean?",
+      "options": [
+        "It can be projected onto a screen.",
+        "It is formed by actual intersection of light rays.",
+        "It cannot be projected onto a screen.",
+        "It is always magnified."
+      ],
+      "answer": 2,
+      "hint": "Think about the image in your bathroom mirror.",
+      "explanation": "A virtual image is formed by the apparent intersection of light rays diverging from the mirror. Because light does not actually pass through the image location, it cannot be captured on a physical screen."
+    }
+  ],
+  "simulation": "PhET Embed",
+  "controls": []
+}

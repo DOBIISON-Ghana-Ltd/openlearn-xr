@@ -345,7 +345,7 @@ model ModuleCheckpoint {
   question        String
   options         String[]
   correctAnswer   Int
-  points          Int      @default(10)
+  points          Int      @default(25)
   explanation     String
   hint            String
   createdAt       DateTime @default(now())

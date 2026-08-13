@@ -1,6 +1,6 @@
 'use client';
 
-import Image from 'next/image';
+import ImageWithFallback from '@/components/(new)/image-with-fallback';
 import Link from 'next/link';
 import { cn } from '@/lib/utils/cn';
 import useApi from '@/data/hooks/use-api';
@@ -150,7 +150,7 @@ type IModuleCard = {
   data: Infer["SimModuleGetAll"]["res"][number]
 }
 function ModuleCard({ data }: IModuleCard) {
-  const { id, module: { title, slug } } = data;
+  const { id, module: { title, image } } = data;
 
   return (
     <Link
@@ -159,11 +159,13 @@ function ModuleCard({ data }: IModuleCard) {
     >
       {/* Background Image / Thumbnail */}
       <div className="absolute inset-0 z-0">
-        <Image
-          src="/(new)/module-thumbnail.png"
+        <ImageWithFallback
+          src={image}
+          fallbackSrc="/(new)/module-thumbnail.png"
           alt={title}
           fill
-          sizes="300px"
+          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, (max-width: 1280px) 33vw, 25vw"
+          priority
           className="object-cover"
         />
       </div>
@@ -175,5 +177,5 @@ function ModuleCard({ data }: IModuleCard) {
         </h4>
       </div>
     </Link>
-  )
+  );
 }

@@ -43,7 +43,7 @@ export const GET = apiHandler(async (req) => {
       module: {
         select: {
           title: true,
-          slug: true,
+          image: true,
           collection: {
             select: {
               name: true,

@@ -31,6 +31,7 @@ const ROUTES = {
   "sim:session:get:stats": ({ id }: { id: string }) => `/api/sim/sessions/${id}/stats`,
   "sim:session:get:players": ({ id }: { id: string }) => `/api/sim/sessions/${id}/players`,
   "sim:module:get:stats": ({ id }: { id: string }) => `/api/sim/modules/${id}/stats`,
+  "sim:module:get:slug": ({ id }: { id: string }) => `/api/sim/modules/${id}/slug`,
   "sim:session:post:join": () => `/api/sim/sessions/join`,
   "sim:session:post:leave": ({ id }: { id: string }) => `/api/sim/sessions/${id}/leave`,
   "sim:session:post:end": ({ id }: { id: string }) => `/api/sim/sessions/${id}/end`,

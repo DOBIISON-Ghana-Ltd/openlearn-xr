@@ -276,9 +276,23 @@ const simGeneralPostNavigate = {
   },
 } satisfies MutationConfig;
 
+const simModuleGetSlug = {
+  type: "query",
+  queryKey: ({ params }: Pick<Infer["SimModuleGetSlug"], "params">) =>
+    [...QUERY_KEYS["sim:module:get:slug"](params.id)],
+  queryFn: async ({ params, query }: Pick<Infer["SimModuleGetSlug"], "params"> & { query?: Infer["SimModuleGetSlug"]["query"] }) => {
+    const data = await fetcher(
+      () => axios.get(R["sim:module:get:slug"](params), { params: query }),
+      ZSim.SimModuleGetSlug.shape.res
+    );
+    return data;
+  },
+} satisfies QueryConfig;
+
 export default {
   "sim:module:get:all": simModuleGetAll,
   "sim:module:get:one": simModuleGetOne,
+  "sim:module:get:slug": simModuleGetSlug,
   "sim:checkpoint:get:one": simCheckpointGetOne,
   "sim:checkpoint:post:answer": simCheckpointPostAnswer,
   "sim:general:get:score": simGeneralGetScore,

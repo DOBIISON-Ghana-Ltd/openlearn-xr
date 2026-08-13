@@ -2,10 +2,9 @@
 
 import { cn } from "@/lib/utils/cn";
 import { BarChart2Icon, CheckIcon, ClockIcon } from "lucide-react";
-import Image from "next/image";
+import ImageWithFallback from "@/components/(new)/image-with-fallback";
 import { useFormContext } from "react-hook-form";
 import { Infer } from "@/data/types.base";
-import ZSes from "@/data/api/ses/ses.schema";
 import { IFormInput } from "./client";
 import { match } from "ts-pattern";
 
@@ -38,8 +37,9 @@ export default function ModuleCard({ data, onClick }: ModuleCardProps) {
     >
       {/* Top Thumbnail Image */}
       <div className="relative w-full h-[150px] overflow-hidden shrink-0">
-        <Image
-          src="/(new)/module-thumbnail.png"
+        <ImageWithFallback
+          src={image}
+          fallbackSrc="/(new)/module-thumbnail.png"
           alt={title}
           fill
           sizes="(max-width: 768px) 100vw, 302px"
