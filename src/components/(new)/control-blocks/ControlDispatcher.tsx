@@ -7,26 +7,21 @@ import SliderControlBlock from "./SliderControlBlock";
 import ToggleControlBlock from "./ToggleControlBlock";
 import SelectControlBlock from "./SelectControlBlock";
 
-interface ControlBlockDispatcherProps {
+interface IControlDispatcher {
   control: SimulationControl;
   value: any;
   onChange: (value: any) => void;
-  className?: string;
 }
 
-export default function ControlBlockDispatcher({
-  control,
-  value,
-  onChange,
-  className,
-}: ControlBlockDispatcherProps) {
+export default function ControlDispatcher(props: IControlDispatcher) {
+  const { control, value, onChange } = props;
+
   return match(control)
     .with({ type: "number" }, (c) => (
       <StepperControlBlock
         control={c}
         value={(value ?? c.value) as number}
         onChange={onChange}
-        className={className}
       />
     ))
     .with({ type: "slider" }, (c) => (
@@ -34,7 +29,6 @@ export default function ControlBlockDispatcher({
         control={c}
         value={(value ?? c.value) as number}
         onChange={onChange}
-        className={className}
       />
     ))
     .with({ type: "toggle" }, (c) => (
@@ -42,7 +36,6 @@ export default function ControlBlockDispatcher({
         control={c}
         value={(value ?? c.value) as boolean}
         onChange={onChange}
-        className={className}
       />
     ))
     .with({ type: "select" }, (c) => (
@@ -50,7 +43,6 @@ export default function ControlBlockDispatcher({
         control={c}
         value={(value ?? c.value) as string}
         onChange={onChange}
-        className={className}
       />
     ))
     .exhaustive();

@@ -11,5 +11,7 @@
   - All subdirectories inside `src/components/` are **deprecated**, EXCEPT `src/components/(new)/`. Do not import from or base architectural decisions on code in deprecated component folders (e.g., `src/components/sim/`, `src/components/ui/`).
   - The `src/app/app/` directory is **deprecated**. Active routes and pages are located strictly within `src/app/(new)/`.
 
+- **Component Props & `className` Rule**: Do NOT add `className` props (or `className?: string`) to domain/feature-specific custom components (such as simulation control blocks) that do not need external style overrides. Keep component props minimal and strictly typed to their domain requirements.
+
 
 

@@ -15,7 +15,7 @@ export const config: LocalSimulationConfig = {
   controls: [
     {
       id: "pendulum_length",
-      label: "Pendulum Length (m)",
+      label: "Length (m)",
       description: "Adjust the length of the string from the pivot to the bob.",
       type: "slider",
       value: 0.5,
@@ -26,7 +26,7 @@ export const config: LocalSimulationConfig = {
     },
     {
       id: "release_pendulum",
-      label: "Release Pendulum",
+      label: "Release Bob",
       description: "Toggle to release the pendulum and start the digital stopwatch.",
       type: "toggle",
       value: false,
@@ -34,7 +34,7 @@ export const config: LocalSimulationConfig = {
     },
     {
       id: "reset_setup",
-      label: "Reset Setup",
+      label: "Reset",
       description: "Stop the pendulum and reset the stopwatch to 0.00s.",
       type: "toggle",
       value: false,

@@ -15,7 +15,7 @@ export const config: LocalSimulationConfig = {
   controls: [
     {
       id: "atom_model",
-      label: "Select Atomic Model",
+      label: "Atomic Model",
       description: "Choose a historical atomic model to display on the workbench.",
       type: "select",
       options: [
@@ -28,7 +28,7 @@ export const config: LocalSimulationConfig = {
     },
     {
       id: "orbital_view",
-      label: "Select Orbital View",
+      label: "Orbital View",
       description: "Visualize the 3D shape of a specific atomic orbital.",
       type: "select",
       options: [
@@ -43,7 +43,7 @@ export const config: LocalSimulationConfig = {
     },
     {
       id: "show_labels",
-      label: "Toggle Quantum Labels",
+      label: "Show Labels",
       description: "Show or hide the principal and azimuthal quantum numbers for the selected orbital.",
       type: "toggle",
       value: false,

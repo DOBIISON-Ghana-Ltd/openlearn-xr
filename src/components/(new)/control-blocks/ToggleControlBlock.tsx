@@ -3,28 +3,19 @@
 import { Switch as SwitchPrimitive } from "@base-ui/react/switch";
 import { cn } from "@/lib/utils/cn";
 import { ToggleControl } from "@/local/simulations/type";
-import ControlInfoTooltip from "./ControlInfoTooltip";
+import ControlInfoTooltip from "./ControlTooltip";
 
-interface ToggleControlBlockProps {
+interface IToggleControlBlock {
   control: ToggleControl;
   value: boolean;
   onChange: (value: boolean) => void;
-  className?: string;
 }
 
-export default function ToggleControlBlock({
-  control,
-  value,
-  onChange,
-  className,
-}: ToggleControlBlockProps) {
+export default function ToggleControlBlock(props: IToggleControlBlock) {
+  const { control, value, onChange } = props;
+
   return (
-    <div
-      className={cn(
-        "flex items-center justify-between gap-3 w-full py-1",
-        className
-      )}
-    >
+    <div className="flex items-center justify-between gap-3 w-full py-2 px-4 pr-3">
       <div className="flex items-center gap-1.5 text-left flex-1 min-w-0">
         <ControlInfoTooltip description={control.description} />
         <span className="text-normal text-primary-text-dark font-medium truncate">
@@ -36,19 +27,19 @@ export default function ToggleControlBlock({
         checked={value}
         onCheckedChange={onChange}
         className={cn(
-          "relative inline-flex h-[24px] w-[48px] shrink-0 items-center rounded-full transition-colors duration-200 cursor-pointer outline-none shadow-xs",
+          "relative inline-flex h-6 w-11 shrink-0 items-center rounded-full transition-colors duration-200 cursor-pointer outline-none shadow-xs border",
           {
-            "bg-primary-pressed": value,
-            "bg-surface-white border border-primary-cta/40": !value,
+            "bg-primary-cta border-primary-cta": value,
+            "bg-primary-subtle border-primary-cta/20": !value,
           }
         )}
       >
         <SwitchPrimitive.Thumb
           className={cn(
-            "pointer-events-none block size-[16px] rounded-full transition-transform duration-200",
+            "pointer-events-none block size-4 rounded-full transition-transform duration-200 shadow-xs",
             {
-              "bg-surface-white translate-x-[26px]": value,
-              "bg-primary-pressed translate-x-[4px]": !value,
+              "bg-surface-white translate-x-6": value,
+              "bg-primary-cta translate-x-1": !value,
             }
           )}
         />

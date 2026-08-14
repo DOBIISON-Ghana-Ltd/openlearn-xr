@@ -3,21 +3,16 @@
 import { cn } from "@/lib/utils/cn";
 import { NumberControl } from "@/local/simulations/type";
 import { MinusIcon, PlusIcon } from "lucide-react";
-import ControlInfoTooltip from "./ControlInfoTooltip";
+import ControlInfoTooltip from "./ControlTooltip";
 
-interface StepperControlBlockProps {
+interface IStepperControlBlock {
   control: NumberControl;
   value: number;
   onChange: (value: number) => void;
-  className?: string;
 }
 
-export default function StepperControlBlock({
-  control,
-  value,
-  onChange,
-  className,
-}: StepperControlBlockProps) {
+export default function StepperControlBlock(props: IStepperControlBlock) {
+  const { control, value, onChange } = props;
   const step = control.step ?? 1;
   const min = control.min ?? 0;
   const max = control.max ?? Number.MAX_SAFE_INTEGER;
@@ -40,33 +35,31 @@ export default function StepperControlBlock({
   const isMax = value >= max;
 
   return (
-    <div
-      className={cn("flex flex-col items-center gap-1.5 w-full", className)}
-    >
-      <div className="flex items-center justify-center gap-1.5 text-center">
+    <div className="flex flex-col gap-2 w-full py-2 px-4 pr-3">
+      <div className="flex items-center gap-1.5 text-left">
         <ControlInfoTooltip description={control.description} />
         <span className="text-normal text-primary-text-dark font-medium">
           {control.label}
         </span>
       </div>
 
-      <div className="flex-center gap-4 mt-1">
+      <div className="flex items-center justify-center gap-4">
         <button
           type="button"
           onClick={handleDecrement}
           disabled={isMin}
           className={cn(
-            "bg-primary-subtle border-[1.8px] border-primary-cta rounded-[11.7px] size-8.75 flex-center transition-all cursor-pointer",
+            "bg-primary-subtle border border-primary-cta/20 rounded-md size-9 flex items-center justify-center transition-colors outline-none",
             {
-              "hover:bg-primary-light/70 active:scale-95": !isMin,
-              "opacity-50 cursor-not-allowed": isMin,
+              "cursor-pointer hover:bg-primary-light/40 active:scale-95 text-primary-cta": !isMin,
+              "cursor-not-allowed opacity-40 text-disable": isMin,
             }
           )}
         >
-          <MinusIcon className="size-4 text-primary-text-dark" />
+          <MinusIcon className="size-4" />
         </button>
 
-        <span className="text-h6 text-primary-text-dark min-w-5 text-center font-semibold">
+        <span className="text-normal text-primary-text-dark font-semibold min-w-8 text-center">
           {value}
         </span>
 
@@ -75,14 +68,14 @@ export default function StepperControlBlock({
           onClick={handleIncrement}
           disabled={isMax}
           className={cn(
-            "bg-primary-subtle border-[1.8px] border-primary-cta rounded-[11.7px] size-8.75 flex-center transition-all cursor-pointer",
+            "bg-primary-subtle border border-primary-cta/20 rounded-md size-9 flex items-center justify-center transition-colors outline-none",
             {
-              "hover:bg-primary-light/70 active:scale-95": !isMax,
-              "opacity-50 cursor-not-allowed": isMax,
+              "cursor-pointer hover:bg-primary-light/40 active:scale-95 text-primary-cta": !isMax,
+              "cursor-not-allowed opacity-40 text-disable": isMax,
             }
           )}
         >
-          <PlusIcon className="size-4 text-primary-text-dark" />
+          <PlusIcon className="size-4" />
         </button>
       </div>
     </div>

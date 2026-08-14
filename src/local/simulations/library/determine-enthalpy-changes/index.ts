@@ -22,7 +22,7 @@ export const config: LocalSimulationConfig = {
   controls: [
     {
       id: "reaction_type",
-      label: "Select Reaction Type",
+      label: "Reaction Type",
       description: "Choose the calorimetry experiment from the NaCCA SHS Chemistry curriculum.",
       type: "select",
       options: [
@@ -37,7 +37,7 @@ export const config: LocalSimulationConfig = {
     },
     {
       id: "reactant_amount",
-      label: "Reactant Mass / Volume (g or mL)",
+      label: "Reactant Amount (g/mL)",
       description: "Adjust the mass or volume of reactants added to the calorimeter.",
       type: "slider",
       value: 50,
@@ -47,7 +47,7 @@ export const config: LocalSimulationConfig = {
     },
     {
       id: "initiate_reaction",
-      label: "Initiate Reaction",
+      label: "Start Reaction",
       description: "Mix reactants / ignite spirit burner to observe dynamic enthalpy kinetics.",
       type: "toggle",
       value: false,
@@ -55,7 +55,7 @@ export const config: LocalSimulationConfig = {
     },
     {
       id: "show_heat_flow",
-      label: "Show Heat Flow Vectors",
+      label: "Show Heat Flow",
       description: "Toggle thermal heat transfer vectors and system boundaries.",
       type: "toggle",
       value: false,

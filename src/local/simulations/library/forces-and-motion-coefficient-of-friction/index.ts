@@ -15,7 +15,7 @@ export const config: LocalSimulationConfig = {
   controls: [
     {
       id: "block_mass",
-      label: "Block Mass",
+      label: "Block Mass (kg)",
       description: "Adjust the mass of the sliding wooden block.",
       type: "slider",
       value: 1,
@@ -25,7 +25,7 @@ export const config: LocalSimulationConfig = {
     },
     {
       id: "surface_condition",
-      label: "Surface Condition",
+      label: "Surface Material",
       description: "Select the treatment applied to the sliding surface.",
       type: "select",
       options: [
@@ -38,7 +38,7 @@ export const config: LocalSimulationConfig = {
     },
     {
       id: "initiate_pull",
-      label: "Initiate Pull",
+      label: "Pull Block",
       description: "Start pulling the block to measure the frictional force.",
       type: "toggle",
       value: false,

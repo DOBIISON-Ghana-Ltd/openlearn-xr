@@ -1,23 +1,17 @@
 "use client";
 
-import { cn } from "@/lib/utils/cn";
 import { SliderControl } from "@/local/simulations/type";
 import React from "react";
-import ControlInfoTooltip from "./ControlInfoTooltip";
+import ControlInfoTooltip from "./ControlTooltip";
 
-interface SliderControlBlockProps {
+interface ISliderControlBlock {
   control: SliderControl;
   value: number;
   onChange: (value: number) => void;
-  className?: string;
 }
 
-export default function SliderControlBlock({
-  control,
-  value,
-  onChange,
-  className,
-}: SliderControlBlockProps) {
+export default function SliderControlBlock(props: ISliderControlBlock) {
+  const { control, value, onChange } = props;
   const min = control.min ?? 0;
   const max = control.max ?? 100;
   const step = control.step ?? 1;
@@ -32,9 +26,7 @@ export default function SliderControlBlock({
   };
 
   return (
-    <div
-      className={cn("flex flex-col gap-2 w-full py-1.5", className)}
-    >
+    <div className="flex flex-col gap-2 w-full py-2 px-4 pr-3">
       <div className="flex items-center justify-between gap-2">
         <div className="flex items-center gap-1.5 text-left">
           <ControlInfoTooltip description={control.description} />
@@ -42,7 +34,7 @@ export default function SliderControlBlock({
             {control.label}
           </span>
         </div>
-        <span className="text-small text-primary-text-dark font-semibold bg-primary-subtle px-2 py-0.5 rounded-md border border-primary-cta/20">
+        <span className="text-small text-secondary-text font-medium bg-primary-subtle px-2.5 py-0.5 rounded-md border border-primary-cta/20">
           {value}
         </span>
       </div>
@@ -55,7 +47,7 @@ export default function SliderControlBlock({
           step={step}
           value={value}
           onChange={handleChange}
-          className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
+          className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10 outline-none"
         />
 
         {/* Track background */}
@@ -69,7 +61,7 @@ export default function SliderControlBlock({
 
         {/* Custom thumb */}
         <div
-          className="absolute size-4.5 rounded-full bg-primary-pressed border-2 border-surface-white shadow-sm pointer-events-none transition-all duration-75 -translate-x-1/2"
+          className="absolute size-4.5 rounded-full bg-primary-cta border-2 border-surface-white shadow-xs pointer-events-none transition-all duration-75 -translate-x-1/2"
           style={{ left: `${percentage}%` }}
         />
       </div>

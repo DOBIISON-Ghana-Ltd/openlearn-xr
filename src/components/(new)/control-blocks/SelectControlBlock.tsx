@@ -3,24 +3,19 @@
 import { Select as SelectPrimitive } from "@base-ui/react/select";
 import { cn } from "@/lib/utils/cn";
 import { SelectControl } from "@/local/simulations/type";
-import { ChevronDownIcon } from "lucide-react";
-import ControlInfoTooltip from "./ControlInfoTooltip";
+import { CheckIcon, ChevronDownIcon } from "lucide-react";
+import ControlInfoTooltip from "./ControlTooltip";
 
-interface SelectControlBlockProps {
+interface ISelectControlBlock {
   control: SelectControl;
   value: string;
   onChange: (value: string) => void;
-  className?: string;
 }
+export default function SelectControlBlock(props: ISelectControlBlock) {
+  const { control, value, onChange } = props;
 
-export default function SelectControlBlock({
-  control,
-  value,
-  onChange,
-  className,
-}: SelectControlBlockProps) {
   return (
-    <div className={cn("flex flex-col gap-1.5 w-full py-1", className)}>
+    <div className="flex flex-col gap-2 w-full py-2 px-4 pr-3">
       <div className="flex items-center gap-1.5 text-left">
         <ControlInfoTooltip description={control.description} />
         <span className="text-normal text-primary-text-dark font-medium">
@@ -35,11 +30,11 @@ export default function SelectControlBlock({
         }}
       >
         <SelectPrimitive.Trigger
-          className="bg-primary-subtle border border-primary-cta/20 h-[33px] px-3 rounded-[10px] w-full flex items-center justify-between cursor-pointer outline-none hover:bg-primary-light/40 transition-colors"
+          className="bg-primary-subtle border border-primary-cta/20 h-9 px-3 rounded-md w-full flex items-center justify-between cursor-pointer outline-none hover:bg-primary-light/40 transition-colors"
         >
           <SelectPrimitive.Value
             placeholder="Select option"
-            className="text-[12px] text-secondary-text truncate font-normal"
+            className="text-small text-secondary-text truncate"
           />
           <SelectPrimitive.Icon>
             <ChevronDownIcon className="size-4 text-primary-cta" />
@@ -47,27 +42,25 @@ export default function SelectControlBlock({
         </SelectPrimitive.Trigger>
 
         <SelectPrimitive.Portal>
-          <SelectPrimitive.Positioner sideOffset={4}>
-            <SelectPrimitive.Popup className="bg-primary-subtle border border-primary-cta/20 rounded-[10px] shadow-md overflow-hidden min-w-[168px] z-50">
-              {control.options.map((option, index) => {
-                const isLast = index === control.options.length - 1;
-                return (
-                  <SelectPrimitive.Item
-                    key={option}
-                    value={option}
-                    className={cn(
-                      "px-3 py-1.5 text-[12px] text-secondary-text cursor-pointer hover:bg-primary-light/50 transition-colors flex items-center outline-none data-highlighted:bg-primary-light/60",
-                      {
-                        "border-b border-primary-cta/20": !isLast,
-                      }
-                    )}
-                  >
-                    <SelectPrimitive.ItemText>
-                      {option}
-                    </SelectPrimitive.ItemText>
-                  </SelectPrimitive.Item>
-                );
-              })}
+          <SelectPrimitive.Positioner alignItemWithTrigger={false} sideOffset={4} className="z-50 select-none">
+            <SelectPrimitive.Popup className="bg-surface-white border border-primary-cta/20 rounded-md overflow-hidden w-(--anchor-width) min-w-(--anchor-width) outline-none">
+              {control.options.map((option, index) => (
+                <SelectPrimitive.Item
+                  key={option}
+                  value={option}
+                  className={cn(
+                    "px-3 py-2 text-small! text-secondary-text cursor-pointer transition-colors outline-none data-highlighted:bg-primary-subtle/30 flex-center justify-between",
+                    { "border-b border-primary-light": !(index === (control.options.length - 1)) }
+                  )}
+                >
+                  <SelectPrimitive.ItemText>
+                    {option}
+                  </SelectPrimitive.ItemText>
+                  <SelectPrimitive.ItemIndicator>
+                    <CheckIcon className="size-4 text-primary-cta" />
+                  </SelectPrimitive.ItemIndicator>
+                </SelectPrimitive.Item>
+              ))}
             </SelectPrimitive.Popup>
           </SelectPrimitive.Positioner>
         </SelectPrimitive.Portal>

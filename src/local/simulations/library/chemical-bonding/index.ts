@@ -15,7 +15,7 @@ export const config: LocalSimulationConfig = {
   controls: [
     {
       id: "select_molecule",
-      label: "Select Molecule",
+      label: "Molecule",
       description: "Choose a molecule to visualize its 3D geometry and hybridization.",
       type: "select",
       options: [
@@ -30,7 +30,7 @@ export const config: LocalSimulationConfig = {
     },
     {
       id: "show_hybrid_orbitals",
-      label: "Show Hybrid Orbitals",
+      label: "Show Orbitals",
       description: "Toggle to display the hybrid orbital lobes around the central atom.",
       type: "toggle",
       value: false,
@@ -38,7 +38,7 @@ export const config: LocalSimulationConfig = {
     },
     {
       id: "display_bond_angles",
-      label: "Display Bond Angles",
+      label: "Show Angles",
       description: "Toggle to show the exact bond angle measurements on the 3D model.",
       type: "toggle",
       value: true,

@@ -6,17 +6,13 @@ import { useStore } from "zustand";
 import { ExpandIcon, RotateCcwIcon } from "lucide-react";
 import { useState } from "react";
 import { ScrollArea } from "@base-ui/react/scroll-area";
-import ControlBlockDispatcher from "./ControlBlockDispatcher";
+import ControlDispatcher from "./ControlDispatcher";
 
-interface DynamicLabPanelProps {
-  className?: string;
+interface IDynamicLabPanel {
   onFullscreenToggle?: () => void;
 }
-
-export default function DynamicLabPanel({
-  className,
-  onFullscreenToggle,
-}: DynamicLabPanelProps) {
+export default function DynamicLabPanel(props: IDynamicLabPanel) {
+  const { onFullscreenToggle } = props;
   const controls = useStore(simStore, (state) => state.controls);
   const updateControl = useStore(simStore, (state) => state.updateControl);
   const resetControls = useStore(simStore, (state) => state.resetControls);
@@ -48,12 +44,7 @@ export default function DynamicLabPanel({
   }
 
   return (
-    <div
-      className={cn(
-        "fixed right-6 lg:right-20 top-25 z-30 flex flex-col items-end gap-4 max-h-[calc(100vh-140px)]",
-        className
-      )}
-    >
+    <div className="fixed right-6 lg:right-20 top-25 z-30 flex flex-col items-end gap-4 max-h-[calc(100vh-140px)]">
       {/* Action Toolbar */}
       <div className="flex items-center gap-3 shrink-0">
         {ACTIONS.map((action) => (
@@ -70,19 +61,17 @@ export default function DynamicLabPanel({
       </div>
 
       {/* Lab Controls Floating Card */}
-      <div className="bg-primary-light/50 border border-primary-cta/50 backdrop-blur-xs rounded-[20px] w-72 p-5 flex flex-col items-center gap-3 shadow-lg flex-1 min-h-0 overflow-hidden">
-        <h2 className="text-h6 text-primary-text-dark text-center font-semibold shrink-0">
+      <div className="bg-primary-light border border-primary-cta/50 rounded-2xl w-84 flex flex-col items-center gap-3 flex-1 min-h-0 overflow-hidden">
+        <h2 className="w-full p-4 text-h6 text-primary-text-dark shrink-0 border-b border-primary-cta/30">
           Lab controls
         </h2>
-
-        <div className="w-full h-px bg-primary-cta/30 my-0.5 shrink-0" />
 
         {/* Base UI ScrollArea */}
         <ScrollArea.Root className="flex-1 w-full min-h-0 overflow-hidden">
           <ScrollArea.Viewport className="size-full rounded-[inherit] outline-none">
-            <ScrollArea.Content className="flex flex-col gap-4 w-full items-center pr-1 pb-1">
+            <ScrollArea.Content className="flex flex-col gap-1 w-full items-center pr-1 pb-1">
               {controls.map((control) => (
-                <ControlBlockDispatcher
+                <ControlDispatcher
                   key={control.id}
                   control={control}
                   value={control.value}

@@ -16,7 +16,7 @@ export const config: LocalSimulationConfig = {
   controls: [
     {
       id: "circuit_config",
-      label: "Circuit Configuration",
+      label: "Circuit Mode",
       description: "Select how the two capacitors are wired together.",
       type: "select",
       options: [
@@ -28,7 +28,7 @@ export const config: LocalSimulationConfig = {
     },
     {
       id: "c1_value",
-      label: "Capacitor 1 Value (μF)",
+      label: "Capacitor 1 (μF)",
       description: "Adjust the capacitance rating of the first capacitor.",
       type: "slider",
       value: 2,
@@ -38,7 +38,7 @@ export const config: LocalSimulationConfig = {
     },
     {
       id: "c2_value",
-      label: "Capacitor 2 Value (μF)",
+      label: "Capacitor 2 (μF)",
       description: "Adjust the capacitance rating of the second capacitor.",
       type: "slider",
       value: 3,
@@ -48,7 +48,7 @@ export const config: LocalSimulationConfig = {
     },
     {
       id: "multimeter_mode",
-      label: "Multimeter Readout Mode",
+      label: "Multimeter Mode",
       description: "Choose which circuit property the digital meter should display.",
       type: "select",
       options: [
