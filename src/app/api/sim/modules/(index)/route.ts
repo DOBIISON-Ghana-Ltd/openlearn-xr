@@ -44,6 +44,8 @@ export const GET = apiHandler(async (req) => {
         select: {
           title: true,
           image: true,
+          duration: true,
+          difficulty: true,
           collection: {
             select: {
               name: true,

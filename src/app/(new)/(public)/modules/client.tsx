@@ -1,13 +1,13 @@
 'use client';
 
-import ImageWithFallback from '@/components/(new)/image-with-fallback';
-import Link from 'next/link';
+import ModuleCard from '@/components/(new)/common/module-card';
 import { cn } from '@/lib/utils/cn';
 import useApi from '@/data/hooks/use-api';
 import { nuqs } from '@/lib/utils/nuqs';
 import { Infer } from '@/data/types.base';
 import { PATHS } from '@/lib/constants/paths';
 import { match, P } from 'ts-pattern';
+import { Loader2Icon } from 'lucide-react';
 
 export default function ClientPage() {
   const [state] = nuqs.getStates("sim:modules");
@@ -124,7 +124,12 @@ function Content(props: IContent) {
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl">
       {props.data.map((item) => (
-        <ModuleCard key={item.id} data={item} />
+        <ModuleCard
+          key={item.id}
+          data={item}
+          actionType="play"
+          href={PATHS.PLAY("module", item.id)}
+        />
       ))}
     </div>
   )
@@ -132,8 +137,8 @@ function Content(props: IContent) {
 
 Content.Loading = function Loading() {
   return (
-    <div className="w-full py-10 flex-center">
-      Loading Modules
+    <div className="relative flex-1 flex flex-col items-center justify-center bg-surface-white size-full min-h-[300px] overflow-hidden py-10">
+      <Loader2Icon className="size-8 animate-spin text-primary-cta" />
     </div>
   )
 }
@@ -144,38 +149,4 @@ Content.Empty = function Empty() {
       No Modules
     </div>
   )
-}
-
-type IModuleCard = {
-  data: Infer["SimModuleGetAll"]["res"][number]
-}
-function ModuleCard({ data }: IModuleCard) {
-  const { id, module: { title, image } } = data;
-
-  return (
-    <Link
-      href={PATHS.PLAY("module", id)}
-      className="group relative not-[]:w-full h-65 bg-primary-subtle border-2 border-primary-light rounded-[20px] overflow-hidden transition-all hover:border-primary-cta"
-    >
-      {/* Background Image / Thumbnail */}
-      <div className="absolute inset-0 z-0">
-        <ImageWithFallback
-          src={image}
-          fallbackSrc="/(new)/module-thumbnail.png"
-          alt={title}
-          fill
-          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, (max-width: 1280px) 33vw, 25vw"
-          priority
-          className="object-cover"
-        />
-      </div>
-
-      {/* Bottom Glass Overlay Info Area */}
-      <div className="absolute bottom-0 inset-x-0 h-25 z-10 backdrop-blur-[5px] bg-linear-to-t from-primary-light via-surface-white/80 to-surface-white/40 p-4 flex flex-col justify-between">
-        <h4 className="text-normal text-primary-text-dark leading-snug line-clamp-2">
-          {title}
-        </h4>
-      </div>
-    </Link>
-  );
 }

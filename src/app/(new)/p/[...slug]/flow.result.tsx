@@ -8,6 +8,7 @@ import useApi from '@/data/hooks/use-api';
 import { usePlayServerMode } from '@/hooks/use-play-mode';
 import { simStore } from '@/store/sim/store';
 import { useStore } from 'zustand';
+import { Loader2Icon } from 'lucide-react';
 
 type IDetail = Infer["SimModuleGetOne"]["res"];
 type IScore = Infer["SimGeneralGetScore"]["res"];
@@ -180,8 +181,8 @@ function Leaderboard(props: ILeaderboard) {
 
 Leaderboard.Loading = function Loading() {
   return (
-    <div className="w-full h-full flex-center">
-      <p className="text-small">Loading...</p>
+    <div className="relative flex-1 flex flex-col items-center justify-center bg-surface-white size-full min-h-0 overflow-hidden">
+      <Loader2Icon className="size-8 animate-spin text-primary-cta" />
     </div>
   );
 };

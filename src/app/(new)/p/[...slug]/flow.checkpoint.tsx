@@ -199,8 +199,8 @@ function Content(props: IContent) {
 
 Content.Loading = function Loading() {
   return (
-    <div className="w-full h-full flex-center">
-      <p className="text-small">Loading...</p>
+    <div className="relative flex-1 flex flex-col items-center justify-center bg-surface-white size-full min-h-0 overflow-hidden">
+      <Loader2Icon className="size-8 animate-spin text-primary-cta" />
     </div>
   );
 };

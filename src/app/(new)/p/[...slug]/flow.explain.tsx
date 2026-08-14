@@ -5,6 +5,7 @@ import { IFlowContent } from './flow';
 import { Infer } from '@/data/types.base';
 import useApi from '@/data/hooks/use-api';
 import { match, P } from 'ts-pattern';
+import { Loader2Icon } from 'lucide-react';
 
 type IModuleDetail = Infer["SimModuleGetOne"]["res"];
 type IModuleNotes = NonNullable<IModuleDetail["notes"]>;
@@ -28,8 +29,8 @@ export default function ExplainFLow(props: IExplainFlow) {
 
         {match({ data, isLoading })
           .with({ isLoading: true }, () => <Content.Loading />)
-          .with({ data: P.select(P.nonNullable) }, (data) => <Content data={data} />)
           .with({ data: P.nullish, isLoading: false }, () => <Content.Error />)
+          .with({ data: P.select(P.nonNullable) }, (data) => <Content data={data} />)
           .exhaustive()
         }
       </div>
@@ -69,8 +70,8 @@ function Content(props: IContent) {
 
 Content.Loading = function Loading() {
   return (
-    <div className="w-full h-full flex-center">
-      <p className="text-small">Loading....</p>
+    <div className="relative flex-1 flex flex-col items-center justify-center bg-surface-white size-full min-h-0 overflow-hidden">
+      <Loader2Icon className="size-8 animate-spin text-primary-cta" />
     </div>
   );
 };

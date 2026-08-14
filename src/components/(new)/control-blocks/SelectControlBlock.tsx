@@ -4,6 +4,7 @@ import { Select as SelectPrimitive } from "@base-ui/react/select";
 import { cn } from "@/lib/utils/cn";
 import { SelectControl } from "@/local/simulations/type";
 import { ChevronDownIcon } from "lucide-react";
+import ControlInfoTooltip from "./ControlInfoTooltip";
 
 interface SelectControlBlockProps {
   control: SelectControl;
@@ -20,15 +21,11 @@ export default function SelectControlBlock({
 }: SelectControlBlockProps) {
   return (
     <div className={cn("flex flex-col gap-1.5 w-full py-1", className)}>
-      <div className="flex flex-col text-left">
+      <div className="flex items-center gap-1.5 text-left">
+        <ControlInfoTooltip description={control.description} />
         <span className="text-normal text-primary-text-dark font-medium">
           {control.label}
         </span>
-        {control.description && (
-          <span className="text-caption text-tertiary">
-            {control.description}
-          </span>
-        )}
       </div>
 
       <SelectPrimitive.Root

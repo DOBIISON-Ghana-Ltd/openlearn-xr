@@ -3,6 +3,7 @@
 import { Switch as SwitchPrimitive } from "@base-ui/react/switch";
 import { cn } from "@/lib/utils/cn";
 import { ToggleControl } from "@/local/simulations/type";
+import ControlInfoTooltip from "./ControlInfoTooltip";
 
 interface ToggleControlBlockProps {
   control: ToggleControl;
@@ -24,15 +25,11 @@ export default function ToggleControlBlock({
         className
       )}
     >
-      <div className="flex flex-col text-left flex-1 min-w-0">
+      <div className="flex items-center gap-1.5 text-left flex-1 min-w-0">
+        <ControlInfoTooltip description={control.description} />
         <span className="text-normal text-primary-text-dark font-medium truncate">
           {control.label}
         </span>
-        {control.description && (
-          <span className="text-caption text-tertiary truncate">
-            {control.description}
-          </span>
-        )}
       </div>
 
       <SwitchPrimitive.Root

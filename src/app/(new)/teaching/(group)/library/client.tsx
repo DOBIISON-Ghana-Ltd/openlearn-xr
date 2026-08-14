@@ -1,7 +1,7 @@
 'use client';
 
-import Image from 'next/image';
-import { Search, ChevronDown, Clock, BarChart2, Play } from 'lucide-react';
+import ModuleCard from '@/components/(new)/common/module-card';
+import { Search, ChevronDown } from 'lucide-react';
 
 interface LibraryModule {
   id: string;
@@ -63,46 +63,19 @@ export default function ClientPage() {
       {/* Modules 3-Column Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {LIBRARY_MODULES.map((item) => (
-          <div
+          <ModuleCard
             key={item.id}
-            className="group bg-primary-subtle border-2 border-primary-light rounded-[20px] overflow-hidden flex flex-col relative transition-all duration-200 hover:shadow-md hover:border-primary-cta/40 cursor-pointer"
-          >
-            {/* Card Thumbnail Top Section */}
-            <div className="relative w-full h-[160px] overflow-hidden">
-              <Image
-                src={item.image}
-                alt={item.title}
-                fill
-                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, (max-width: 1280px) 33vw, 25vw"
-                className="object-cover group-hover:scale-105 transition-transform duration-300"
-              />
-            </div>
-
-            {/* Card Bottom Content Section with Frosted Glass Overlay */}
-            <div className="p-4 bg-surface-white/70 backdrop-blur-[5px] flex flex-col justify-between gap-4 flex-1 border-t border-primary-light/80">
-              <h3 className="text-normal text-primary-text-dark leading-snug line-clamp-2">
-                {item.title}
-              </h3>
-
-              <div className="pt-3 border-t border-[#3b494c]/10 flex items-center justify-between">
-                <div className="flex items-center gap-4 text-caption text-tertiary">
-                  <div className="flex items-center gap-1">
-                    <Clock className="size-3.5" />
-                    <span>{item.duration}</span>
-                  </div>
-
-                  <div className="flex items-center gap-1">
-                    <BarChart2 className="size-3.5" />
-                    <span>{item.level}</span>
-                  </div>
-                </div>
-
-                <div className="size-6 rounded-full border border-[#3b494c]/30 flex items-center justify-center text-[#3b494c] group-hover:border-primary-cta group-hover:text-primary-cta transition-colors">
-                  <Play className="size-3 fill-current ml-0.5" />
-                </div>
-              </div>
-            </div>
-          </div>
+            data={{
+              id: item.id,
+              module: {
+                title: item.title,
+                duration: item.duration,
+                difficulty: item.level,
+                image: item.image,
+              },
+            }}
+            actionType="play"
+          />
         ))}
       </div>
     </div>

@@ -25,6 +25,8 @@ const SimModuleGetAll = ZApi({
     module: z.object({
       title: ZModule.shape.title,
       image: ZModule.shape.image,
+      duration: ZModule.shape.duration,
+      difficulty: ZModule.shape.difficulty,
       collection: z.object({
         name: ZCollection.shape.name,
         grade: ZCollection.shape.grade

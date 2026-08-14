@@ -1,7 +1,7 @@
 "use client";
 
 import { cn } from "@/lib/utils/cn";
-import { SearchIcon } from "lucide-react";
+import { SearchIcon, Loader2Icon } from "lucide-react";
 import useApi from "@/data/hooks/use-api";
 import { nuqs } from "@/lib/utils/nuqs";
 import { Infer } from "@/data/types.base";
@@ -153,8 +153,8 @@ function Content({ data }: IContentProps) {
 
 Content.Loading = function Loading() {
   return (
-    <div className="w-full py-12 flex items-center justify-center text-tertiary text-normal">
-      Loading modules...
+    <div className="relative flex-1 flex flex-col items-center justify-center bg-surface-white size-full min-h-[300px] overflow-hidden py-12">
+      <Loader2Icon className="size-8 animate-spin text-primary-cta" />
     </div>
   );
 };

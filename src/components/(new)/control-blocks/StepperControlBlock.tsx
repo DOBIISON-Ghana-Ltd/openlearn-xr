@@ -3,6 +3,7 @@
 import { cn } from "@/lib/utils/cn";
 import { NumberControl } from "@/local/simulations/type";
 import { MinusIcon, PlusIcon } from "lucide-react";
+import ControlInfoTooltip from "./ControlInfoTooltip";
 
 interface StepperControlBlockProps {
   control: NumberControl;
@@ -42,15 +43,11 @@ export default function StepperControlBlock({
     <div
       className={cn("flex flex-col items-center gap-1.5 w-full", className)}
     >
-      <div className="flex flex-col items-center text-center">
+      <div className="flex items-center justify-center gap-1.5 text-center">
+        <ControlInfoTooltip description={control.description} />
         <span className="text-normal text-primary-text-dark font-medium">
           {control.label}
         </span>
-        {control.description && (
-          <span className="text-caption text-tertiary">
-            {control.description}
-          </span>
-        )}
       </div>
 
       <div className="flex-center gap-4 mt-1">

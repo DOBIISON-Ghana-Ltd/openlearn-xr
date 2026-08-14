@@ -4,7 +4,7 @@ import React, { useMemo, useRef, useState, useEffect } from 'react';
 import { useFrame } from '@react-three/fiber';
 import { Text, Billboard } from '@react-three/drei';
 import * as THREE from 'three';
-import { SvgLathe } from '../../common';
+import { SVGLoader } from 'three-stdlib';
 import { useSimValue } from '../../resolver';
 import { IValueMap } from './index';
 
@@ -22,7 +22,7 @@ const LATHE_KNOB_HANDLE_PROFILE =
 
 // 3. Turned Eyebolt Hook Collar Profile
 const LATHE_HOOK_COLLAR_PROFILE =
-  'M 0,0.012 L 0.008,0.012 C 0.01,0.009 0.009,0.005 0.005,0.003 L 0.01,0.001 L 0.01,0 Z';
+  'M 0,0.012 L 0.008,0.012 C 0.01,0.009 0.009,0.005 0.005,0.003 L 0.01,0.001 L 0.01,0 L 0,0 Z';
 
 // 4. Turned Dynamometer Housing End Cap Profile
 const LATHE_BALANCE_ENDCAP_PROFILE =
@@ -35,6 +35,43 @@ const LATHE_PULLEY_WHEEL_PROFILE =
 // 6. Turned Track Support Foot Profile
 const LATHE_TRACK_FOOT_PROFILE =
   'M 0,0.025 L 0.018,0.025 C 0.02,0.018 0.018,0.008 0.014,0 L 0,0 Z';
+
+/**
+ * Reusable SVG Lathe Component
+ * Converts SVG path data into smooth 3D lathe geometries
+ */
+function SvgLathe({
+  pathData,
+  segments = 48,
+  subdivisions = 40,
+  children,
+  ...props
+}: {
+  pathData: string;
+  segments?: number;
+  subdivisions?: number;
+  children?: React.ReactNode;
+  [key: string]: any;
+}) {
+  const points = useMemo(() => {
+    const loader = new SVGLoader();
+    const strokeData = loader.parse(`<svg><path d="${pathData}" /></svg>`);
+    if (!strokeData.paths.length) return [];
+    const shapes = SVGLoader.createShapes(strokeData.paths[0]);
+    if (!shapes.length) return [];
+    const rawPoints = shapes[0].getPoints(subdivisions);
+    return rawPoints.map((p) => new THREE.Vector2(p.x, -p.y));
+  }, [pathData, subdivisions]);
+
+  if (!points.length) return null;
+
+  return (
+    <mesh {...props}>
+      <latheGeometry args={[points, segments]} />
+      {children}
+    </mesh>
+  );
+}
 
 // -----------------------------------------------------------------------------
 // MAIN SIMULATION MODEL COMPONENT
@@ -144,7 +181,7 @@ export default function FrictionModel() {
       {/* 1. ACADEMIC HORIZONTAL TEST TRACK (Grounded at trackSurfaceY) */}
       <TestTrack surfaceCondition={surfaceCondition} surfaceColor={surfaceCoeffs.color} roughness={surfaceCoeffs.roughness} />
 
-      {/* 2. WOODEN FRICTION BLOCK WITH STACKED BRASS WEIGHTS */}
+      {/* 2. WOODEN FRICTION BLOCK WITH STACKED LATHE BRASS WEIGHTS */}
       <FrictionBlock position={[blockX, blockCenterY, 0]} blockMass={blockMass} />
 
       {/* 3. LATHE END PULLEY WHEEL ASSEMBLY */}
@@ -259,8 +296,8 @@ function TestTrack({
 }
 
 /**
- * 2. Wooden Friction Block & Stacked Brass Weights
- * Solid wooden block resting directly on track, with brass corner brackets, turned eyebolt hook, and stacked brass mass plates (elevated 0.5mm to eliminate starburst Z-fighting)
+ * 2. Wooden Friction Block & Lathe Stacked Weights
+ * Solid wooden block resting directly on track, with brass corner brackets, turned eyebolt hook, and stacked lathe brass plates
  */
 function FrictionBlock({ position, blockMass }: { position: [number, number, number]; blockMass: number }) {
   const extraWeightsCount = Math.max(0, blockMass - 1); // 1kg base block + 1kg per stacked plate
@@ -283,7 +320,7 @@ function FrictionBlock({ position, blockMass }: { position: [number, number, num
         ))
       )}
 
-      {/* Turned Brass Eyebolt Hook attached to front face */}
+      {/* Turned Brass Eyebolt Hook attached to front face (Offset 1.5mm forward to eliminate Z-fighting) */}
       <group position={[0.1015, 0, 0]} rotation={[0, 0, -Math.PI / 2]}>
         <SvgLathe pathData={LATHE_HOOK_COLLAR_PROFILE}>
           <meshStandardMaterial color="#eab308" metalness={0.85} roughness={0.2} polygonOffset polygonOffsetFactor={-1} />
@@ -295,26 +332,27 @@ function FrictionBlock({ position, blockMass }: { position: [number, number, num
         </mesh>
       </group>
 
-      {/* Stacked Lathe Brass Mass Discs standing upright on top of block */}
+      {/* Stacked Lathe Brass Mass Discs */}
       {Array.from({ length: extraWeightsCount }).map((_, idx) => (
-        <group key={`weight-${idx}`} position={[0, 0.045 + idx * 0.012, 0]} rotation={[Math.PI, 0, 0]}>
+        <group key={`weight-${idx}`} position={[0, 0.045 + idx * 0.012, 0]}>
           <SvgLathe pathData={LATHE_WEIGHT_PLATE_PROFILE} segments={48}>
             <meshStandardMaterial color="#facc15" metalness={0.85} roughness={0.25} />
           </SvgLathe>
           {/* Central Locator Pin */}
-          <mesh position={[0, -0.006, 0]}>
+          <mesh position={[0, 0.006, 0]}>
             <cylinderGeometry args={[0.004, 0.004, 0.012, 16]} />
             <meshStandardMaterial color="#ca8a04" metalness={0.9} roughness={0.2} />
           </mesh>
         </group>
       ))}
 
-      {/* Top Turned Brass Handle Knob standing upright on topmost stacked weight or base block */}
-      <group position={[0, 0.045 + extraWeightsCount * 0.012, 0]} rotation={[Math.PI, 0, 0]}>
-        <SvgLathe pathData={LATHE_KNOB_HANDLE_PROFILE}>
-          <meshStandardMaterial color="#eab308" metalness={0.9} roughness={0.2} />
-        </SvgLathe>
-      </group>
+      {/* Top Handle Knob on topmost stacked weight or base block */}
+      <SvgLathe
+        pathData={LATHE_KNOB_HANDLE_PROFILE}
+        position={[0, 0.045 + extraWeightsCount * 0.012, 0]}
+      >
+        <meshStandardMaterial color="#eab308" metalness={0.9} roughness={0.2} />
+      </SvgLathe>
     </group>
   );
 }
@@ -518,9 +556,9 @@ function ForceVectorOverlay({
           <VectorArrow length={pullVectorLen} color="#0284c7" rotation={[0, 0, -Math.PI / 2]} />
           <Billboard position={[pullVectorLen + 0.025, 0.02, 0]}>
             <Text
-              fontSize={0.020}
-              color="#0284c7"
-              anchorX="left"
+              fontSize={0.014}
+              color="#38bdf8"
+              anchorX="center"
               anchorY="middle"
             >
               {`F_pull = ${currentForce.toFixed(1)}N`}
@@ -535,9 +573,9 @@ function ForceVectorOverlay({
           <VectorArrow length={frictionVectorLen} color="#dc2626" rotation={[0, 0, Math.PI / 2]} />
           <Billboard position={[-frictionVectorLen - 0.025, 0.02, 0]}>
             <Text
-              fontSize={0.020}
-              color="#dc2626"
-              anchorX="right"
+              fontSize={0.014}
+              color="#f87171"
+              anchorX="center"
               anchorY="middle"
             >
               {isSliding ? `Fk = ${(muK * normalForceN).toFixed(1)}N` : `Fs = ${currentForce.toFixed(1)}N`}

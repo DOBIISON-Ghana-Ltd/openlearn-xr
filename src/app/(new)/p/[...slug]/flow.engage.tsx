@@ -6,6 +6,7 @@ import { IFlowContent } from './flow';
 import { Infer } from '@/data/types.base';
 import useApi from '@/data/hooks/use-api';
 import { match, P } from 'ts-pattern';
+import { Loader2Icon } from 'lucide-react';
 
 type IModuleDetail = Infer["SimModuleGetOne"]["res"];
 type IModuleNotes = NonNullable<IModuleDetail["notes"]>;
@@ -18,13 +19,12 @@ export default function EngageFLow(props: IEngageFlow) {
   });
 
   return (
-    <div className="flex-1 bg-primary-subtle pt-5 pb-8 px-8 lg:pl-86 lg:pr-8 overflow-y-auto w-full min-h-0">
+    <div className="flex-1 bg-surface-white pt-5 pb-8 px-6 lg:pl-86.25 lg:pr-8 overflow-y-auto w-full min-h-0">
       {match({ data, isLoading })
         .with({ isLoading: true }, () => <Content.Loading />)
-        .with({ data: P.select(P.nonNullable) }, (data) => <Content data={data} />)
         .with({ data: P.nullish, isLoading: false }, () => <Content.Error />)
-        .exhaustive()
-      }
+        .with({ data: P.select(P.nonNullable) }, (data) => <Content data={data} />)
+        .exhaustive()}
     </div>
   );
 };
@@ -55,8 +55,8 @@ function Content(props: IContent) {
 
 Content.Loading = function Loading() {
   return (
-    <div className="w-full h-full flex-center">
-      <p className="text-small">Loading....</p>
+    <div className="relative flex-1 flex flex-col items-center justify-center bg-surface-white size-full min-h-0 overflow-hidden">
+      <Loader2Icon className="size-8 animate-spin text-primary-cta" />
     </div>
   );
 };

@@ -1,7 +1,7 @@
 'use client';
 
 import useApi from '@/data/hooks/use-api';
-import { Clock } from 'lucide-react';
+import { Clock, Loader2Icon } from 'lucide-react';
 import { IFlowContent } from './flow';
 import { Infer } from '@/data/types.base';
 import { match, P } from 'ts-pattern';
@@ -109,8 +109,8 @@ function Content(props: IContent) {
 
 Content.Loading = function Loading() {
   return (
-    <div className="w-full h-full flex-center">
-      <p className="text-small">Loading....</p>
+    <div className="relative flex-1 flex flex-col items-center justify-center bg-surface-white size-full min-h-0 overflow-hidden">
+      <Loader2Icon className="size-8 animate-spin text-primary-cta" />
     </div>
   );
 };

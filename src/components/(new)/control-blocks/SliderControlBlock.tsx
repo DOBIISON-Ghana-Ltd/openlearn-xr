@@ -3,6 +3,7 @@
 import { cn } from "@/lib/utils/cn";
 import { SliderControl } from "@/local/simulations/type";
 import React from "react";
+import ControlInfoTooltip from "./ControlInfoTooltip";
 
 interface SliderControlBlockProps {
   control: SliderControl;
@@ -19,8 +20,7 @@ export default function SliderControlBlock({
 }: SliderControlBlockProps) {
   const min = control.min ?? 0;
   const max = control.max ?? 100;
-  const step = control.step ?? (max - min <= 5 ? 0.05 : 1);
-
+  const step = control.step ?? 1;
   const range = max - min;
   const percentage =
     range <= 0
@@ -36,18 +36,14 @@ export default function SliderControlBlock({
       className={cn("flex flex-col gap-2 w-full py-1.5", className)}
     >
       <div className="flex items-center justify-between gap-2">
-        <div className="flex flex-col text-left">
+        <div className="flex items-center gap-1.5 text-left">
+          <ControlInfoTooltip description={control.description} />
           <span className="text-normal text-primary-text-dark font-medium">
             {control.label}
           </span>
-          {control.description && (
-            <span className="text-caption text-tertiary">
-              {control.description}
-            </span>
-          )}
         </div>
         <span className="text-small text-primary-text-dark font-semibold bg-primary-subtle px-2 py-0.5 rounded-md border border-primary-cta/20">
-          {typeof value === "number" && step < 1 ? Number(value).toFixed(2) : value}
+          {value}
         </span>
       </div>
 
