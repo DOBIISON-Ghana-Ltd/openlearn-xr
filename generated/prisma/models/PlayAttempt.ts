@@ -29,12 +29,14 @@ export type AggregatePlayAttempt = {
 export type PlayAttemptAvgAggregateOutputType = {
   currentTab: number | null
   progress: number | null
+  totalCheckpoints: number | null
   accumulatedPoints: number | null
 }
 
 export type PlayAttemptSumAggregateOutputType = {
   currentTab: number | null
   progress: number | null
+  totalCheckpoints: number | null
   accumulatedPoints: number | null
 }
 
@@ -47,6 +49,7 @@ export type PlayAttemptMinAggregateOutputType = {
   currentTab: number | null
   progress: number | null
   currentCheckpointId: string | null
+  totalCheckpoints: number | null
   accumulatedPoints: number | null
   sessionPlayerId: string | null
   createdAt: Date | null
@@ -62,6 +65,7 @@ export type PlayAttemptMaxAggregateOutputType = {
   currentTab: number | null
   progress: number | null
   currentCheckpointId: string | null
+  totalCheckpoints: number | null
   accumulatedPoints: number | null
   sessionPlayerId: string | null
   createdAt: Date | null
@@ -77,6 +81,7 @@ export type PlayAttemptCountAggregateOutputType = {
   currentTab: number
   progress: number
   currentCheckpointId: number
+  totalCheckpoints: number
   accumulatedPoints: number
   sessionPlayerId: number
   createdAt: number
@@ -88,12 +93,14 @@ export type PlayAttemptCountAggregateOutputType = {
 export type PlayAttemptAvgAggregateInputType = {
   currentTab?: true
   progress?: true
+  totalCheckpoints?: true
   accumulatedPoints?: true
 }
 
 export type PlayAttemptSumAggregateInputType = {
   currentTab?: true
   progress?: true
+  totalCheckpoints?: true
   accumulatedPoints?: true
 }
 
@@ -106,6 +113,7 @@ export type PlayAttemptMinAggregateInputType = {
   currentTab?: true
   progress?: true
   currentCheckpointId?: true
+  totalCheckpoints?: true
   accumulatedPoints?: true
   sessionPlayerId?: true
   createdAt?: true
@@ -121,6 +129,7 @@ export type PlayAttemptMaxAggregateInputType = {
   currentTab?: true
   progress?: true
   currentCheckpointId?: true
+  totalCheckpoints?: true
   accumulatedPoints?: true
   sessionPlayerId?: true
   createdAt?: true
@@ -136,6 +145,7 @@ export type PlayAttemptCountAggregateInputType = {
   currentTab?: true
   progress?: true
   currentCheckpointId?: true
+  totalCheckpoints?: true
   accumulatedPoints?: true
   sessionPlayerId?: true
   createdAt?: true
@@ -238,6 +248,7 @@ export type PlayAttemptGroupByOutputType = {
   currentTab: number
   progress: number
   currentCheckpointId: string | null
+  totalCheckpoints: number
   accumulatedPoints: number
   sessionPlayerId: string | null
   createdAt: Date
@@ -276,6 +287,7 @@ export type PlayAttemptWhereInput = {
   currentTab?: Prisma.IntFilter<"PlayAttempt"> | number
   progress?: Prisma.IntFilter<"PlayAttempt"> | number
   currentCheckpointId?: Prisma.StringNullableFilter<"PlayAttempt"> | string | null
+  totalCheckpoints?: Prisma.IntFilter<"PlayAttempt"> | number
   accumulatedPoints?: Prisma.IntFilter<"PlayAttempt"> | number
   sessionPlayerId?: Prisma.StringNullableFilter<"PlayAttempt"> | string | null
   createdAt?: Prisma.DateTimeFilter<"PlayAttempt"> | Date | string
@@ -296,6 +308,7 @@ export type PlayAttemptOrderByWithRelationInput = {
   currentTab?: Prisma.SortOrder
   progress?: Prisma.SortOrder
   currentCheckpointId?: Prisma.SortOrderInput | Prisma.SortOrder
+  totalCheckpoints?: Prisma.SortOrder
   accumulatedPoints?: Prisma.SortOrder
   sessionPlayerId?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -320,6 +333,7 @@ export type PlayAttemptWhereUniqueInput = Prisma.AtLeast<{
   currentTab?: Prisma.IntFilter<"PlayAttempt"> | number
   progress?: Prisma.IntFilter<"PlayAttempt"> | number
   currentCheckpointId?: Prisma.StringNullableFilter<"PlayAttempt"> | string | null
+  totalCheckpoints?: Prisma.IntFilter<"PlayAttempt"> | number
   accumulatedPoints?: Prisma.IntFilter<"PlayAttempt"> | number
   createdAt?: Prisma.DateTimeFilter<"PlayAttempt"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"PlayAttempt"> | Date | string
@@ -339,6 +353,7 @@ export type PlayAttemptOrderByWithAggregationInput = {
   currentTab?: Prisma.SortOrder
   progress?: Prisma.SortOrder
   currentCheckpointId?: Prisma.SortOrderInput | Prisma.SortOrder
+  totalCheckpoints?: Prisma.SortOrder
   accumulatedPoints?: Prisma.SortOrder
   sessionPlayerId?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -362,6 +377,7 @@ export type PlayAttemptScalarWhereWithAggregatesInput = {
   currentTab?: Prisma.IntWithAggregatesFilter<"PlayAttempt"> | number
   progress?: Prisma.IntWithAggregatesFilter<"PlayAttempt"> | number
   currentCheckpointId?: Prisma.StringNullableWithAggregatesFilter<"PlayAttempt"> | string | null
+  totalCheckpoints?: Prisma.IntWithAggregatesFilter<"PlayAttempt"> | number
   accumulatedPoints?: Prisma.IntWithAggregatesFilter<"PlayAttempt"> | number
   sessionPlayerId?: Prisma.StringNullableWithAggregatesFilter<"PlayAttempt"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"PlayAttempt"> | Date | string
@@ -373,6 +389,7 @@ export type PlayAttemptCreateInput = {
   playMode: string
   currentTab?: number
   progress?: number
+  totalCheckpoints?: number
   accumulatedPoints?: number
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -392,6 +409,7 @@ export type PlayAttemptUncheckedCreateInput = {
   currentTab?: number
   progress?: number
   currentCheckpointId?: string | null
+  totalCheckpoints?: number
   accumulatedPoints?: number
   sessionPlayerId?: string | null
   createdAt?: Date | string
@@ -403,6 +421,7 @@ export type PlayAttemptUpdateInput = {
   playMode?: Prisma.StringFieldUpdateOperationsInput | string
   currentTab?: Prisma.IntFieldUpdateOperationsInput | number
   progress?: Prisma.IntFieldUpdateOperationsInput | number
+  totalCheckpoints?: Prisma.IntFieldUpdateOperationsInput | number
   accumulatedPoints?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -422,6 +441,7 @@ export type PlayAttemptUncheckedUpdateInput = {
   currentTab?: Prisma.IntFieldUpdateOperationsInput | number
   progress?: Prisma.IntFieldUpdateOperationsInput | number
   currentCheckpointId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  totalCheckpoints?: Prisma.IntFieldUpdateOperationsInput | number
   accumulatedPoints?: Prisma.IntFieldUpdateOperationsInput | number
   sessionPlayerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -437,6 +457,7 @@ export type PlayAttemptCreateManyInput = {
   currentTab?: number
   progress?: number
   currentCheckpointId?: string | null
+  totalCheckpoints?: number
   accumulatedPoints?: number
   sessionPlayerId?: string | null
   createdAt?: Date | string
@@ -448,6 +469,7 @@ export type PlayAttemptUpdateManyMutationInput = {
   playMode?: Prisma.StringFieldUpdateOperationsInput | string
   currentTab?: Prisma.IntFieldUpdateOperationsInput | number
   progress?: Prisma.IntFieldUpdateOperationsInput | number
+  totalCheckpoints?: Prisma.IntFieldUpdateOperationsInput | number
   accumulatedPoints?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -462,6 +484,7 @@ export type PlayAttemptUncheckedUpdateManyInput = {
   currentTab?: Prisma.IntFieldUpdateOperationsInput | number
   progress?: Prisma.IntFieldUpdateOperationsInput | number
   currentCheckpointId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  totalCheckpoints?: Prisma.IntFieldUpdateOperationsInput | number
   accumulatedPoints?: Prisma.IntFieldUpdateOperationsInput | number
   sessionPlayerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -492,6 +515,7 @@ export type PlayAttemptCountOrderByAggregateInput = {
   currentTab?: Prisma.SortOrder
   progress?: Prisma.SortOrder
   currentCheckpointId?: Prisma.SortOrder
+  totalCheckpoints?: Prisma.SortOrder
   accumulatedPoints?: Prisma.SortOrder
   sessionPlayerId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -501,6 +525,7 @@ export type PlayAttemptCountOrderByAggregateInput = {
 export type PlayAttemptAvgOrderByAggregateInput = {
   currentTab?: Prisma.SortOrder
   progress?: Prisma.SortOrder
+  totalCheckpoints?: Prisma.SortOrder
   accumulatedPoints?: Prisma.SortOrder
 }
 
@@ -513,6 +538,7 @@ export type PlayAttemptMaxOrderByAggregateInput = {
   currentTab?: Prisma.SortOrder
   progress?: Prisma.SortOrder
   currentCheckpointId?: Prisma.SortOrder
+  totalCheckpoints?: Prisma.SortOrder
   accumulatedPoints?: Prisma.SortOrder
   sessionPlayerId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -528,6 +554,7 @@ export type PlayAttemptMinOrderByAggregateInput = {
   currentTab?: Prisma.SortOrder
   progress?: Prisma.SortOrder
   currentCheckpointId?: Prisma.SortOrder
+  totalCheckpoints?: Prisma.SortOrder
   accumulatedPoints?: Prisma.SortOrder
   sessionPlayerId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -537,6 +564,7 @@ export type PlayAttemptMinOrderByAggregateInput = {
 export type PlayAttemptSumOrderByAggregateInput = {
   currentTab?: Prisma.SortOrder
   progress?: Prisma.SortOrder
+  totalCheckpoints?: Prisma.SortOrder
   accumulatedPoints?: Prisma.SortOrder
 }
 
@@ -745,6 +773,7 @@ export type PlayAttemptCreateWithoutUserInput = {
   playMode: string
   currentTab?: number
   progress?: number
+  totalCheckpoints?: number
   accumulatedPoints?: number
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -762,6 +791,7 @@ export type PlayAttemptUncheckedCreateWithoutUserInput = {
   currentTab?: number
   progress?: number
   currentCheckpointId?: string | null
+  totalCheckpoints?: number
   accumulatedPoints?: number
   sessionPlayerId?: string | null
   createdAt?: Date | string
@@ -806,6 +836,7 @@ export type PlayAttemptScalarWhereInput = {
   currentTab?: Prisma.IntFilter<"PlayAttempt"> | number
   progress?: Prisma.IntFilter<"PlayAttempt"> | number
   currentCheckpointId?: Prisma.StringNullableFilter<"PlayAttempt"> | string | null
+  totalCheckpoints?: Prisma.IntFilter<"PlayAttempt"> | number
   accumulatedPoints?: Prisma.IntFilter<"PlayAttempt"> | number
   sessionPlayerId?: Prisma.StringNullableFilter<"PlayAttempt"> | string | null
   createdAt?: Prisma.DateTimeFilter<"PlayAttempt"> | Date | string
@@ -817,6 +848,7 @@ export type PlayAttemptCreateWithoutModuleVersionInput = {
   playMode: string
   currentTab?: number
   progress?: number
+  totalCheckpoints?: number
   accumulatedPoints?: number
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -834,6 +866,7 @@ export type PlayAttemptUncheckedCreateWithoutModuleVersionInput = {
   currentTab?: number
   progress?: number
   currentCheckpointId?: string | null
+  totalCheckpoints?: number
   accumulatedPoints?: number
   sessionPlayerId?: string | null
   createdAt?: Date | string
@@ -871,6 +904,7 @@ export type PlayAttemptCreateWithoutCurrentCheckpointInput = {
   playMode: string
   currentTab?: number
   progress?: number
+  totalCheckpoints?: number
   accumulatedPoints?: number
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -888,6 +922,7 @@ export type PlayAttemptUncheckedCreateWithoutCurrentCheckpointInput = {
   playMode: string
   currentTab?: number
   progress?: number
+  totalCheckpoints?: number
   accumulatedPoints?: number
   sessionPlayerId?: string | null
   createdAt?: Date | string
@@ -925,6 +960,7 @@ export type PlayAttemptCreateWithoutSessionInput = {
   playMode: string
   currentTab?: number
   progress?: number
+  totalCheckpoints?: number
   accumulatedPoints?: number
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -942,6 +978,7 @@ export type PlayAttemptUncheckedCreateWithoutSessionInput = {
   currentTab?: number
   progress?: number
   currentCheckpointId?: string | null
+  totalCheckpoints?: number
   accumulatedPoints?: number
   sessionPlayerId?: string | null
   createdAt?: Date | string
@@ -979,6 +1016,7 @@ export type PlayAttemptCreateWithoutSessionPlayerInput = {
   playMode: string
   currentTab?: number
   progress?: number
+  totalCheckpoints?: number
   accumulatedPoints?: number
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -997,6 +1035,7 @@ export type PlayAttemptUncheckedCreateWithoutSessionPlayerInput = {
   currentTab?: number
   progress?: number
   currentCheckpointId?: string | null
+  totalCheckpoints?: number
   accumulatedPoints?: number
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1023,6 +1062,7 @@ export type PlayAttemptUpdateWithoutSessionPlayerInput = {
   playMode?: Prisma.StringFieldUpdateOperationsInput | string
   currentTab?: Prisma.IntFieldUpdateOperationsInput | number
   progress?: Prisma.IntFieldUpdateOperationsInput | number
+  totalCheckpoints?: Prisma.IntFieldUpdateOperationsInput | number
   accumulatedPoints?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1041,6 +1081,7 @@ export type PlayAttemptUncheckedUpdateWithoutSessionPlayerInput = {
   currentTab?: Prisma.IntFieldUpdateOperationsInput | number
   progress?: Prisma.IntFieldUpdateOperationsInput | number
   currentCheckpointId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  totalCheckpoints?: Prisma.IntFieldUpdateOperationsInput | number
   accumulatedPoints?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1054,6 +1095,7 @@ export type PlayAttemptCreateManyUserInput = {
   currentTab?: number
   progress?: number
   currentCheckpointId?: string | null
+  totalCheckpoints?: number
   accumulatedPoints?: number
   sessionPlayerId?: string | null
   createdAt?: Date | string
@@ -1065,6 +1107,7 @@ export type PlayAttemptUpdateWithoutUserInput = {
   playMode?: Prisma.StringFieldUpdateOperationsInput | string
   currentTab?: Prisma.IntFieldUpdateOperationsInput | number
   progress?: Prisma.IntFieldUpdateOperationsInput | number
+  totalCheckpoints?: Prisma.IntFieldUpdateOperationsInput | number
   accumulatedPoints?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1082,6 +1125,7 @@ export type PlayAttemptUncheckedUpdateWithoutUserInput = {
   currentTab?: Prisma.IntFieldUpdateOperationsInput | number
   progress?: Prisma.IntFieldUpdateOperationsInput | number
   currentCheckpointId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  totalCheckpoints?: Prisma.IntFieldUpdateOperationsInput | number
   accumulatedPoints?: Prisma.IntFieldUpdateOperationsInput | number
   sessionPlayerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1096,6 +1140,7 @@ export type PlayAttemptUncheckedUpdateManyWithoutUserInput = {
   currentTab?: Prisma.IntFieldUpdateOperationsInput | number
   progress?: Prisma.IntFieldUpdateOperationsInput | number
   currentCheckpointId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  totalCheckpoints?: Prisma.IntFieldUpdateOperationsInput | number
   accumulatedPoints?: Prisma.IntFieldUpdateOperationsInput | number
   sessionPlayerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1110,6 +1155,7 @@ export type PlayAttemptCreateManyModuleVersionInput = {
   currentTab?: number
   progress?: number
   currentCheckpointId?: string | null
+  totalCheckpoints?: number
   accumulatedPoints?: number
   sessionPlayerId?: string | null
   createdAt?: Date | string
@@ -1121,6 +1167,7 @@ export type PlayAttemptUpdateWithoutModuleVersionInput = {
   playMode?: Prisma.StringFieldUpdateOperationsInput | string
   currentTab?: Prisma.IntFieldUpdateOperationsInput | number
   progress?: Prisma.IntFieldUpdateOperationsInput | number
+  totalCheckpoints?: Prisma.IntFieldUpdateOperationsInput | number
   accumulatedPoints?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1138,6 +1185,7 @@ export type PlayAttemptUncheckedUpdateWithoutModuleVersionInput = {
   currentTab?: Prisma.IntFieldUpdateOperationsInput | number
   progress?: Prisma.IntFieldUpdateOperationsInput | number
   currentCheckpointId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  totalCheckpoints?: Prisma.IntFieldUpdateOperationsInput | number
   accumulatedPoints?: Prisma.IntFieldUpdateOperationsInput | number
   sessionPlayerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1152,6 +1200,7 @@ export type PlayAttemptUncheckedUpdateManyWithoutModuleVersionInput = {
   currentTab?: Prisma.IntFieldUpdateOperationsInput | number
   progress?: Prisma.IntFieldUpdateOperationsInput | number
   currentCheckpointId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  totalCheckpoints?: Prisma.IntFieldUpdateOperationsInput | number
   accumulatedPoints?: Prisma.IntFieldUpdateOperationsInput | number
   sessionPlayerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1166,6 +1215,7 @@ export type PlayAttemptCreateManyCurrentCheckpointInput = {
   playMode: string
   currentTab?: number
   progress?: number
+  totalCheckpoints?: number
   accumulatedPoints?: number
   sessionPlayerId?: string | null
   createdAt?: Date | string
@@ -1177,6 +1227,7 @@ export type PlayAttemptUpdateWithoutCurrentCheckpointInput = {
   playMode?: Prisma.StringFieldUpdateOperationsInput | string
   currentTab?: Prisma.IntFieldUpdateOperationsInput | number
   progress?: Prisma.IntFieldUpdateOperationsInput | number
+  totalCheckpoints?: Prisma.IntFieldUpdateOperationsInput | number
   accumulatedPoints?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1194,6 +1245,7 @@ export type PlayAttemptUncheckedUpdateWithoutCurrentCheckpointInput = {
   playMode?: Prisma.StringFieldUpdateOperationsInput | string
   currentTab?: Prisma.IntFieldUpdateOperationsInput | number
   progress?: Prisma.IntFieldUpdateOperationsInput | number
+  totalCheckpoints?: Prisma.IntFieldUpdateOperationsInput | number
   accumulatedPoints?: Prisma.IntFieldUpdateOperationsInput | number
   sessionPlayerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1208,6 +1260,7 @@ export type PlayAttemptUncheckedUpdateManyWithoutCurrentCheckpointInput = {
   playMode?: Prisma.StringFieldUpdateOperationsInput | string
   currentTab?: Prisma.IntFieldUpdateOperationsInput | number
   progress?: Prisma.IntFieldUpdateOperationsInput | number
+  totalCheckpoints?: Prisma.IntFieldUpdateOperationsInput | number
   accumulatedPoints?: Prisma.IntFieldUpdateOperationsInput | number
   sessionPlayerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1222,6 +1275,7 @@ export type PlayAttemptCreateManySessionInput = {
   currentTab?: number
   progress?: number
   currentCheckpointId?: string | null
+  totalCheckpoints?: number
   accumulatedPoints?: number
   sessionPlayerId?: string | null
   createdAt?: Date | string
@@ -1233,6 +1287,7 @@ export type PlayAttemptUpdateWithoutSessionInput = {
   playMode?: Prisma.StringFieldUpdateOperationsInput | string
   currentTab?: Prisma.IntFieldUpdateOperationsInput | number
   progress?: Prisma.IntFieldUpdateOperationsInput | number
+  totalCheckpoints?: Prisma.IntFieldUpdateOperationsInput | number
   accumulatedPoints?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1250,6 +1305,7 @@ export type PlayAttemptUncheckedUpdateWithoutSessionInput = {
   currentTab?: Prisma.IntFieldUpdateOperationsInput | number
   progress?: Prisma.IntFieldUpdateOperationsInput | number
   currentCheckpointId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  totalCheckpoints?: Prisma.IntFieldUpdateOperationsInput | number
   accumulatedPoints?: Prisma.IntFieldUpdateOperationsInput | number
   sessionPlayerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1264,6 +1320,7 @@ export type PlayAttemptUncheckedUpdateManyWithoutSessionInput = {
   currentTab?: Prisma.IntFieldUpdateOperationsInput | number
   progress?: Prisma.IntFieldUpdateOperationsInput | number
   currentCheckpointId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  totalCheckpoints?: Prisma.IntFieldUpdateOperationsInput | number
   accumulatedPoints?: Prisma.IntFieldUpdateOperationsInput | number
   sessionPlayerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1281,6 +1338,7 @@ export type PlayAttemptSelect<ExtArgs extends runtime.Types.Extensions.InternalA
   currentTab?: boolean
   progress?: boolean
   currentCheckpointId?: boolean
+  totalCheckpoints?: boolean
   accumulatedPoints?: boolean
   sessionPlayerId?: boolean
   createdAt?: boolean
@@ -1301,6 +1359,7 @@ export type PlayAttemptSelectCreateManyAndReturn<ExtArgs extends runtime.Types.E
   currentTab?: boolean
   progress?: boolean
   currentCheckpointId?: boolean
+  totalCheckpoints?: boolean
   accumulatedPoints?: boolean
   sessionPlayerId?: boolean
   createdAt?: boolean
@@ -1321,6 +1380,7 @@ export type PlayAttemptSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.E
   currentTab?: boolean
   progress?: boolean
   currentCheckpointId?: boolean
+  totalCheckpoints?: boolean
   accumulatedPoints?: boolean
   sessionPlayerId?: boolean
   createdAt?: boolean
@@ -1341,13 +1401,14 @@ export type PlayAttemptSelectScalar = {
   currentTab?: boolean
   progress?: boolean
   currentCheckpointId?: boolean
+  totalCheckpoints?: boolean
   accumulatedPoints?: boolean
   sessionPlayerId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type PlayAttemptOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "sessionId" | "moduleVersionId" | "playMode" | "currentTab" | "progress" | "currentCheckpointId" | "accumulatedPoints" | "sessionPlayerId" | "createdAt" | "updatedAt", ExtArgs["result"]["playAttempt"]>
+export type PlayAttemptOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "sessionId" | "moduleVersionId" | "playMode" | "currentTab" | "progress" | "currentCheckpointId" | "totalCheckpoints" | "accumulatedPoints" | "sessionPlayerId" | "createdAt" | "updatedAt", ExtArgs["result"]["playAttempt"]>
 export type PlayAttemptInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.PlayAttempt$userArgs<ExtArgs>
   session?: boolean | Prisma.PlayAttempt$sessionArgs<ExtArgs>
@@ -1388,6 +1449,7 @@ export type $PlayAttemptPayload<ExtArgs extends runtime.Types.Extensions.Interna
     currentTab: number
     progress: number
     currentCheckpointId: string | null
+    totalCheckpoints: number
     accumulatedPoints: number
     sessionPlayerId: string | null
     createdAt: Date
@@ -1828,6 +1890,7 @@ export interface PlayAttemptFieldRefs {
   readonly currentTab: Prisma.FieldRef<"PlayAttempt", 'Int'>
   readonly progress: Prisma.FieldRef<"PlayAttempt", 'Int'>
   readonly currentCheckpointId: Prisma.FieldRef<"PlayAttempt", 'String'>
+  readonly totalCheckpoints: Prisma.FieldRef<"PlayAttempt", 'Int'>
   readonly accumulatedPoints: Prisma.FieldRef<"PlayAttempt", 'Int'>
   readonly sessionPlayerId: Prisma.FieldRef<"PlayAttempt", 'String'>
   readonly createdAt: Prisma.FieldRef<"PlayAttempt", 'DateTime'>

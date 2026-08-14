@@ -7,33 +7,20 @@ export function handleGetRemoteCheckpoint(playId: string) {
   return secureApiRoute<{ playId: string }>(async (req, ctx, user) => {
     const userId = user.id;
 
-    const checkpoints = await prisma.moduleCheckpoint.findMany({
-      where: { moduleVersionId: playId },
-      orderBy: { orderIndex: "asc" },
-    });
-
-    const totalCheckpoints = checkpoints.length;
-
-    if (totalCheckpoints === 0) {
-      return JSend.error("No checkpoints found for this module version", 404);
-    }
-
     const attempt = await prisma.playAttempt.findFirst({
       where: { userId, moduleVersionId: playId, playMode: "module" },
     });
 
     if (!attempt) {
-      return JSend.error("Play attempt not initialized. Please start lesson navigation first", 404);
+      return JSend.error("Play attempt not initialized.", 404);
     }
 
-    let activeIndex = 0;
-    const currentCheckpointId = attempt.currentCheckpointId;
-    if (currentCheckpointId) {
-      const idx = checkpoints.findIndex((c) => c.id === currentCheckpointId);
-      if (idx !== -1) activeIndex = idx;
-    }
+    const checkpointId = attempt.currentCheckpointId;
+    const activeCheckpoint = await prisma.moduleCheckpoint.findUnique({ where: { id: checkpointId || "" } })
 
-    const activeCheckpoint = checkpoints[activeIndex] ?? checkpoints[0];
+    if (!activeCheckpoint) {
+      return JSend.error("No checkpoints found for this module version", 404);
+    }
 
     const resData = {
       checkpoint: {
@@ -45,8 +32,8 @@ export function handleGetRemoteCheckpoint(playId: string) {
       },
       meta: {
         checkpointId: null,
-        currentCheckpointIndex: activeIndex,
-        totalCheckpoints,
+        currentCheckpointIndex: Math.max(0, activeCheckpoint.orderIndex - 1),
+        totalCheckpoints: attempt.totalCheckpoints,
         accumulatedPoints: attempt.accumulatedPoints,
       },
     };

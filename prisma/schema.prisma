@@ -545,6 +545,7 @@ model PlayAttempt {
   currentTab          Int     @default(0) // Active tab index (0..5)
   progress            Int     @default(0) // Progress percentage (0..100)
   currentCheckpointId String? // Tracks which checkpoint id is active
+  totalCheckpoints    Int     @default(0) // Cached total count of checkpoints for this attempt
   accumulatedPoints   Int     @default(0) // Staged points during this attempt
 
   // Session details

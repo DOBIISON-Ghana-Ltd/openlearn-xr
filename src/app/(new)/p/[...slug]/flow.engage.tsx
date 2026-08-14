@@ -38,12 +38,10 @@ function Content(props: IContent) {
 
   return (
     <div className="w-full max-w-3xl flex flex-col items-start gap-4">
-      {/* Main Title (Figma Node 78:17: 48px bold #459d9f) */}
       <h1 className="text-h2 text-primary-cta leading-tight">
         Let’s get curious!
       </h1>
 
-      {/* Subtext (Figma Node 78:18: 16px text-[#111827] max-w-[656px]) */}
       <p className="text-normal text-primary-text-dark leading-normal w-full max-w-2xl mb-2">
         {data.notes?.engage.curiosityQuestion}
       </p>
@@ -75,8 +73,8 @@ type IPreAssessment = {
 
 type IInternalQuestion = {
   hasAnswered: boolean;
-  markedCorrect: number | null;
-  markedWrong: number | null;
+  selectedIndex: number | null;
+  isCorrect: boolean;
 } & IPreAssessment["data"][number];
 
 function PreAssessment(props: IPreAssessment) {
@@ -90,8 +88,8 @@ function PreAssessment(props: IPreAssessment) {
       data.map((item) => ({
         ...item,
         hasAnswered: false,
-        markedCorrect: null,
-        markedWrong: null,
+        selectedIndex: null,
+        isCorrect: false,
       }))
     );
     setActiveIndex(0);
@@ -108,17 +106,17 @@ function PreAssessment(props: IPreAssessment) {
     updatedQuestions[activeIndex] = {
       ...currentQ,
       hasAnswered: true,
-      markedCorrect: currentQ.answer,
-      markedWrong: isCorrect ? null : selectedIndex,
+      selectedIndex,
+      isCorrect,
     };
 
     setQuestions(updatedQuestions);
 
-    // Auto-advance to the next question after a 800ms delay (stops at the last question)
+    // Auto-advance to the next question after a 1600ms timer
     if (activeIndex < questions.length - 1) {
       setTimeout(() => {
         setActiveIndex((prev) => prev + 1);
-      }, 800);
+      }, 1600);
     }
   };
 
@@ -128,8 +126,8 @@ function PreAssessment(props: IPreAssessment) {
 
   return (
     <>
-      {/* Section Heading & Step Counter (Figma Nodes 78:30 & 78:31) */}
-      <div className="flex flex-col gap-1 w-full">
+      {/* Section Heading & Step Counter */}
+      <div className="flex flex-col gap-2 w-full">
         <h2 className="text-h6 text-primary-text-dark">
           Questions: What do you already know?
         </h2>
@@ -138,8 +136,18 @@ function PreAssessment(props: IPreAssessment) {
         </span>
       </div>
 
-      {/* Quiz Container Card (Figma Node 78:19: w-[748px] min-h-[307px] bg-[#f8fafc] rounded-[15.5px]) */}
-      <div className="w-full bg-surface-slate border border-surface-slate rounded-[15.5px] p-6 lg:p-8 flex flex-col gap-4 mt-2">
+      {/* Quiz Container Card */}
+      <div className="relative w-full bg-surface-slate rounded-2xl p-6 flex flex-col gap-4">
+        {/* Progress Timer Bar */}
+        <div className="w-full h-1.5 rounded-full bg-primary-light/50 overflow-hidden">
+          <div
+            className={cn(
+              "h-full rounded-full transition-transform ease-linear w-full scale-x-0 duration-0 origin-left bg-primary-cta",
+              { "scale-x-100 duration-1600": currentQ.hasAnswered }
+            )}
+          />
+        </div>
+
         {/* Question Text */}
         <h3 className="text-h6 font-normal text-secondary-text mb-2">
           {`${activeIndex + 1}. ${currentQ.question}`}
@@ -148,9 +156,10 @@ function PreAssessment(props: IPreAssessment) {
         {/* Options Stack */}
         <div className="flex flex-col gap-3.5 w-full">
           {currentQ.options.map((opt, index) => {
-            const isCorrect = currentQ.markedCorrect === index;
-            const isWrong = currentQ.markedWrong === index;
+            const isSelected = currentQ.selectedIndex === index;
             const isAnswered = currentQ.hasAnswered;
+            const isCorrect = isSelected && currentQ.isCorrect;
+            const isWrong = isSelected && !currentQ.isCorrect;
 
             return (
               <div
@@ -162,14 +171,14 @@ function PreAssessment(props: IPreAssessment) {
                     // Default un-answered option styling
                     'bg-primary-subtle border-transparent hover:bg-primary-light/40 cursor-pointer': !isAnswered,
 
-                    // Correct answer styling (Project --success token)
+                    // Correct answer styling (only if user chose correctly)
                     'border-success bg-success/10 ring-2 ring-success/20 font-medium': isAnswered && isCorrect,
 
-                    // Wrong answer styling (Project --error token)
+                    // Wrong answer styling (only on the option the user chose)
                     'border-error bg-error/10 ring-2 ring-error/20 font-medium': isAnswered && isWrong,
 
-                    // Non-selected option once answered
-                    'bg-primary-subtle/50 border-transparent opacity-60 cursor-default': isAnswered && !isCorrect && !isWrong,
+                    // Non-selected options once answered (neutral, does not reveal the correct answer)
+                    'bg-primary-subtle/40 border-transparent opacity-50 cursor-default': isAnswered && !isSelected,
 
                     'pointer-events-none': isAnswered,
                   }

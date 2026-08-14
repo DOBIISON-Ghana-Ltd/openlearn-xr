@@ -33,13 +33,8 @@ export const POST = apiHandler<{ slug: string[] }>(async (req, ctx) => {
   const params = ZSim.SimGeneralPostNavigate.shape.params.parse(parsePlaySlug(slug));
 
   const rawBody = await req.json();
-  const { nextTab } = ZSim.SimGeneralPostNavigate.shape.body.parse(rawBody);
-
-  const searchParams = ZSim.SimGeneralPostNavigate.shape.query.parse(
-    Object.fromEntries(req.nextUrl.searchParams)
-  );
+  const { nextTab, isHost } = ZSim.SimGeneralPostNavigate.shape.body.parse(rawBody);
   const { mode, playId, playerId } = params;
-  const { isHost } = searchParams;
 
   switch (mode) {
     case "session":

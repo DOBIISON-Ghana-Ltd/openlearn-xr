@@ -1,22 +1,24 @@
 import { JSend } from "@/lib/utils/jsend";
 import prisma from "@/adapters/db/client";
 import ZSim from "@/data/api/sim/sim.schema";
-import { persistAttemptCompletion } from "@/lib/actions/persist-attempt-completion";
 import { Infer } from "@/data/types.base";
 
 type IAnswerBody = Infer["SimCheckpointPostAnswer"]["body"];
 
 export async function handlePostSessionAnswer(playId: string, body: IAnswerBody) {
-  const attempt = await prisma.playAttempt.findFirst({
-    where: { sessionId: playId },
+  if (!body.sessionPlayerId) {
+    return JSend.error("Session player ID is required.", 400);
+  }
+
+  const attempt = await prisma.playAttempt.findUnique({
+    where: { sessionPlayerId: body.sessionPlayerId },
   });
 
   if (!attempt || !attempt.currentCheckpointId) {
-    return JSend.error("Session play attempt not initialized. Please fetch checkpoint first", 404);
+    return JSend.error("Session play attempt not initialized.", 404);
   }
 
   const targetCheckpointId = attempt.currentCheckpointId;
-  const attemptIdToUpdate = attempt.id;
   const currentAccumulatedPoints = attempt.accumulatedPoints;
 
   const checkpoint = await prisma.moduleCheckpoint.findUnique({
@@ -36,37 +38,36 @@ export async function handlePostSessionAnswer(playId: string, body: IAnswerBody)
   const pointsAwarded = isCorrect ? checkpoint.points : 0;
   const moduleId = checkpoint.moduleVersion.moduleId;
 
-  let nextCheckpointId = "";
-  const sessionCheckpoints = await prisma.sessionCheckpoint.findMany({
-    where: { sessionId: playId, isEnabled: true },
+  const nextSessionCheckpoint = await prisma.sessionCheckpoint.findFirst({
+    where: {
+      sessionId: playId,
+      isEnabled: true,
+      checkpointId: { not: targetCheckpointId },
+      checkpoint: { orderIndex: { gt: checkpoint.orderIndex } },
+    },
     include: { checkpoint: true },
     orderBy: { checkpoint: { orderIndex: "asc" } },
   });
 
-  const checkpoints = sessionCheckpoints.map((sc) => sc.checkpoint);
-  const currentIdx = checkpoints.findIndex((c) => c.id === targetCheckpointId);
-
-  if (currentIdx !== -1 && currentIdx < checkpoints.length - 1) {
-    nextCheckpointId = checkpoints[currentIdx + 1].id;
-  }
-
+  const nextCheckpointId = nextSessionCheckpoint?.checkpointId ?? "";
   const finalScore = currentAccumulatedPoints + pointsAwarded;
 
+  // 1. Update PlayAttempt checkpoint and score
+  await prisma.playAttempt.update({
+    where: { id: attempt.id },
+    data: {
+      currentCheckpointId: nextCheckpointId || null,
+      accumulatedPoints: finalScore,
+    },
+  });
+
+  // 2. If finished, mark SessionPlayer completed
   if (!nextCheckpointId) {
-    await persistAttemptCompletion({
-      attemptId: attemptIdToUpdate,
-      mode: "session",
-      userId: null,
-      playId,
-      finalScore,
-      sessionPlayerId: body.sessionPlayerId,
-    });
-  } else {
-    await prisma.playAttempt.update({
-      where: { id: attemptIdToUpdate },
+    await prisma.sessionPlayer.update({
+      where: { id: body.sessionPlayerId },
       data: {
-        currentCheckpointId: nextCheckpointId,
-        accumulatedPoints: { increment: pointsAwarded },
+        score: finalScore,
+        completedAt: new Date(),
       },
     });
   }

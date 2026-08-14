@@ -84,7 +84,7 @@ const simCheckpointPostAnswer = {
       const updatedPoints = (localAttempt?.accumulatedPoints ?? 0) + (res.isCorrect ? res.pointsAwarded : 0);
 
       if (!res.nextCheckpointId && res.moduleId) {
-        // Completion reached: Save local module completion & DELETE local play attempt
+        // Completion reached: Save local module completion & update local play attempt to completed state
         const existingCompletion = await localDB.getModuleCompletion(res.moduleId);
 
         await localDB.upsertModuleCompletion({
@@ -95,7 +95,13 @@ const simCheckpointPostAnswer = {
           totalPlays: (existingCompletion?.totalPlays ?? 0) + 1,
           lastPlayedAt: new Date().toISOString(),
         });
-        await localDB.deletePlayAttempt(params.playId);
+        await localDB.upsertPlayAttempt({
+          moduleVersionId: params.playId,
+          currentTab: 5,
+          progress: 100,
+          currentCheckpointId: null,
+          accumulatedPoints: updatedPoints,
+        });
       } else {
         // Attempt in progress
         await localDB.upsertPlayAttempt({
@@ -256,20 +262,31 @@ const simGeneralGetNavigate = {
 
 const simGeneralPostNavigate = {
   type: "mutation",
-  mutationFn: async ({ params, query, body }: { params: Infer["SimGeneralPostNavigate"]["params"], query?: Infer["SimGeneralPostNavigate"]["query"], body: Infer["SimGeneralPostNavigate"]["body"] }) => {
-    const progress = Math.round((body.nextTab / 5) * 100);
-
+  mutationFn: async ({ params, body }: Pick<Infer["SimGeneralPostNavigate"], "params" | "body">) => {
     if (params.mode === "local") {
-      await localDB.upsertPlayAttempt({
-        moduleVersionId: params.playId,
-        currentTab: body.nextTab,
-        progress,
-      });
+      const attempt = await localDB.getPlayAttempt(params.playId);
+      const currentTab = attempt?.currentTab ?? 0;
+
+      // Rule 1: Resume check — clicking Start Learning (nextTab 1) when attempt is already in progress
+      if (currentTab > 0 && body.nextTab === 1) {
+        return "Navigation updated successfully.";
+      }
+
+      // Rule 2: Single-step transition (handles 0 -> 1 and 1 <-> 2 <-> 3 <-> 4 <-> 5)
+      if (Math.abs(body.nextTab - currentTab) === 1) {
+        const progress = Math.round((body.nextTab / 5) * 100);
+        await localDB.upsertPlayAttempt({
+          moduleVersionId: params.playId,
+          currentTab: body.nextTab,
+          progress,
+        });
+      }
+
       return "Navigation updated successfully.";
     }
 
     const data = await fetcher(
-      () => axios.post(R["sim:general:post:navigate"](params), body, { params: query }),
+      () => axios.post(R["sim:general:post:navigate"](params), body),
       ZSim.SimGeneralPostNavigate.shape.res
     );
     return data;
@@ -280,7 +297,7 @@ const simModuleGetSlug = {
   type: "query",
   queryKey: ({ params }: Pick<Infer["SimModuleGetSlug"], "params">) =>
     [...QUERY_KEYS["sim:module:get:slug"](params.id)],
-  queryFn: async ({ params, query }: Pick<Infer["SimModuleGetSlug"], "params"> & { query?: Infer["SimModuleGetSlug"]["query"] }) => {
+  queryFn: async ({ params, query }: Pick<Infer["SimModuleGetSlug"], "params" | "query">) => {
     const data = await fetcher(
       () => axios.get(R["sim:module:get:slug"](params), { params: query }),
       ZSim.SimModuleGetSlug.shape.res

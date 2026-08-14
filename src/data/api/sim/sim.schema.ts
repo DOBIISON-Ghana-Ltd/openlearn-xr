@@ -253,11 +253,9 @@ const SimGeneralPostNavigate = ZApi({
     playId: z.string(),
     playerId: z.string(),
   }),
-  query: z.object({
-    isHost: z.stringbool().optional(),
-  }),
   body: z.object({
     nextTab: z.number().int(),
+    isHost: z.boolean().optional(),
   }),
   res: z.string(),
 });

@@ -2,7 +2,7 @@ import { JSend } from "@/lib/utils/jsend";
 import prisma from "@/adapters/db/client";
 import ZSim from "@/data/api/sim/sim.schema";
 
-export async function handleGetLocalCheckpoint(playId: string, checkpointId?: string) {
+export async function handleGetLocalCheckpoint(playId: string, checkpointId: string) {
   const checkpoints = await prisma.moduleCheckpoint.findMany({
     where: { moduleVersionId: playId },
     orderBy: { orderIndex: "asc" },

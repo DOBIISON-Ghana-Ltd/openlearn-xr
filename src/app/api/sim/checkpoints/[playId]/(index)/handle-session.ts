@@ -2,36 +2,28 @@ import { JSend } from "@/lib/utils/jsend";
 import prisma from "@/adapters/db/client";
 import ZSim from "@/data/api/sim/sim.schema";
 
-export async function handleGetSessionCheckpoint(playId: string, playerId?: string) {
-  const sessionCheckpoints = await prisma.sessionCheckpoint.findMany({
-    where: { sessionId: playId, isEnabled: true },
-    include: { checkpoint: true },
-    orderBy: { checkpoint: { orderIndex: "asc" } },
+export async function handleGetSessionCheckpoint(playId: string, playerId: string) {
+  const liveSession = await prisma.liveSession.findUnique({
+    where: { joinCode: playId },
+    select: { id: true },
   });
 
-  const checkpoints = sessionCheckpoints.map((sc) => sc.checkpoint);
-  const totalCheckpoints = checkpoints.length;
-
-  if (totalCheckpoints === 0) {
-    return JSend.error("No enabled checkpoints found for this session", 404);
+  if (!liveSession) {
+    return JSend.error("Live session not found", 404);
   }
 
-  const attempt = await prisma.playAttempt.findFirst({
-    where: { sessionId: playId },
-  });
+  const attempt = await prisma.playAttempt.findUnique({ where: { sessionPlayerId: playerId } })
 
   if (!attempt) {
-    return JSend.error("Session play attempt not initialized. Please start session navigation first", 404);
+    return JSend.error("Session play attempt not initialized.", 404);
   }
 
-  let activeIndex = 0;
-  const sessionCheckpointId = attempt.currentCheckpointId;
-  if (sessionCheckpointId) {
-    const idx = checkpoints.findIndex((c) => c.id === sessionCheckpointId);
-    if (idx !== -1) activeIndex = idx;
-  }
+  const checkpointId = attempt.currentCheckpointId;
+  const activeCheckpoint = await prisma.moduleCheckpoint.findUnique({ where: { id: checkpointId || "" } });
 
-  const activeCheckpoint = checkpoints[activeIndex] ?? checkpoints[0];
+  if (!activeCheckpoint) {
+    return JSend.error("No enabled checkpoints found for this session", 404);
+  }
 
   const resData = {
     checkpoint: {
@@ -43,8 +35,8 @@ export async function handleGetSessionCheckpoint(playId: string, playerId?: stri
     },
     meta: {
       checkpointId: null,
-      currentCheckpointIndex: activeIndex,
-      totalCheckpoints,
+      currentCheckpointIndex: Math.max(0, activeCheckpoint.orderIndex - 1),
+      totalCheckpoints: attempt.totalCheckpoints,
       accumulatedPoints: attempt.accumulatedPoints,
     },
   };

@@ -157,7 +157,7 @@ function Content(props: IContent) {
           </Dialog.Trigger>
 
           {/* Button 3 - Explanation Trigger */}
-          <Dialog.Trigger
+          {/* <Dialog.Trigger
             handle={checkpointModalHandle}
             payload={{ type: 'explanation', text: state.explanation ?? '' }}
             disabled={!state.explanation}
@@ -165,7 +165,7 @@ function Content(props: IContent) {
             className="p-2.5 bg-primary-subtle hover:bg-primary-light/60 text-primary-cta rounded-lg transition-all disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
           >
             <InfoIcon className="size-5" />
-          </Dialog.Trigger>
+          </Dialog.Trigger> */}
         </div>
       </div>
 
@@ -235,9 +235,9 @@ function ChoiceCard(props: IChoiceCard) {
         {
           'border-transparent hover:bg-primary-light/40': !isAnswerEvaluated && !isPendingChoice,
           'border-primary-cta ring-2 ring-primary-cta/20 bg-primary-light/60': isPendingChoice,
-          'border-success bg-success/15 text-success font-medium': isAnswerEvaluated && isCorrectOption,
+          'border-success bg-success/15 text-success font-medium': isAnswerEvaluated && isChosen && isCorrect,
           'border-error bg-error/15 text-error font-medium': isAnswerEvaluated && isChosen && !isCorrect,
-          'border-transparent opacity-60 cursor-default': isAnswerEvaluated && !isChosen && !isCorrectOption,
+          'border-transparent opacity-60 cursor-default': isAnswerEvaluated && !isChosen,
           'pointer-events-none': isPending || isAnswerEvaluated,
         }
       )}
@@ -249,7 +249,7 @@ function ChoiceCard(props: IChoiceCard) {
       {isPendingChoice && (
         <Loader2Icon className="size-5 animate-spin text-primary-cta" />
       )}
-      {isAnswerEvaluated && isCorrectOption && (
+      {isAnswerEvaluated && isChosen && isCorrect && (
         <CheckCircle2Icon className="size-5 text-success" />
       )}
       {isAnswerEvaluated && isChosen && !isCorrect && (

@@ -2,7 +2,6 @@ import { secureApiRoute } from "@/lib/utils/secure-api-route";
 import { JSend } from "@/lib/utils/jsend";
 import prisma from "@/adapters/db/client";
 import ZSim from "@/data/api/sim/sim.schema";
-import { persistAttemptCompletion } from "@/lib/actions/persist-attempt-completion";
 import { Infer } from "@/data/types.base";
 
 type IAnswerBody = Infer["SimCheckpointPostAnswer"]["body"];
@@ -16,7 +15,7 @@ export function handlePostRemoteAnswer(playId: string, body: IAnswerBody) {
     });
 
     if (!attempt || !attempt.currentCheckpointId) {
-      return JSend.error("Play attempt not initialized. Please fetch checkpoint first", 404);
+      return JSend.error("Play attempt not initialized.", 404);
     }
 
     const targetCheckpointId = attempt.currentCheckpointId;
@@ -40,37 +39,58 @@ export function handlePostRemoteAnswer(playId: string, body: IAnswerBody) {
     const pointsAwarded = isCorrect ? checkpoint.points : 0;
     const moduleId = checkpoint.moduleVersion.moduleId;
 
-    let nextCheckpointId = "";
-    const checkpoints = await prisma.moduleCheckpoint.findMany({
-      where: { moduleVersionId: checkpoint.moduleVersionId },
+    const nextCheckpoint = await prisma.moduleCheckpoint.findFirst({
+      where: {
+        moduleVersionId: checkpoint.moduleVersionId,
+        id: { not: targetCheckpointId },
+        orderIndex: { gt: checkpoint.orderIndex },
+      },
       orderBy: { orderIndex: "asc" },
+      select: { id: true },
     });
 
-    const currentIdx = checkpoints.findIndex((c) => c.id === targetCheckpointId);
-
-    if (currentIdx !== -1 && currentIdx < checkpoints.length - 1) {
-      nextCheckpointId = checkpoints[currentIdx + 1].id;
-    }
-
+    const nextCheckpointId = nextCheckpoint?.id ?? "";
     const finalScore = currentAccumulatedPoints + pointsAwarded;
 
+    // 1. Update PlayAttempt checkpoint and score
+    await prisma.playAttempt.update({
+      where: { id: attemptIdToUpdate },
+      data: {
+        currentCheckpointId: nextCheckpointId || null,
+        accumulatedPoints: finalScore,
+      },
+    });
+
+    // 2. If finished, upsert ModuleCompletion record
     if (!nextCheckpointId) {
-      await persistAttemptCompletion({
-        attemptId: attemptIdToUpdate,
-        mode: "remote",
-        userId,
-        playId,
-        finalScore,
-        sessionPlayerId: body.sessionPlayerId,
+      const existingCompletion = await prisma.moduleCompletion.findFirst({
+        where: { userId, moduleId },
       });
-    } else {
-      await prisma.playAttempt.update({
-        where: { id: attemptIdToUpdate },
-        data: {
-          currentCheckpointId: nextCheckpointId,
-          accumulatedPoints: { increment: pointsAwarded },
-        },
-      });
+
+      if (existingCompletion) {
+        await prisma.moduleCompletion.update({
+          where: { id: existingCompletion.id },
+          data: {
+            highScore: Math.max(existingCompletion.highScore, finalScore),
+            lastScore: finalScore,
+            totalPlays: { increment: 1 },
+            lastPlayedAt: new Date(),
+            lastPlayedVersionId: playId,
+          },
+        });
+      } else {
+        await prisma.moduleCompletion.create({
+          data: {
+            userId,
+            moduleId,
+            highScore: finalScore,
+            lastScore: finalScore,
+            totalPlays: 1,
+            lastPlayedAt: new Date(),
+            lastPlayedVersionId: playId,
+          },
+        });
+      }
     }
 
     const resData = {

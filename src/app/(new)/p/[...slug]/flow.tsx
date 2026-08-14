@@ -1,9 +1,8 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Tabs } from '@base-ui/react/tabs';
-import { LogOut, Flame, Loader2Icon } from 'lucide-react';
-import { cn } from '@/lib/utils/cn';
+import { LogOut, Loader2Icon } from 'lucide-react';
 import OverviewFLow from './flow.overview';
 import EngageFLow from './flow.engage';
 import ExplainFLow from './flow.explain';
@@ -22,15 +21,6 @@ import { useRouter } from 'next/navigation';
 import { PATHS } from '@/lib/constants/paths';
 import { toastManager } from '@/components/ui/toast';
 
-const TAB_FLOW = [
-  { render: OverviewFLow, backLabel: 'Back', nextLabel: 'Start Learning' },
-  { render: EngageFLow, backLabel: 'Back', nextLabel: 'Continue' },
-  { render: ExplainFLow, backLabel: 'Back', nextLabel: 'Continue' },
-  { render: ExploreFLow, backLabel: 'Back', nextLabel: 'Continue' },
-  { render: CheckpointFLow, backLabel: 'Back', nextLabel: 'Continue' },
-  { render: ResultFLow, backLabel: 'Retake Lesson', nextLabel: 'Back to Modules' },
-];
-
 export type IFlowContent = {
   id: string;
   mode: "session" | "module";
@@ -40,9 +30,21 @@ export type IFlowContent = {
 type IFlow = {
   mode: "session" | "module";
   id: string;
-}
+};
 
 type INav = Infer["SimGeneralGetNavigate"]["res"];
+
+type ITabFlowItem = {
+  render: React.ComponentType<any>;
+  back: {
+    label: string;
+    goto: number | string;
+  };
+  next: {
+    label: string;
+    goto: number | string;
+  };
+};
 
 export default function FLow(props: IFlow) {
   const [mounted, setMounted] = useState(false);
@@ -74,11 +76,14 @@ export default function FLow(props: IFlow) {
       {match({ nav, isLoading: isNavLoading })
         .with({ isLoading: true }, () => <Content.Loading />)
         .with({ nav: P.select(P.nonNullable) }, (navData) => (
-          <Content nav={navData} id={props.id} mode={props.mode} />
+          <Content
+            nav={navData}
+            id={props.id}
+            mode={props.mode}
+          />
         ))
         .with({ nav: P.nullish, isLoading: false }, () => <Content.Error />)
-        .exhaustive()
-      }
+        .exhaustive()}
     </div>
   );
 }
@@ -91,7 +96,60 @@ type IContent = {
 
 function Content(props: IContent) {
   const { nav, id, mode } = props;
-  const tabIndex = nav.currentTab;
+  const [tabIndex, setTabIndex] = useState<number>(0);
+  const isInitialMount = useRef(true);
+  const sessionInfo = useStore(simStore, (s) => s.getSessionInfo(id));
+  const sessionId = sessionInfo?.sessionId || '';
+  const isHost = sessionInfo?.isHost ?? false;
+  const playerId = sessionInfo?.playerId || "";
+
+  useEffect(() => {
+    // Skip setting tabIndex on the initial mount so Overview (0) is displayed first
+    if (isInitialMount.current) {
+      isInitialMount.current = false;
+      return;
+    }
+
+    // On any subsequent update (clicking Start Learning, next, or WebSocket tab:change), sync tabIndex
+    setTabIndex(nav.currentTab);
+  }, [nav.currentTab]);
+
+  const tabFlow: ITabFlowItem[] = [
+    {
+      render: OverviewFLow,
+      back: { label: "Back", goto: 0 },
+      next: { label: "Start Learning", goto: 1 },
+    },
+    {
+      render: EngageFLow,
+      back: { label: "Back", goto: 0 },
+      next: { label: "Continue", goto: 2 },
+    },
+    {
+      render: ExplainFLow,
+      back: { label: "Back", goto: 1 },
+      next: { label: "Continue", goto: 3 },
+    },
+    {
+      render: ExploreFLow,
+      back: { label: "Back", goto: 2 },
+      next: { label: "Continue", goto: 4 },
+    },
+    {
+      render: CheckpointFLow,
+      back: { label: "Back", goto: 3 },
+      next: { label: "Continue", goto: 5 },
+    },
+    {
+      render: ResultFLow,
+      back: isHost
+        ? { label: "Go to Dashboard", goto: PATHS.SESSION.DASHBOARD }
+        : { label: "Retake Lesson", goto: "refresh" },
+      next: isHost
+        ? { label: "View Analytics", goto: PATHS.SESSION.ONE.ANALYTICS(sessionId) }
+        : { label: "Back to Modules", goto: PATHS.MODULES },
+    },
+  ];
 
   return (
     <Tabs.Root
@@ -100,13 +158,22 @@ function Content(props: IContent) {
     >
       <Header id={id} mode={mode} />
       <main className="flex-1 flex flex-col min-h-0 overflow-y-auto">
-        {TAB_FLOW.map((content, idx) => (
+        {tabFlow.map((content, idx) => (
           <Tabs.Panel key={idx} value={String(idx)} className="flex-1 flex flex-col min-h-0">
             <content.render id={id} mode={mode} progress={nav.progress} />
           </Tabs.Panel>
         ))}
       </main>
-      <Footer id={id} mode={mode} tabIndex={tabIndex} />
+      {!(sessionInfo?.config.controlMode === "tutor-led" && !isHost) && (
+        <Footer
+          id={id}
+          mode={mode}
+          playerId={playerId}
+          isHost={isHost}
+          tabIndex={tabIndex}
+          tabFlow={tabFlow}
+        />
+      )}
     </Tabs.Root>
   );
 }
@@ -153,47 +220,33 @@ function Header(props: IHeader) {
   const isPending = isLeaving || isEnding;
 
   const handleEndSession = () => {
-    endSession(
-      { params: { id } },
-      {
-        onSuccess: () => {
-          removeSession(id);
-          router.push(PATHS.MODULES);
-        },
-        onError: (err) => {
-          toastManager.add({
-            title: err.message || "Failed to end session. Please try again.",
-            type: "error",
-          });
-        },
-      }
-    );
+    endSession({ params: { id } }, {
+      onSuccess: () => {
+        removeSession(id);
+        router.push(PATHS.MODULES);
+      },
+      onError: (err) => {
+        toastManager.add({ title: err.message || "Failed to end session. Please try again.", type: "error" });
+      },
+    });
   };
 
   const handleLeaveSession = () => {
-    if (playerId) {
-      leaveSession(
-        {
-          params: { id },
-          body: { playerId },
-        },
-        {
-          onSuccess: () => {
-            removeSession(id);
-            router.push(PATHS.MODULES);
-          },
-          onError: (err) => {
-            toastManager.add({
-              title: err.message || "Failed to leave session. Please try again.",
-              type: "error",
-            });
-          },
-        }
-      );
-    } else {
+    if (!playerId) {
       removeSession(id);
       router.push(PATHS.MODULES);
+      return;
     }
+
+    leaveSession({ params: { id }, body: { playerId } }, {
+      onSuccess: () => {
+        removeSession(id);
+        router.push(PATHS.MODULES);
+      },
+      onError: (err) => {
+        toastManager.add({ title: err.message || "Failed to leave session. Please try again.", type: "error" });
+      },
+    });
   };
 
   const handleExitLesson = () => {
@@ -239,127 +292,65 @@ function Header(props: IHeader) {
 type IFooter = {
   id: string;
   mode: "session" | "module";
+  playerId: string;
+  isHost: boolean;
   tabIndex: number;
+  tabFlow: ITabFlowItem[];
 };
 
 function Footer(props: IFooter) {
-  const { id, mode, tabIndex } = props;
+  const { id, mode, playerId, isHost, tabIndex, tabFlow } = props;
   const router = useRouter();
   const queryClient = useQueryClient();
   const { serverMode } = usePlayServerMode(mode);
-  const sessionInfo = useStore(simStore, (s) => s.getSessionInfo(id));
-  const playerId = useStore(simStore, (s) => s.getSessionPlayer(id)) || '';
   const { mutate: navigate, isPending } = useApi.mutate("sim:general:post:navigate");
 
-  if (sessionInfo?.config.controlMode === "tutor-led" && !sessionInfo.isHost) {
-    return null;
-  }
+  const activeTab = tabFlow[tabIndex] || tabFlow[0];
+  const { back, next } = activeTab;
 
-  const isLastTab = tabIndex === TAB_FLOW.length - 1;
-  const isHost = sessionInfo?.isHost ?? false;
-
-  // On session mode result page: if not host, no button is shown
-  if (isLastTab && mode === "session" && !isHost) {
-    return null;
-  }
-
-  const navParams = {
-    mode: serverMode,
-    playId: id,
-    playerId,
-  };
-
-  const activeTab = TAB_FLOW[tabIndex] || TAB_FLOW[0];
-  const isPrevDisabled = tabIndex === 0 || isPending;
-
-  const [navTarget, setNavTarget] = useState<number | null>(null);
-
-  const handleNavigate = (nextTab: number) => {
-    if (nextTab < 0 || nextTab >= TAB_FLOW.length) return;
-    setNavTarget(nextTab);
-    navigate(
-      {
-        params: navParams,
-        query: { isHost },
-        body: { nextTab },
-      },
-      {
-        onSuccess: () => {
-          queryClient.invalidateQueries({
-            queryKey: QUERY_KEYS["sim:general:get:navigate"](id),
-          });
-        },
-        onSettled: () => {
-          setNavTarget(null);
-        },
-      }
-    );
-  };
-
-  const isLeftPending = isPending && navTarget !== null && navTarget < tabIndex;
-  const isRightPending = isPending && navTarget !== null && navTarget > tabIndex;
-
-  let leftButtonLabel: React.ReactNode = activeTab.backLabel;
-  let leftButtonOnClick = () => handleNavigate(tabIndex - 1);
-  let leftButtonDisabled = isPrevDisabled || isPending;
-
-  let rightButtonLabel: React.ReactNode = activeTab.nextLabel;
-  let rightButtonOnClick = () => handleNavigate(tabIndex + 1);
-
-  if (isLastTab) {
-    if (mode === "session" && isHost) {
-      const sessionId = sessionInfo?.sessionId || id;
-      leftButtonLabel = "Go to Dashboard";
-      leftButtonOnClick = () => router.push(PATHS.SESSION.DASHBOARD);
-      leftButtonDisabled = isPending;
-
-      rightButtonLabel = "View Analytics";
-      rightButtonOnClick = () => router.push(PATHS.SESSION.ONE.ANALYTICS(sessionId));
-    } else if (mode !== "session") {
-      leftButtonLabel = "Retake Lesson";
-      leftButtonOnClick = () => handleNavigate(0);
-      leftButtonDisabled = isPending;
-
-      rightButtonLabel = "Back to Modules";
-      rightButtonOnClick = () => router.push(PATHS.MODULES);
+  const handleAction = (goto: number | string) => {
+    if (goto === "refresh") {
+      window.location.reload();
+      return;
     }
-  }
+
+    if (typeof goto === "string") {
+      router.push(goto);
+      return;
+    }
+
+    navigate({
+      params: { mode: serverMode, playId: id, playerId },
+      body: { nextTab: goto, isHost },
+    }, {
+      onSuccess: () => {
+        queryClient.invalidateQueries({
+          queryKey: QUERY_KEYS["sim:general:get:navigate"](id),
+        });
+      },
+    });
+  };
 
   return (
     <footer className="bg-primary-subtle px-8 lg:px-22 flex justify-between items-center z-20 shrink-0 h-24">
       {/* Back / Left Action Button */}
       <button
         type="button"
-        onClick={leftButtonOnClick}
-        disabled={leftButtonDisabled}
-        className={cn(
-          'bg-surface-slate text-tertiary text-button w-60 h-15 rounded-[10px] shadow-[0px_4px_4px_0px_rgba(69,157,159,0.3)] flex items-center justify-center transition-all cursor-pointer',
-          {
-            'opacity-40 cursor-not-allowed': leftButtonDisabled,
-            'active:scale-98 hover:bg-surface-white': !leftButtonDisabled,
-          }
-        )}
+        onClick={() => handleAction(back.goto)}
+        disabled={isPending || tabIndex === 0}
+        className="bg-surface-slate text-tertiary text-button w-60 h-15 rounded-[10px] shadow-[0px_4px_4px_0px_rgba(69,157,159,0.3)] flex items-center justify-center transition-all cursor-pointer hover:bg-surface-white active:scale-98 disabled:opacity-40 disabled:cursor-not-allowed disabled:pointer-events-none"
       >
-        {match(isLeftPending)
-          .with(true, () => <Loader2Icon className="size-5 animate-spin text-tertiary" />)
-          .otherwise(() => leftButtonLabel)}
+        {back.label}
       </button>
 
       {/* Primary / Right Action Button */}
       <button
         type="button"
-        onClick={rightButtonOnClick}
+        onClick={() => handleAction(next.goto)}
         disabled={isPending}
-        className={cn(
-          'bg-primary-cta text-button text-primary-text-light w-60 h-15 rounded-[10px] flex items-center justify-center hover:bg-primary-hover transition-all cursor-pointer active:scale-98',
-          {
-            'opacity-70 cursor-not-allowed': isPending,
-          }
-        )}
+        className="bg-primary-cta text-button text-primary-text-light w-60 h-15 rounded-[10px] flex items-center justify-center hover:bg-primary-hover transition-all cursor-pointer active:scale-98 disabled:opacity-70 disabled:cursor-not-allowed disabled:pointer-events-none"
       >
-        {match(isRightPending)
-          .with(true, () => <Loader2Icon className="size-5 animate-spin text-primary-text-light" />)
-          .otherwise(() => rightButtonLabel)}
+        {next.label}
       </button>
     </footer>
   );
