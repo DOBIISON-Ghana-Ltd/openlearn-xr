@@ -29,17 +29,17 @@ export async function handlePostLocalAnswer(playId: string, body: IAnswerBody) {
   const pointsAwarded = isCorrect ? checkpoint.points : 0;
   const moduleId = checkpoint.moduleVersion.moduleId;
 
-  let nextCheckpointId = "";
-  const checkpoints = await prisma.moduleCheckpoint.findMany({
-    where: { moduleVersionId: checkpoint.moduleVersionId },
+  const nextCheckpoint = await prisma.moduleCheckpoint.findFirst({
+    where: {
+      moduleVersionId: checkpoint.moduleVersionId,
+      id: { not: targetCheckpointId },
+      orderIndex: { gt: checkpoint.orderIndex },
+    },
     orderBy: { orderIndex: "asc" },
+    select: { id: true },
   });
 
-  const currentIdx = checkpoints.findIndex((c) => c.id === targetCheckpointId);
-
-  if (currentIdx !== -1 && currentIdx < checkpoints.length - 1) {
-    nextCheckpointId = checkpoints[currentIdx + 1].id;
-  }
+  const nextCheckpointId = nextCheckpoint?.id ?? "";
 
   const resData = {
     isCorrect,

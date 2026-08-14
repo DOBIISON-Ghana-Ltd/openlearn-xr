@@ -21,6 +21,7 @@ export interface PlayAttemptRecord {
   currentTab?: number;
   progress?: number;
   currentCheckpointId?: string | null;
+  totalCheckpoints?: number;
   accumulatedPoints: number;
   updatedAt: string;
 }

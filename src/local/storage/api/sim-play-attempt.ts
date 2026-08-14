@@ -18,6 +18,7 @@ export async function upsertPlayAttempt(params: {
   currentTab?: number;
   progress?: number;
   currentCheckpointId?: string | null;
+  totalCheckpoints?: number;
   accumulatedPoints?: number;
 }): Promise<PlayAttemptRecord | null> {
   try {
@@ -27,10 +28,20 @@ export async function upsertPlayAttempt(params: {
 
     const record: PlayAttemptRecord = {
       moduleVersionId: params.moduleVersionId,
-      currentTab: params.currentTab ?? existing?.currentTab ?? 0,
-      progress: params.progress ?? existing?.progress ?? 0,
-      currentCheckpointId: params.currentCheckpointId ?? existing?.currentCheckpointId ?? null,
-      accumulatedPoints: params.accumulatedPoints ?? existing?.accumulatedPoints ?? 0,
+      currentTab: params.currentTab !== undefined ? params.currentTab : (existing?.currentTab ?? 0),
+      progress: params.progress !== undefined ? params.progress : (existing?.progress ?? 0),
+      currentCheckpointId:
+        params.currentCheckpointId !== undefined
+          ? params.currentCheckpointId
+          : (existing?.currentCheckpointId ?? null),
+      totalCheckpoints:
+        params.totalCheckpoints !== undefined
+          ? params.totalCheckpoints
+          : (existing?.totalCheckpoints ?? 0),
+      accumulatedPoints:
+        params.accumulatedPoints !== undefined
+          ? params.accumulatedPoints
+          : (existing?.accumulatedPoints ?? 0),
       updatedAt: now,
     };
 

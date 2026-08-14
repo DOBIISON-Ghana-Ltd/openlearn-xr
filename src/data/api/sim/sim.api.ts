@@ -35,25 +35,21 @@ const simCheckpointGetOne = {
   queryKey: ({ params, query }: Pick<Infer["SimCheckpointGetOne"], "params" | "query">) => [...QUERY_KEYS["sim:checkpoint:get:one"](params.playId, query)],
   queryFn: async ({ params, query }: Pick<Infer["SimCheckpointGetOne"], "params" | "query">) => {
     if (query.mode === "local") {
-      const localAttempt = await localDB.getPlayAttempt(params.playId);
-      if (localAttempt?.currentCheckpointId) {
-        query.checkpointId = localAttempt.currentCheckpointId;
-      }
+      const attempt = (await localDB.getPlayAttempt(params.playId))!;
+      console.log({ attempt })
+      query.checkpointId = attempt.currentCheckpointId || "";
+
+      const res = await fetcher(
+        () => axios.get(R["sim:checkpoint:get:one"](params), { params: query }),
+        ZSim.SimCheckpointGetOne.shape.res
+      );
+      return res;
     }
 
     const res = await fetcher(
       () => axios.get(R["sim:checkpoint:get:one"](params), { params: query }),
       ZSim.SimCheckpointGetOne.shape.res
     );
-
-    if (query.mode === "local" && res.meta?.checkpointId) {
-      await localDB.upsertPlayAttempt({
-        moduleVersionId: params.playId,
-        currentCheckpointId: res.meta.checkpointId,
-        accumulatedPoints: 0,
-      });
-    }
-
     return res;
   },
   options: {
@@ -66,25 +62,28 @@ const simCheckpointGetOne = {
 const simCheckpointPostAnswer = {
   type: "mutation",
   mutationFn: async ({ params, body }: Pick<Infer["SimCheckpointPostAnswer"], "params" | "body">) => {
-    let localAttempt = null;
-
     if (body.mode === "local") {
-      localAttempt = await localDB.getPlayAttempt(params.playId);
-      if (localAttempt?.currentCheckpointId) {
-        body.checkpointId = localAttempt.currentCheckpointId;
-      }
-    }
+      const attempt = (await localDB.getPlayAttempt(params.playId))!;
+      body.checkpointId = attempt.currentCheckpointId || "";
 
-    const res = await fetcher(
-      () => axios.post(R["sim:checkpoint:post:answer"](params), body),
-      ZSim.SimCheckpointPostAnswer.shape.res
-    );
+      const res = await fetcher(
+        () => axios.post(R["sim:checkpoint:post:answer"](params), body),
+        ZSim.SimCheckpointPostAnswer.shape.res
+      );
 
-    if (body.mode === "local") {
-      const updatedPoints = (localAttempt?.accumulatedPoints ?? 0) + (res.isCorrect ? res.pointsAwarded : 0);
+      const updatedPoints = attempt.accumulatedPoints + (res.isCorrect ? res.pointsAwarded : 0);
 
+      // 1. Update PlayAttempt in IndexedDB
+      await localDB.upsertPlayAttempt({
+        moduleVersionId: params.playId,
+        currentCheckpointId: res.nextCheckpointId || null,
+        accumulatedPoints: updatedPoints,
+      });
+      console.log("NEXT CHECKPOINT: ", res.nextCheckpointId, typeof res.nextCheckpointId);
+
+      // 2. If finished, save module completion
       if (!res.nextCheckpointId && res.moduleId) {
-        // Completion reached: Save local module completion & update local play attempt to completed state
+        console.log("PASSED TO COMPLETION");
         const existingCompletion = await localDB.getModuleCompletion(res.moduleId);
 
         await localDB.upsertModuleCompletion({
@@ -95,24 +94,16 @@ const simCheckpointPostAnswer = {
           totalPlays: (existingCompletion?.totalPlays ?? 0) + 1,
           lastPlayedAt: new Date().toISOString(),
         });
-        await localDB.upsertPlayAttempt({
-          moduleVersionId: params.playId,
-          currentTab: 5,
-          progress: 100,
-          currentCheckpointId: null,
-          accumulatedPoints: updatedPoints,
-        });
-      } else {
-        // Attempt in progress
-        await localDB.upsertPlayAttempt({
-          moduleVersionId: params.playId,
-          currentCheckpointId: res.nextCheckpointId ?? null,
-          accumulatedPoints: updatedPoints,
-        });
       }
+
+      return res;
     }
 
-    return res;
+    const data = await fetcher(
+      () => axios.post(R["sim:checkpoint:post:answer"](params), body),
+      ZSim.SimCheckpointPostAnswer.shape.res
+    );
+    return data;
   },
 } satisfies MutationConfig;
 
@@ -228,6 +219,7 @@ const simGeneralGetScore = {
   queryFn: async ({ params }: Pick<Infer["SimGeneralGetScore"], "params">) => {
     if (params.mode === "local") {
       const completion = await localDB.getModuleCompletion(params.playId);
+      console.log("MY COMPLETION: ", completion);
       return { score: completion?.lastScore ?? 0 };
     }
 
@@ -246,9 +238,29 @@ const simGeneralGetNavigate = {
     [...QUERY_KEYS["sim:general:get:navigate"](params.playId)],
   queryFn: async ({ params, query }: Pick<Infer["SimGeneralGetNavigate"], "params" | "query">) => {
     if (params.mode === "local") {
-      const attempt = await localDB.getPlayAttempt(params.playId);
-      const currentTab = attempt?.currentTab ?? 0;
-      const progress = attempt?.progress ?? Math.round((currentTab / 5) * 100);
+      let attempt = await localDB.getPlayAttempt(params.playId);
+      console.log("FROM GET NAVIGATE : ", { attempt })
+      // If attempt does not exist or completed attempt needs reset (currentTab === 5 && !currentCheckpointId)
+      if (!attempt || (attempt.currentTab === 5 && !attempt.currentCheckpointId)) {
+        const res = await fetcher(
+          () => axios.get(R["sim:general:get:navigate"](params), { params: query }),
+          ZSim.SimGeneralGetNavigate.shape.res
+        );
+
+        attempt = await localDB.upsertPlayAttempt({
+          moduleVersionId: params.playId,
+          currentTab: 0,
+          progress: 0,
+          accumulatedPoints: 0,
+          currentCheckpointId: res.checkpointId ?? null,
+          totalCheckpoints: res.totalCheckpoints ?? 0,
+        });
+
+        return { currentTab: 0, progress: 0 };
+      }
+
+      const currentTab = attempt.currentTab ?? 0;
+      const progress = attempt.progress ?? Math.round((currentTab / 5) * 100);
       return { currentTab, progress };
     }
 
@@ -264,21 +276,15 @@ const simGeneralPostNavigate = {
   type: "mutation",
   mutationFn: async ({ params, body }: Pick<Infer["SimGeneralPostNavigate"], "params" | "body">) => {
     if (params.mode === "local") {
-      const attempt = await localDB.getPlayAttempt(params.playId);
-      const currentTab = attempt?.currentTab ?? 0;
+      const attempt = (await localDB.getPlayAttempt(params.playId))!;
+      const currentTab = attempt.currentTab ?? 0;
 
-      // Rule 1: Resume check — clicking Start Learning (nextTab 1) when attempt is already in progress
-      if (currentTab > 0 && body.nextTab === 1) {
-        return "Navigation updated successfully.";
-      }
-
-      // Rule 2: Single-step transition (handles 0 -> 1 and 1 <-> 2 <-> 3 <-> 4 <-> 5)
+      // Single-step transition (handles 0 -> 1 and 1 <-> 2 <-> 3 <-> 4 <-> 5; ignores jumps like 3 -> 1 on resume)
       if (Math.abs(body.nextTab - currentTab) === 1) {
-        const progress = Math.round((body.nextTab / 5) * 100);
         await localDB.upsertPlayAttempt({
           moduleVersionId: params.playId,
           currentTab: body.nextTab,
-          progress,
+          progress: Math.round((body.nextTab / 5) * 100),
         });
       }
 
@@ -295,8 +301,7 @@ const simGeneralPostNavigate = {
 
 const simModuleGetSlug = {
   type: "query",
-  queryKey: ({ params }: Pick<Infer["SimModuleGetSlug"], "params">) =>
-    [...QUERY_KEYS["sim:module:get:slug"](params.id)],
+  queryKey: ({ params }: Pick<Infer["SimModuleGetSlug"], "params">) => [...QUERY_KEYS["sim:module:get:slug"](params.id)],
   queryFn: async ({ params, query }: Pick<Infer["SimModuleGetSlug"], "params" | "query">) => {
     const data = await fetcher(
       () => axios.get(R["sim:module:get:slug"](params), { params: query }),
@@ -310,17 +315,22 @@ export default {
   "sim:module:get:all": simModuleGetAll,
   "sim:module:get:one": simModuleGetOne,
   "sim:module:get:slug": simModuleGetSlug,
+  "sim:module:get:stats": simModuleGetStats,
+
   "sim:checkpoint:get:one": simCheckpointGetOne,
   "sim:checkpoint:post:answer": simCheckpointPostAnswer,
+
   "sim:general:get:score": simGeneralGetScore,
   "sim:general:get:navigate": simGeneralGetNavigate,
   "sim:general:post:navigate": simGeneralPostNavigate,
+
   "sim:module-completion:get:all": simModuleCompletionGetAll,
+
   "sim:collection:get:all": simCollectionGetAll,
   "sim:collection:get:modules": simCollectionGetModules,
+
   "sim:session:get:stats": simSessionGetStats,
   "sim:session:get:players": simSessionGetPlayers,
-  "sim:module:get:stats": simModuleGetStats,
   "sim:session:post:join": simSessionPostJoin,
   "sim:session:post:leave": simSessionPostLeave,
   "sim:session:post:end": simSessionPostEnd,

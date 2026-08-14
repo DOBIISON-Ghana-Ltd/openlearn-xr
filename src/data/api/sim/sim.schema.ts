@@ -241,6 +241,8 @@ const SimGeneralGetNavigate = ZApi({
   res: z.object({
     currentTab: z.number().int(),
     progress: z.number().int(),
+    totalCheckpoints: z.number().int().optional(),
+    checkpointId: z.string().nullable().optional(),
   }),
 });
 

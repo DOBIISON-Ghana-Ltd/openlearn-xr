@@ -96,23 +96,14 @@ type IContent = {
 
 function Content(props: IContent) {
   const { nav, id, mode } = props;
-  const [tabIndex, setTabIndex] = useState<number>(0);
-  const isInitialMount = useRef(true);
+  const started = useStore(simStore, (s) => s.started);
   const sessionInfo = useStore(simStore, (s) => s.getSessionInfo(id));
   const sessionId = sessionInfo?.sessionId || '';
   const isHost = sessionInfo?.isHost ?? false;
   const playerId = sessionInfo?.playerId || "";
 
-  useEffect(() => {
-    // Skip setting tabIndex on the initial mount so Overview (0) is displayed first
-    if (isInitialMount.current) {
-      isInitialMount.current = false;
-      return;
-    }
-
-    // On any subsequent update (clicking Start Learning, next, or WebSocket tab:change), sync tabIndex
-    setTabIndex(nav.currentTab);
-  }, [nav.currentTab]);
+  const tutorLedPlayer = sessionInfo?.config.controlMode === "tutor-led" && !isHost
+  const tabIndex = !started && !tutorLedPlayer ? 0 : nav.currentTab;
 
   const tabFlow: ITabFlowItem[] = [
     {
@@ -164,13 +155,14 @@ function Content(props: IContent) {
           </Tabs.Panel>
         ))}
       </main>
-      {!(sessionInfo?.config.controlMode === "tutor-led" && !isHost) && (
+      {!(tutorLedPlayer) && (
         <Footer
           id={id}
           mode={mode}
           playerId={playerId}
           isHost={isHost}
           tabIndex={tabIndex}
+          navCurrentTab={nav.currentTab}
           tabFlow={tabFlow}
         />
       )}
@@ -295,15 +287,18 @@ type IFooter = {
   playerId: string;
   isHost: boolean;
   tabIndex: number;
+  navCurrentTab: number;
   tabFlow: ITabFlowItem[];
 };
 
 function Footer(props: IFooter) {
-  const { id, mode, playerId, isHost, tabIndex, tabFlow } = props;
+  const { id, mode, playerId, isHost, tabIndex, navCurrentTab, tabFlow } = props;
   const router = useRouter();
   const queryClient = useQueryClient();
   const { serverMode } = usePlayServerMode(mode);
   const { mutate: navigate, isPending } = useApi.mutate("sim:general:post:navigate");
+  const started = useStore(simStore, (s) => s.started);
+  const setStarted = useStore(simStore, (s) => s.setStarted);
 
   const activeTab = tabFlow[tabIndex] || tabFlow[0];
   const { back, next } = activeTab;
@@ -317,6 +312,16 @@ function Footer(props: IFooter) {
     if (typeof goto === "string") {
       router.push(goto);
       return;
+    }
+
+    // If on Overview (0) and attempt is already in progress, resume locally without network mutation
+    if (tabIndex === 0 && navCurrentTab > 0) {
+      setStarted(true);
+      return;
+    }
+
+    if (!started) {
+      setStarted(true);
     }
 
     navigate({

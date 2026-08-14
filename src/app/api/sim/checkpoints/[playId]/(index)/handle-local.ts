@@ -2,25 +2,22 @@ import { JSend } from "@/lib/utils/jsend";
 import prisma from "@/adapters/db/client";
 import ZSim from "@/data/api/sim/sim.schema";
 
-export async function handleGetLocalCheckpoint(playId: string, checkpointId: string) {
-  const checkpoints = await prisma.moduleCheckpoint.findMany({
-    where: { moduleVersionId: playId },
-    orderBy: { orderIndex: "asc" },
+export async function handleGetLocalCheckpoint(playId: string, checkpointId?: string) {
+  if (!checkpointId) {
+    return JSend.error("checkpointId is required for local mode", 400);
+  }
+
+  const activeCheckpoint = await prisma.moduleCheckpoint.findUnique({
+    where: { id: checkpointId },
   });
 
-  const totalCheckpoints = checkpoints.length;
-
-  if (totalCheckpoints === 0) {
-    return JSend.error("No checkpoints found for this module version", 404);
+  if (!activeCheckpoint) {
+    return JSend.error("Checkpoint not found", 404);
   }
 
-  let activeIndex = 0;
-  if (checkpointId) {
-    const idx = checkpoints.findIndex((c) => c.id === checkpointId);
-    if (idx !== -1) activeIndex = idx;
-  }
-
-  const activeCheckpoint = checkpoints[activeIndex] ?? checkpoints[0];
+  const totalCheckpoints = await prisma.moduleCheckpoint.count({
+    where: { moduleVersionId: playId },
+  });
 
   const resData = {
     checkpoint: {
@@ -31,8 +28,8 @@ export async function handleGetLocalCheckpoint(playId: string, checkpointId: str
       hint: activeCheckpoint.hint,
     },
     meta: {
-      checkpointId: checkpointId ? null : activeCheckpoint.id,
-      currentCheckpointIndex: activeIndex,
+      checkpointId: null,
+      currentCheckpointIndex: Math.max(0, activeCheckpoint.orderIndex - 1),
       totalCheckpoints,
       accumulatedPoints: 0,
     },

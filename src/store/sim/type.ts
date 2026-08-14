@@ -27,4 +27,9 @@ export type IStore = {
   updateControl: (id: string, value: ControlValue) => void;
   resetControls: () => void;
   clearControls: () => void;
+
+  // Transient Navigation State (Non-Persisted)
+  started: boolean;
+  getStarted: () => boolean;
+  setStarted: (started: boolean) => void;
 };

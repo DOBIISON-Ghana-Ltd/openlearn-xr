@@ -22,7 +22,7 @@ export const GET = apiHandler<{ slug: string[] }>(async (req, ctx) => {
     case "remote":
       return handleGetRemoteNav(playId)(req, ctx);
     case "local":
-      return handleGetLocalNav();
+      return handleGetLocalNav(playId);
     default:
       return JSend.error("Invalid mode specified", 400);
   }

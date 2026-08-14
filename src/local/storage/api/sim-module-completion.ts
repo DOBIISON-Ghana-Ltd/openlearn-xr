@@ -42,7 +42,10 @@ export async function upsertModuleCompletion(params: {
     const record: ModuleCompletionRecord = {
       id: existing?.id ?? `local_${params.moduleId}`,
       moduleId: params.moduleId,
-      lastPlayedVersionId: params.lastPlayedVersionId ?? existing?.lastPlayedVersionId ?? null,
+      lastPlayedVersionId:
+        params.lastPlayedVersionId !== undefined
+          ? params.lastPlayedVersionId
+          : (existing?.lastPlayedVersionId ?? null),
       highScore: bestScore,
       lastScore: currentScore,
       totalPlays: params.totalPlays ?? (existing?.totalPlays ?? 0) + 1,
