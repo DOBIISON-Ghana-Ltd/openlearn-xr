@@ -16,7 +16,7 @@ export function handleGetRemoteCheckpoint(playId: string) {
     }
 
     const checkpointId = attempt.currentCheckpointId;
-    const activeCheckpoint = await prisma.moduleCheckpoint.findUnique({ where: { id: checkpointId || "" } })
+    const activeCheckpoint = await prisma.moduleCheckpoint.findUnique({ where: { id: checkpointId || "" } });
 
     if (!activeCheckpoint) {
       return JSend.error("No checkpoints found for this module version", 404);
@@ -31,8 +31,7 @@ export function handleGetRemoteCheckpoint(playId: string) {
         hint: activeCheckpoint.hint,
       },
       meta: {
-        checkpointId: null,
-        currentCheckpointIndex: Math.max(0, activeCheckpoint.orderIndex - 1),
+        currentCheckpointIndex: attempt.currentCheckpointIndex,
         totalCheckpoints: attempt.totalCheckpoints,
         accumulatedPoints: attempt.accumulatedPoints,
       },

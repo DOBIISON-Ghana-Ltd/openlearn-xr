@@ -56,7 +56,8 @@ export async function handlePostSessionAnswer(playId: string, body: IAnswerBody)
   await prisma.playAttempt.update({
     where: { id: attempt.id },
     data: {
-      currentCheckpointId: nextCheckpointId || null,
+      currentCheckpointId: nextCheckpointId || targetCheckpointId,
+      currentCheckpointIndex: attempt.currentCheckpointIndex + 1,
       accumulatedPoints: finalScore,
     },
   });

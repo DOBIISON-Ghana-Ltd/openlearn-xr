@@ -21,6 +21,7 @@ export interface PlayAttemptRecord {
   currentTab?: number;
   progress?: number;
   currentCheckpointId?: string | null;
+  currentCheckpointIndex?: number;
   totalCheckpoints?: number;
   accumulatedPoints: number;
   updatedAt: string;
@@ -30,7 +31,10 @@ export interface OpenLearnDBSchema extends DBSchema {
   moduleCompletions: {
     key: string; // moduleId
     value: ModuleCompletionRecord;
-    indexes: { "by-lastPlayedAt": string };
+    indexes: {
+      "by-lastPlayedAt": string;
+      "by-lastPlayedVersionId": string;
+    };
   };
   collectionProgress: {
     key: string; // collectionId
@@ -60,6 +64,7 @@ export function getOpenLearnDB(): Promise<IDBPDatabase<OpenLearnDBSchema>> {
             keyPath: "moduleId",
           });
           completionStore.createIndex("by-lastPlayedAt", "lastPlayedAt");
+          completionStore.createIndex("by-lastPlayedVersionId", "lastPlayedVersionId");
         }
 
         if (!db.objectStoreNames.contains("collectionProgress")) {

@@ -51,6 +51,10 @@ export default function FLow(props: IFlow) {
 
   useEffect(() => {
     setMounted(true);
+    return () => {
+      simStore.getState().setStarted(false);
+      simStore.getState().clearControls();
+    };
   }, []);
 
   const { serverMode, isLoading: isModeLoading } = usePlayServerMode(props.mode);
@@ -135,7 +139,7 @@ function Content(props: IContent) {
       render: ResultFLow,
       back: isHost
         ? { label: "Go to Dashboard", goto: PATHS.SESSION.DASHBOARD }
-        : { label: "Retake Lesson", goto: "refresh" },
+        : { label: "Retake Lesson", goto: "retake" },
       next: isHost
         ? { label: "View Analytics", goto: PATHS.SESSION.ONE.ANALYTICS(sessionId) }
         : { label: "Back to Modules", goto: PATHS.MODULES },
@@ -296,7 +300,9 @@ function Footer(props: IFooter) {
   const router = useRouter();
   const queryClient = useQueryClient();
   const { serverMode } = usePlayServerMode(mode);
-  const { mutate: navigate, isPending } = useApi.mutate("sim:general:post:navigate");
+  const { mutate: navigate, isPending: isNavPending } = useApi.mutate("sim:general:post:navigate");
+  const { mutate: retake, isPending: isRetakePending } = useApi.mutate("sim:general:post:retake");
+  const isPending = isNavPending || isRetakePending;
   const started = useStore(simStore, (s) => s.started);
   const setStarted = useStore(simStore, (s) => s.setStarted);
 
@@ -304,8 +310,17 @@ function Footer(props: IFooter) {
   const { back, next } = activeTab;
 
   const handleAction = (goto: number | string) => {
-    if (goto === "refresh") {
-      window.location.reload();
+    if (goto === "retake") {
+      retake({
+        params: { mode: serverMode, playId: id, playerId },
+      }, {
+        onSuccess: () => {
+          setStarted(false);
+          queryClient.invalidateQueries({
+            queryKey: QUERY_KEYS["sim:general:get:navigate"](id),
+          });
+        },
+      });
       return;
     }
 

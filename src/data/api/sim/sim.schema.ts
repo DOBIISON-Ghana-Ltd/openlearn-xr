@@ -75,11 +75,10 @@ const SimCheckpointGetOne = ZApi({
       hint: ZModuleCheckpoint.shape.hint,
     }),
     meta: z.object({
-      checkpointId: z.string().nullable(),
-      currentCheckpointIndex: z.number().int(),
-      totalCheckpoints: z.number().int(),
-      accumulatedPoints: z.number().int(),
-    }),
+      currentCheckpointIndex: z.number().int().optional(),
+      totalCheckpoints: z.number().int().optional(),
+      accumulatedPoints: z.number().int().optional(),
+    }).optional(),
   }),
 });
 
@@ -111,7 +110,6 @@ const SimGeneralGetScore = ZApi({
   }),
   res: z.object({
     score: z.number().int(),
-    moduleId: z.string().optional(),
   }),
 });
 
@@ -241,6 +239,7 @@ const SimGeneralGetNavigate = ZApi({
   res: z.object({
     currentTab: z.number().int(),
     progress: z.number().int(),
+    currentCheckpointIndex: z.number().int().optional(),
     totalCheckpoints: z.number().int().optional(),
     checkpointId: z.string().nullable().optional(),
   }),
@@ -260,6 +259,21 @@ const SimGeneralPostNavigate = ZApi({
     isHost: z.boolean().optional(),
   }),
   res: z.string(),
+});
+
+// ---------------------------------------------------------------------------
+// POST /api/sim/play/[...slug]/retake — reset attempt for replay
+// ---------------------------------------------------------------------------
+const SimGeneralPostRetake = ZApi({
+  params: z.object({
+    mode: ServerModeEnum,
+    playId: z.string(),
+    playerId: z.string(),
+  }),
+  res: z.object({
+    checkpointId: z.string().nullable().optional(),
+    totalCheckpoints: z.number().int().optional(),
+  }),
 });
 
 // ---------------------------------------------------------------------------
@@ -332,6 +346,7 @@ const schema = {
   SimGeneralGetScore,
   SimGeneralGetNavigate,
   SimGeneralPostNavigate,
+  SimGeneralPostRetake,
 
   SimCollectionGetAll,
   SimCollectionGetModules,

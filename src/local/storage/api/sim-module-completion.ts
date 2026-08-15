@@ -12,12 +12,15 @@ export async function getModuleCompletions(): Promise<ModuleCompletionRecord[]> 
 }
 
 export async function getModuleCompletion(
-  moduleId: string
+  identifier: string
 ): Promise<ModuleCompletionRecord | null> {
   try {
     const db = await getOpenLearnDB();
-    const completion = await db.get("moduleCompletions", moduleId);
-    return completion ?? null;
+    const byModuleId = await db.get("moduleCompletions", identifier);
+    if (byModuleId) return byModuleId;
+
+    const byVersionId = await db.getFromIndex("moduleCompletions", "by-lastPlayedVersionId", identifier);
+    return byVersionId ?? null;
   } catch (error) {
     console.error("[LocalDB] Error fetching module completion:", error);
     return null;
@@ -36,7 +39,7 @@ export async function upsertModuleCompletion(params: {
     const db = await getOpenLearnDB();
     const existing = await db.get("moduleCompletions", params.moduleId);
     const now = params.lastPlayedAt ?? new Date().toISOString();
-    const currentScore = params.score ?? params.highScore ?? 0;
+    const currentScore = params.score ?? 0;
     const bestScore = Math.max(existing?.highScore ?? 0, params.highScore ?? currentScore);
 
     const record: ModuleCompletionRecord = {

@@ -8,6 +8,8 @@ import { Dialog } from '@base-ui/react/dialog';
 import { IServerMode, usePlayServerMode } from '@/hooks/use-play-mode';
 import { Infer } from '@/data/types.base';
 import { match, P } from 'ts-pattern';
+import { simStore } from '@/store/sim/store';
+import { useStore } from 'zustand';
 import { LightbulbIcon, InfoIcon, ChevronRightIcon, CheckCircle2Icon, XCircleIcon, Loader2Icon } from 'lucide-react';
 
 type ICheckpoint = Infer["SimCheckpointGetOne"]["res"];
@@ -15,16 +17,14 @@ type ICheckpointFlow = {} & IFlowContent;
 
 export default function CheckpointFLow(props: ICheckpointFlow) {
   const { serverMode, isLoading: isModeLoading } = usePlayServerMode(props.mode);
-  const [isFinished, setIsFinished] = useState(false);
+  const playerId = useStore(simStore, (s) => s.getSessionPlayer(props.id)) || '';
 
-  const { data, isLoading, isFetching, refetch } = useApi.query(
-    "sim:checkpoint:get:one",
-    {
-      params: { playId: props.id },
-      query: { mode: serverMode },
-    },
-    !isModeLoading && !isFinished
-  );
+  const { data, isLoading, isFetching, refetch } = useApi.query("sim:checkpoint:get:one", {
+    params: { playId: props.id },
+    query: { mode: serverMode, playerId },
+  }, !isModeLoading);
+
+  const isCompleted = !!data?.meta?.totalCheckpoints && (data.meta.currentCheckpointIndex ?? 0) >= data.meta.totalCheckpoints;
 
   return (
     <div className="flex-1 bg-surface-white pt-5 pb-8 px-6 lg:pl-86.25 lg:pr-8 overflow-y-auto w-full min-h-0">
@@ -39,19 +39,20 @@ export default function CheckpointFLow(props: ICheckpointFlow) {
           Answer the questions to show what you have learnt
         </p>
 
-        {match({ data, isLoading: isLoading || isModeLoading })
+        {match({ data, isCompleted, isLoading: isLoading || isModeLoading })
           .with({ isLoading: true }, () => <Content.Loading />)
-          .with({ data: P.nullish, isLoading: false }, () => <Content.Error />)
+          .with({ isCompleted: true }, () => <Content.Completed />)
           .with({ data: P.select(P.nonNullable) }, (data) => (
             <Content
               data={data}
               playId={props.id}
+              playerId={playerId}
               serverMode={serverMode}
               isRefetching={isFetching}
               refetch={refetch}
-              onFinish={() => setIsFinished(true)}
             />
           ))
+          .with({ data: P.nullish, isLoading: false }, () => <Content.Error />)
           .exhaustive()
         }
       </div>
@@ -77,47 +78,39 @@ type IContent = {
   serverMode: IServerMode;
   isRefetching: boolean;
   refetch: () => void;
-  onFinish: () => void;
 };
 function Content(props: IContent) {
-  const { isRefetching, playId, serverMode, playerId, data: { checkpoint, meta }, refetch, onFinish } = props;
+  const { isRefetching, playId, serverMode, playerId, data: { checkpoint, meta }, refetch } = props;
   const [state, setState] = useState<Partial<IState>>({});
   const { mutate, isPending } = useApi.mutate("sim:checkpoint:post:answer");
 
   const handleSelect = (value: number) => {
     if (state.choosenAnswer !== undefined || isPending) return;
-
     setState({ choosenAnswer: value });
 
-    mutate(
-      {
-        params: { playId },
-        body: {
-          mode: serverMode,
-          selectedIndex: value,
-          sessionPlayerId: playerId,
-        },
+    mutate({
+      params: { playId },
+      body: {
+        mode: serverMode,
+        selectedIndex: value,
+        sessionPlayerId: playerId,
       },
-      {
-        onSuccess: (res) => {
-          setState((prev) => ({
-            ...prev,
-            isCorrect: res.isCorrect,
-            correctAnswer: res.correctAnswer,
-            explanation: res.explanation,
-            pointsAwarded: res.pointsAwarded,
-          }));
-
-          if (!res.nextCheckpointId) {
-            onFinish();
-          }
-        },
-        onError: () => {
-          setState({});
-        },
-      }
-    );
+    }, {
+      onSuccess: (res) => {
+        setState((prev) => ({
+          ...prev,
+          isCorrect: res.isCorrect,
+          correctAnswer: res.correctAnswer,
+          explanation: res.explanation,
+          pointsAwarded: res.pointsAwarded,
+        }));
+      },
+      onError: () => setState({}),
+    });
   };
+
+  const currentIdx = meta?.currentCheckpointIndex ?? 0;
+  const totalCount = meta?.totalCheckpoints ?? 1;
 
   const handleNext = () => {
     setState({});
@@ -128,12 +121,12 @@ function Content(props: IContent) {
     <>
       <div className="w-full mt-2 flex items-center justify-between">
         <span className="text-h6 text-primary-text-dark">
-          {`${meta.currentCheckpointIndex + 1} of ${meta.totalCheckpoints}`}
+          {`${currentIdx + 1} of ${totalCount}`}
         </span>
 
         <div className="flex-center gap-2">
           {/* Button 1 - Next (Hidden on final checkpoint) */}
-          {meta.currentCheckpointIndex + 1 < meta.totalCheckpoints && state.isCorrect !== undefined && (
+          {currentIdx + 1 < totalCount && state.isCorrect !== undefined && (
             <button
               type="button"
               onClick={handleNext}
@@ -171,7 +164,7 @@ function Content(props: IContent) {
 
       <div className="w-full bg-surface-slate border border-surface-slate rounded-[15.5px] p-6 lg:p-8 flex flex-col gap-4 mt-1 shadow-sm">
         <h2 className="text-h6 font-normal text-secondary-text mb-2">
-          {`${meta.currentCheckpointIndex + 1}. ${checkpoint.question}`}
+          {`${currentIdx + 1}. ${checkpoint.question}`}
         </h2>
 
         {/* Options Stack */}
@@ -199,8 +192,26 @@ function Content(props: IContent) {
 
 Content.Loading = function Loading() {
   return (
-    <div className="relative flex-1 flex flex-col items-center justify-center bg-surface-white size-full min-h-0 overflow-hidden">
+    <div className="relative flex-1 flex-center bg-surface-white size-full min-h-0 py-12">
       <Loader2Icon className="size-8 animate-spin text-primary-cta" />
+    </div>
+  );
+};
+
+Content.Completed = function Completed() {
+  return (
+    <div className="w-full bg-surface-slate border border-surface-slate rounded-[15.5px] p-8 flex flex-col items-center justify-center text-center gap-4 mt-2 shadow-sm">
+      <div className="size-16 rounded-full bg-success/15 flex items-center justify-center text-success">
+        <CheckCircle2Icon className="size-9" />
+      </div>
+      <div className="flex flex-col gap-1.5 max-w-md">
+        <h2 className="text-h4 font-medium text-primary-text-dark">
+          Assessment Completed
+        </h2>
+        <p className="text-normal text-secondary-text leading-relaxed">
+          You have successfully answered all checkpoint questions for this lesson. Click continue below to view your results.
+        </p>
+      </div>
     </div>
   );
 };
@@ -223,7 +234,6 @@ type IChoiceCard = {
   isCorrect?: boolean;
   onClick: () => void;
 };
-
 function ChoiceCard(props: IChoiceCard) {
   const { label, isChosen, isCorrectOption, isAnswerEvaluated, isPendingChoice, isPending, isCorrect, onClick } = props;
 
@@ -247,13 +257,13 @@ function ChoiceCard(props: IChoiceCard) {
       </span>
 
       {isPendingChoice && (
-        <Loader2Icon className="size-5 animate-spin text-primary-cta" />
+        <Loader2Icon className="shrink-0 size-5 animate-spin text-primary-cta" />
       )}
       {isAnswerEvaluated && isChosen && isCorrect && (
-        <CheckCircle2Icon className="size-5 text-success" />
+        <CheckCircle2Icon className="shrink-0 size-5 text-success" />
       )}
       {isAnswerEvaluated && isChosen && !isCorrect && (
-        <XCircleIcon className="size-5 text-error" />
+        <XCircleIcon className="shrink-0 size-5 text-error" />
       )}
     </div>
   );

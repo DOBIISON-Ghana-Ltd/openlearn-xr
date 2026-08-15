@@ -477,6 +477,7 @@ export const PlayAttemptScalarFieldEnum = {
   currentTab: 'currentTab',
   progress: 'progress',
   currentCheckpointId: 'currentCheckpointId',
+  currentCheckpointIndex: 'currentCheckpointIndex',
   totalCheckpoints: 'totalCheckpoints',
   accumulatedPoints: 'accumulatedPoints',
   sessionPlayerId: 'sessionPlayerId',

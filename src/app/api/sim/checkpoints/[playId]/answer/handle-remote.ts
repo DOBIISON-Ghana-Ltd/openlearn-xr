@@ -56,7 +56,8 @@ export function handlePostRemoteAnswer(playId: string, body: IAnswerBody) {
     await prisma.playAttempt.update({
       where: { id: attemptIdToUpdate },
       data: {
-        currentCheckpointId: nextCheckpointId || null,
+        currentCheckpointId: nextCheckpointId || targetCheckpointId,
+        currentCheckpointIndex: attempt.currentCheckpointIndex + 1,
         accumulatedPoints: finalScore,
       },
     });

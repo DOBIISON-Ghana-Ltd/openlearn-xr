@@ -29,7 +29,7 @@ export function handleGetRemoteScore(playId: string) {
       score = completion?.lastScore ?? 0;
     }
 
-    const resData = { score, moduleId };
+    const resData = { score };
     return JSend.success(ZSim.SimGeneralGetScore.shape.res.parse(resData));
   });
 }

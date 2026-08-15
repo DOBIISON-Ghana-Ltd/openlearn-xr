@@ -34,8 +34,7 @@ export async function handleGetSessionCheckpoint(playId: string, playerId: strin
       hint: activeCheckpoint.hint,
     },
     meta: {
-      checkpointId: null,
-      currentCheckpointIndex: Math.max(0, activeCheckpoint.orderIndex - 1),
+      currentCheckpointIndex: attempt.currentCheckpointIndex,
       totalCheckpoints: attempt.totalCheckpoints,
       accumulatedPoints: attempt.accumulatedPoints,
     },

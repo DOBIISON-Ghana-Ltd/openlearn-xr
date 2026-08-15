@@ -1,4 +1,4 @@
-import fetcher from "@/data/fetcher";
+import fetcher, { ApiError } from "@/data/fetcher";
 import { axios } from "@/data/axios";
 import { Infer, QueryConfig, MutationConfig } from "@/data/types.base";
 import { QUERY_KEYS } from "@/data/key-factory";
@@ -36,14 +36,21 @@ const simCheckpointGetOne = {
   queryFn: async ({ params, query }: Pick<Infer["SimCheckpointGetOne"], "params" | "query">) => {
     if (query.mode === "local") {
       const attempt = (await localDB.getPlayAttempt(params.playId))!;
-      console.log({ attempt })
       query.checkpointId = attempt.currentCheckpointId || "";
 
       const res = await fetcher(
         () => axios.get(R["sim:checkpoint:get:one"](params), { params: query }),
         ZSim.SimCheckpointGetOne.shape.res
       );
-      return res;
+
+      return {
+        checkpoint: res.checkpoint,
+        meta: {
+          currentCheckpointIndex: attempt.currentCheckpointIndex ?? 0,
+          totalCheckpoints: attempt.totalCheckpoints ?? 0,
+          accumulatedPoints: attempt.accumulatedPoints ?? 0,
+        },
+      };
     }
 
     const res = await fetcher(
@@ -53,9 +60,10 @@ const simCheckpointGetOne = {
     return res;
   },
   options: {
+    refetchOnMount: "always",
     refetchOnWindowFocus: false,
     refetchOnReconnect: false,
-    staleTime: Infinity,
+    staleTime: 0,
   },
 } satisfies QueryConfig;
 
@@ -72,11 +80,13 @@ const simCheckpointPostAnswer = {
       );
 
       const updatedPoints = attempt.accumulatedPoints + (res.isCorrect ? res.pointsAwarded : 0);
+      const nextCheckpointIndex = (attempt.currentCheckpointIndex ?? 0) + 1;
 
       // 1. Update PlayAttempt in IndexedDB
       await localDB.upsertPlayAttempt({
         moduleVersionId: params.playId,
-        currentCheckpointId: res.nextCheckpointId || null,
+        currentCheckpointId: res.nextCheckpointId || attempt.currentCheckpointId,
+        currentCheckpointIndex: nextCheckpointIndex,
         accumulatedPoints: updatedPoints,
       });
       console.log("NEXT CHECKPOINT: ", res.nextCheckpointId, typeof res.nextCheckpointId);
@@ -230,6 +240,10 @@ const simGeneralGetScore = {
 
     return data;
   },
+  options: {
+    refetchOnMount: "always",
+    staleTime: 0,
+  },
 } satisfies QueryConfig;
 
 const simGeneralGetNavigate = {
@@ -239,9 +253,8 @@ const simGeneralGetNavigate = {
   queryFn: async ({ params, query }: Pick<Infer["SimGeneralGetNavigate"], "params" | "query">) => {
     if (params.mode === "local") {
       let attempt = await localDB.getPlayAttempt(params.playId);
-      console.log("FROM GET NAVIGATE : ", { attempt })
-      // If attempt does not exist or completed attempt needs reset (currentTab === 5 && !currentCheckpointId)
-      if (!attempt || (attempt.currentTab === 5 && !attempt.currentCheckpointId)) {
+      console.log("FROM GET NAVIGATE : ", attempt);      // If attempt does not exist, initialize fresh attempt at Tab 0
+      if (!attempt) {
         const res = await fetcher(
           () => axios.get(R["sim:general:get:navigate"](params), { params: query }),
           ZSim.SimGeneralGetNavigate.shape.res
@@ -252,6 +265,7 @@ const simGeneralGetNavigate = {
           currentTab: 0,
           progress: 0,
           accumulatedPoints: 0,
+          currentCheckpointIndex: 0,
           currentCheckpointId: res.checkpointId ?? null,
           totalCheckpoints: res.totalCheckpoints ?? 0,
         });
@@ -276,17 +290,11 @@ const simGeneralPostNavigate = {
   type: "mutation",
   mutationFn: async ({ params, body }: Pick<Infer["SimGeneralPostNavigate"], "params" | "body">) => {
     if (params.mode === "local") {
-      const attempt = (await localDB.getPlayAttempt(params.playId))!;
-      const currentTab = attempt.currentTab ?? 0;
-
-      // Single-step transition (handles 0 -> 1 and 1 <-> 2 <-> 3 <-> 4 <-> 5; ignores jumps like 3 -> 1 on resume)
-      if (Math.abs(body.nextTab - currentTab) === 1) {
-        await localDB.upsertPlayAttempt({
-          moduleVersionId: params.playId,
-          currentTab: body.nextTab,
-          progress: Math.round((body.nextTab / 5) * 100),
-        });
-      }
+      await localDB.upsertPlayAttempt({
+        moduleVersionId: params.playId,
+        currentTab: body.nextTab,
+        progress: Math.round((body.nextTab / 5) * 100),
+      });
 
       return "Navigation updated successfully.";
     }
@@ -295,6 +303,30 @@ const simGeneralPostNavigate = {
       () => axios.post(R["sim:general:post:navigate"](params), body),
       ZSim.SimGeneralPostNavigate.shape.res
     );
+    return data;
+  },
+} satisfies MutationConfig;
+
+const simGeneralPostRetake = {
+  type: "mutation",
+  mutationFn: async (vars: Pick<Infer["SimGeneralPostRetake"], "params">) => {
+    const data = await fetcher(
+      () => axios.post(R["sim:general:post:retake"](vars.params)),
+      ZSim.SimGeneralPostRetake.shape.res
+    );
+
+    if (vars.params.mode === "local") {
+      await localDB.upsertPlayAttempt({
+        moduleVersionId: vars.params.playId,
+        currentTab: 0,
+        progress: 0,
+        currentCheckpointIndex: 0,
+        accumulatedPoints: 0,
+        currentCheckpointId: data.checkpointId ?? null,
+        totalCheckpoints: data.totalCheckpoints ?? 0,
+      });
+    }
+
     return data;
   },
 } satisfies MutationConfig;
@@ -323,6 +355,7 @@ export default {
   "sim:general:get:score": simGeneralGetScore,
   "sim:general:get:navigate": simGeneralGetNavigate,
   "sim:general:post:navigate": simGeneralPostNavigate,
+  "sim:general:post:retake": simGeneralPostRetake,
 
   "sim:module-completion:get:all": simModuleCompletionGetAll,
 

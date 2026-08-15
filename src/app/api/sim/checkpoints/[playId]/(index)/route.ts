@@ -16,11 +16,11 @@ export const GET = apiHandler<{ playId: string }>(async (req, ctx) => {
 
   switch (mode) {
     case "local":
-      return handleGetLocalCheckpoint(playId, checkpointId);
+      return handleGetLocalCheckpoint(checkpointId);
     case "remote":
       return handleGetRemoteCheckpoint(playId)(req, ctx);
     case "session":
-      return handleGetSessionCheckpoint(playId, playerId);
+      return handleGetSessionCheckpoint(playId, playerId || "");
     default:
       return JSend.error("Invalid mode specified", 400);
   }

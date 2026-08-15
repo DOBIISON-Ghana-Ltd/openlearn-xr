@@ -13,6 +13,6 @@ export async function handleGetSessionScore(playId: string, playerId: string) {
   });
 
   const score = player?.score ?? 0;
-  const resData = { score, moduleId: undefined };
+  const resData = { score };
   return JSend.success(ZSim.SimGeneralGetScore.shape.res.parse(resData));
 }
