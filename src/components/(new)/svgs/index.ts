@@ -10,3 +10,4 @@ export * from "./sessions-filled-svg";
 export * from "./sessions-outline-svg";
 export * from "./settings-filled-svg";
 export * from "./settings-outline-svg";
+export * from "./logo-small-svg";

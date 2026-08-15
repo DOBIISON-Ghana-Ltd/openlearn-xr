@@ -27,20 +27,20 @@ export const getPusherServer = (): Pusher => {
 
   const config: Pusher.Options = host
     ? {
-        appId,
-        key,
-        secret,
-        host,
-        port: portStr || undefined,
-        useTLS,
-      }
+      appId,
+      key,
+      secret,
+      host,
+      port: portStr || undefined,
+      useTLS,
+    }
     : {
-        appId,
-        key,
-        secret,
-        cluster: env.PUSHER_CLUSTER || "mt1",
-        useTLS,
-      };
+      appId,
+      key,
+      secret,
+      cluster: env.PUSHER_CLUSTER || "mt1",
+      useTLS,
+    };
 
   pusherServerInstance = new Pusher(config);
   return pusherServerInstance;
@@ -62,9 +62,9 @@ export const triggerEvent = async <E extends RealtimeEventName>(
  * Session-specific trigger helper that automatically prepends `session-` prefix.
  */
 export const triggerSessionEvent = async <E extends RealtimeEventName>(
-  sessionId: string,
+  joinCode: string,
   event: E,
   data: RealtimeEventMap[E]
 ) => {
-  await triggerEvent(`session-${sessionId}`, event, data);
+  await triggerEvent(`session-${joinCode}`, event, data);
 };

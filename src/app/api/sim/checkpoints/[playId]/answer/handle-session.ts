@@ -40,8 +40,8 @@ export async function handlePostSessionAnswer(playId: string, body: IAnswerBody)
 
   const nextSessionCheckpoint = await prisma.sessionCheckpoint.findFirst({
     where: {
-      sessionId: playId,
       isEnabled: true,
+      session: { joinCode: playId },
       checkpointId: { not: targetCheckpointId },
       checkpoint: { orderIndex: { gt: checkpoint.orderIndex } },
     },
@@ -63,15 +63,14 @@ export async function handlePostSessionAnswer(playId: string, body: IAnswerBody)
   });
 
   // 2. If finished, mark SessionPlayer completed
-  if (!nextCheckpointId) {
-    await prisma.sessionPlayer.update({
-      where: { id: body.sessionPlayerId },
-      data: {
-        score: finalScore,
-        completedAt: new Date(),
-      },
-    });
-  }
+  await prisma.sessionPlayer.update({
+    where: { id: body.sessionPlayerId },
+    data: {
+      score: finalScore,
+      ...(nextCheckpointId ? {} : { completedAt: new Date() }),
+    },
+  });
+
 
   const resData = {
     isCorrect,

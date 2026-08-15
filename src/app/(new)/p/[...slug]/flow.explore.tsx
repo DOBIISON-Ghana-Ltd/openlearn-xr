@@ -8,6 +8,7 @@ import { getSimulationConfig } from '@/local/simulations';
 import FlowExploreInternal from './flow.explore.internal';
 import FlowExploreExternal from './flow.explore.external';
 import { Loader2Icon } from 'lucide-react';
+import { simStore } from '@/store/sim/store';
 
 type IExploreFlow = {} & IFlowContent;
 
@@ -16,6 +17,8 @@ export default function ExploreFLow(props: IExploreFlow) {
 
   useEffect(() => {
     setMounted(true);
+    simStore.getState().setDisableNext(false);
+    simStore.getState().setDisableBack(false);
   }, []);
 
   const { data: slugData, isLoading: isSlugQueryLoading } = useApi.query(

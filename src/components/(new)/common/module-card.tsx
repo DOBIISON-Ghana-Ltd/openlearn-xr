@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { BarChart2, CheckIcon, Clock, Play } from "lucide-react";
-import ImageWithFallback from "@/components/(new)/image-with-fallback";
+import ImageWithFallback from "./image-with-fallback";
 import { cn } from "@/lib/utils/cn";
 import { match } from "ts-pattern";
 
@@ -44,15 +44,14 @@ export default function ModuleCard({
   const cardContent = (
     <>
       {/* Card Thumbnail Top Section */}
-      <div className="relative w-full h-[160px] overflow-hidden shrink-0">
+      <div className="relative w-full h-40 overflow-hidden shrink-0">
         <ImageWithFallback
           src={image}
-          fallbackSrc="/(new)/module-thumbnail.png"
           alt={title}
           fill
           sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, (max-width: 1280px) 33vw, 25vw"
           loading="eager"
-          className="object-cover group-hover:scale-105 transition-transform duration-300"
+          className="object-cover"
         />
       </div>
 
@@ -78,11 +77,8 @@ export default function ModuleCard({
           {actionType === "select" ? (
             <div
               className={cn(
-                "size-6 rounded-full border border-[#3b494c]/30 flex items-center justify-center transition-all",
-                {
-                  "bg-primary-cta border-primary-cta text-primary-text-light": isSelected,
-                  "bg-transparent text-transparent": !isSelected,
-                }
+                "size-6 rounded-full border border-[#3b494c]/30 flex-center transition-all bg-transparent text-transparent",
+                { "bg-primary-cta border-primary-cta text-primary-text-light": isSelected }
               )}
             >
               <CheckIcon className="size-3.5 stroke-3 transition-colors" />
@@ -98,7 +94,7 @@ export default function ModuleCard({
   );
 
   const containerClasses = cn(
-    "group bg-primary-subtle border-2 border-primary-light rounded-[20px] overflow-hidden flex flex-col relative transition-all duration-200 hover:shadow-md cursor-pointer",
+    "group bg-primary-subtle border-2 border-primary-light rounded-[20px] overflow-hidden flex flex-col relative transition-all duration-200 cursor-pointer",
     {
       "border-primary-cta ring-2 ring-primary-cta/20": isSelected,
       "hover:border-primary-cta/40": !isSelected,

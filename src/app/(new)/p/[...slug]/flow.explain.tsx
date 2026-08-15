@@ -1,17 +1,25 @@
 'use client';
 
+import { useEffect } from 'react';
 import { cn } from '@/lib/utils/cn';
 import { IFlowContent } from './flow';
 import { Infer } from '@/data/types.base';
 import useApi from '@/data/hooks/use-api';
 import { match, P } from 'ts-pattern';
 import { Loader2Icon } from 'lucide-react';
+import { simStore } from '@/store/sim/store';
+import ImageWithFallback from '@/components/(new)/common/image-with-fallback';
 
 type IModuleDetail = Infer["SimModuleGetOne"]["res"];
 type IModuleNotes = NonNullable<IModuleDetail["notes"]>;
 type IExplainFlow = {} & IFlowContent;
 
 export default function ExplainFLow(props: IExplainFlow) {
+  useEffect(() => {
+    simStore.getState().setDisableNext(false);
+    simStore.getState().setDisableBack(false);
+  }, []);
+
   const { data, isLoading } = useApi.query("sim:module:get:one", {
     params: { id: props.id },
     query: { mode: props.mode },
@@ -97,10 +105,13 @@ function ConceptCard(props: IConceptCard) {
         <p className="text-normal text-primary-text-dark leading-normal">{data.description}</p>
       </div>
       <div className="w-44 aspect-square shrink-0 flex-center relative">
-        <img
-          src={"/(new)/explain-proton.png"}
+        <ImageWithFallback
+          src={data.image}
           alt={data.name}
-          className={cn('size-full pointer-events-none object-contain')}
+          fill
+          sizes="176px"
+          className="object-contain p-2"
+          fallbackIconClassName="size-36 text-primary-cta/25"
         />
       </div>
     </div>

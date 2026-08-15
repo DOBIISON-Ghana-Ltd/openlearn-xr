@@ -216,10 +216,9 @@ const SimSessionPostJoin = ZApi({
     avatar: z.string().optional(),
   }),
   res: z.object({
-    playerId: ZSessionPlayer.shape.id.nullable(),
+    playerId: ZSessionPlayer.shape.id,
     sessionId: ZLiveSession.shape.id,
     joinCode: ZLiveSession.shape.joinCode,
-    isHost: z.boolean(),
     config: ZLiveSession.shape.config,
   }),
 });

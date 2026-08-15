@@ -3,8 +3,6 @@ import { JSend } from "@/lib/utils/jsend";
 import ZSim from "@/data/api/sim/sim.schema";
 import prisma from "@/adapters/db/client";
 import { triggerSessionEvent } from "@/adapters/realtime/server";
-import { headers } from "next/headers";
-import { auth } from "@/adapters/auth/server";
 
 export const POST = apiHandler(async (req) => {
   const rawBody = await req.json();
@@ -29,37 +27,23 @@ export const POST = apiHandler(async (req) => {
     return JSend.error("Late admissions are not allowed for this active session.", 403);
   }
 
-  const userSession = await auth.api.getSession({
-    headers: await headers(),
+  const player = await prisma.sessionPlayer.create({
+    data: {
+      sessionId: liveSession.id,
+      name: body.name,
+      avatar: body.avatar || "avatar-01",
+    },
   });
 
-  const isHost = Boolean(userSession?.user && userSession.user.id === liveSession.hostId);
-
-  let playerId: string | null = null;
-
-  if (!isHost) {
-    const player = await prisma.sessionPlayer.create({
-      data: {
-        sessionId: liveSession.id,
-        userId: userSession?.user?.id || null,
-        name: body.name,
-        avatar: body.avatar || "avatar-01",
-      },
-    });
-
-    playerId = player.id;
-
-    await triggerSessionEvent(liveSession.id, "player:joined", {
-      participantId: player.id,
-      name: player.name,
-    });
-  }
+  await triggerSessionEvent(body.joinCode, "player:joined", {
+    participantId: player.id,
+    name: player.name,
+  });
 
   const parsedData = ZSim.SimSessionPostJoin.shape.res.parse({
-    playerId,
+    playerId: player.id,
     sessionId: liveSession.id,
     joinCode: liveSession.joinCode,
-    isHost,
     config: liveSession.config,
   });
 

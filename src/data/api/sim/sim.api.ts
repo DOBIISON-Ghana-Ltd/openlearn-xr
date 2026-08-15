@@ -89,11 +89,9 @@ const simCheckpointPostAnswer = {
         currentCheckpointIndex: nextCheckpointIndex,
         accumulatedPoints: updatedPoints,
       });
-      console.log("NEXT CHECKPOINT: ", res.nextCheckpointId, typeof res.nextCheckpointId);
 
       // 2. If finished, save module completion
       if (!res.nextCheckpointId && res.moduleId) {
-        console.log("PASSED TO COMPLETION");
         const existingCompletion = await localDB.getModuleCompletion(res.moduleId);
 
         await localDB.upsertModuleCompletion({
@@ -228,9 +226,11 @@ const simGeneralGetScore = {
     [...QUERY_KEYS["sim:general:get:score"](params.playId)],
   queryFn: async ({ params }: Pick<Infer["SimGeneralGetScore"], "params">) => {
     if (params.mode === "local") {
-      const completion = await localDB.getModuleCompletion(params.playId);
-      console.log("MY COMPLETION: ", completion);
-      return { score: completion?.lastScore ?? 0 };
+      const [completion, attempt] = await Promise.all([
+        localDB.getModuleCompletion(params.playId),
+        localDB.getPlayAttempt(params.playId),
+      ]);
+      return { score: completion?.lastScore ?? attempt?.accumulatedPoints ?? 0 };
     }
 
     const data = await fetcher(
@@ -253,7 +253,6 @@ const simGeneralGetNavigate = {
   queryFn: async ({ params, query }: Pick<Infer["SimGeneralGetNavigate"], "params" | "query">) => {
     if (params.mode === "local") {
       let attempt = await localDB.getPlayAttempt(params.playId);
-      console.log("FROM GET NAVIGATE : ", attempt);      // If attempt does not exist, initialize fresh attempt at Tab 0
       if (!attempt) {
         const res = await fetcher(
           () => axios.get(R["sim:general:get:navigate"](params), { params: query }),

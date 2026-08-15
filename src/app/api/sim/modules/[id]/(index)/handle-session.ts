@@ -4,7 +4,7 @@ import ZSim from "@/data/api/sim/sim.schema";
 
 export async function handleGetSessionModule(id: string) {
   const liveSession = await prisma.liveSession.findUnique({
-    where: { id },
+    where: { joinCode: id },
     select: { moduleVersionId: true },
   });
 

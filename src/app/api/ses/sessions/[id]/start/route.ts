@@ -6,15 +6,18 @@ import { triggerSessionEvent } from "@/adapters/realtime/server";
 export const POST = secureApiRoute<{ id: string }>(async (req, ctx) => {
   const { id } = await ctx.params;
 
-  await prisma.liveSession.update({
+  const res = await prisma.liveSession.update({
     where: { id },
     data: {
       status: "ACTIVE",
       startedAt: new Date(),
     },
+    select: {
+      joinCode: true
+    }
   });
 
-  await triggerSessionEvent(id, "session:started", { sessionId: id });
+  await triggerSessionEvent(res.joinCode, "session:started", { joinCode: res.joinCode });
 
   return JSend.success("Session started successfully");
 });

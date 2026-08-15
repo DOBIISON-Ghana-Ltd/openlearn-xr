@@ -53,6 +53,8 @@ export default function FLow(props: IFlow) {
     setMounted(true);
     return () => {
       simStore.getState().setStarted(false);
+      simStore.getState().setDisableNext(false);
+      simStore.getState().setDisableBack(false);
       simStore.getState().clearControls();
     };
   }, []);
@@ -152,9 +154,9 @@ function Content(props: IContent) {
       className="relative h-dvh min-h-screen flex flex-col bg-surface-white overflow-hidden"
     >
       <Header id={id} mode={mode} />
-      <main className="flex-1 flex flex-col min-h-0 overflow-y-auto">
+      <main className="flex-1 flex flex-col min-h-0 overflow-hidden">
         {tabFlow.map((content, idx) => (
-          <Tabs.Panel key={idx} value={String(idx)} className="flex-1 flex flex-col min-h-0">
+          <Tabs.Panel key={idx} value={String(idx)} className="flex-1 flex flex-col min-h-0 overflow-hidden">
             <content.render id={id} mode={mode} progress={nav.progress} />
           </Tabs.Panel>
         ))}
@@ -276,7 +278,7 @@ function Header(props: IHeader) {
           .with(true, () => <Loader2Icon className="size-5 animate-spin text-primary-cta" />)
           .otherwise(() => (
             <>
-              <LogOut className="size-5 rotate-180 text-primary-text-dark" />
+              <LogOut className="size-5 rotate-180" />
               <span>{exitConfig.label}</span>
             </>
           ))}
@@ -305,6 +307,8 @@ function Footer(props: IFooter) {
   const isPending = isNavPending || isRetakePending;
   const started = useStore(simStore, (s) => s.started);
   const setStarted = useStore(simStore, (s) => s.setStarted);
+  const disableNext = useStore(simStore, (s) => s.disableNext);
+  const disableBack = useStore(simStore, (s) => s.disableBack);
 
   const activeTab = tabFlow[tabIndex] || tabFlow[0];
   const { back, next } = activeTab;
@@ -357,7 +361,7 @@ function Footer(props: IFooter) {
       <button
         type="button"
         onClick={() => handleAction(back.goto)}
-        disabled={isPending || tabIndex === 0}
+        disabled={isPending || tabIndex === 0 || disableBack}
         className="bg-surface-slate text-tertiary text-button w-60 h-15 rounded-[10px] shadow-[0px_4px_4px_0px_rgba(69,157,159,0.3)] flex items-center justify-center transition-all cursor-pointer hover:bg-surface-white active:scale-98 disabled:opacity-40 disabled:cursor-not-allowed disabled:pointer-events-none"
       >
         {back.label}
@@ -367,7 +371,7 @@ function Footer(props: IFooter) {
       <button
         type="button"
         onClick={() => handleAction(next.goto)}
-        disabled={isPending}
+        disabled={isPending || disableNext}
         className="bg-primary-cta text-button text-primary-text-light w-60 h-15 rounded-[10px] flex items-center justify-center hover:bg-primary-hover transition-all cursor-pointer active:scale-98 disabled:opacity-70 disabled:cursor-not-allowed disabled:pointer-events-none"
       >
         {next.label}

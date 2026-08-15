@@ -7,12 +7,18 @@ import { Infer } from '@/data/types.base';
 import useApi from '@/data/hooks/use-api';
 import { match, P } from 'ts-pattern';
 import { Loader2Icon } from 'lucide-react';
+import { simStore } from '@/store/sim/store';
 
 type IModuleDetail = Infer["SimModuleGetOne"]["res"];
 type IModuleNotes = NonNullable<IModuleDetail["notes"]>;
 type IEngageFlow = {} & IFlowContent;
 
 export default function EngageFLow(props: IEngageFlow) {
+  useEffect(() => {
+    simStore.getState().setDisableNext(false);
+    simStore.getState().setDisableBack(false);
+  }, []);
+
   const { data, isLoading } = useApi.query("sim:module:get:one", {
     params: { id: props.id },
     query: { mode: props.mode },

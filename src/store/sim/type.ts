@@ -32,4 +32,10 @@ export type IStore = {
   started: boolean;
   getStarted: () => boolean;
   setStarted: (started: boolean) => void;
+  disableNext: boolean;
+  getDisableNext: () => boolean;
+  setDisableNext: (disableNext: boolean) => void;
+  disableBack: boolean;
+  getDisableBack: () => boolean;
+  setDisableBack: (disableBack: boolean) => void;
 };

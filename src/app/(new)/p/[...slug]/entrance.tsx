@@ -16,6 +16,7 @@ import { Loader2Icon } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { PATHS } from '@/lib/constants/paths';
 import { toastManager } from '@/components/ui/toast';
+import { getRandomAvatar } from '@/lib/utils/get-random-avatar';
 
 const ZForm = ZSim.SimSessionPostJoin.shape.body;
 type IForm = Infer["SimSessionPostJoin"]["body"];
@@ -30,6 +31,7 @@ export default function Entrance(props: IEntrance) {
   const defaultValues: IForm = {
     name: "",
     joinCode: id || "",
+    avatar: getRandomAvatar(),
   };
 
   const { handleSubmit, control, reset } = useForm({
@@ -53,7 +55,7 @@ export default function Entrance(props: IEntrance) {
             addSession(resData.joinCode, {
               sessionId: resData.sessionId,
               playerId: resData.playerId,
-              isHost: resData.isHost,
+              isHost: false,
               config: resData.config,
             });
             router.replace(PATHS.PLAY("session", resData.joinCode));

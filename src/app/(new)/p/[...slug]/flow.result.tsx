@@ -1,5 +1,6 @@
 'use client';
 
+import { useEffect } from 'react';
 import { cn } from '@/lib/utils/cn';
 import { IFlowContent } from './flow';
 import { match, P } from 'ts-pattern';
@@ -16,6 +17,100 @@ type IPlayers = Infer["SimSessionGetPlayers"]["res"];
 type IResultFlow = {} & IFlowContent;
 
 export default function ResultFLow(props: IResultFlow) {
+  const isHost = useStore(simStore, (s) => s.getSessionInfo(props.id)?.isHost) ?? false;
+
+  useEffect(() => {
+    simStore.getState().setDisableNext(false);
+    simStore.getState().setDisableBack(false);
+  }, []);
+
+  return (
+    <div className="relative flex-1 bg-surface-white p-6 lg:px-20 overflow-y-auto w-full min-h-0 flex flex-col justify-center">
+      {match(isHost)
+        .with(true, () => <HostContent {...props} />)
+        .with(false, () => <NormalContent {...props} />)
+        .exhaustive()}
+    </div>
+  );
+}
+
+function HostContent(props: IResultFlow) {
+  const { data: players, isLoading: ILPlayers } = useApi.query(
+    "sim:session:get:players",
+    { id: props.id },
+    props.mode === "session"
+  );
+
+  const { data: detail, isLoading: ILDetails } = useApi.query("sim:module:get:one", {
+    params: { id: props.id },
+    query: { mode: props.mode },
+  });
+
+  const isLoading = ILDetails || ILPlayers;
+
+  return (
+    <div className="w-full max-w-7xl mx-auto min-h-full flex items-center justify-between gap-12 lg:gap-16 flex-col lg:flex-row">
+      <div className="flex-1 w-full">
+        {match({ detail, isLoading })
+          .with({ isLoading: true }, () => <HostResult.Loading />)
+          .with({ detail: P.nonNullable }, ({ detail }) => (
+            <HostResult detail={detail} totalPlayers={players?.length ?? 0} />
+          ))
+          .otherwise(() => <HostResult.Error />)}
+      </div>
+
+      <div className="flex-1 w-full flex justify-center">
+        {match({ players, isLoading: ILPlayers })
+          .with({ isLoading: true }, () => <Leaderboard.Loading />)
+          .with({ players: P.select(P.nonNullable) }, (players) => <Leaderboard players={players} />)
+          .with({ players: P.nullish, isLoading: false }, () => <Leaderboard.Error />)
+          .exhaustive()}
+      </div>
+    </div>
+  );
+}
+
+function HostResult({ detail, totalPlayers }: { detail: IDetail; totalPlayers: number }) {
+  return (
+    <div className="flex-1 flex flex-col gap-10 py-4 items-center text-center lg:items-start lg:text-left">
+      <div className="flex flex-col gap-3">
+        <h1 className="text-h2 text-primary-cta leading-tight">
+          Session Completed
+        </h1>
+        <p className="text-normal text-primary-text-dark">
+          You have successfully hosted <span className="text-primary-cta font-semibold">{detail.module.title}</span>.
+        </p>
+      </div>
+
+      <div className="flex-1 flex flex-col gap-1 mt-4 items-center lg:items-start">
+        <span className="text-button text-primary-text-dark">
+          Participants
+        </span>
+        <span className="text-display text-primary-cta leading-none mt-1">
+          {totalPlayers}
+        </span>
+      </div>
+    </div>
+  );
+};
+
+HostResult.Loading = function Loading() {
+  return (
+    <div className="w-full h-full flex-center">
+      <p className="text-small">Loading...</p>
+    </div>
+  );
+};
+
+HostResult.Error = function Error() {
+  return (
+    <div className="w-full h-full flex-center">
+      <p className="text-small">An error occurred</p>
+    </div>
+  );
+};
+
+function NormalContent(props: IResultFlow) {
   const { serverMode, isLoading: isModeLoading } = usePlayServerMode(props.mode);
 
   const { data: players, isLoading: ILPlayers } = useApi.query(
@@ -46,36 +141,34 @@ export default function ResultFLow(props: IResultFlow) {
   const isResultLoading = ILDetails || ILPlayScore || isModeLoading;
 
   return (
-    <div className="relative flex-1 bg-surface-white p-6 lg:px-20 overflow-y-auto w-full min-h-0 flex flex-col justify-center">
-      <div className={cn("w-full max-w-7xl mx-auto min-h-full flex items-center justify-between gap-12 lg:gap-16", {
-        "flex-col lg:flex-row": props.mode === "session",
-        "flex-col items-center justify-center": props.mode === "module",
-      })}>
-        <div className="flex-1 w-full">
-          {match({ detail, playScore, isLoading: isResultLoading })
-            .with({ isLoading: true }, () => <Result.Loading />)
-            .with({ detail: P.nonNullable, playScore: P.nonNullable }, ({ detail, playScore }) => (
-              <Result
-                detail={detail}
-                score={playScore.score}
-                mode={props.mode}
-              />
-            ))
-            .otherwise(() => <Result.Error />)
+    <div className={cn("w-full max-w-7xl mx-auto min-h-full flex items-center justify-between gap-12 lg:gap-16", {
+      "flex-col lg:flex-row": props.mode === "session",
+      "flex-col items-center justify-center": props.mode === "module",
+    })}>
+      <div className="flex-1 w-full">
+        {match({ detail, playScore, isLoading: isResultLoading })
+          .with({ isLoading: true }, () => <NormalResult.Loading />)
+          .with({ detail: P.nonNullable, playScore: P.nonNullable }, ({ detail, playScore }) => (
+            <NormalResult
+              detail={detail}
+              score={playScore.score}
+              mode={props.mode}
+            />
+          ))
+          .otherwise(() => <NormalResult.Error />)
+        }
+      </div>
+
+      {props.mode === "session" && (
+        <div className="flex-1 w-full flex justify-center">
+          {match({ players, isLoading: ILPlayers })
+            .with({ isLoading: true }, () => <Leaderboard.Loading />)
+            .with({ players: P.select(P.nonNullable) }, (players) => <Leaderboard players={players} />)
+            .with({ players: P.nullish, isLoading: false }, () => <Leaderboard.Error />)
+            .exhaustive()
           }
         </div>
-
-        {props.mode === "session" && (
-          <div className="flex-1 w-full flex justify-center">
-            {match({ players, isLoading: ILPlayers })
-              .with({ isLoading: true }, () => <Leaderboard.Loading />)
-              .with({ players: P.select(P.nonNullable) }, (players) => <Leaderboard players={players} />)
-              .with({ players: P.nullish, isLoading: false }, () => <Leaderboard.Error />)
-              .exhaustive()
-            }
-          </div>
-        )}
-      </div>
+      )}
     </div>
   );
 }
@@ -86,7 +179,7 @@ type IResult = {
   mode: "module" | "session";
 };
 
-function Result(props: IResult) {
+function NormalResult(props: IResult) {
   const { detail, score, mode } = props;
   const isSession = mode === "session";
 
@@ -121,7 +214,7 @@ function Result(props: IResult) {
   );
 }
 
-Result.Loading = function Loading() {
+NormalResult.Loading = function Loading() {
   return (
     <div className="w-full h-full flex-center">
       <p className="text-small">Loading...</p>
@@ -129,7 +222,7 @@ Result.Loading = function Loading() {
   );
 };
 
-Result.Error = function Error() {
+NormalResult.Error = function Error() {
   return (
     <div className="w-full h-full flex-center">
       <p className="text-small">An error occurred</p>

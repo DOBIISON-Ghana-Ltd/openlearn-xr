@@ -30,7 +30,7 @@ export const POST = apiHandler<{ id: string }>(async (req, ctx) => {
   });
 
   if (player) {
-    await triggerSessionEvent(liveSession.id, "player:left", {
+    await triggerSessionEvent(playId, "player:left", {
       participantId: player.id,
       name: player.name,
     });

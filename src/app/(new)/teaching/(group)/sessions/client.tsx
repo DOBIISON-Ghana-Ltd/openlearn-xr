@@ -1,6 +1,6 @@
 'use client';
 
-import ImageWithFallback from '@/components/(new)/image-with-fallback';
+import ImageWithFallback from '@/components/(new)/common/image-with-fallback';
 import Link from 'next/link';
 import { Presentation, Pencil, Trash2, ChevronLeft, ChevronRight, Users } from 'lucide-react';
 import { match, P } from 'ts-pattern';
@@ -204,7 +204,6 @@ function SessionCard({ data }: { data: ISessionItem }) {
       <div className="relative w-full md:w-48 h-32 rounded-lg overflow-hidden shrink-0">
         <ImageWithFallback
           src={image}
-          fallbackSrc="/(new)/module-thumbnail.png"
           alt={title}
           fill
           sizes="(max-width: 768px) 100vw, 192px"

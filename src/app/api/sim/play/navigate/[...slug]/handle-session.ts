@@ -57,7 +57,9 @@ export async function handleGetSessionNav(playId: string, playerId: string, isHo
     const currentTab = liveSession.currentTab;
     const progress = Math.round((currentTab / 5) * 100);
     return JSend.success(ZSim.SimGeneralGetNavigate.shape.res.parse({ currentTab, progress }));
-  }
+  };
+
+  if (!attempt) return JSend.error("Error occured", 500);
 
   // 3. Student-paced mode: student uses their own attempt's currentTab
   const resData = {
@@ -94,7 +96,7 @@ export async function handlePostSessionNav(playId: string, playerId: string, nex
     });
 
     if (isTutorLed) {
-      await triggerSessionEvent(liveSession.id, "tab:change", { currentTab: nextTab });
+      await triggerSessionEvent(playId, "tab:change", { currentTab: nextTab });
     }
 
     return JSend.success(responseMsg);

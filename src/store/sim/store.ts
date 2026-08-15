@@ -10,9 +10,17 @@ export const simStore = create<IStore>()(
       controls: [],
       controlsMap: {},
       started: false,
+      disableNext: false,
+      disableBack: false,
 
       getStarted: () => get().started,
       setStarted: (started: boolean) => set({ started }),
+
+      getDisableNext: () => get().disableNext,
+      setDisableNext: (disableNext: boolean) => set({ disableNext }),
+
+      getDisableBack: () => get().disableBack,
+      setDisableBack: (disableBack: boolean) => set({ disableBack }),
 
       addSession: (joinCode: string, info: ISessionInfo) =>
         set((state) => ({

@@ -36,9 +36,7 @@ export const POST = apiHandler<{ id: string }>(async (req, ctx) => {
     },
   });
 
-  await triggerSessionEvent(liveSession.id, "session:ended", {
-    sessionId: liveSession.id,
-  });
+  await triggerSessionEvent(playId, "session:ended", { joinCode: playId });
 
   return JSend.success("Session ended successfully.");
 });

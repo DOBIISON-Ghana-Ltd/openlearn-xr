@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { cn } from '@/lib/utils/cn';
 import { IFlowContent } from './flow';
 import useApi from '@/data/hooks/use-api';
@@ -16,15 +16,16 @@ type ICheckpoint = Infer["SimCheckpointGetOne"]["res"];
 type ICheckpointFlow = {} & IFlowContent;
 
 export default function CheckpointFLow(props: ICheckpointFlow) {
-  const { serverMode, isLoading: isModeLoading } = usePlayServerMode(props.mode);
-  const playerId = useStore(simStore, (s) => s.getSessionPlayer(props.id)) || '';
+  const isHost = useStore(simStore, (s) => s.getSessionInfo(props.id)?.isHost) ?? false;
 
-  const { data, isLoading, isFetching, refetch } = useApi.query("sim:checkpoint:get:one", {
-    params: { playId: props.id },
-    query: { mode: serverMode, playerId },
-  }, !isModeLoading);
-
-  const isCompleted = !!data?.meta?.totalCheckpoints && (data.meta.currentCheckpointIndex ?? 0) >= data.meta.totalCheckpoints;
+  useEffect(() => {
+    if (isHost) {
+      simStore.getState().setDisableNext(false);
+    } else {
+      simStore.getState().setDisableNext(true);
+    }
+    simStore.getState().setDisableBack(false);
+  }, [isHost]);
 
   return (
     <div className="flex-1 bg-surface-white pt-5 pb-8 px-6 lg:pl-86.25 lg:pr-8 overflow-y-auto w-full min-h-0">
@@ -36,27 +37,59 @@ export default function CheckpointFLow(props: ICheckpointFlow) {
 
         {/* Subtext (Figma Node 1:1729) */}
         <p className="text-normal text-primary-text-dark leading-normal w-full max-w-2xl">
-          Answer the questions to show what you have learnt
+          {isHost
+            ? "Guide students through the checkpoint questions"
+            : "Answer the questions to show what you have learnt"}
         </p>
 
-        {match({ data, isCompleted, isLoading: isLoading || isModeLoading })
-          .with({ isLoading: true }, () => <Content.Loading />)
-          .with({ isCompleted: true }, () => <Content.Completed />)
-          .with({ data: P.select(P.nonNullable) }, (data) => (
-            <Content
-              data={data}
-              playId={props.id}
-              playerId={playerId}
-              serverMode={serverMode}
-              isRefetching={isFetching}
-              refetch={refetch}
-            />
-          ))
-          .with({ data: P.nullish, isLoading: false }, () => <Content.Error />)
-          .exhaustive()
-        }
+        {match(isHost)
+          .with(true, () => <HostContent />)
+          .with(false, () => <NormalContent {...props} />)
+          .exhaustive()}
       </div>
     </div>
+  );
+}
+
+function HostContent() {
+  return null;
+}
+
+function NormalContent(props: ICheckpointFlow) {
+  const { serverMode, isLoading: isModeLoading } = usePlayServerMode(props.mode);
+  const playerId = useStore(simStore, (s) => s.getSessionPlayer(props.id)) || '';
+
+  const { data, isLoading, isFetching, refetch } = useApi.query("sim:checkpoint:get:one", {
+    params: { playId: props.id },
+    query: { mode: serverMode, playerId },
+  }, !isModeLoading);
+
+  const isCompleted = !!data?.meta?.totalCheckpoints && (data.meta.currentCheckpointIndex ?? 0) >= data.meta.totalCheckpoints;
+
+  useEffect(() => {
+    if (isCompleted) {
+      simStore.getState().setDisableNext(false);
+    }
+  }, [isCompleted]);
+
+  return (
+    <>
+      {match({ data, isCompleted, isLoading: isLoading || isModeLoading })
+        .with({ isLoading: true }, () => <NormalContent.Loading />)
+        .with({ isCompleted: true }, () => <NormalContent.Completed />)
+        .with({ data: P.select(P.nonNullable) }, (checkpointData) => (
+          <Content
+            data={checkpointData}
+            playId={props.id}
+            playerId={playerId}
+            serverMode={serverMode}
+            isRefetching={isFetching}
+            refetch={refetch}
+          />
+        ))
+        .with({ data: P.nullish, isLoading: false }, () => <NormalContent.Error />)
+        .exhaustive()}
+    </>
   );
 }
 
@@ -84,6 +117,19 @@ function Content(props: IContent) {
   const [state, setState] = useState<Partial<IState>>({});
   const { mutate, isPending } = useApi.mutate("sim:checkpoint:post:answer");
 
+  const currentIdx = meta?.currentCheckpointIndex ?? 0;
+  const totalCount = meta?.totalCheckpoints ?? 1;
+  const isLastQuestion = currentIdx + 1 >= totalCount;
+  const hasAnswered = state.isCorrect !== undefined;
+
+  useEffect(() => {
+    if (isLastQuestion && hasAnswered) {
+      simStore.getState().setDisableNext(false);
+    } else {
+      simStore.getState().setDisableNext(true);
+    }
+  }, [isLastQuestion, hasAnswered]);
+
   const handleSelect = (value: number) => {
     if (state.choosenAnswer !== undefined || isPending) return;
     setState({ choosenAnswer: value });
@@ -108,9 +154,6 @@ function Content(props: IContent) {
       onError: () => setState({}),
     });
   };
-
-  const currentIdx = meta?.currentCheckpointIndex ?? 0;
-  const totalCount = meta?.totalCheckpoints ?? 1;
 
   const handleNext = () => {
     setState({});
@@ -190,7 +233,7 @@ function Content(props: IContent) {
   );
 }
 
-Content.Loading = function Loading() {
+NormalContent.Loading = function Loading() {
   return (
     <div className="relative flex-1 flex-center bg-surface-white size-full min-h-0 py-12">
       <Loader2Icon className="size-8 animate-spin text-primary-cta" />
@@ -198,7 +241,7 @@ Content.Loading = function Loading() {
   );
 };
 
-Content.Completed = function Completed() {
+NormalContent.Completed = function Completed() {
   return (
     <div className="w-full bg-surface-slate border border-surface-slate rounded-[15.5px] p-8 flex flex-col items-center justify-center text-center gap-4 mt-2 shadow-sm">
       <div className="size-16 rounded-full bg-success/15 flex items-center justify-center text-success">
@@ -216,7 +259,7 @@ Content.Completed = function Completed() {
   );
 };
 
-Content.Error = function Error() {
+NormalContent.Error = function Error() {
   return (
     <div className="w-full h-full flex-center">
       <p className="text-small">An error occurred</p>
