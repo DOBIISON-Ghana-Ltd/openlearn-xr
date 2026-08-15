@@ -13,7 +13,7 @@ import OtpBlock from "@/components/(new)/form-blocks/otp-block";
 import { nuqs } from "@/lib/utils/nuqs";
 import useApi from "@/data/hooks/use-api";
 import { PATHS } from "@/lib/constants/paths";
-import { toastManager } from "@/components/ui/toast";
+import { toastManager } from "@/components/(new)/common/toast";
 import { Loader2Icon } from "lucide-react";
 import { match } from "ts-pattern";
 

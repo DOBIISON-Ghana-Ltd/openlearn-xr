@@ -20,7 +20,8 @@ const clientSchema = z.object({
 // Server-only variables + client variables (inherited)
 const serverSchema = clientSchema.extend({
   NODE_ENV: z.enum(['development', 'production', 'test']).default('development'),
-  DATABASE_URL: z.url().optional(),
+  DATABASE_URL: z.string().optional(),
+  DIRECT_URL: z.string().optional(),
   BETTER_AUTH_SECRET: z.string().optional(),
   BETTER_AUTH_URL: z.url().default("http://localhost:3000"),
   GOOGLE_CLIENT_ID: z.string().optional(),
@@ -60,20 +61,27 @@ const clientEnv = {
 const serverEnv = {
   ...clientEnv,
   NODE_ENV: process.env.NODE_ENV,
+
   DATABASE_URL: process.env.DATABASE_URL,
+  DIRECT_URL: process.env.DIRECT_URL,
+
   BETTER_AUTH_SECRET: process.env.BETTER_AUTH_SECRET,
   BETTER_AUTH_URL: process.env.BETTER_AUTH_URL,
+
   GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID,
   GOOGLE_CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET,
+
   EMAIL_PROVIDER: process.env.EMAIL_PROVIDER,
   RESEND_API_KEY: process.env.RESEND_API_KEY,
   EMAIL_FROM: process.env.EMAIL_FROM,
+  EMAIL_DEV_TO: process.env.EMAIL_DEV_TO,
+
   AWS_REGION: process.env.AWS_REGION,
   AWS_ACCESS_KEY_ID: process.env.AWS_ACCESS_KEY_ID,
   AWS_SECRET_ACCESS_KEY: process.env.AWS_SECRET_ACCESS_KEY,
   AWS_SES_SENDER: process.env.AWS_SES_SENDER,
-  S3_BUCKET_NAME: process.env.S3_BUCKET_NAME || process.env.AWS_S3_BUCKET, // handle both keys for backwards compatibility
-  EMAIL_DEV_TO: process.env.EMAIL_DEV_TO,
+  S3_BUCKET_NAME: process.env.S3_BUCKET_NAME,
+
   PUSHER_APP_ID: process.env.PUSHER_APP_ID,
   PUSHER_KEY: process.env.PUSHER_KEY || process.env.NEXT_PUBLIC_PUSHER_KEY,
   PUSHER_SECRET: process.env.PUSHER_SECRET,

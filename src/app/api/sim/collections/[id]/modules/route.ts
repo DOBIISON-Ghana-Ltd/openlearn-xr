@@ -11,7 +11,7 @@ export const GET = apiHandler(async (req, ctx: { params: Promise<{ id: string }>
     select: {
       id: true,
       name: true,
-      level: true,
+      grade: true,
     },
   });
 
@@ -28,20 +28,16 @@ export const GET = apiHandler(async (req, ctx: { params: Promise<{ id: string }>
     },
     select: {
       id: true,
-      versionNumber: true,
-      status: true,
-      _count: {
-        select: {
-          checkpoints: true,
-        },
-      },
       module: {
         select: {
           title: true,
+          image: true,
+          duration: true,
+          difficulty: true,
           collection: {
             select: {
               name: true,
-              level: true,
+              grade: true,
             },
           },
         },

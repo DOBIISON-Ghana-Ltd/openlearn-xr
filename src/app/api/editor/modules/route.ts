@@ -49,6 +49,7 @@ export const POST = secureApiRoute(async (req, ctx, user) => {
       title: body.title,
       slug: uniqueSlug,
       description: "",
+      difficulty: "MEDIUM",
       orderIndex: newOrderIndex,
       collectionId: body.collectionId,
     },

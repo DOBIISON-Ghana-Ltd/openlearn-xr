@@ -15,7 +15,7 @@ import { match } from 'ts-pattern';
 import { Loader2Icon } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { PATHS } from '@/lib/constants/paths';
-import { toastManager } from '@/components/ui/toast';
+import { toastManager } from '@/components/(new)/common/toast';
 import { getRandomAvatar } from '@/lib/utils/get-random-avatar';
 
 const ZForm = ZSim.SimSessionPostJoin.shape.body;

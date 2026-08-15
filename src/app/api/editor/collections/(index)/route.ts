@@ -41,6 +41,7 @@ export const POST = secureApiRoute(async (req, ctx, user) => {
       name: body.name,
       slug: uniqueSlug,
       description: body.description || null,
+      grade: "General",
     },
     select: {
       id: true,

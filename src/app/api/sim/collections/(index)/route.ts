@@ -8,7 +8,7 @@ export const GET = apiHandler(async (req) => {
     select: {
       id: true,
       name: true,
-      level: true,
+      grade: true,
       _count: {
         select: {
           modules: true,

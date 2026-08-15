@@ -26,10 +26,10 @@ export default function EnthalpyChangesModel() {
     if (reactionType === 'Neutralization (HCl + NaOH)') {
       deltaT = 0.35 * reactantAmount; // e.g. +17.5°C at 50g -> 42.5°C
       exo = true;
-    } else if (reactionType === 'Solution (NH4Cl in Water)') {
+    } else if (reactionType === 'Solution (NH4Cl - Endothermic)') {
       deltaT = -0.22 * reactantAmount; // e.g. -11.0°C at 50g -> 14.0°C
       exo = false;
-    } else if (reactionType === 'Solution (CaCl2 in Water)') {
+    } else if (reactionType === 'Solution (CaCl2 - Exothermic)') {
       deltaT = 0.28 * reactantAmount; // e.g. +14.0°C at 50g -> 39.0°C
       exo = true;
     }

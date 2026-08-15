@@ -19,7 +19,7 @@ import { match, P } from 'ts-pattern';
 import { Infer } from '@/data/types.base';
 import { useRouter } from 'next/navigation';
 import { PATHS } from '@/lib/constants/paths';
-import { toastManager } from '@/components/ui/toast';
+import { toastManager } from '@/components/(new)/common/toast';
 
 export type IFlowContent = {
   id: string;

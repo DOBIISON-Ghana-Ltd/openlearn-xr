@@ -4,8 +4,10 @@ import { dehydrate, HydrationBoundary } from '@tanstack/react-query';
 import Header from '@/components/(new)/common/header';
 import { HeaderSearch } from '@/components/(new)/common/header-search';
 import Footer from '@/components/(new)/common/footer';
+import { connection } from 'next/server';
 
 export default async function Layout({ children }: { children: React.ReactNode }) {
+  await connection();
   const queryClient = getQueryClient();
   await prefetchApi(queryClient, 'app:user:get:me');
 
