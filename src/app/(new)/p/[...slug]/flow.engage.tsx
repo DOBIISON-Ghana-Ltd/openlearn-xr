@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect } from 'react';
 import { cn } from '@/lib/utils/cn';
 import { IFlowContent } from './flow';
 import { Infer } from '@/data/types.base';
@@ -8,6 +8,7 @@ import useApi from '@/data/hooks/use-api';
 import { match, P } from 'ts-pattern';
 import { Loader2Icon } from 'lucide-react';
 import { simStore } from '@/store/sim/store';
+import { useStore } from 'zustand';
 
 type IModuleDetail = Infer["SimModuleGetOne"]["res"];
 type IModuleNotes = NonNullable<IModuleDetail["notes"]>;
@@ -29,7 +30,9 @@ export default function EngageFLow(props: IEngageFlow) {
       {match({ data, isLoading })
         .with({ isLoading: true }, () => <Content.Loading />)
         .with({ data: P.nullish, isLoading: false }, () => <Content.Error />)
-        .with({ data: P.select(P.nonNullable) }, (data) => <Content data={data} />)
+        .with({ data: P.select(P.nonNullable) }, (data) => (
+          <Content data={data} playId={props.id} />
+        ))
         .exhaustive()}
     </div>
   );
@@ -37,10 +40,11 @@ export default function EngageFLow(props: IEngageFlow) {
 
 type IContent = {
   data: IModuleDetail;
+  playId: string;
 };
 
 function Content(props: IContent) {
-  const { data } = props;
+  const { data, playId } = props;
 
   return (
     <div className="w-full max-w-3xl flex flex-col items-start gap-4">
@@ -52,9 +56,9 @@ function Content(props: IContent) {
         {data.notes?.engage.curiosityQuestion}
       </p>
 
-      <PreAssessment data={data.notes?.engage.preAssessment || []} />
+      <PreAssessment data={data.notes?.engage.preAssessment || []} playId={playId} />
     </div>
-  )
+  );
 };
 
 Content.Loading = function Loading() {
@@ -75,60 +79,48 @@ Content.Error = function Error() {
 
 type IPreAssessment = {
   data: IModuleNotes["engage"]["preAssessment"];
+  playId: string;
 };
 
-type IInternalQuestion = {
-  hasAnswered: boolean;
-  selectedIndex: number | null;
-  isCorrect: boolean;
-} & IPreAssessment["data"][number];
-
 function PreAssessment(props: IPreAssessment) {
-  const { data } = props;
-  const [questions, setQuestions] = useState<IInternalQuestion[]>([]);
-  const [activeIndex, setActiveIndex] = useState<number>(0);
+  const { data, playId } = props;
+  const playState = useStore(simStore, (s) => s.preAssessments[playId]);
+  const setAnswer = useStore(simStore, (s) => s.setPreAssessmentAnswer);
+  const setActiveIndex = useStore(simStore, (s) => s.setPreAssessmentActiveIndex);
 
-  useEffect(() => {
-    if (!data) return;
-    setQuestions(
-      data.map((item) => ({
-        ...item,
-        hasAnswered: false,
-        selectedIndex: null,
-        isCorrect: false,
-      }))
-    );
-    setActiveIndex(0);
-  }, [data]);
-
-  const currentQ = questions[activeIndex];
+  const activeIndex = playState?.activeIndex ?? 0;
+  const questionsCount = data?.length ?? 0;
+  const clampedIndex = Math.min(activeIndex, Math.max(0, questionsCount - 1));
+  const currentQ = data?.[clampedIndex];
+  const currentFeedback = playState?.answers?.[clampedIndex];
 
   const checkAnswer = (selectedIndex: number) => {
-    if (!currentQ || currentQ.hasAnswered) return;
+    if (!currentQ || currentFeedback?.hasAnswered) return;
 
     const isCorrect = selectedIndex === currentQ.answer;
 
-    const updatedQuestions = [...questions];
-    updatedQuestions[activeIndex] = {
-      ...currentQ,
-      hasAnswered: true,
+    setAnswer(playId, clampedIndex, {
+      questionIndex: clampedIndex,
       selectedIndex,
+      hasAnswered: true,
       isCorrect,
-    };
-
-    setQuestions(updatedQuestions);
+    });
 
     // Auto-advance to the next question after a 1600ms timer
-    if (activeIndex < questions.length - 1) {
+    if (clampedIndex < questionsCount - 1) {
       setTimeout(() => {
-        setActiveIndex((prev) => prev + 1);
+        setActiveIndex(playId, clampedIndex + 1);
       }, 1600);
     }
   };
 
-  if (!questions.length || !currentQ) {
+  if (!data || !data.length || !currentQ) {
     return null;
   }
+
+  const isAnswered = Boolean(currentFeedback?.hasAnswered);
+  const selectedIdx = currentFeedback?.selectedIndex ?? null;
+  const isAnswerCorrect = Boolean(currentFeedback?.isCorrect);
 
   return (
     <>
@@ -138,7 +130,7 @@ function PreAssessment(props: IPreAssessment) {
           Questions: What do you already know?
         </h2>
         <span className="text-normal text-tertiary">
-          {`${activeIndex + 1} of ${questions.length}`}
+          {`${clampedIndex + 1} of ${questionsCount}`}
         </span>
       </div>
 
@@ -149,23 +141,22 @@ function PreAssessment(props: IPreAssessment) {
           <div
             className={cn(
               "h-full rounded-full transition-transform ease-linear w-full scale-x-0 duration-0 origin-left bg-primary-cta",
-              { "scale-x-100 duration-1600": currentQ.hasAnswered }
+              { "scale-x-100 duration-1600": isAnswered }
             )}
           />
         </div>
 
         {/* Question Text */}
         <h3 className="text-h6 font-normal text-secondary-text mb-2">
-          {`${activeIndex + 1}. ${currentQ.question}`}
+          {`${clampedIndex + 1}. ${currentQ.question}`}
         </h3>
 
         {/* Options Stack */}
         <div className="flex flex-col gap-3.5 w-full">
           {currentQ.options.map((opt, index) => {
-            const isSelected = currentQ.selectedIndex === index;
-            const isAnswered = currentQ.hasAnswered;
-            const isCorrect = isSelected && currentQ.isCorrect;
-            const isWrong = isSelected && !currentQ.isCorrect;
+            const isSelected = selectedIdx === index;
+            const isCorrect = isSelected && isAnswerCorrect;
+            const isWrong = isSelected && !isAnswerCorrect;
 
             return (
               <div

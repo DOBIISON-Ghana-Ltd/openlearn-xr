@@ -19,12 +19,8 @@ export default function CheckpointFLow(props: ICheckpointFlow) {
   const isHost = useStore(simStore, (s) => s.getSessionInfo(props.id)?.isHost) ?? false;
 
   useEffect(() => {
-    if (isHost) {
-      simStore.getState().setDisableNext(false);
-    } else {
-      simStore.getState().setDisableNext(true);
-    }
     simStore.getState().setDisableBack(false);
+    simStore.getState().setDisableNext(!isHost);
   }, [isHost]);
 
   return (
@@ -64,19 +60,10 @@ function NormalContent(props: ICheckpointFlow) {
     query: { mode: serverMode, playerId },
   }, !isModeLoading);
 
-  const isCompleted = !!data?.meta?.totalCheckpoints && (data.meta.currentCheckpointIndex ?? 0) >= data.meta.totalCheckpoints;
-
-  useEffect(() => {
-    if (isCompleted) {
-      simStore.getState().setDisableNext(false);
-    }
-  }, [isCompleted]);
-
   return (
     <>
-      {match({ data, isCompleted, isLoading: isLoading || isModeLoading })
+      {match({ data, isLoading: isLoading || isModeLoading })
         .with({ isLoading: true }, () => <NormalContent.Loading />)
-        .with({ isCompleted: true }, () => <NormalContent.Completed />)
         .with({ data: P.select(P.nonNullable) }, (checkpointData) => (
           <Content
             data={checkpointData}
@@ -100,10 +87,6 @@ type IModalPayload = {
 
 const checkpointModalHandle = Dialog.createHandle<IModalPayload>();
 
-type IState = {
-  choosenAnswer: number;
-} & Omit<Infer["SimCheckpointPostAnswer"]["res"], "nextCheckpointId" | "moduleId">;
-
 type IContent = {
   playId: ICheckpointFlow["id"];
   playerId?: string;
@@ -114,25 +97,27 @@ type IContent = {
 };
 function Content(props: IContent) {
   const { isRefetching, playId, serverMode, playerId, data: { checkpoint, meta }, refetch } = props;
-  const [state, setState] = useState<Partial<IState>>({});
+  const feedback = useStore(simStore, (s) => s.checkpoints[playId]?.activeFeedback);
+  const setFeedback = useStore(simStore, (s) => s.setCheckpointFeedback);
+  const clearFeedback = useStore(simStore, (s) => s.clearCheckpointActiveFeedback);
+  const [localChosenAnswer, setLocalChosenAnswer] = useState<number | null>(null);
+
   const { mutate, isPending } = useApi.mutate("sim:checkpoint:post:answer");
 
-  const currentIdx = meta?.currentCheckpointIndex ?? 0;
   const totalCount = meta?.totalCheckpoints ?? 1;
-  const isLastQuestion = currentIdx + 1 >= totalCount;
-  const hasAnswered = state.isCorrect !== undefined;
+  const rawIdx = meta?.currentCheckpointIndex ?? 0;
+  const currentIdx = Math.min(rawIdx, Math.max(0, totalCount - 1));
+  const isLastQuestion = rawIdx >= totalCount - 1;
+  const hasAnswered = feedback?.isCorrect !== undefined;
+  const chosenAnswer = feedback?.chosenAnswer ?? localChosenAnswer;
 
   useEffect(() => {
-    if (isLastQuestion && hasAnswered) {
-      simStore.getState().setDisableNext(false);
-    } else {
-      simStore.getState().setDisableNext(true);
-    }
+    simStore.getState().setDisableNext(!isLastQuestion || !hasAnswered);
   }, [isLastQuestion, hasAnswered]);
 
   const handleSelect = (value: number) => {
-    if (state.choosenAnswer !== undefined || isPending) return;
-    setState({ choosenAnswer: value });
+    if (chosenAnswer !== null || isPending) return;
+    setLocalChosenAnswer(value);
 
     mutate({
       params: { playId },
@@ -143,20 +128,24 @@ function Content(props: IContent) {
       },
     }, {
       onSuccess: (res) => {
-        setState((prev) => ({
-          ...prev,
+        setFeedback(playId, currentIdx, {
+          chosenAnswer: value,
           isCorrect: res.isCorrect,
           correctAnswer: res.correctAnswer,
           explanation: res.explanation,
           pointsAwarded: res.pointsAwarded,
-        }));
+        });
+        setLocalChosenAnswer(null);
       },
-      onError: () => setState({}),
+      onError: () => {
+        setLocalChosenAnswer(null);
+      },
     });
   };
 
   const handleNext = () => {
-    setState({});
+    setLocalChosenAnswer(null);
+    clearFeedback(playId);
     refetch();
   };
 
@@ -169,7 +158,7 @@ function Content(props: IContent) {
 
         <div className="flex-center gap-2">
           {/* Button 1 - Next (Hidden on final checkpoint) */}
-          {currentIdx + 1 < totalCount && state.isCorrect !== undefined && (
+          {currentIdx + 1 < totalCount && hasAnswered && (
             <button
               type="button"
               onClick={handleNext}
@@ -204,29 +193,37 @@ function Content(props: IContent) {
           </Dialog.Trigger> */}
         </div>
       </div>
+      {match(isRefetching)
+        .with(true, () => (
+          <div className="w-full py-20 flex-center">
+            <Loader2Icon className="size-8 animate-spin text-primary-cta" />
+          </div>
+        ))
+        .otherwise(() => (
+          <div className="w-full bg-surface-slate border border-surface-slate rounded-[15.5px] p-6 lg:p-8 flex flex-col gap-4 mt-1 shadow-sm min-h-60 justify-center">
+            <h2 className="text-h6 font-normal text-secondary-text mb-2">
+              {`${currentIdx + 1}. ${checkpoint.question}`}
+            </h2>
 
-      <div className="w-full bg-surface-slate border border-surface-slate rounded-[15.5px] p-6 lg:p-8 flex flex-col gap-4 mt-1 shadow-sm">
-        <h2 className="text-h6 font-normal text-secondary-text mb-2">
-          {`${currentIdx + 1}. ${checkpoint.question}`}
-        </h2>
-
-        {/* Options Stack */}
-        <div className="flex flex-col gap-3.5 w-full">
-          {checkpoint.options.map((opt, index) => (
-            <ChoiceCard
-              key={`${opt}_${index}`}
-              label={opt}
-              isChosen={state.choosenAnswer === index}
-              isCorrectOption={state.correctAnswer === index}
-              isAnswerEvaluated={state.isCorrect !== undefined}
-              isPendingChoice={state.choosenAnswer === index && isPending}
-              isPending={isPending}
-              isCorrect={state.isCorrect}
-              onClick={() => handleSelect(index)}
-            />
-          ))}
-        </div>
-      </div>
+            {/* Options Stack */}
+            <div className="flex flex-col gap-3.5 w-full">
+              {checkpoint.options.map((opt, index) => (
+                <ChoiceCard
+                  key={`${opt}_${index}`}
+                  label={opt}
+                  isChosen={chosenAnswer === index}
+                  isCorrectOption={feedback?.correctAnswer === index}
+                  isAnswerEvaluated={hasAnswered}
+                  isPendingChoice={localChosenAnswer === index && isPending}
+                  isPending={isPending}
+                  isCorrect={feedback?.isCorrect}
+                  onClick={() => handleSelect(index)}
+                />
+              ))}
+            </div>
+          </div>
+        ))
+      }
 
       <CheckpointModal />
     </>
@@ -237,24 +234,6 @@ NormalContent.Loading = function Loading() {
   return (
     <div className="relative flex-1 flex-center bg-surface-white size-full min-h-0 py-12">
       <Loader2Icon className="size-8 animate-spin text-primary-cta" />
-    </div>
-  );
-};
-
-NormalContent.Completed = function Completed() {
-  return (
-    <div className="w-full bg-surface-slate border border-surface-slate rounded-[15.5px] p-8 flex flex-col items-center justify-center text-center gap-4 mt-2 shadow-sm">
-      <div className="size-16 rounded-full bg-success/15 flex items-center justify-center text-success">
-        <CheckCircle2Icon className="size-9" />
-      </div>
-      <div className="flex flex-col gap-1.5 max-w-md">
-        <h2 className="text-h4 font-medium text-primary-text-dark">
-          Assessment Completed
-        </h2>
-        <p className="text-normal text-secondary-text leading-relaxed">
-          You have successfully answered all checkpoint questions for this lesson. Click continue below to view your results.
-        </p>
-      </div>
     </div>
   );
 };

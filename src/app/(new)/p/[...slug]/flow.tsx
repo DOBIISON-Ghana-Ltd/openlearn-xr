@@ -221,7 +221,7 @@ function Header(props: IHeader) {
     endSession({ params: { id } }, {
       onSuccess: () => {
         removeSession(id);
-        router.push(PATHS.MODULES);
+        simStore.getState().resetPlayState(id);
       },
       onError: (err) => {
         toastManager.add({ title: err.message || "Failed to end session. Please try again.", type: "error" });
@@ -232,14 +232,14 @@ function Header(props: IHeader) {
   const handleLeaveSession = () => {
     if (!playerId) {
       removeSession(id);
-      router.push(PATHS.MODULES);
+      simStore.getState().resetPlayState(id);
       return;
     }
 
     leaveSession({ params: { id }, body: { playerId } }, {
       onSuccess: () => {
         removeSession(id);
-        router.push(PATHS.MODULES);
+        simStore.getState().resetPlayState(id);
       },
       onError: (err) => {
         toastManager.add({ title: err.message || "Failed to leave session. Please try again.", type: "error" });
@@ -320,6 +320,7 @@ function Footer(props: IFooter) {
       }, {
         onSuccess: () => {
           setStarted(false);
+          simStore.getState().resetPlayState(id);
           queryClient.invalidateQueries({
             queryKey: QUERY_KEYS["sim:general:get:navigate"](id),
           });

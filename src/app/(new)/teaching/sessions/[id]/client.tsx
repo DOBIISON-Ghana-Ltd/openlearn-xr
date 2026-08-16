@@ -109,7 +109,7 @@ function Content({ id, data, onStart, isStarting }: ContentProps) {
           {/* Title & Code Badge with Copy button */}
           <div className="flex items-center gap-3">
             <h2 className="text-h5 text-primary-text-dark">
-              {data.name}
+              {data.moduleVersion.module.title}
             </h2>
             <div className="flex items-center gap-1.5 bg-primary-light border border-primary-cta/20 text-secondary-text text-caption px-3 py-1.5 rounded-[8px]">
               <span className="font-mono">{id}</span>

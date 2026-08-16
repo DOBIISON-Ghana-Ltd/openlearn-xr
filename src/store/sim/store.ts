@@ -1,12 +1,14 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import { IStore, ISessionInfo, ControlValue } from './type';
+import { IStore, ISessionInfo, ControlValue, ITestFeedback, ICheckpointFeedback } from './type';
 import { SimulationControl } from '@/local/simulations/type';
 
 export const simStore = create<IStore>()(
   persist(
     (set, get) => ({
       sessions: {},
+      preAssessments: {},
+      checkpoints: {},
       controls: [],
       controlsMap: {},
       started: false,
@@ -38,6 +40,103 @@ export const simStore = create<IStore>()(
         set((state) => {
           const { [joinCode]: _, ...rest } = state.sessions;
           return { sessions: rest };
+        }),
+
+      setPreAssessmentAnswer: (playId: string, questionIndex: number, answer: ITestFeedback) =>
+        set((state) => {
+          const current = state.preAssessments[playId] || {
+            activeIndex: 0,
+            answers: {},
+          };
+          return {
+            preAssessments: {
+              ...state.preAssessments,
+              [playId]: {
+                ...current,
+                answers: {
+                  ...current.answers,
+                  [questionIndex]: answer,
+                },
+              },
+            },
+          };
+        }),
+
+      setPreAssessmentActiveIndex: (playId: string, activeIndex: number) =>
+        set((state) => {
+          const current = state.preAssessments[playId] || {
+            activeIndex: 0,
+            answers: {},
+          };
+          return {
+            preAssessments: {
+              ...state.preAssessments,
+              [playId]: {
+                ...current,
+                activeIndex,
+              },
+            },
+          };
+        }),
+
+      setCheckpointFeedback: (playId: string, questionIndex: number, feedback: ICheckpointFeedback) =>
+        set((state) => {
+          const current = state.checkpoints[playId] || {
+            answers: {},
+          };
+          return {
+            checkpoints: {
+              ...state.checkpoints,
+              [playId]: {
+                activeFeedback: feedback,
+                answers: {
+                  ...current.answers,
+                  [questionIndex]: feedback,
+                },
+              },
+            },
+          };
+        }),
+
+      setCheckpointCompleted: (playId: string, isCompleted: boolean) =>
+        set((state) => {
+          const current = state.checkpoints[playId] || {
+            answers: {},
+          };
+          return {
+            checkpoints: {
+              ...state.checkpoints,
+              [playId]: {
+                ...current,
+                isCompleted,
+              },
+            },
+          };
+        }),
+
+      clearCheckpointActiveFeedback: (playId: string) =>
+        set((state) => {
+          const current = state.checkpoints[playId];
+          if (!current) return state;
+          return {
+            checkpoints: {
+              ...state.checkpoints,
+              [playId]: {
+                ...current,
+                activeFeedback: undefined,
+              },
+            },
+          };
+        }),
+
+      resetPlayState: (playId: string) =>
+        set((state) => {
+          const { [playId]: _pre, ...remainingPre } = state.preAssessments;
+          const { [playId]: _cp, ...remainingCp } = state.checkpoints;
+          return {
+            preAssessments: remainingPre,
+            checkpoints: remainingCp,
+          };
         }),
 
       // Simulation Controls Actions
@@ -83,7 +182,11 @@ export const simStore = create<IStore>()(
     }),
     {
       name: 'simulation-store',
-      partialize: (state) => ({ sessions: state.sessions }),
+      partialize: (state) => ({
+        sessions: state.sessions,
+        preAssessments: state.preAssessments,
+        checkpoints: state.checkpoints,
+      }),
     }
   )
 );

@@ -57,6 +57,14 @@ export default function ClientPage(props: IClientPage) {
     }
   }, [mode, id, stats, addSession, router]);
 
+  // Clear session info and play state if session has ended/completed/cancelled
+  useEffect(() => {
+    if (mode === 'session' && id && stats?.status && stats.status !== 'STAGING' && stats.status !== 'ACTIVE') {
+      simStore.getState().removeSession(id);
+      simStore.getState().resetPlayState(id);
+    }
+  }, [mode, id, stats?.status]);
+
   const isLive = stats?.status === 'STAGING' || stats?.status === 'ACTIVE';
 
   // Subscribe to realtime session events when joined & live (or host)

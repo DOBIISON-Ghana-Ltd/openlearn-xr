@@ -82,16 +82,34 @@ export const POST = secureApiRoute(async (req, ctx, user, session) => {
     return JSend.error("Invalid join code format. Expected format: xxxx-xxxx-xxxx", 400);
   }
 
-  await prisma.liveSession.create({
-    data: {
-      name: body.name,
-      moduleVersionId: body.moduleId,
-      hostId: user.id,
-      organizationId: session.activeOrganizationId,
-      joinCode: body.joinCode,
-      status: "STAGING",
-      config: body.config
+  await prisma.$transaction(async (tx) => {
+    const moduleCheckpoints = await tx.moduleCheckpoint.findMany({
+      where: { moduleVersionId: body.moduleId },
+      select: { id: true },
+    });
+
+    const newSession = await tx.liveSession.create({
+      data: {
+        name: body.name,
+        moduleVersionId: body.moduleId,
+        hostId: user.id,
+        organizationId: session.activeOrganizationId,
+        joinCode: body.joinCode,
+        status: "STAGING",
+        config: body.config,
+      },
+    });
+
+    if (moduleCheckpoints.length > 0) {
+      await tx.sessionCheckpoint.createMany({
+        data: moduleCheckpoints.map((checkpoint) => ({
+          sessionId: newSession.id,
+          checkpointId: checkpoint.id,
+          isEnabled: true,
+        })),
+      });
     }
   });
+
   return JSend.success("Session created successfully");
 });
