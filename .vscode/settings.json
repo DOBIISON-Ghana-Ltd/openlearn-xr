@@ -1,0 +1,10 @@
+{
+  "explorer.compactFolders": false,
+  "editor.linkedEditing": true,
+  "editor.tabSize": 2,
+  "editor.insertSpaces": true,
+  "css.lint.unknownAtRules": "ignore",
+  "files.associations": {
+    "*.css": "tailwindcss"
+  }
+}

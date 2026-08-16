@@ -1,5 +1,5 @@
 import prisma from "@/adapters/db/client";
-import ZModules from "@/data/api/modules/modules.schema";
+import ZEditor from "@/data/api/editor/editor.schema";
 import { JSend } from "@/lib/utils/jsend";
 import { secureApiRoute } from "@/lib/utils/secure-api-route";
 
@@ -26,7 +26,8 @@ export const GET = secureApiRoute<{ id: string }>(async (req, ctx) => {
     orderBy: { createdAt: "desc" },
   });
 
-  const parsed = ZModules.AdminCollectionGetDocuments.shape.res.parse(collectionMedia);
+  const parsed =
+    ZEditor.EditorCollectionGetDocuments.shape.res.parse(collectionMedia);
 
   return JSend.success(parsed);
 });

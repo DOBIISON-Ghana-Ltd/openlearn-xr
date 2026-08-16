@@ -70,7 +70,7 @@ export async function handleFileUpload(params: IHandleFileUpload) {
   const { file: uploadRes } = await uploadFile({ file, key, msc });
 
   // 2. Create media record in DB
-  const mediaRes = await apiRegistry["public:media:post:one"]["mutationFn"]({
+  const mediaRes = await apiRegistry["app:media:post:one"]["mutationFn"]({
     fileName,
     mimeType,
     folder,

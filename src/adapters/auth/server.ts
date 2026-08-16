@@ -8,6 +8,7 @@ import { nextCookies } from 'better-auth/next-js'
 import { env } from '@/lib/config/env'
 import { getInitialOrganization } from '@/lib/actions/get-initial-organization'
 import { createDefaultSubscription } from '@/lib/actions/create-default-subscription'
+import { getRandomAvatar } from '@/lib/utils/get-random-avatar'
 
 export const auth = betterAuth({
   database: prismaAdapter(prisma, { provider: 'postgresql' }),
@@ -48,6 +49,18 @@ export const auth = betterAuth({
     },
   },
   databaseHooks: {
+    user: {
+      create: {
+        before: async (user) => {
+          return {
+            data: {
+              ...user,
+              image: getRandomAvatar(),
+            },
+          };
+        },
+      },
+    },
     session: {
       create: {
         before: async (session) => {
@@ -98,4 +111,5 @@ export const auth = betterAuth({
 
 export type Session = typeof auth.$Infer.Session;
 export type User = typeof auth.$Infer.Session["user"];
-export type Roles = "admin" | "user" | "editor" | ("admin" | "user" | "editor")[];
+export type UserRole = "admin" | "user" | "editor";
+export type Roles = UserRole | UserRole[];

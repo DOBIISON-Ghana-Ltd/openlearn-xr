@@ -20,8 +20,18 @@ export type LiveSessionModel = runtime.Types.Result.DefaultSelection<Prisma.$Liv
 
 export type AggregateLiveSession = {
   _count: LiveSessionCountAggregateOutputType | null
+  _avg: LiveSessionAvgAggregateOutputType | null
+  _sum: LiveSessionSumAggregateOutputType | null
   _min: LiveSessionMinAggregateOutputType | null
   _max: LiveSessionMaxAggregateOutputType | null
+}
+
+export type LiveSessionAvgAggregateOutputType = {
+  currentTab: number | null
+}
+
+export type LiveSessionSumAggregateOutputType = {
+  currentTab: number | null
 }
 
 export type LiveSessionMinAggregateOutputType = {
@@ -32,6 +42,7 @@ export type LiveSessionMinAggregateOutputType = {
   joinCode: string | null
   name: string | null
   status: string | null
+  currentTab: number | null
   startedAt: Date | null
   endedAt: Date | null
   createdAt: Date | null
@@ -46,6 +57,7 @@ export type LiveSessionMaxAggregateOutputType = {
   joinCode: string | null
   name: string | null
   status: string | null
+  currentTab: number | null
   startedAt: Date | null
   endedAt: Date | null
   createdAt: Date | null
@@ -60,6 +72,7 @@ export type LiveSessionCountAggregateOutputType = {
   joinCode: number
   name: number
   status: number
+  currentTab: number
   config: number
   startedAt: number
   endedAt: number
@@ -69,6 +82,14 @@ export type LiveSessionCountAggregateOutputType = {
 }
 
 
+export type LiveSessionAvgAggregateInputType = {
+  currentTab?: true
+}
+
+export type LiveSessionSumAggregateInputType = {
+  currentTab?: true
+}
+
 export type LiveSessionMinAggregateInputType = {
   id?: true
   hostId?: true
@@ -77,6 +98,7 @@ export type LiveSessionMinAggregateInputType = {
   joinCode?: true
   name?: true
   status?: true
+  currentTab?: true
   startedAt?: true
   endedAt?: true
   createdAt?: true
@@ -91,6 +113,7 @@ export type LiveSessionMaxAggregateInputType = {
   joinCode?: true
   name?: true
   status?: true
+  currentTab?: true
   startedAt?: true
   endedAt?: true
   createdAt?: true
@@ -105,6 +128,7 @@ export type LiveSessionCountAggregateInputType = {
   joinCode?: true
   name?: true
   status?: true
+  currentTab?: true
   config?: true
   startedAt?: true
   endedAt?: true
@@ -151,6 +175,18 @@ export type LiveSessionAggregateArgs<ExtArgs extends runtime.Types.Extensions.In
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
    * 
+   * Select which fields to average
+  **/
+  _avg?: LiveSessionAvgAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
+   * Select which fields to sum
+  **/
+  _sum?: LiveSessionSumAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
    * Select which fields to find the minimum value
   **/
   _min?: LiveSessionMinAggregateInputType
@@ -181,6 +217,8 @@ export type LiveSessionGroupByArgs<ExtArgs extends runtime.Types.Extensions.Inte
   take?: number
   skip?: number
   _count?: LiveSessionCountAggregateInputType | true
+  _avg?: LiveSessionAvgAggregateInputType
+  _sum?: LiveSessionSumAggregateInputType
   _min?: LiveSessionMinAggregateInputType
   _max?: LiveSessionMaxAggregateInputType
 }
@@ -193,12 +231,15 @@ export type LiveSessionGroupByOutputType = {
   joinCode: string
   name: string | null
   status: string
+  currentTab: number
   config: runtime.JsonValue | null
   startedAt: Date | null
   endedAt: Date | null
   createdAt: Date
   updatedAt: Date
   _count: LiveSessionCountAggregateOutputType | null
+  _avg: LiveSessionAvgAggregateOutputType | null
+  _sum: LiveSessionSumAggregateOutputType | null
   _min: LiveSessionMinAggregateOutputType | null
   _max: LiveSessionMaxAggregateOutputType | null
 }
@@ -229,6 +270,7 @@ export type LiveSessionWhereInput = {
   joinCode?: Prisma.StringFilter<"LiveSession"> | string
   name?: Prisma.StringNullableFilter<"LiveSession"> | string | null
   status?: Prisma.StringFilter<"LiveSession"> | string
+  currentTab?: Prisma.IntFilter<"LiveSession"> | number
   config?: Prisma.JsonNullableFilter<"LiveSession">
   startedAt?: Prisma.DateTimeNullableFilter<"LiveSession"> | Date | string | null
   endedAt?: Prisma.DateTimeNullableFilter<"LiveSession"> | Date | string | null
@@ -251,6 +293,7 @@ export type LiveSessionOrderByWithRelationInput = {
   joinCode?: Prisma.SortOrder
   name?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrder
+  currentTab?: Prisma.SortOrder
   config?: Prisma.SortOrderInput | Prisma.SortOrder
   startedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   endedAt?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -276,6 +319,7 @@ export type LiveSessionWhereUniqueInput = Prisma.AtLeast<{
   moduleVersionId?: Prisma.StringFilter<"LiveSession"> | string
   name?: Prisma.StringNullableFilter<"LiveSession"> | string | null
   status?: Prisma.StringFilter<"LiveSession"> | string
+  currentTab?: Prisma.IntFilter<"LiveSession"> | number
   config?: Prisma.JsonNullableFilter<"LiveSession">
   startedAt?: Prisma.DateTimeNullableFilter<"LiveSession"> | Date | string | null
   endedAt?: Prisma.DateTimeNullableFilter<"LiveSession"> | Date | string | null
@@ -298,14 +342,17 @@ export type LiveSessionOrderByWithAggregationInput = {
   joinCode?: Prisma.SortOrder
   name?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrder
+  currentTab?: Prisma.SortOrder
   config?: Prisma.SortOrderInput | Prisma.SortOrder
   startedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   endedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.LiveSessionCountOrderByAggregateInput
+  _avg?: Prisma.LiveSessionAvgOrderByAggregateInput
   _max?: Prisma.LiveSessionMaxOrderByAggregateInput
   _min?: Prisma.LiveSessionMinOrderByAggregateInput
+  _sum?: Prisma.LiveSessionSumOrderByAggregateInput
 }
 
 export type LiveSessionScalarWhereWithAggregatesInput = {
@@ -319,6 +366,7 @@ export type LiveSessionScalarWhereWithAggregatesInput = {
   joinCode?: Prisma.StringWithAggregatesFilter<"LiveSession"> | string
   name?: Prisma.StringNullableWithAggregatesFilter<"LiveSession"> | string | null
   status?: Prisma.StringWithAggregatesFilter<"LiveSession"> | string
+  currentTab?: Prisma.IntWithAggregatesFilter<"LiveSession"> | number
   config?: Prisma.JsonNullableWithAggregatesFilter<"LiveSession">
   startedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"LiveSession"> | Date | string | null
   endedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"LiveSession"> | Date | string | null
@@ -331,6 +379,7 @@ export type LiveSessionCreateInput = {
   joinCode: string
   name?: string | null
   status?: string
+  currentTab?: number
   config?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   startedAt?: Date | string | null
   endedAt?: Date | string | null
@@ -353,6 +402,7 @@ export type LiveSessionUncheckedCreateInput = {
   joinCode: string
   name?: string | null
   status?: string
+  currentTab?: number
   config?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   startedAt?: Date | string | null
   endedAt?: Date | string | null
@@ -369,6 +419,7 @@ export type LiveSessionUpdateInput = {
   joinCode?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.StringFieldUpdateOperationsInput | string
+  currentTab?: Prisma.IntFieldUpdateOperationsInput | number
   config?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   startedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -391,6 +442,7 @@ export type LiveSessionUncheckedUpdateInput = {
   joinCode?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.StringFieldUpdateOperationsInput | string
+  currentTab?: Prisma.IntFieldUpdateOperationsInput | number
   config?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   startedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -410,6 +462,7 @@ export type LiveSessionCreateManyInput = {
   joinCode: string
   name?: string | null
   status?: string
+  currentTab?: number
   config?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   startedAt?: Date | string | null
   endedAt?: Date | string | null
@@ -422,6 +475,7 @@ export type LiveSessionUpdateManyMutationInput = {
   joinCode?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.StringFieldUpdateOperationsInput | string
+  currentTab?: Prisma.IntFieldUpdateOperationsInput | number
   config?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   startedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -437,6 +491,7 @@ export type LiveSessionUncheckedUpdateManyInput = {
   joinCode?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.StringFieldUpdateOperationsInput | string
+  currentTab?: Prisma.IntFieldUpdateOperationsInput | number
   config?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   startedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -462,11 +517,16 @@ export type LiveSessionCountOrderByAggregateInput = {
   joinCode?: Prisma.SortOrder
   name?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  currentTab?: Prisma.SortOrder
   config?: Prisma.SortOrder
   startedAt?: Prisma.SortOrder
   endedAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+}
+
+export type LiveSessionAvgOrderByAggregateInput = {
+  currentTab?: Prisma.SortOrder
 }
 
 export type LiveSessionMaxOrderByAggregateInput = {
@@ -477,6 +537,7 @@ export type LiveSessionMaxOrderByAggregateInput = {
   joinCode?: Prisma.SortOrder
   name?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  currentTab?: Prisma.SortOrder
   startedAt?: Prisma.SortOrder
   endedAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -491,10 +552,15 @@ export type LiveSessionMinOrderByAggregateInput = {
   joinCode?: Prisma.SortOrder
   name?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  currentTab?: Prisma.SortOrder
   startedAt?: Prisma.SortOrder
   endedAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+}
+
+export type LiveSessionSumOrderByAggregateInput = {
+  currentTab?: Prisma.SortOrder
 }
 
 export type LiveSessionScalarRelationFilter = {
@@ -696,6 +762,7 @@ export type LiveSessionCreateWithoutHostInput = {
   joinCode: string
   name?: string | null
   status?: string
+  currentTab?: number
   config?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   startedAt?: Date | string | null
   endedAt?: Date | string | null
@@ -716,6 +783,7 @@ export type LiveSessionUncheckedCreateWithoutHostInput = {
   joinCode: string
   name?: string | null
   status?: string
+  currentTab?: number
   config?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   startedAt?: Date | string | null
   endedAt?: Date | string | null
@@ -764,6 +832,7 @@ export type LiveSessionScalarWhereInput = {
   joinCode?: Prisma.StringFilter<"LiveSession"> | string
   name?: Prisma.StringNullableFilter<"LiveSession"> | string | null
   status?: Prisma.StringFilter<"LiveSession"> | string
+  currentTab?: Prisma.IntFilter<"LiveSession"> | number
   config?: Prisma.JsonNullableFilter<"LiveSession">
   startedAt?: Prisma.DateTimeNullableFilter<"LiveSession"> | Date | string | null
   endedAt?: Prisma.DateTimeNullableFilter<"LiveSession"> | Date | string | null
@@ -776,6 +845,7 @@ export type LiveSessionCreateWithoutOrganizationInput = {
   joinCode: string
   name?: string | null
   status?: string
+  currentTab?: number
   config?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   startedAt?: Date | string | null
   endedAt?: Date | string | null
@@ -796,6 +866,7 @@ export type LiveSessionUncheckedCreateWithoutOrganizationInput = {
   joinCode: string
   name?: string | null
   status?: string
+  currentTab?: number
   config?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   startedAt?: Date | string | null
   endedAt?: Date | string | null
@@ -838,6 +909,7 @@ export type LiveSessionCreateWithoutModuleVersionInput = {
   joinCode: string
   name?: string | null
   status?: string
+  currentTab?: number
   config?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   startedAt?: Date | string | null
   endedAt?: Date | string | null
@@ -858,6 +930,7 @@ export type LiveSessionUncheckedCreateWithoutModuleVersionInput = {
   joinCode: string
   name?: string | null
   status?: string
+  currentTab?: number
   config?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   startedAt?: Date | string | null
   endedAt?: Date | string | null
@@ -900,6 +973,7 @@ export type LiveSessionCreateWithoutSessionCheckpointsInput = {
   joinCode: string
   name?: string | null
   status?: string
+  currentTab?: number
   config?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   startedAt?: Date | string | null
   endedAt?: Date | string | null
@@ -921,6 +995,7 @@ export type LiveSessionUncheckedCreateWithoutSessionCheckpointsInput = {
   joinCode: string
   name?: string | null
   status?: string
+  currentTab?: number
   config?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   startedAt?: Date | string | null
   endedAt?: Date | string | null
@@ -952,6 +1027,7 @@ export type LiveSessionUpdateWithoutSessionCheckpointsInput = {
   joinCode?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.StringFieldUpdateOperationsInput | string
+  currentTab?: Prisma.IntFieldUpdateOperationsInput | number
   config?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   startedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -973,6 +1049,7 @@ export type LiveSessionUncheckedUpdateWithoutSessionCheckpointsInput = {
   joinCode?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.StringFieldUpdateOperationsInput | string
+  currentTab?: Prisma.IntFieldUpdateOperationsInput | number
   config?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   startedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -988,6 +1065,7 @@ export type LiveSessionCreateWithoutPlayersInput = {
   joinCode: string
   name?: string | null
   status?: string
+  currentTab?: number
   config?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   startedAt?: Date | string | null
   endedAt?: Date | string | null
@@ -1009,6 +1087,7 @@ export type LiveSessionUncheckedCreateWithoutPlayersInput = {
   joinCode: string
   name?: string | null
   status?: string
+  currentTab?: number
   config?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   startedAt?: Date | string | null
   endedAt?: Date | string | null
@@ -1040,6 +1119,7 @@ export type LiveSessionUpdateWithoutPlayersInput = {
   joinCode?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.StringFieldUpdateOperationsInput | string
+  currentTab?: Prisma.IntFieldUpdateOperationsInput | number
   config?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   startedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1061,6 +1141,7 @@ export type LiveSessionUncheckedUpdateWithoutPlayersInput = {
   joinCode?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.StringFieldUpdateOperationsInput | string
+  currentTab?: Prisma.IntFieldUpdateOperationsInput | number
   config?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   startedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1076,6 +1157,7 @@ export type LiveSessionCreateWithoutAnalyticsInput = {
   joinCode: string
   name?: string | null
   status?: string
+  currentTab?: number
   config?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   startedAt?: Date | string | null
   endedAt?: Date | string | null
@@ -1097,6 +1179,7 @@ export type LiveSessionUncheckedCreateWithoutAnalyticsInput = {
   joinCode: string
   name?: string | null
   status?: string
+  currentTab?: number
   config?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   startedAt?: Date | string | null
   endedAt?: Date | string | null
@@ -1128,6 +1211,7 @@ export type LiveSessionUpdateWithoutAnalyticsInput = {
   joinCode?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.StringFieldUpdateOperationsInput | string
+  currentTab?: Prisma.IntFieldUpdateOperationsInput | number
   config?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   startedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1149,6 +1233,7 @@ export type LiveSessionUncheckedUpdateWithoutAnalyticsInput = {
   joinCode?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.StringFieldUpdateOperationsInput | string
+  currentTab?: Prisma.IntFieldUpdateOperationsInput | number
   config?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   startedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1164,6 +1249,7 @@ export type LiveSessionCreateWithoutPlayAttemptsInput = {
   joinCode: string
   name?: string | null
   status?: string
+  currentTab?: number
   config?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   startedAt?: Date | string | null
   endedAt?: Date | string | null
@@ -1185,6 +1271,7 @@ export type LiveSessionUncheckedCreateWithoutPlayAttemptsInput = {
   joinCode: string
   name?: string | null
   status?: string
+  currentTab?: number
   config?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   startedAt?: Date | string | null
   endedAt?: Date | string | null
@@ -1216,6 +1303,7 @@ export type LiveSessionUpdateWithoutPlayAttemptsInput = {
   joinCode?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.StringFieldUpdateOperationsInput | string
+  currentTab?: Prisma.IntFieldUpdateOperationsInput | number
   config?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   startedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1237,6 +1325,7 @@ export type LiveSessionUncheckedUpdateWithoutPlayAttemptsInput = {
   joinCode?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.StringFieldUpdateOperationsInput | string
+  currentTab?: Prisma.IntFieldUpdateOperationsInput | number
   config?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   startedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1254,6 +1343,7 @@ export type LiveSessionCreateManyHostInput = {
   joinCode: string
   name?: string | null
   status?: string
+  currentTab?: number
   config?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   startedAt?: Date | string | null
   endedAt?: Date | string | null
@@ -1266,6 +1356,7 @@ export type LiveSessionUpdateWithoutHostInput = {
   joinCode?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.StringFieldUpdateOperationsInput | string
+  currentTab?: Prisma.IntFieldUpdateOperationsInput | number
   config?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   startedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1286,6 +1377,7 @@ export type LiveSessionUncheckedUpdateWithoutHostInput = {
   joinCode?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.StringFieldUpdateOperationsInput | string
+  currentTab?: Prisma.IntFieldUpdateOperationsInput | number
   config?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   startedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1304,6 +1396,7 @@ export type LiveSessionUncheckedUpdateManyWithoutHostInput = {
   joinCode?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.StringFieldUpdateOperationsInput | string
+  currentTab?: Prisma.IntFieldUpdateOperationsInput | number
   config?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   startedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1318,6 +1411,7 @@ export type LiveSessionCreateManyOrganizationInput = {
   joinCode: string
   name?: string | null
   status?: string
+  currentTab?: number
   config?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   startedAt?: Date | string | null
   endedAt?: Date | string | null
@@ -1330,6 +1424,7 @@ export type LiveSessionUpdateWithoutOrganizationInput = {
   joinCode?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.StringFieldUpdateOperationsInput | string
+  currentTab?: Prisma.IntFieldUpdateOperationsInput | number
   config?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   startedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1350,6 +1445,7 @@ export type LiveSessionUncheckedUpdateWithoutOrganizationInput = {
   joinCode?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.StringFieldUpdateOperationsInput | string
+  currentTab?: Prisma.IntFieldUpdateOperationsInput | number
   config?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   startedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1368,6 +1464,7 @@ export type LiveSessionUncheckedUpdateManyWithoutOrganizationInput = {
   joinCode?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.StringFieldUpdateOperationsInput | string
+  currentTab?: Prisma.IntFieldUpdateOperationsInput | number
   config?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   startedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1382,6 +1479,7 @@ export type LiveSessionCreateManyModuleVersionInput = {
   joinCode: string
   name?: string | null
   status?: string
+  currentTab?: number
   config?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   startedAt?: Date | string | null
   endedAt?: Date | string | null
@@ -1394,6 +1492,7 @@ export type LiveSessionUpdateWithoutModuleVersionInput = {
   joinCode?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.StringFieldUpdateOperationsInput | string
+  currentTab?: Prisma.IntFieldUpdateOperationsInput | number
   config?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   startedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1414,6 +1513,7 @@ export type LiveSessionUncheckedUpdateWithoutModuleVersionInput = {
   joinCode?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.StringFieldUpdateOperationsInput | string
+  currentTab?: Prisma.IntFieldUpdateOperationsInput | number
   config?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   startedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1432,6 +1532,7 @@ export type LiveSessionUncheckedUpdateManyWithoutModuleVersionInput = {
   joinCode?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.StringFieldUpdateOperationsInput | string
+  currentTab?: Prisma.IntFieldUpdateOperationsInput | number
   config?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   startedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   endedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1505,6 +1606,7 @@ export type LiveSessionSelect<ExtArgs extends runtime.Types.Extensions.InternalA
   joinCode?: boolean
   name?: boolean
   status?: boolean
+  currentTab?: boolean
   config?: boolean
   startedAt?: boolean
   endedAt?: boolean
@@ -1528,6 +1630,7 @@ export type LiveSessionSelectCreateManyAndReturn<ExtArgs extends runtime.Types.E
   joinCode?: boolean
   name?: boolean
   status?: boolean
+  currentTab?: boolean
   config?: boolean
   startedAt?: boolean
   endedAt?: boolean
@@ -1546,6 +1649,7 @@ export type LiveSessionSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.E
   joinCode?: boolean
   name?: boolean
   status?: boolean
+  currentTab?: boolean
   config?: boolean
   startedAt?: boolean
   endedAt?: boolean
@@ -1564,6 +1668,7 @@ export type LiveSessionSelectScalar = {
   joinCode?: boolean
   name?: boolean
   status?: boolean
+  currentTab?: boolean
   config?: boolean
   startedAt?: boolean
   endedAt?: boolean
@@ -1571,7 +1676,7 @@ export type LiveSessionSelectScalar = {
   updatedAt?: boolean
 }
 
-export type LiveSessionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "hostId" | "organizationId" | "moduleVersionId" | "joinCode" | "name" | "status" | "config" | "startedAt" | "endedAt" | "createdAt" | "updatedAt", ExtArgs["result"]["liveSession"]>
+export type LiveSessionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "hostId" | "organizationId" | "moduleVersionId" | "joinCode" | "name" | "status" | "currentTab" | "config" | "startedAt" | "endedAt" | "createdAt" | "updatedAt", ExtArgs["result"]["liveSession"]>
 export type LiveSessionInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   host?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   organization?: boolean | Prisma.LiveSession$organizationArgs<ExtArgs>
@@ -1612,6 +1717,7 @@ export type $LiveSessionPayload<ExtArgs extends runtime.Types.Extensions.Interna
     joinCode: string
     name: string | null
     status: string
+    currentTab: number
     config: runtime.JsonValue | null
     startedAt: Date | null
     endedAt: Date | null
@@ -2054,6 +2160,7 @@ export interface LiveSessionFieldRefs {
   readonly joinCode: Prisma.FieldRef<"LiveSession", 'String'>
   readonly name: Prisma.FieldRef<"LiveSession", 'String'>
   readonly status: Prisma.FieldRef<"LiveSession", 'String'>
+  readonly currentTab: Prisma.FieldRef<"LiveSession", 'Int'>
   readonly config: Prisma.FieldRef<"LiveSession", 'Json'>
   readonly startedAt: Prisma.FieldRef<"LiveSession", 'DateTime'>
   readonly endedAt: Prisma.FieldRef<"LiveSession", 'DateTime'>

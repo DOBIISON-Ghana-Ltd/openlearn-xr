@@ -8,43 +8,68 @@ const paginationPage = {
 }
 
 const parsers = {
-  resetPassword: {
+  // APP SUITE (Auth, Onboarding, Core App)
+  "app:login": {
+    redirect: parseAsString.withDefault(''),
+  },
+  "app:register": {
+    redirect: parseAsString.withDefault(''),
+  },
+  "app:forgot-password": {
+    email: parseAsString.withDefault(''),
+    redirect: parseAsString.withDefault(''),
+  },
+  "app:reset-password": {
     email: parseAsString.withDefault(''),
     otp: parseAsString.withDefault(''),
     redirect: parseAsString.withDefault(''),
   },
-  verifyEmail: {
+  "app:verify-email": {
     email: parseAsString.withDefault(''),
     redirect: parseAsString.withDefault(''),
   },
-  register: {
+  "app:onboarding": {
     redirect: parseAsString.withDefault(''),
   },
-  login: {
+  "app:verify-cache": {
     redirect: parseAsString.withDefault(''),
   },
-  forgotPassword: {
-    email: parseAsString.withDefault(''),
-    redirect: parseAsString.withDefault(''),
+
+  // SIM SUITE (Simulation Dashboard & Library)
+  "sim:modules": {
+    search: parseAsString.withDefault(''),
+    subject: parseAsString.withDefault('chemistry'),
+    grade: parseAsString.withDefault('year 1'),
   },
-  verifyCache: {
-    redirect: parseAsString.withDefault('')
+  "sim:library": {
+    collectionId: parseAsString.withDefault(''),
   },
-  onboarding: {
-    redirect: parseAsString.withDefault(''),
+  "sim:play": {
+    code: parseAsString.withDefault(''),
   },
-  modules: {
-    q:    parseAsString.withDefault(''),
-    page: parseAsString.withDefault('1'),
-  },
-  library: {
-    book: parseAsString.withDefault('')
-  },
-  session: {
+
+  // SES SUITE (Live Sessions & Multiplayer)
+  "ses:dashboard": {
     new: parseAsString.withDefault('false'),
     moduleId: parseAsString.withDefault(''),
   },
-  page: paginationPage
+  "ses:create": {
+    search: parseAsString.withDefault(''),
+    subject: parseAsString.withDefault('chemistry'),
+    grade: parseAsString.withDefault('year 1'),
+  },
+
+  // EDITOR SUITE (Interactive Lab Studio)
+  "editor:home": {
+    q: parseAsString.withDefault(''),
+  },
+
+  // ADMIN SUITE (Admin Console)
+  "admin:home": {
+    q: parseAsString.withDefault(''),
+  },
+
+  page: paginationPage,
 } as const
 
 type ParsersMap = typeof parsers
@@ -55,7 +80,7 @@ type NuqsKey = keyof ParsersMap
 export const nuqs = {
   /**
    * useQueryStates wrapper — usage:
-   *   const [state, setState] = nuqs.getStates('login', { history: 'push' })
+   *   const [state, setState] = nuqs.getStates('app:login', { history: 'push' })
    */
   getStates<K extends NuqsKey>(
     key: K,
@@ -74,7 +99,7 @@ export const nuqs = {
 
   /**
    * Serializes a URL with query params — usage:
-   *   nuqs.getUrl('resetPassword', 'auth:reset-password', { email: '...', otp: '...' })
+   *   nuqs.getUrl('app:reset-password', { email: '...', otp: '...' }, '/auth/reset-password')
    */
   getUrl<K extends NuqsKey>(
     key: K,
@@ -82,7 +107,7 @@ export const nuqs = {
     route?: string
   ): string {
     return createSerializer(parsers[key])(
-      route || PATHS.SIMS.DASHBOARD, 
+      route || PATHS.MODULES,
       data as any
     )
   },

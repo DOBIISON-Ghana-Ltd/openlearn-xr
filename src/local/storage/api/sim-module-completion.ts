@@ -1,0 +1,64 @@
+import { getOpenLearnDB, ModuleCompletionRecord } from "../db";
+
+export async function getModuleCompletions(): Promise<ModuleCompletionRecord[]> {
+  try {
+    const db = await getOpenLearnDB();
+    const completions = await db.getAll("moduleCompletions");
+    return completions;
+  } catch (error) {
+    console.error("[LocalDB] Error fetching module completions:", error);
+    return [];
+  }
+}
+
+export async function getModuleCompletion(
+  identifier: string
+): Promise<ModuleCompletionRecord | null> {
+  try {
+    const db = await getOpenLearnDB();
+    const byModuleId = await db.get("moduleCompletions", identifier);
+    if (byModuleId) return byModuleId;
+
+    const byVersionId = await db.getFromIndex("moduleCompletions", "by-lastPlayedVersionId", identifier);
+    return byVersionId ?? null;
+  } catch (error) {
+    console.error("[LocalDB] Error fetching module completion:", error);
+    return null;
+  }
+}
+
+export async function upsertModuleCompletion(params: {
+  moduleId: string;
+  score?: number;
+  highScore?: number;
+  totalPlays?: number;
+  lastPlayedVersionId?: string | null;
+  lastPlayedAt?: string;
+}): Promise<ModuleCompletionRecord | null> {
+  try {
+    const db = await getOpenLearnDB();
+    const existing = await db.get("moduleCompletions", params.moduleId);
+    const now = params.lastPlayedAt ?? new Date().toISOString();
+    const currentScore = params.score ?? 0;
+    const bestScore = Math.max(existing?.highScore ?? 0, params.highScore ?? currentScore);
+
+    const record: ModuleCompletionRecord = {
+      id: existing?.id ?? `local_${params.moduleId}`,
+      moduleId: params.moduleId,
+      lastPlayedVersionId:
+        params.lastPlayedVersionId !== undefined
+          ? params.lastPlayedVersionId
+          : (existing?.lastPlayedVersionId ?? null),
+      highScore: bestScore,
+      lastScore: currentScore,
+      totalPlays: params.totalPlays ?? (existing?.totalPlays ?? 0) + 1,
+      lastPlayedAt: now,
+    };
+
+    await db.put("moduleCompletions", record);
+    return record;
+  } catch (error) {
+    console.error("[LocalDB] Error saving module completion:", error);
+    return null;
+  }
+}

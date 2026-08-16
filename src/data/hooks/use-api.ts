@@ -2,7 +2,9 @@
 
 import { 
   useQuery, 
-  useMutation
+  useMutation,
+  UseQueryResult,
+  UseMutationResult,
 } from '@tanstack/react-query';
 import { apiRegistry, ApiRegistry } from '@/data/registry';
 import { ApiError } from '@/data/fetcher';
@@ -21,7 +23,7 @@ export default {
     key: K,
     vars?: Parameters<ApiRegistry[K]['queryFn']>[0],
     enabled: boolean = true
-  ) => {
+  ): UseQueryResult<Awaited<ReturnType<ApiRegistry[K]['queryFn']>>, ApiError> => {
     type TData = Awaited<ReturnType<ApiRegistry[K]['queryFn']>>;
 
     const config = apiRegistry[key] as any;
@@ -29,12 +31,16 @@ export default {
       queryKey: config.queryKey(vars),
       queryFn: () => config.queryFn(vars),
       ...config.options,
-      enabled
+      enabled: typeof enabled === 'function' ? enabled : Boolean(enabled)
     });
   },
 
   // 2. Mutation
-  mutate: <K extends MutationKeys>(key: K) => {
+  mutate: <K extends MutationKeys>(key: K): UseMutationResult<
+    Awaited<ReturnType<ApiRegistry[K]['mutationFn']>>,
+    ApiError,
+    Parameters<ApiRegistry[K]['mutationFn']>[0]
+  > => {
     type TData = Awaited<ReturnType<ApiRegistry[K]['mutationFn']>>;
     type TVars = Parameters<ApiRegistry[K]['mutationFn']>[0];
 

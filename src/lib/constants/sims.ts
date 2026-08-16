@@ -83,7 +83,7 @@ export const MOCK_SIMS: SimDef[] = [
         type: 'multiple-choice',
         options: ['It stays the same', 'It doubles', 'It halves', 'It quadruples'],
         correctAnswer: 'It doubles',
-        points: 10,
+        points: 25,
       },
       {
         id: 'cp-pressure-2',
@@ -91,7 +91,7 @@ export const MOCK_SIMS: SimDef[] = [
         type: 'boolean',
         options: ['True', 'False'],
         correctAnswer: 'True',
-        points: 10,
+        points: 25,
       },
       {
         id: 'cp-pressure-3',
@@ -99,7 +99,7 @@ export const MOCK_SIMS: SimDef[] = [
         type: 'multiple-choice',
         options: ['The top hole', 'The middle hole', 'The bottom hole', 'They all squirt the same distance'],
         correctAnswer: 'The bottom hole',
-        points: 10,
+        points: 25,
       },
       {
         id: 'cp-pressure-4',
@@ -107,7 +107,7 @@ export const MOCK_SIMS: SimDef[] = [
         type: 'multiple-choice',
         options: ['It increases', 'It decreases', 'It remains the same', 'It becomes zero'],
         correctAnswer: 'It decreases',
-        points: 10,
+        points: 25,
       },
       {
         id: 'cp-pressure-5',
@@ -115,7 +115,7 @@ export const MOCK_SIMS: SimDef[] = [
         type: 'multiple-choice',
         options: ['Fluid density and depth', 'Volume and temperature', 'Hole size and fluid density', 'Barrel shape and depth'],
         correctAnswer: 'Fluid density and depth',
-        points: 10,
+        points: 25,
       },
       {
         id: 'cp-pressure-6',
@@ -123,7 +123,7 @@ export const MOCK_SIMS: SimDef[] = [
         type: 'boolean',
         options: ['True', 'False'],
         correctAnswer: 'False',
-        points: 10,
+        points: 25,
       },
     ],
   },
@@ -183,7 +183,7 @@ export const MOCK_SIMS: SimDef[] = [
         type: 'multiple-choice',
         options: ['It collapses completely', 'It deflects (repels)', 'It spins in a circle', 'Nothing happens'],
         correctAnswer: 'It deflects (repels)',
-        points: 10,
+        points: 25,
       },
       {
         id: 'cp-electro-2',
@@ -191,7 +191,7 @@ export const MOCK_SIMS: SimDef[] = [
         type: 'multiple-choice',
         options: ['Conduction', 'Friction', 'Induction', 'Earthing'],
         correctAnswer: 'Induction',
-        points: 10,
+        points: 25,
       },
       {
         id: 'cp-electro-3',
@@ -199,7 +199,7 @@ export const MOCK_SIMS: SimDef[] = [
         type: 'multiple-choice',
         options: ['Positive', 'Negative', 'Neutral', 'It alternates'],
         correctAnswer: 'Positive',
-        points: 10,
+        points: 25,
       },
       {
         id: 'cp-electro-4',
@@ -207,7 +207,7 @@ export const MOCK_SIMS: SimDef[] = [
         type: 'multiple-choice',
         options: ['Electrons flow to/from earth', 'Charge transfers permanently (Conduction)', 'The rod shatters', 'The jar shatters'],
         correctAnswer: 'Charge transfers permanently (Conduction)',
-        points: 10,
+        points: 25,
       },
       {
         id: 'cp-electro-5',
@@ -215,7 +215,7 @@ export const MOCK_SIMS: SimDef[] = [
         type: 'multiple-choice',
         options: ['Positive', 'Negative', 'Neutral', 'Zero'],
         correctAnswer: 'Negative',
-        points: 10,
+        points: 25,
       },
       {
         id: 'cp-electro-6',
@@ -223,7 +223,7 @@ export const MOCK_SIMS: SimDef[] = [
         type: 'multiple-choice',
         options: ['It stays deflected', 'It turns green', 'It collapses (returns to neutral)', 'It sparks'],
         correctAnswer: 'It collapses (returns to neutral)',
-        points: 10,
+        points: 25,
       },
       {
         id: 'cp-electro-7',
@@ -231,7 +231,7 @@ export const MOCK_SIMS: SimDef[] = [
         type: 'multiple-choice',
         options: ['To generate electricity', 'To indicate the presence and magnitude of charge', 'To look shiny', 'To act as a resistor'],
         correctAnswer: 'To indicate the presence and magnitude of charge',
-        points: 10,
+        points: 25,
       },
       {
         id: 'cp-electro-8',
@@ -239,7 +239,7 @@ export const MOCK_SIMS: SimDef[] = [
         type: 'multiple-choice',
         options: ['They are insulators', 'They are conductors, allowing electrons to flow freely', 'They are cheap', 'They are magnetic'],
         correctAnswer: 'They are conductors, allowing electrons to flow freely',
-        points: 10,
+        points: 25,
       },
       {
         id: 'cp-electro-9',
@@ -247,7 +247,7 @@ export const MOCK_SIMS: SimDef[] = [
         type: 'multiple-choice',
         options: ['To trap the electrons', 'To protect it from air currents and dust', 'To magnify the view', 'To insulate it completely from light'],
         correctAnswer: 'To protect it from air currents and dust',
-        points: 10,
+        points: 25,
       },
       {
         id: 'cp-electro-10',
@@ -255,7 +255,7 @@ export const MOCK_SIMS: SimDef[] = [
         type: 'multiple-choice',
         options: ['The deflection increases', 'The deflection decreases (collapses slightly)', 'It catches fire', 'Nothing happens'],
         correctAnswer: 'The deflection decreases (collapses slightly)',
-        points: 10,
+        points: 25,
       },
     ],
   },
@@ -295,7 +295,7 @@ export const MOCK_SIMS: SimDef[] = [
         type: 'multiple-choice',
         options: ['Density = Mass × Volume', 'Density = Mass / Volume', 'Density = Volume / Mass', 'Density = Mass + Volume'],
         correctAnswer: 'Density = Mass / Volume',
-        points: 10,
+        points: 25,
       },
       {
         id: 'cp-density-2',
@@ -303,7 +303,7 @@ export const MOCK_SIMS: SimDef[] = [
         type: 'multiple-choice',
         options: ['By using a ruler to measure its length, width, and height', 'By using the water displacement method in a measuring cylinder', 'By weighing it on a balance', 'By melting it'],
         correctAnswer: 'By using the water displacement method in a measuring cylinder',
-        points: 10,
+        points: 25,
       },
       {
         id: 'cp-density-3',
@@ -311,7 +311,7 @@ export const MOCK_SIMS: SimDef[] = [
         type: 'multiple-choice',
         options: ['14.4 g', '34.0 g', '54.0 g', '20.0 g'],
         correctAnswer: '54.0 g',
-        points: 10,
+        points: 25,
       },
       {
         id: 'cp-density-4',
@@ -319,7 +319,7 @@ export const MOCK_SIMS: SimDef[] = [
         type: 'multiple-choice',
         options: ['50 cm³', '70 cm³', '20 cm³', '120 cm³'],
         correctAnswer: '20 cm³',
-        points: 10,
+        points: 25,
       },
       {
         id: 'cp-density-5',
@@ -327,7 +327,7 @@ export const MOCK_SIMS: SimDef[] = [
         type: 'multiple-choice',
         options: ['2.7 g/cm³', '0.37 g/cm³', '74 g/cm³', '1080 g/cm³'],
         correctAnswer: '2.7 g/cm³',
-        points: 10,
+        points: 25,
       },
       {
         id: 'cp-density-6',
@@ -335,7 +335,7 @@ export const MOCK_SIMS: SimDef[] = [
         type: 'multiple-choice',
         options: ['Measure its dimensions with a ruler and multiply length × width × height', 'Use a measuring cylinder', 'Weigh it on an electronic balance', 'Count its sides'],
         correctAnswer: 'Measure its dimensions with a ruler and multiply length × width × height',
-        points: 10,
+        points: 25,
       },
       {
         id: 'cp-density-7',
@@ -343,7 +343,7 @@ export const MOCK_SIMS: SimDef[] = [
         type: 'multiple-choice',
         options: ['0.6 g/cm³', '1.67 g/cm³', '38.4 g/cm³', '345.6 g/cm³'],
         correctAnswer: '0.6 g/cm³',
-        points: 10,
+        points: 25,
       },
       {
         id: 'cp-density-8',
@@ -351,7 +351,7 @@ export const MOCK_SIMS: SimDef[] = [
         type: 'multiple-choice',
         options: ['Because wood is heavier than stone', 'Because the density of wood is less than the density of water (1.0 g/cm³)', 'Because the stone is round', 'Because the wood absorbs water'],
         correctAnswer: 'Because the density of wood is less than the density of water (1.0 g/cm³)',
-        points: 10,
+        points: 25,
       },
       {
         id: 'cp-density-9',
@@ -359,7 +359,7 @@ export const MOCK_SIMS: SimDef[] = [
         type: 'multiple-choice',
         options: ['To calibrate the balance', 'To subtract the mass of the beaker, so you only measure the liquid', 'To make the liquid heavier', 'To prevent spilling'],
         correctAnswer: 'To subtract the mass of the beaker, so you only measure the liquid',
-        points: 10,
+        points: 25,
       },
       {
         id: 'cp-density-10',
@@ -367,7 +367,7 @@ export const MOCK_SIMS: SimDef[] = [
         type: 'multiple-choice',
         options: ['1.18 g/cm³', '0.85 g/cm³', '74 g/cm³', '1360 g/cm³'],
         correctAnswer: '0.85 g/cm³',
-        points: 10,
+        points: 25,
       },
     ],
   },

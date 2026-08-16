@@ -1,37 +1,68 @@
-import { Infer } from "./types.base";
+type IPlaySlugs = {
+  mode: string;
+  playId: string;
+  playerId: string
+}
 
 const ROUTES = {
-  // USERS
-  "public:user:get:me": () => `/api/users/me`,
-  "public:user:delete:me": () => '/api/users/me',
-  "public:user:patch:onboarding": () => '/api/users/onboarding',
+  // APP SUITE
+  "app:user:get:me": () => `/api/app/users/me`,
+  "app:user:delete:me": () => `/api/app/users/me`,
+  "app:user:patch:onboarding": () => `/api/app/users/onboarding`,
+  "app:media:post:one": () => `/api/app/media`,
+  "app:org:get:subscription": ({ orgId }: { orgId: string }) => `/api/app/org/${orgId}/subscription`,
+  "app:org:get:active": () => `/api/app/org/active`,
+  "app:org:get:members": ({ orgId }: { orgId: string }) => `/api/app/org/${orgId}/members`,
+  "app:org:delete:member": ({ orgId }: { orgId: string }) => `/api/app/org/${orgId}/members`,
+  "app:org:patch:member-role": ({ orgId }: { orgId: string }) => `/api/app/org/${orgId}/members/role`,
+  "app:org:post:invite": ({ orgId }: { orgId: string }) => `/api/app/org/${orgId}/members/invite`,
+
+  // SIM SUITE
+  "sim:module:get:all": () => `/api/sim/modules`,
+  "sim:module:get:one": ({ id }: { id: string }) => `/api/sim/modules/${id}`,
+  "sim:checkpoint:get:one": ({ playId }: { playId: string }) => `/api/sim/checkpoints/${playId}`,
+  "sim:checkpoint:post:answer": ({ playId }: { playId: string }) => `/api/sim/checkpoints/${playId}/answer`,
+  "sim:general:get:score": (_: IPlaySlugs) => `/api/sim/play/score/${_.mode}/${_.playId}/${_.playerId}`,
+  "sim:general:get:navigate": (_: IPlaySlugs) => `/api/sim/play/navigate/${_.mode}/${_.playId}/${_.playerId}`,
+  "sim:general:post:navigate": (_: IPlaySlugs) => `/api/sim/play/navigate/${_.mode}/${_.playId}/${_.playerId}`,
+  "sim:general:post:retake": (_: IPlaySlugs) => `/api/sim/play/retake/${_.mode}/${_.playId}/${_.playerId}`,
+  "sim:module-completion:get:all": () => `/api/sim/modules/completions`,
+  "sim:collection:get:all": () => `/api/sim/collections`,
+  "sim:collection:get:modules": ({ collectionId }: { collectionId: string }) => `/api/sim/collections/${collectionId}/modules`,
+  "sim:session:get:stats": ({ id }: { id: string }) => `/api/sim/sessions/${id}/stats`,
+  "sim:session:get:players": ({ id }: { id: string }) => `/api/sim/sessions/${id}/players`,
+  "sim:module:get:stats": ({ id }: { id: string }) => `/api/sim/modules/${id}/stats`,
+  "sim:module:get:slug": ({ id }: { id: string }) => `/api/sim/modules/${id}/slug`,
+  "sim:session:post:join": () => `/api/sim/sessions/join`,
+  "sim:session:post:leave": ({ id }: { id: string }) => `/api/sim/sessions/${id}/leave`,
+  "sim:session:post:end": ({ id }: { id: string }) => `/api/sim/sessions/${id}/end`,
+
+  // SES SUITE
+  "ses:session:get:all": () => `/api/ses/sessions`,
+  "ses:session:get:recent": () => `/api/ses/sessions/recent`,
+  "ses:session:get:overview": (id: string) => `/api/ses/sessions/${id}/overview`,
+  "ses:session:get:notes": (id: string) => `/api/ses/sessions/${id}/notes`,
+  "ses:session:get:players": (id: string) => `/api/ses/sessions/${id}/players`,
+  "ses:session:get:player-summary": (id: string) => `/api/ses/sessions/${id}/player-summary`,
+  "ses:session:post:create": () => `/api/ses/sessions`,
+  "ses:session:post:start": (id: string) => `/api/ses/sessions/${id}/start`,
+  "ses:module-version:get:options": () => `/api/ses/modules-versions/options`,
+  "ses:module:get:all": () => `/api/ses/modules`,
+  "ses:module:get:one": ({ id }: { id: string }) => `/api/ses/modules/${id}`,
+  "ses:session:get:one": ({ code }: { code: string }) => `/api/ses/sessions/${code}`,
+
+  // EDITOR SUITE
+  "editor:collection:get:all": () => `/api/editor/collections`,
+  "editor:collection:get:documents": ({ collectionId }: { collectionId: string }) => `/api/editor/collections/${collectionId}/documents`,
+  "editor:collection:patch:details": ({ id }: { id: string }) => `/api/editor/collections/${id}`,
+  "editor:collection:post:create": () => `/api/editor/collections`,
+  "editor:module:get:all": () => `/api/editor/modules`,
+  "editor:module:post:create": () => `/api/editor/modules`,
+
+  // ADMIN SUITE
   "admin:user:get:all": () => `/api/admin/users`,
-
-  // MEDIA
-  "public:media:post:one": () => `/api/media`,
-
-  // ORGANIZATIONS
-  "public:org:get:subscription": ({ orgId }: { orgId: string }) => `/api/org/${orgId}/subscription`,
-  "public:org:get:active": () => '/api/org/active',
-  "public:org:get:members": ({ orgId }: { orgId: string }) => `/api/org/${orgId}/members`,
-  "public:org:delete:member": ({ orgId }: { orgId: string }) => `/api/org/${orgId}/members`,
-  "public:org:patch:member-role": ({ orgId }: { orgId: string }) => `/api/org/${orgId}/members/role`,
-  "public:org:post:invite": ({ orgId }: { orgId: string }) => `/api/org/${orgId}/members/invite`,
-
-  "public:session:get:all":           () => '/api/sessions',
-  "public:session:get:overview":      (id: string) => `/api/sessions/${id}/overview`,
-  "public:session:post:create":       () => '/api/sessions',
-  "public:module-version:get:all":    () => '/api/modules/versions',
-  "public:module-completion:get:all": () => '/api/modules/completions',
-  "public:collection:get:all":        () => '/api/editor/collections',
-  "admin:collection:get:documents":   ({ collectionId }: { collectionId: string }) => `/api/editor/collections/${collectionId}/documents`,
-  "admin:collection:patch:details":   ({ id }: { id: string }) => `/api/editor/collections/${id}`,
-  "public:collection:post:create":     () => '/api/editor/collections',
-  "public:module:get:all":            () => '/api/editor/modules',
-  "public:module:post:create":        () => '/api/editor/modules',
-  "admin:subscription:get:all":       () => '/api/admin/subscriptions',
-  "admin:email-log:get:all":          () => '/api/admin/email',
+  "admin:subscription:get:all": () => `/api/admin/subscriptions`,
+  "admin:email-log:get:all": () => `/api/admin/email`,
 } as const;
-
 
 export default ROUTES;

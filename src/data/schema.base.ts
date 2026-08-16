@@ -22,6 +22,21 @@ export const ZStorageMetadata = z.object({
   msc: z.string()
 });
 
+export const ZSessionConfig = z.object({
+  allowLateAdmissions: z.boolean().default(true),
+  maxAdmissions: z.number().int().positive().default(50),
+  controlMode: z.enum(["tutor-led", "self-paced"]).default("self-paced"),
+  allowHints: z.boolean().default(true)
+}).catch({
+  allowLateAdmissions: true,
+  maxAdmissions: 50,
+  controlMode: "self-paced",
+  allowHints: true
+});
+
+export const ServerModeEnum = z.enum(["local", "remote", "session"]);
+export type ServerMode = z.infer<typeof ServerModeEnum>;
+
 export const ZBaseFilter = z.object({
   search: z.string().optional(),
 
@@ -121,6 +136,8 @@ export const SubscriptionStatusEnum = z.enum(["ACTIVE", "PAST_DUE", "CANCELED", 
 
 export const MediaStatusEnum = z.enum(["active", "deleted", "uploading", "processing", "ready", "failed"]);
 
+export const ModuleDifficultyEnum = z.enum(["EAZY", "MEDIUM", "HARD"]);
+
 export const ModuleVersionStatusEnum = z.enum(["DRAFT", "PUBLISHED", "ARCHIVED"]);
 
 export const ModuleProgressPlayModeEnum = z.enum(["free", "controlled"]);
@@ -130,6 +147,31 @@ export const GamificationLogActionEnum = z.enum(["XP_EARNED", "XP_DEDUCTED", "ST
 export const LiveSessionStatusEnum = z.enum(["STAGING", "ACTIVE", "COMPLETED", "CANCELLED"]);
 
 export const EmailLogStatusEnum = z.enum(["QUEUED", "SENT", "FAILED", "BOUNCED"]);
+
+export const ZNote = z.object({
+  overview: z.object({
+    objectives: z.string().array()
+  }),
+  engage: z.object({
+    curiosityQuestion: z.string(),
+    preAssessment: z.object({
+      question: z.string(),
+      options: z.string().array(),
+      answer: z.number()
+    }).array(),
+  }),
+  explanation: z.object({
+    items: z.object({
+      name: z.string(),
+      image: z.string(),
+      description: z.string()
+    }).array(),
+    keyTakeaways: z.object({
+      phrase: z.string(),
+      description: z.string()
+    }).array()
+  })
+})
 
 // ==========================================
 // BETTER AUTH CORE
@@ -294,7 +336,7 @@ export const ZCollection = z.object({
   name: z.string().min(1, "Collection name is required"),
   slug: z.string(),
   description: z.string().nullable(),
-  level: z.string().nullable(),
+  grade: z.string(),
   createdAt: ZDate,
   updatedAt: ZDate,
 });
@@ -333,10 +375,12 @@ export const ZModule = z.object({
   id: z.string(),
   collectionId: z.string(),
   title: z.string().min(1, "Title is required"),
+  image: z.string(),
   slug: z.string(),
+  duration: z.string().nullable(),
+  difficulty: ModuleDifficultyEnum,
   description: z.string(),
   orderIndex: z.number().int(),
-  publishedVersionId: z.string().nullable(),
   createdAt: ZDate,
   updatedAt: ZDate,
 });
@@ -348,7 +392,7 @@ export const ZModuleVersion = z.object({
   branchedFromId: z.string().nullable(),
   status: ModuleVersionStatusEnum.default("DRAFT"),
   interactiveConfig: z.record(z.string(), z.any()),
-  notes: z.record(z.string(), z.any()).nullable(),
+  notes: ZNote.nullable(),
   changeNote: z.string().nullable(),
   createdById: z.string(),
   publishedAt: ZDate.nullable(),
@@ -363,7 +407,9 @@ export const ZModuleCheckpoint = z.object({
   question: z.string().min(1, "Question is required"),
   options: z.array(z.string()),
   correctAnswer: z.number().int(),
-  points: z.number().int().default(10),
+  points: z.number().int().default(25),
+  explanation: z.string(),
+  hint: z.string(),
   createdAt: ZDate,
   updatedAt: ZDate,
 });
@@ -387,6 +433,7 @@ export const ZModuleCompletion = z.object({
   moduleId: z.string(),
   lastPlayedVersionId: z.string().nullable(),
   highScore: z.number().int().default(0),
+  lastScore: z.number().int().default(0),
   totalPlays: z.number().int().default(0),
   lastPlayedAt: ZDate.nullable(),
   createdAt: ZDate,
@@ -399,6 +446,8 @@ export const ZPlayAttempt = z.object({
   sessionId: z.string().nullable(),
   moduleVersionId: z.string(),
   playMode: z.enum(["session", "library", "free"]),
+  currentTab: z.number().int().default(0),
+  progress: z.number().int().default(0),
   currentCheckpointIndex: z.number().int().default(0),
   accumulatedPoints: z.number().int().default(0),
   sessionPlayerId: z.string().nullable(),
@@ -425,9 +474,10 @@ export const ZLiveSession = z.object({
   organizationId: z.string().nullable(),
   moduleVersionId: z.string(),
   joinCode: z.string(),
-  name: z.string().nullable(),
+  name: z.string(),
   status: LiveSessionStatusEnum.default("STAGING"),
-  config: z.record(z.string(), z.any()).nullable(),
+  config: ZSessionConfig,
+  currentTab: z.number().int().default(0),
   startedAt: ZDate.nullable(),
   endedAt: ZDate.nullable(),
   createdAt: ZDate,
@@ -447,7 +497,8 @@ export const ZSessionPlayer = z.object({
   id: z.string(),
   sessionId: z.string(),
   userId: z.string().nullable(),
-  anonymousName: z.string().nullable(),
+  name: z.string(),
+  avatar: z.enum(avatarKeys).default("avatar-01"),
   score: z.number().int().default(0),
   completionRate: z.number().min(0).max(1).default(0.0),
   joinedAt: ZDate,
@@ -494,6 +545,7 @@ export const ZEmailLog = z.object({
 // ==========================================
 
 const baseSchema = {
+  ServerModeEnum,
   // Utilities
   ZMediaFile,
   ZDate,

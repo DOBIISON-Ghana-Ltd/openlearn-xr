@@ -1,11 +1,13 @@
 import prisma from "@/adapters/db/client";
-import ZModules from "@/data/api/modules/modules.schema";
+import ZEditor from "@/data/api/editor/editor.schema";
 import { JSend } from "@/lib/utils/jsend";
 import { secureApiRoute } from "@/lib/utils/secure-api-route";
 
 export const PATCH = secureApiRoute<{ id: string }>(async (req, ctx) => {
   const { id } = await ctx.params;
-  const body = ZModules.AdminCollectionPatchDetails.shape.body.parse(await req.json());
+  const body = ZEditor.EditorCollectionPatchDetails.shape.body.parse(
+    await req.json()
+  );
 
   await prisma.collection.update({
     where: { id },

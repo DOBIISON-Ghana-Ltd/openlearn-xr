@@ -1,13 +1,10 @@
 import type { Metadata } from "next";
 import localFont from 'next/font/local';
-import { Geist_Mono } from "next/font/google";
 import { cn } from "@/lib/utils/cn";
 import "./globals.css";
-import Providers from "@/components/common/providers";
+import Providers from "@/components/(new)/common/providers";
 
-const sans = localFont({ src: './fonts/GoogleSansFlex.ttf', variable: '--font-sans' });
-const heading = localFont({ src: './fonts/GoogleSansFlex.ttf', variable: '--font-heading', weight: '700' });
-const mono = Geist_Mono({ subsets: ['latin'], variable: '--font-mono' });
+const sans = localFont({ src: './fonts/Sora.ttf', variable: '--font-sans' });
 
 export const metadata: Metadata = {
   title: {
@@ -22,7 +19,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
     <html
       lang="en"
       suppressHydrationWarning
-      className={cn("h-full", "antialiased", "font-sans", sans.variable, heading.variable, mono.variable)}
+      className={cn("h-full", "antialiased", "font-sans", sans.variable)}
     >
       <body className="relative">
         <Providers>

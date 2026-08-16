@@ -1,5 +1,5 @@
 import prisma from "@/adapters/db/client";
-import ZUser from "@/data/api/user/user.schema";
+import ZAdmin from "@/data/api/admin/admin.schema";
 import { JSend } from "@/lib/utils/jsend";
 import { secureApiRoute } from "@/lib/utils/secure-api-route";
 
@@ -10,7 +10,7 @@ export const GET = secureApiRoute(async (req, ctx, user) => {
     },
   });
 
-  const parsed = ZUser.AdminEmailLogGetAll.shape.res.parse(logs);
+  const parsed = ZAdmin.AdminEmailLogGetAll.shape.res.parse(logs);
 
   return JSend.success(parsed);
 });

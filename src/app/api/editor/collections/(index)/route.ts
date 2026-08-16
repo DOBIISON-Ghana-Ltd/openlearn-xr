@@ -1,7 +1,7 @@
 import { secureApiRoute } from "@/lib/utils/secure-api-route";
 import { JSend } from "@/lib/utils/jsend";
 import prisma from "@/adapters/db/client";
-import ZModules from "@/data/api/modules/modules.schema";
+import ZEditor from "@/data/api/editor/editor.schema";
 import slugify from "@sindresorhus/slugify";
 import { nanoid } from "nanoid";
 
@@ -25,13 +25,13 @@ export const GET = secureApiRoute(async (req, ctx, user) => {
     },
   });
 
-  const parsedData = ZModules.PublicCollectionGetAll.shape.res.parse(collections);
+  const parsedData = ZEditor.EditorCollectionGetAll.shape.res.parse(collections);
   return JSend.success(parsedData);
 });
 
 export const POST = secureApiRoute(async (req, ctx, user) => {
   const rawBody = await req.json();
-  const body = ZModules.PublicCollectionCreate.shape.body.parse(rawBody);
+  const body = ZEditor.EditorCollectionPostCreate.shape.body.parse(rawBody);
 
   const baseSlug = slugify(body.name);
   const uniqueSlug = `${baseSlug}-${nanoid(6)}`;
@@ -41,12 +41,13 @@ export const POST = secureApiRoute(async (req, ctx, user) => {
       name: body.name,
       slug: uniqueSlug,
       description: body.description || null,
+      grade: "General",
     },
     select: {
       id: true,
     },
   });
 
-  const parsedData = ZModules.PublicCollectionCreate.shape.res.parse(created);
+  const parsedData = ZEditor.EditorCollectionPostCreate.shape.res.parse(created);
   return JSend.success(parsedData);
 });
