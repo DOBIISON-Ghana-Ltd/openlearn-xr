@@ -1,16 +1,4 @@
-import {
-  Body,
-  Column,
-  Container,
-  Head,
-  Html,
-  Preview,
-  Row,
-  Section,
-  Tailwind,
-  Text,
-  pixelBasedPreset,
-} from '@react-email/components'
+import { Body, Column, Container, Head, Html, Preview, Row, Section, Tailwind, Text, pixelBasedPreset } from 'react-email';
 
 export interface IEmailOtp {
   type: 'sign-in' | 'email-verification' | 'forget-password' | 'change-email'
