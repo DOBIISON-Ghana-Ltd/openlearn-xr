@@ -20,21 +20,26 @@ const clientSchema = z.object({
 // Server-only variables + client variables (inherited)
 const serverSchema = clientSchema.extend({
   NODE_ENV: z.enum(['development', 'production', 'test']).default('development'),
+
   DATABASE_URL: z.string().optional(),
   DIRECT_URL: z.string().optional(),
+
   BETTER_AUTH_SECRET: z.string().optional(),
   BETTER_AUTH_URL: z.url().default("http://localhost:3000"),
+
   GOOGLE_CLIENT_ID: z.string().optional(),
   GOOGLE_CLIENT_SECRET: z.string().optional(),
+
   EMAIL_PROVIDER: z.enum(['console', 'ses', 'resend']).default('console'),
   RESEND_API_KEY: z.string().optional(),
   EMAIL_FROM: z.string().default("OpenLearn <noreply@openlearn.app>"),
+  EMAIL_DEV_TO: z.string().optional(),
+
   AWS_REGION: z.string().default("us-east-1"),
   AWS_ACCESS_KEY_ID: z.string().optional(),
   AWS_SECRET_ACCESS_KEY: z.string().optional(),
-  AWS_SES_SENDER: z.string().optional(),
   S3_BUCKET_NAME: z.string().optional(),
-  EMAIL_DEV_TO: z.string().optional(),
+
   PUSHER_APP_ID: z.string().optional(),
   PUSHER_KEY: z.string().optional(),
   PUSHER_SECRET: z.string().optional(),
@@ -79,7 +84,6 @@ const serverEnv = {
   AWS_REGION: process.env.AWS_REGION,
   AWS_ACCESS_KEY_ID: process.env.AWS_ACCESS_KEY_ID,
   AWS_SECRET_ACCESS_KEY: process.env.AWS_SECRET_ACCESS_KEY,
-  AWS_SES_SENDER: process.env.AWS_SES_SENDER,
   S3_BUCKET_NAME: process.env.S3_BUCKET_NAME,
 
   PUSHER_APP_ID: process.env.PUSHER_APP_ID,
