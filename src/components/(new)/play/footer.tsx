@@ -90,6 +90,15 @@ export default function Footer(props: IFooter) {
     });
   };
 
+  const surveyUrl =
+    tabIndex === 0 && !isHost
+      ? "https://forms.gle/VSg1JHokZGcdTZin9"
+      : tabIndex === 5 && !isHost
+        ? "https://forms.gle/QqXwsL9Xau1BxbMG8"
+        : tabIndex === 5 && isHost
+          ? "https://forms.gle/PKb4w6oCrZ1ekdZg9"
+          : null;
+
   return (
     <footer className="bg-primary-subtle px-8 lg:px-22 flex-center justify-between z-20 shrink-0 py-3">
       {/* Back / Left Action Button */}
@@ -101,6 +110,18 @@ export default function Footer(props: IFooter) {
       >
         {back.label}
       </button>
+
+      {/* Survey Link */}
+      {surveyUrl && (
+        <a
+          href={surveyUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-small text-primary-cta underline underline-offset-2 hover:text-primary-hover transition-colors"
+        >
+          Take Survey
+        </a>
+      )}
 
       {/* Primary / Right Action Button */}
       <button
