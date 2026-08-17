@@ -24,6 +24,9 @@ export default function NormalContent(props: INormalResultFlow) {
   });
 
   const playerId = useStore(simStore, (s) => s.getSessionPlayer(props.id)) || '';
+  const sessionInfo = useStore(simStore, (s) => s.getSessionInfo(props.id));
+  const isTutorLedSession =
+    props.mode === "session" && sessionInfo?.config.controlMode === "tutor-led";
 
   const { data: playScore, isLoading: ILPlayScore } = useApi.query(
     "sim:general:get:score",
@@ -52,6 +55,7 @@ export default function NormalContent(props: INormalResultFlow) {
               detail={detail}
               score={playScore.score}
               mode={props.mode}
+              isTutorLedSession={isTutorLedSession}
             />
           ))
           .otherwise(() => <StateError />)
@@ -71,10 +75,11 @@ type IResult = {
   detail: IDetail;
   score: number;
   mode: "module" | "session";
+  isTutorLedSession: boolean;
 };
 
 function NormalResult(props: IResult) {
-  const { detail, score, mode } = props;
+  const { detail, score, mode, isTutorLedSession } = props;
   const isSession = mode === "session";
 
   return (
@@ -104,6 +109,17 @@ function NormalResult(props: IResult) {
           {score}
         </span>
       </div>
+
+      {isTutorLedSession && (
+        <a
+          href="https://forms.gle/QqXwsL9Xau1BxbMG8"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-normal text-primary-cta underline underline-offset-2 hover:text-primary-hover transition-colors"
+        >
+          Take Post-Session Survey
+        </a>
+      )}
     </div>
   );
 }

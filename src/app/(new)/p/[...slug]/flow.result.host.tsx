@@ -26,6 +26,9 @@ export default function HostContent(props: IHostResultFlow) {
     query: { mode: props.mode },
   });
 
+  const sessionInfo = useStore(simStore, (s) => s.getSessionInfo(props.id));
+  const isTutorLedSession = sessionInfo?.config.controlMode === "tutor-led";
+
   const isLoading = ILDetails || ILPlayers;
 
   return (
@@ -38,6 +41,7 @@ export default function HostContent(props: IHostResultFlow) {
               id={props.id}
               detail={detail}
               players={players ?? []}
+              isTutorLedSession={isTutorLedSession}
             />
           ))
           .otherwise(() => <StateError />)}
@@ -50,7 +54,7 @@ export default function HostContent(props: IHostResultFlow) {
   );
 }
 
-function HostResult({ id, detail, players }: { id: string; detail: IDetail; players: IPlayers }) {
+function HostResult({ id, detail, players, isTutorLedSession }: { id: string; detail: IDetail; players: IPlayers; isTutorLedSession: boolean }) {
   const router = useRouter();
   const sessionInfo = useStore(simStore, (s) => s.getSessionInfo(id));
   const removeSession = useStore(simStore, (s) => s.removeSession);
@@ -122,7 +126,7 @@ function HostResult({ id, detail, players }: { id: string; detail: IDetail; play
       </div>
 
       {/* Full-width End Session Bar */}
-      <div className="w-full max-w-xl">
+      <div className="w-full max-w-xl flex flex-col gap-3">
         <button
           type="button"
           onClick={handleEndSession}
@@ -135,6 +139,17 @@ function HostResult({ id, detail, players }: { id: string; detail: IDetail; play
             "End Session"
           )}
         </button>
+
+        {isTutorLedSession && (
+          <a
+            href="https://forms.gle/PKb4w6oCrZ1ekdZg9"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-normal text-primary-cta underline underline-offset-2 hover:text-primary-hover transition-colors text-center"
+          >
+            Take Post-Session Survey
+          </a>
+        )}
       </div>
     </div>
   );

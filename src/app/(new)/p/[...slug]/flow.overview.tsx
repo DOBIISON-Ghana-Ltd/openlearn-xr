@@ -7,6 +7,7 @@ import { IFlowContent } from './flow';
 import { Infer } from '@/data/types.base';
 import { match, P } from 'ts-pattern';
 import { simStore } from '@/store/sim/store';
+import { useStore } from 'zustand';
 import StateLoading from '@/components/(new)/common/state.loading';
 import StateError from '@/components/(new)/common/state.error';
 
@@ -20,6 +21,10 @@ export default function OverviewFLow(props: IOverviewFlow) {
     simStore.getState().setDisableBack(false);
   }, []);
 
+  const sessionInfo = useStore(simStore, (s) => s.getSessionInfo(props.id));
+  const isTutorLedSession =
+    props.mode === "session" && sessionInfo?.config.controlMode === "tutor-led";
+
   const { data, isLoading } = useApi.query("sim:module:get:one", {
     params: { id: props.id },
     query: { mode: props.mode },
@@ -29,7 +34,9 @@ export default function OverviewFLow(props: IOverviewFlow) {
     <div className="flex-1 bg-primary-subtle overflow-y-auto overscroll-contain w-full min-h-0">
       {match({ data, isLoading })
         .with({ isLoading: true }, () => <StateLoading />)
-        .with({ data: P.select(P.nonNullable) }, (data) => <Content data={data} progress={props.progress ?? 0} />)
+        .with({ data: P.select(P.nonNullable) }, (data) => (
+          <Content data={data} progress={props.progress ?? 0} isTutorLedSession={isTutorLedSession} />
+        ))
         .with({ data: P.nullish, isLoading: false }, () => <StateError />)
         .exhaustive()
       }
@@ -40,10 +47,11 @@ export default function OverviewFLow(props: IOverviewFlow) {
 type IContent = {
   data: IModuleDetail;
   progress: number;
+  isTutorLedSession: boolean;
 };
 
 function Content(props: IContent) {
-  const { data, progress } = props;
+  const { data, progress, isTutorLedSession } = props;
 
   return (
     <div className="w-full min-h-full pt-5 pb-12 px-6 md:px-12 xl:pl-60 xl:pr-8 flex flex-col">
@@ -111,6 +119,17 @@ function Content(props: IContent) {
 
           <Objectives data={props.data.notes?.overview.objectives || []} />
         </div>
+
+        {isTutorLedSession && (
+          <a
+            href="https://forms.gle/VSg1JHokZGcdTZin9"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-2 text-normal text-primary-cta underline underline-offset-2 hover:text-primary-hover transition-colors self-start"
+          >
+            Take Pre-Session Survey
+          </a>
+        )}
       </div>
     </div>
   );
