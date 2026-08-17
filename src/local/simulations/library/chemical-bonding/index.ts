@@ -1,49 +1,6 @@
-import { LocalSimulationConfig } from "../../type";
-import Model from "./model.v0";
+// Active version export (switch to ./config.v0, ./config.v1, etc.)
+export * from "./config.v1";
 
-export type IValueMap = {
-  select_molecule: "BeCl2 (Linear)" | "BCl3 (Trigonal Planar)" | "CH4 (Tetrahedral)" | "PCl5 (Trigonal Bipyramidal)" | "SF6 (Octahedral)";
-  show_hybrid_orbitals: boolean;
-  display_bond_angles: boolean;
-};
-
-export const config: LocalSimulationConfig = {
-  type: "internal",
-  slug: "chemical-bonding",
-  name: "Chemical Bonding",
-  Model,
-  controls: [
-    {
-      id: "select_molecule",
-      label: "Molecule",
-      description: "Choose a molecule to visualize its 3D geometry and hybridization.",
-      type: "select",
-      options: [
-        "BeCl2 (Linear)",
-        "BCl3 (Trigonal Planar)",
-        "CH4 (Tetrahedral)",
-        "PCl5 (Trigonal Bipyramidal)",
-        "SF6 (Octahedral)"
-      ],
-      value: "CH4 (Tetrahedral)",
-      defaultValue: "CH4 (Tetrahedral)"
-    },
-    {
-      id: "show_hybrid_orbitals",
-      label: "Show Orbitals",
-      description: "Toggle to display the hybrid orbital lobes around the central atom.",
-      type: "toggle",
-      value: false,
-      defaultValue: false
-    },
-    {
-      id: "display_bond_angles",
-      label: "Show Angles",
-      description: "Toggle to show the exact bond angle measurements on the 3D model.",
-      type: "toggle",
-      value: true,
-      defaultValue: true
-    }
-  ]
-};
-
+// Versioned exports
+export { config as configV0, type IValueMap as IValueMapV0 } from "./config.v0";
+export { config as configV1, type IValueMap as IValueMapV1 } from "./config.v1";

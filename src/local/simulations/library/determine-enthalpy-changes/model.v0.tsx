@@ -5,7 +5,7 @@ import { useFrame } from '@react-three/fiber';
 import { Text } from '@react-three/drei';
 import * as THREE from 'three';
 import { useSimValue } from '../../resolver';
-import { IValueMap } from './index';
+import { IValueMap } from './config.v0';
 
 export default function EnthalpyChangesModel() {
   const reactionType = useSimValue<IValueMap, 'reaction_type'>('reaction_type', 'Neutralization (HCl + NaOH)');

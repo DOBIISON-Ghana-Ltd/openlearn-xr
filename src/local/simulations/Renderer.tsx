@@ -6,23 +6,32 @@ import { OrbitControls } from "@react-three/drei";
 
 interface RendererProps {
   children?: React.ReactNode;
+  /** DOM overlay rendered outside the Canvas — immune to camera rotation/panning */
+  overlay?: React.ReactNode;
 }
 
-export default function Renderer({ children }: RendererProps) {
+export default function Renderer({ children, overlay }: RendererProps) {
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
     setMounted(true);
   }, []);
 
+  const gridStyle: React.CSSProperties = {
+    backgroundColor: "#f4f8ff",
+    backgroundImage:
+      "linear-gradient(rgba(100, 160, 230, 0.18) 1px, transparent 1px), linear-gradient(90deg, rgba(100, 160, 230, 0.18) 1px, transparent 1px)",
+    backgroundSize: "36px 36px",
+  };
+
   if (!mounted) {
     return (
-      <div className="flex-1 size-full relative overflow-hidden min-h-0 bg-surface-white" />
+      <div className="flex-1 size-full relative overflow-hidden min-h-0" style={gridStyle} />
     );
   }
 
   return (
-    <div className="flex-1 size-full relative overflow-hidden min-h-0 bg-surface-white">
+    <div className="flex-1 size-full relative overflow-hidden min-h-0" style={gridStyle}>
       <div className="absolute inset-0 size-full">
         <Canvas
           camera={{ position: [0, 0.25, 1.8], fov: 45 }}
@@ -30,11 +39,10 @@ export default function Renderer({ children }: RendererProps) {
           dpr={[1, 2]}
           style={{ width: "100%", height: "100%" }}
         >
-          {/* Clean Light-Mode Educational Studio Lighting */}
-          <ambientLight intensity={0.9} />
-          <directionalLight position={[8, 10, 5]} intensity={1.3} />
-          <directionalLight position={[-8, -5, -5]} intensity={0.4} color="#94a3b8" />
-          <pointLight position={[0, 4, 2]} intensity={0.8} />
+          {/* Clay studio lighting — soft key + fill, enough depth to see 3D form */}
+          <ambientLight intensity={1.4} color="#f0f4ff" />
+          <directionalLight position={[4, 8, 5]} intensity={1.1} color="#ffffff" />
+          <directionalLight position={[-4, -2, -3]} intensity={0.4} color="#ddeeff" />
 
           {/* Centered Floating 3D Model Scene */}
           <group position={[0, 0, 0]}>
@@ -53,6 +61,13 @@ export default function Renderer({ children }: RendererProps) {
           />
         </Canvas>
       </div>
+
+      {/* DOM overlay — lives outside WebGL, immune to OrbitControls */}
+      {overlay && (
+        <div className="absolute inset-0 size-full pointer-events-none">
+          {overlay}
+        </div>
+      )}
     </div>
   );
 }

@@ -7,7 +7,7 @@ import * as THREE from 'three';
 import gsap from 'gsap';
 import { SvgLathe } from '../../common';
 import { useSimValue } from '../../resolver';
-import { IValueMap } from './index';
+import { IValueMap } from './config.v0';
 
 // -----------------------------------------------------------------------------
 // REFINED SVG LATHE GEOMETRY PROFILES (High Definition Turned Hardware Parts)

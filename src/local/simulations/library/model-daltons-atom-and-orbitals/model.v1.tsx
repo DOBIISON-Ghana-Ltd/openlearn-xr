@@ -1,17 +1,15 @@
 'use client';
 
-import React, { useEffect, useMemo, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useFrame } from '@react-three/fiber';
-import { Text } from '@react-three/drei';
 import * as THREE from 'three';
 import { SvgLathe } from '../../common';
 import { useSimValue } from '../../resolver';
-import { IValueMap } from './config.v0';
+import { IValueMap } from './config.v1';
 
-export default function DaltonsAtomModel() {
+export default function DaltonsAtomModelV1() {
   const atomModel = useSimValue<IValueMap, 'atom_model'>('atom_model', "Dalton's Sphere");
   const orbitalView = useSimValue<IValueMap, 'orbital_view'>('orbital_view', '1s Orbital');
-  const showLabels = useSimValue<IValueMap, 'show_labels'>('show_labels', false);
 
   const modelGroupRef = useRef<THREE.Group>(null);
 
@@ -41,9 +39,6 @@ export default function DaltonsAtomModel() {
           )}
         </group>
       </ModelTransition>
-
-      {/* Vector SDF Quantum Badge Label */}
-      {showLabels && <QuantumLabels orbitalView={orbitalView} atomModel={atomModel} />}
     </group>
   );
 }
@@ -98,23 +93,14 @@ function DaltonsSphere() {
 
   return (
     <group position={[0, 0, 0]}>
-      {/* Primary Solid Billiard Ball Atom */}
+      {/* Solid Matte Clay Atom — soft periwinkle */}
       <mesh ref={sphereRef} position={[0, 0, 0]}>
         <sphereGeometry args={[0.52, 64, 64]} />
-        <meshPhysicalMaterial
-          color="#0284c7"
-          roughness={0.15}
-          metalness={0.2}
-          clearcoat={1.0}
-          clearcoatRoughness={0.1}
-          reflectivity={0.9}
+        <meshStandardMaterial
+          color="#7eb8e8"
+          roughness={1.0}
+          metalness={0}
         />
-      </mesh>
-
-      {/* Equatorial Atomic Equator Ring */}
-      <mesh rotation={[Math.PI / 2, 0, 0]}>
-        <torusGeometry args={[0.53, 0.008, 16, 100]} />
-        <meshBasicMaterial color="#38bdf8" transparent opacity={0.6} />
       </mesh>
     </group>
   );
@@ -135,21 +121,23 @@ function ThompsonsModel() {
 
   return (
     <group position={[0, 0, 0]}>
+      {/* Matte clay pudding sphere — soft rose */}
       <mesh position={[0, 0, 0]}>
         <sphereGeometry args={[0.5, 64, 64]} />
-        <meshPhysicalMaterial
-          color="#ec4899"
+        <meshStandardMaterial
+          color="#e8a0b4"
+          roughness={1.0}
+          metalness={0}
           transparent
-          opacity={0.6}
-          transmission={0.6}
-          roughness={0.2}
+          opacity={0.72}
         />
       </mesh>
 
+      {/* Embedded matte clay electrons — warm yellow */}
       {electronPositions.map((pos, idx) => (
         <mesh key={idx} position={pos}>
           <sphereGeometry args={[0.065, 32, 32]} />
-          <meshStandardMaterial color="#eab308" roughness={0.2} metalness={0.8} />
+          <meshStandardMaterial color="#f5d48a" roughness={1.0} metalness={0} />
         </mesh>
       ))}
     </group>
@@ -165,7 +153,7 @@ function RutherfordsModel() {
   const ring2Ref = useRef<THREE.Group>(null);
   const ring3Ref = useRef<THREE.Group>(null);
 
-  useFrame((state, delta) => {
+  useFrame((state) => {
     const t = state.clock.getElapsedTime();
     if (ring1Ref.current) ring1Ref.current.rotation.z = t * 3.0;
     if (ring2Ref.current) ring2Ref.current.rotation.z = -t * 2.4;
@@ -174,88 +162,91 @@ function RutherfordsModel() {
 
   return (
     <group position={[0, 0, 0]}>
-      {/* Clustered Protons & Neutrons Nucleus */}
+      {/* Matte clay nucleus */}
       <group position={[0, 0, 0]}>
+        {/* Protons — soft coral */}
         <mesh position={[0.04, 0.04, 0.04]}>
           <sphereGeometry args={[0.075, 24, 24]} />
-          <meshStandardMaterial color="#ef4444" roughness={0.2} metalness={0.6} />
-        </mesh>
-        <mesh position={[-0.05, 0.03, -0.04]}>
-          <sphereGeometry args={[0.075, 24, 24]} />
-          <meshStandardMaterial color="#0284c7" roughness={0.2} metalness={0.6} />
+          <meshStandardMaterial color="#f4857a" roughness={1.0} metalness={0} />
         </mesh>
         <mesh position={[0.03, -0.05, 0.04]}>
           <sphereGeometry args={[0.075, 24, 24]} />
-          <meshStandardMaterial color="#ef4444" roughness={0.2} metalness={0.6} />
-        </mesh>
-        <mesh position={[-0.04, -0.04, -0.03]}>
-          <sphereGeometry args={[0.075, 24, 24]} />
-          <meshStandardMaterial color="#0284c7" roughness={0.2} metalness={0.6} />
+          <meshStandardMaterial color="#f4857a" roughness={1.0} metalness={0} />
         </mesh>
         <mesh position={[0.01, 0.06, -0.02]}>
           <sphereGeometry args={[0.075, 24, 24]} />
-          <meshStandardMaterial color="#ef4444" roughness={0.2} metalness={0.6} />
+          <meshStandardMaterial color="#f4857a" roughness={1.0} metalness={0} />
+        </mesh>
+        {/* Neutrons — soft slate blue */}
+        <mesh position={[-0.05, 0.03, -0.04]}>
+          <sphereGeometry args={[0.075, 24, 24]} />
+          <meshStandardMaterial color="#8eaed4" roughness={1.0} metalness={0} />
+        </mesh>
+        <mesh position={[-0.04, -0.04, -0.03]}>
+          <sphereGeometry args={[0.075, 24, 24]} />
+          <meshStandardMaterial color="#8eaed4" roughness={1.0} metalness={0} />
         </mesh>
         <mesh position={[0.05, -0.02, -0.05]}>
           <sphereGeometry args={[0.075, 24, 24]} />
-          <meshStandardMaterial color="#0284c7" roughness={0.2} metalness={0.6} />
+          <meshStandardMaterial color="#8eaed4" roughness={1.0} metalness={0} />
         </mesh>
+        {/* Neutron — soft sage */}
         <mesh position={[-0.02, 0.05, 0.05]}>
           <sphereGeometry args={[0.075, 24, 24]} />
-          <meshStandardMaterial color="#10b981" roughness={0.2} metalness={0.6} />
+          <meshStandardMaterial color="#a8c8a0" roughness={1.0} metalness={0} />
         </mesh>
       </group>
 
-      {/* Ring 1 */}
+      {/* Orbit Ring 1 — soft lavender */}
       <group rotation={[Math.PI / 3, Math.PI / 6, 0]}>
         <mesh>
-          <torusGeometry args={[0.65, 0.01, 16, 100]} />
-          <meshStandardMaterial color="#6366f1" roughness={0.3} />
+          <torusGeometry args={[0.65, 0.008, 16, 100]} />
+          <meshStandardMaterial color="#b8a8d8" roughness={1.0} metalness={0} />
         </mesh>
         <group ref={ring1Ref}>
           <mesh position={[0.65, 0, 0]}>
             <sphereGeometry args={[0.055, 32, 32]} />
-            <meshPhysicalMaterial color="#eab308" metalness={0.9} roughness={0.1} clearcoat={1.0} />
+            <meshStandardMaterial color="#f5d48a" roughness={1.0} metalness={0} />
           </mesh>
           <mesh position={[-0.65, 0, 0]}>
             <sphereGeometry args={[0.055, 32, 32]} />
-            <meshPhysicalMaterial color="#eab308" metalness={0.9} roughness={0.1} clearcoat={1.0} />
+            <meshStandardMaterial color="#f5d48a" roughness={1.0} metalness={0} />
           </mesh>
         </group>
       </group>
 
-      {/* Ring 2 */}
+      {/* Orbit Ring 2 — soft periwinkle */}
       <group rotation={[-Math.PI / 4, -Math.PI / 3, 0]}>
         <mesh>
-          <torusGeometry args={[0.82, 0.01, 16, 100]} />
-          <meshStandardMaterial color="#8b5cf6" roughness={0.3} />
+          <torusGeometry args={[0.82, 0.008, 16, 100]} />
+          <meshStandardMaterial color="#9ab8e0" roughness={1.0} metalness={0} />
         </mesh>
         <group ref={ring2Ref}>
           <mesh position={[0, 0.82, 0]}>
             <sphereGeometry args={[0.055, 32, 32]} />
-            <meshPhysicalMaterial color="#eab308" metalness={0.9} roughness={0.1} clearcoat={1.0} />
+            <meshStandardMaterial color="#f5d48a" roughness={1.0} metalness={0} />
           </mesh>
           <mesh position={[0, -0.82, 0]}>
             <sphereGeometry args={[0.055, 32, 32]} />
-            <meshPhysicalMaterial color="#eab308" metalness={0.9} roughness={0.1} clearcoat={1.0} />
+            <meshStandardMaterial color="#f5d48a" roughness={1.0} metalness={0} />
           </mesh>
         </group>
       </group>
 
-      {/* Ring 3 */}
+      {/* Orbit Ring 3 — soft mint */}
       <group rotation={[0, Math.PI / 4, Math.PI / 3]}>
         <mesh>
-          <torusGeometry args={[0.98, 0.01, 16, 100]} />
-          <meshStandardMaterial color="#06b6d4" roughness={0.3} />
+          <torusGeometry args={[0.98, 0.008, 16, 100]} />
+          <meshStandardMaterial color="#90c8b8" roughness={1.0} metalness={0} />
         </mesh>
         <group ref={ring3Ref}>
           <mesh position={[0.98, 0, 0]}>
             <sphereGeometry args={[0.055, 32, 32]} />
-            <meshPhysicalMaterial color="#eab308" metalness={0.9} roughness={0.1} clearcoat={1.0} />
+            <meshStandardMaterial color="#f5d48a" roughness={1.0} metalness={0} />
           </mesh>
           <mesh position={[-0.98, 0, 0]}>
             <sphereGeometry args={[0.055, 32, 32]} />
-            <meshPhysicalMaterial color="#eab308" metalness={0.9} roughness={0.1} clearcoat={1.0} />
+            <meshStandardMaterial color="#f5d48a" roughness={1.0} metalness={0} />
           </mesh>
         </group>
       </group>
@@ -271,35 +262,34 @@ function SOrbital({ view }: { view: string }) {
 
   return (
     <group position={[0, 0, 0]}>
+      {/* Inner shell — soft sky blue clay */}
       <mesh>
         <sphereGeometry args={[0.45, 64, 64]} />
-        <meshPhysicalMaterial
-          color="#0284c7"
+        <meshStandardMaterial
+          color="#a8cce8"
+          roughness={1.0}
+          metalness={0}
           transparent
-          opacity={0.65}
-          transmission={0.6}
-          roughness={0.15}
+          opacity={0.55}
         />
       </mesh>
 
+      {/* Outer 2s node shell — soft violet clay */}
       {is2s && (
         <mesh>
           <sphereGeometry args={[0.8, 64, 64]} />
-          <meshPhysicalMaterial
-            color="#6366f1"
+          <meshStandardMaterial
+            color="#c0b0dc"
+            roughness={1.0}
+            metalness={0}
             transparent
-            opacity={0.3}
-            transmission={0.8}
-            roughness={0.1}
-            wireframe
+            opacity={0.22}
           />
         </mesh>
       )}
     </group>
   );
 }
-
-
 
 /**
  * Teardrop Lobe Component built via SvgLathe
@@ -309,14 +299,12 @@ function TeardropLobe({ color }: { color: string }) {
 
   return (
     <SvgLathe pathData={balloonSvgPath} segments={48} subdivisions={36}>
-      <meshPhysicalMaterial
+      <meshStandardMaterial
         color={color}
+        roughness={1.0}
+        metalness={0}
         transparent
-        opacity={0.8}
-        transmission={0.6}
-        roughness={0.15}
-        clearcoat={0.8}
-        ior={1.35}
+        opacity={0.82}
       />
     </SvgLathe>
   );
@@ -335,58 +323,112 @@ function POrbital({ view }: { view: string }) {
 
   return (
     <group rotation={rotation} position={[0, 0, 0]}>
-      {/* Upper Lobe (+Y) */}
+      {/* Upper Lobe (+Y) — warm peach */}
       <group position={[0, 0.04, 0]}>
-        <TeardropLobe color="#f59e0b" />
+        <TeardropLobe color="#f5c4a0" />
       </group>
 
-      {/* Lower Lobe (-Y) */}
+      {/* Lower Lobe (-Y) — soft sage */}
       <group position={[0, -0.04, 0]} rotation={[Math.PI, 0, 0]}>
-        <TeardropLobe color="#f59e0b" />
+        <TeardropLobe color="#a8c8a0" />
       </group>
 
-      {/* Central Nodal Point Core */}
+      {/* Central Nodal Point — white clay */}
       <mesh position={[0, 0, 0]}>
         <sphereGeometry args={[0.08, 32, 32]} />
-        <meshStandardMaterial color="#ffffff" roughness={0.1} />
+        <meshStandardMaterial color="#e8e8f0" roughness={1.0} metalness={0} />
       </mesh>
     </group>
   );
 }
 
 /**
- * Crisp Vector SDF Quantum Number Badge
+ * QuantumLabelOverlay
+ * Pure DOM component — reads from the same Zustand simStore.
+ * Renders fixed to the left side of the viewport, completely immune
+ * to OrbitControls rotation and panning.
  */
-function QuantumLabels({ orbitalView, atomModel }: { orbitalView: string; atomModel: string }) {
+export function QuantumLabelOverlay() {
+  const orbitalView = useSimValue<IValueMap, 'orbital_view'>('orbital_view', '1s Orbital');
+  const atomModel = useSimValue<IValueMap, 'atom_model'>('atom_model', "Dalton's Sphere");
+  const showLabels = useSimValue<IValueMap, 'show_labels'>('show_labels', false);
+
+  if (!showLabels) return null;
+
   const getQuantumText = () => {
     switch (orbitalView) {
-      case '1s Orbital':
-        return '1s Orbital (n=1, l=0, ml=0)';
-      case '2s Orbital':
-        return '2s Orbital (n=2, l=0, ml=0)';
-      case '2px Orbital':
-        return '2px Orbital (n=2, l=1, ml=-1)';
-      case '2py Orbital':
-        return '2py Orbital (n=2, l=1, ml=0)';
-      case '2pz Orbital':
-        return '2pz Orbital (n=2, l=1, ml=+1)';
-      default:
-        return `${atomModel}`;
+      case '1s Orbital':  return { n: 1, l: 0, ml: 0,  label: '1s' };
+      case '2s Orbital':  return { n: 2, l: 0, ml: 0,  label: '2s' };
+      case '2px Orbital': return { n: 2, l: 1, ml: -1, label: '2pₓ' };
+      case '2py Orbital': return { n: 2, l: 1, ml: 0,  label: '2pᵧ' };
+      case '2pz Orbital': return { n: 2, l: 1, ml: 1,  label: '2pᵩ' };
+      default: return null;
     }
   };
 
+  const qn = getQuantumText();
+
   return (
-    <group position={[-1.1, 0, 0]}>
-      <Text
-        fontSize={0.095}
-        color="#0f172a"
-        anchorX="right"
-        anchorY="middle"
-        outlineWidth={0.005}
-        outlineColor="#ffffff"
-      >
-        {getQuantumText()}
-      </Text>
-    </group>
+    <div
+      style={{
+        position: 'absolute',
+        left: 24,
+        top: '50%',
+        transform: 'translateY(-50%)',
+        zIndex: 50,
+        pointerEvents: 'none',
+        display: 'flex',
+        flexDirection: 'column',
+        gap: 10,
+        minWidth: 160,
+      }}
+    >
+      {/* Model badge */}
+      <div style={{
+        background: 'rgba(244, 248, 255, 0.94)',
+        border: '1px solid rgba(100, 160, 230, 0.35)',
+        borderRadius: 14,
+        padding: '14px 18px',
+        backdropFilter: 'blur(10px)',
+      }}>
+        <p style={{ margin: 0, fontSize: 10, color: '#7a9ec0', fontFamily: 'system-ui', fontWeight: 600, letterSpacing: '0.08em', textTransform: 'uppercase' }}>
+          Atomic Model
+        </p>
+        <p style={{ margin: '5px 0 0', fontSize: 17, color: '#1e3a5f', fontFamily: 'system-ui', fontWeight: 700, lineHeight: 1.2 }}>
+          {atomModel}
+        </p>
+      </div>
+
+      {/* Quantum numbers badge */}
+      {qn && (
+        <div style={{
+          background: 'rgba(244, 248, 255, 0.94)',
+          border: '1px solid rgba(100, 160, 230, 0.35)',
+          borderRadius: 14,
+          padding: '14px 18px',
+          backdropFilter: 'blur(10px)',
+        }}>
+          <p style={{ margin: 0, fontSize: 10, color: '#7a9ec0', fontFamily: 'system-ui', fontWeight: 600, letterSpacing: '0.08em', textTransform: 'uppercase' }}>
+            Orbital
+          </p>
+          <p style={{ margin: '5px 0 10px', fontSize: 28, color: '#1e3a5f', fontFamily: 'system-ui', fontWeight: 800, lineHeight: 1 }}>
+            {qn.label}
+          </p>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+            {[
+              { sym: 'n',  val: qn.n,  title: 'Principal' },
+              { sym: 'ℓ',  val: qn.l,  title: 'Azimuthal' },
+              { sym: 'mℓ', val: qn.ml >= 0 ? `+${qn.ml}` : qn.ml, title: 'Magnetic' },
+            ].map(({ sym, val, title }) => (
+              <div key={sym} style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+                <span style={{ fontSize: 14, color: '#8ab0d0', fontFamily: 'system-ui', fontWeight: 600, width: 24, flexShrink: 0 }}>{sym}</span>
+                <span style={{ fontSize: 16, color: '#1e3a5f', fontFamily: 'system-ui', fontWeight: 700, width: 22 }}>{val}</span>
+                <span style={{ fontSize: 11, color: '#94a3b8', fontFamily: 'system-ui' }}>{title}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+    </div>
   );
 }

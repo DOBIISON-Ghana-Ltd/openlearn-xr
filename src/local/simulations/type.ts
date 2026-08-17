@@ -54,6 +54,8 @@ export interface InternalSimulationConfig {
   name: string;
   controls: SimulationControl[];
   Model: React.ComponentType<{ slug?: string }>;
+  /** Optional DOM overlay rendered outside the WebGL canvas — immune to camera rotation/panning */
+  Overlay?: React.ComponentType;
 }
 
 export interface ExternalSimulationConfig {
