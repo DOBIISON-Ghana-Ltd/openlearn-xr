@@ -44,9 +44,6 @@ const parsers = {
   "sim:library": {
     collectionId: parseAsString.withDefault(''),
   },
-  "sim:play": {
-    code: parseAsString.withDefault(''),
-  },
 
   // SES SUITE (Live Sessions & Multiplayer)
   "ses:dashboard": {
@@ -67,6 +64,13 @@ const parsers = {
   // ADMIN SUITE (Admin Console)
   "admin:home": {
     q: parseAsString.withDefault(''),
+  },
+
+  // TEACHING SUITE
+  "teaching:library": {
+    search: parseAsString.withDefault(''),
+    subject: parseAsString.withDefault('all'),
+    grade: parseAsString.withDefault('all'),
   },
 
   page: paginationPage,

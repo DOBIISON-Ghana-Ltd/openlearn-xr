@@ -1,12 +1,14 @@
 "use client";
 
 import { cn } from "@/lib/utils/cn";
-import { SearchIcon, Loader2Icon } from "lucide-react";
+import { SearchIcon } from "lucide-react";
 import useApi from "@/data/hooks/use-api";
 import { nuqs } from "@/lib/utils/nuqs";
 import { Infer } from "@/data/types.base";
 import { match, P } from "ts-pattern";
 import ModuleCard from "./module-card";
+import StateLoading from "@/components/(new)/common/state.loading";
+import StateEmpty from "@/components/(new)/common/state.empty";
 
 export default function SelectTab() {
   const [state] = nuqs.getStates("ses:create");
@@ -19,12 +21,12 @@ export default function SelectTab() {
       <div className="flex-1 flex flex-col min-w-0">
         <GradeSelector />
 
-        <div className="flex-1 bg-surface-white p-6 lg:p-10 flex flex-col gap-8 overflow-y-auto">
+        <div className="flex-1 bg-surface-white p-6 lg:p-10 flex flex-col gap-8 overflow-y-auto overscroll-contain">
           <SearchInput />
 
           {match({ modules, isLoading })
-            .with({ isLoading: true }, () => <Content.Loading />)
-            .with({ modules: P.nullish, isLoading: false }, () => <Content.Empty />)
+            .with({ isLoading: true }, () => <StateLoading />)
+            .with({ modules: P.nullish, isLoading: false }, () => <StateEmpty message="No modules found" />)
             .with({ modules: P.select(P.nonNullable) }, (list) => <Content data={list} />)
             .exhaustive()}
         </div>
@@ -150,19 +152,3 @@ function Content({ data }: IContentProps) {
     </div>
   );
 }
-
-Content.Loading = function Loading() {
-  return (
-    <div className="relative flex-1 flex flex-col items-center justify-center bg-surface-white size-full min-h-[300px] overflow-hidden py-12">
-      <Loader2Icon className="size-8 animate-spin text-primary-cta" />
-    </div>
-  );
-};
-
-Content.Empty = function Empty() {
-  return (
-    <div className="w-full py-12 flex items-center justify-center text-tertiary text-normal">
-      No modules found
-    </div>
-  );
-};

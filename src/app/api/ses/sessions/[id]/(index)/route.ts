@@ -14,6 +14,15 @@ export const GET = apiHandler(async (req, ctx: { params: Promise<{ id: string }>
       name: true,
       status: true,
       config: true,
+      moduleVersion: {
+        select: {
+          module: {
+            select: {
+              title: true
+            }
+          }
+        }
+      },
       players: {
         select: {
           id: true,

@@ -1,5 +1,5 @@
 import { createElement, type Attributes, type FC } from 'react'
-import { render, toPlainText } from '@react-email/components'
+import { render, toPlainText } from 'react-email'
 import templates, { type ITemplatePropsMap } from './templates'
 import { EmailAdapter } from './types'
 import { ResendEmailAdapter } from './resend-adapter'

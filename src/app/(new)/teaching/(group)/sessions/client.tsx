@@ -8,6 +8,8 @@ import useApi from '@/data/hooks/use-api';
 import { PATHS } from '@/lib/constants/paths';
 import { Infer } from '@/data/types.base';
 import { AVATARS } from '@/lib/constants/avatars';
+import StateLoading from '@/components/(new)/common/state.loading';
+import StateEmpty from '@/components/(new)/common/state.empty';
 
 export default function ClientPage() {
   return (
@@ -229,7 +231,7 @@ function SessionCard({ data }: { data: ISessionItem }) {
             {players.map((p, idx) => (
               <img
                 key={idx}
-                src={AVATARS[p.avatar]}
+                src={AVATARS[p.avatar].image}
                 alt={p.name || 'Player avatar'}
                 className="size-8 rounded-full object-cover border-2 border-tertiary"
                 title={p.name}
@@ -276,11 +278,11 @@ function ActiveSessions() {
       </div>
 
       {match({ sessions, isLoading })
-        .with({ isLoading: true }, () => <ActiveSessions.Loading />)
+        .with({ isLoading: true }, () => <StateLoading />)
         .with(
           { sessions: P.nullish, isLoading: false },
           { sessions: [] },
-          () => <ActiveSessions.Empty />
+          () => <StateEmpty message="No active sessions running." />
         )
         .with({ sessions: P.select(P.nonNullable) }, (sessions) =>
           sessions.map((session) => (
@@ -292,19 +294,3 @@ function ActiveSessions() {
     </div>
   );
 }
-
-ActiveSessions.Loading = function ActiveSessionsLoading() {
-  return (
-    <div className="bg-primary-subtle border border-surface-white/80 p-8 rounded-xl text-secondary-text text-normal">
-      Loading active sessions...
-    </div>
-  );
-};
-
-ActiveSessions.Empty = function ActiveSessionsEmpty() {
-  return (
-    <div className="bg-primary-subtle border border-surface-white/80 p-8 rounded-xl text-secondary-text text-normal">
-      No active sessions running.
-    </div>
-  );
-};

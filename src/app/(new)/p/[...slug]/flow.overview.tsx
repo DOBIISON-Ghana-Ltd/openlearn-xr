@@ -2,11 +2,13 @@
 
 import { useEffect } from 'react';
 import useApi from '@/data/hooks/use-api';
-import { Clock, Loader2Icon } from 'lucide-react';
+import { Clock } from 'lucide-react';
 import { IFlowContent } from './flow';
 import { Infer } from '@/data/types.base';
 import { match, P } from 'ts-pattern';
 import { simStore } from '@/store/sim/store';
+import StateLoading from '@/components/(new)/common/state.loading';
+import StateError from '@/components/(new)/common/state.error';
 
 type IModuleDetail = Infer["SimModuleGetOne"]["res"];
 type IModuleNotes = NonNullable<IModuleDetail["notes"]>;
@@ -24,11 +26,11 @@ export default function OverviewFLow(props: IOverviewFlow) {
   });
 
   return (
-    <div className="flex-1 bg-primary-subtle overflow-y-auto w-full min-h-0">
+    <div className="flex-1 bg-primary-subtle overflow-y-auto overscroll-contain w-full min-h-0">
       {match({ data, isLoading })
-        .with({ isLoading: true }, () => <Content.Loading />)
+        .with({ isLoading: true }, () => <StateLoading />)
         .with({ data: P.select(P.nonNullable) }, (data) => <Content data={data} progress={props.progress ?? 0} />)
-        .with({ data: P.nullish, isLoading: false }, () => <Content.Error />)
+        .with({ data: P.nullish, isLoading: false }, () => <StateError />)
         .exhaustive()
       }
     </div>
@@ -44,7 +46,7 @@ function Content(props: IContent) {
   const { data, progress } = props;
 
   return (
-    <div className="w-full min-h-full pt-5 pb-12 px-8 lg:pl-60 lg:pr-8 flex flex-col">
+    <div className="w-full min-h-full pt-5 pb-12 px-6 md:px-12 xl:pl-60 xl:pr-8 flex flex-col">
       <div className="w-full max-w-5xl flex flex-col items-start gap-5">
         {/* Subject & Year Badge (Figma Node 10:28: w-[260px] h-[50px] left-[238px] top-[85px]) */}
         <div className="bg-primary-subtle/80 border border-primary-light rounded-[15px] h-12.5 px-5 flex-center justify-between gap-4">
@@ -113,22 +115,6 @@ function Content(props: IContent) {
     </div>
   );
 }
-
-Content.Loading = function Loading() {
-  return (
-    <div className="relative flex-1 flex flex-col items-center justify-center bg-surface-white size-full min-h-0 overflow-hidden">
-      <Loader2Icon className="size-8 animate-spin text-primary-cta" />
-    </div>
-  );
-};
-
-Content.Error = function Error() {
-  return (
-    <div className="w-full h-full flex-center">
-      <p className="text-small">An error occurred</p>
-    </div>
-  );
-};
 
 type IObjectives = {
   data: IModuleNotes["overview"]["objectives"];

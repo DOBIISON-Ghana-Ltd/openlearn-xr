@@ -7,6 +7,8 @@ import { PATHS } from '@/lib/constants/paths';
 import { Infer } from '@/data/types.base';
 import { match, P } from 'ts-pattern';
 import { cn } from '@/lib/utils/cn';
+import StateLoading from '@/components/(new)/common/state.loading';
+import StateEmpty from '@/components/(new)/common/state.empty';
 
 export default function ClientPage() {
   const { data: user } = useApi.query("app:user:get:me");
@@ -65,8 +67,8 @@ function RecentSessions() {
       </div>
 
       {match({ sessions, isLoading })
-        .with({ isLoading: true }, () => <RecentSessions.Loading />)
-        .with({ sessions: P.nullish, isLoading: false }, { sessions: [] }, () => <RecentSessions.Empty />)
+        .with({ isLoading: true }, () => <StateLoading />)
+        .with({ sessions: P.nullish, isLoading: false }, { sessions: [] }, () => <StateEmpty message="No recent sessions found." />)
         .with({ sessions: P.select(P.nonNullable) }, (sessions) =>
           sessions.map((session) => (
             <RecentSessionCard key={session.id} data={session} />
@@ -77,22 +79,6 @@ function RecentSessions() {
     </div>
   );
 };
-
-RecentSessions.Loading = function Loading() {
-  return (
-    <div className="bg-primary-subtle border border-surface-white/80 p-8 rounded-xl text-secondary-text text-normal">
-      Loading sessions...
-    </div>
-  )
-};
-
-RecentSessions.Empty = function Empty() {
-  return (
-    <div className="bg-primary-subtle border border-surface-white/80 p-8 rounded-xl text-secondary-text text-normal">
-      No recent sessions found.
-    </div>
-  )
-}
 
 type IRecentSessionCard = {
   data: Infer["SesSessionGetRecent"]["res"][number];

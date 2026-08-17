@@ -17,6 +17,7 @@ export const QUERY_KEYS = {
   "sim:collection:get:modules": (collectionId: string) => ["sim", "collection", collectionId, "modules"] as const,
   "sim:session:get:stats": (id: string) => ["sim", "session", id, "stats"] as const,
   "sim:session:get:players": (id: string) => ["sim", "session", id, "players"] as const,
+  "sim:session:get:checkpoints": (id: string) => ["sim", "session", id, "checkpoints"] as const,
   "sim:module:get:stats": (id: string) => ["sim", "module", id, "stats"] as const,
   "sim:module:get:slug": (id: string) => ["sim", "module", id, "slug"] as const,
 

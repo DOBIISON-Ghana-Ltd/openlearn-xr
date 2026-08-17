@@ -239,6 +239,11 @@ const SesSessionGetOne = ZApi({
         joinedAt: true,
       })
     ),
+    moduleVersion: z.object({
+      module: ZModule.pick({
+        title: true
+      })
+    })
   }),
 });
 

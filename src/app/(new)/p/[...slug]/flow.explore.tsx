@@ -7,8 +7,9 @@ import useApi from '@/data/hooks/use-api';
 import { getSimulationConfig } from '@/local/simulations';
 import FlowExploreInternal from './flow.explore.internal';
 import FlowExploreExternal from './flow.explore.external';
-import { Loader2Icon } from 'lucide-react';
 import { simStore } from '@/store/sim/store';
+import StateLoading from '@/components/(new)/common/state.loading';
+import StateError from '@/components/(new)/common/state.error';
 
 type IExploreFlow = {} & IFlowContent;
 
@@ -35,34 +36,17 @@ export default function ExploreFLow(props: IExploreFlow) {
   return (
     <div className="relative flex-1 flex flex-col bg-surface-white size-full min-h-0 overflow-hidden">
       {match({ config, isLoading })
-        .with({ isLoading: true }, () => <ExploreFLow.Loading />)
+        .with({ isLoading: true }, () => <StateLoading />)
         .with({ config: P.select(P.nonNullable) }, (cfg) =>
           match(cfg)
             .with({ type: "internal" }, (c) => <FlowExploreInternal config={c} />)
             .with({ type: "external" }, (c) => <FlowExploreExternal embedLink={c.embedLink} />)
             .exhaustive()
         )
-        .with({ config: P.nullish, isLoading: false }, () => <ExploreFLow.Error />)
+        .with({ config: P.nullish, isLoading: false }, () => (
+          <StateError message="Unable to load the simulation." />
+        ))
         .exhaustive()}
     </div>
   );
 }
-
-ExploreFLow.Loading = function Loading() {
-  return (
-    <div className="relative flex-1 flex flex-col items-center justify-center bg-surface-white size-full min-h-0 overflow-hidden">
-      <Loader2Icon className="size-8 animate-spin text-primary-cta" />
-    </div>
-  );
-};
-
-ExploreFLow.Error = function Error() {
-  return (
-    <div className="relative flex-1 flex flex-col items-center justify-center p-6 text-center bg-surface-white size-full min-h-0 overflow-hidden">
-      <h3 className="text-h5 text-primary-text-dark font-medium mb-2">Simulation Not Found</h3>
-      <p className="text-body text-tertiary max-w-md">
-        Unable to load the simulation configuration for this module.
-      </p>
-    </div>
-  );
-};

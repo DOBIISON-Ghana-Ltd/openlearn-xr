@@ -16,7 +16,7 @@ export interface HeaderProps {
 export default function Header({ children }: HeaderProps) {
   return (
     <header className="sticky top-0 z-50 w-full h-20 bg-surface-white flex items-center">
-      <div className="mx-auto flex h-full w-full max-w-8xl items-center justify-between px-6 sm:px-12 lg:px-20">
+      <div className="mx-auto flex size-full max-w-8xl items-center justify-between px-2 sm:px-6">
         <div className="flex items-center gap-6 lg:gap-10">
           <Logo />
           {children && <div className="hidden sm:block">{children}</div>}

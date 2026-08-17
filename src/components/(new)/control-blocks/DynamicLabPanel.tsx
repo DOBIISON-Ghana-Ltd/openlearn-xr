@@ -44,7 +44,7 @@ export default function DynamicLabPanel(props: IDynamicLabPanel) {
   }
 
   return (
-    <div className="fixed right-6 lg:right-20 top-25 z-30 flex flex-col items-end gap-4 max-h-[calc(100vh-140px)]">
+    <div className="fixed right-2 lg:right-4 top-25 z-30 flex flex-col items-end gap-4 max-h-[calc(100vh-140px)]">
       {/* Action Toolbar */}
       <div className="flex items-center gap-3 shrink-0">
         {ACTIONS.map((action) => (

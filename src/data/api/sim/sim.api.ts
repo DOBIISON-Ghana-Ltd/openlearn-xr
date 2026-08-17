@@ -175,6 +175,18 @@ const simSessionGetPlayers = {
   },
 } satisfies QueryConfig;
 
+const simSessionGetCheckpoints = {
+  type: "query",
+  queryKey: (params: Infer["SimSessionGetCheckpoints"]["params"]) => [...QUERY_KEYS["sim:session:get:checkpoints"](params.id)],
+  queryFn: async (params: Infer["SimSessionGetCheckpoints"]["params"]) => {
+    const data = await fetcher(
+      () => axios.get(R["sim:session:get:checkpoints"](params)),
+      ZSim.SimSessionGetCheckpoints.shape.res
+    );
+    return data;
+  },
+} satisfies QueryConfig;
+
 const simModuleGetStats = {
   type: "query",
   queryKey: (params: Infer["SimModuleGetStats"]["params"]) => [...QUERY_KEYS["sim:module:get:stats"](params.id)],
@@ -363,6 +375,7 @@ export default {
 
   "sim:session:get:stats": simSessionGetStats,
   "sim:session:get:players": simSessionGetPlayers,
+  "sim:session:get:checkpoints": simSessionGetCheckpoints,
   "sim:session:post:join": simSessionPostJoin,
   "sim:session:post:leave": simSessionPostLeave,
   "sim:session:post:end": simSessionPostEnd,

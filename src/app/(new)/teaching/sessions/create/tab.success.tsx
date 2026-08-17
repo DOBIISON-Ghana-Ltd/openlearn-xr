@@ -22,9 +22,7 @@ export default function SuccessTab() {
     Boolean(moduleId)
   );
 
-  const shareUrl = sessionCode
-    ? getShareUrl(sessionCode, sessionCode)
-    : "https://openlearnxr.org";
+  const shareUrl = getShareUrl(sessionCode);
 
   return (
     <div className="flex-1 flex flex-col items-center justify-center p-6 lg:p-10 overflow-y-auto bg-surface-white">

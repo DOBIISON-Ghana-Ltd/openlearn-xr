@@ -10,6 +10,34 @@ export type ISessionInfo = {
 
 export type ControlValue = number | boolean | string;
 
+export type ITestFeedback = {
+  questionIndex: number;
+  selectedIndex: number | null;
+  hasAnswered: boolean;
+  isCorrect: boolean;
+};
+
+export type ITestState = {
+  activeIndex: number;
+  answers: Record<number, ITestFeedback>;
+  isCompleted?: boolean;
+};
+
+export type ICheckpointFeedback = {
+  questionIndex?: number;
+  chosenAnswer: number;
+  correctAnswer?: number;
+  isCorrect?: boolean;
+  explanation?: string;
+  pointsAwarded?: number;
+};
+
+export type ICheckpointState = {
+  activeFeedback?: ICheckpointFeedback;
+  answers: Record<number, ICheckpointFeedback>;
+  isCompleted?: boolean;
+};
+
 export type IStore = {
   // Session Registry (Persisted)
   sessions: Record<string, ISessionInfo>;
@@ -17,6 +45,24 @@ export type IStore = {
   getSessionInfo: (joinCode: string) => ISessionInfo | undefined;
   getSessionPlayer: (joinCode: string) => string | null | undefined;
   removeSession: (joinCode: string) => void;
+
+  // Pre-Assessment & Checkpoint State (Persisted)
+  preAssessments: Record<string, ITestState>;
+  checkpoints: Record<string, ICheckpointState>;
+  setPreAssessmentAnswer: (
+    playId: string,
+    questionIndex: number,
+    answer: ITestFeedback
+  ) => void;
+  setPreAssessmentActiveIndex: (playId: string, activeIndex: number) => void;
+  setCheckpointFeedback: (
+    playId: string,
+    questionIndex: number,
+    feedback: ICheckpointFeedback
+  ) => void;
+  setCheckpointCompleted: (playId: string, isCompleted: boolean) => void;
+  clearCheckpointActiveFeedback: (playId: string) => void;
+  resetPlayState: (playId: string) => void;
 
   // Active Simulation Controls (Transient / Non-Persisted)
   controls: SimulationControl[];

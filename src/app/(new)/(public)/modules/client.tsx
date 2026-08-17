@@ -7,7 +7,8 @@ import { nuqs } from '@/lib/utils/nuqs';
 import { Infer } from '@/data/types.base';
 import { PATHS } from '@/lib/constants/paths';
 import { match, P } from 'ts-pattern';
-import { Loader2Icon } from 'lucide-react';
+import StateLoading from '@/components/(new)/common/state.loading';
+import StateEmpty from '@/components/(new)/common/state.empty';
 
 export default function ClientPage() {
   const [state] = nuqs.getStates("sim:modules");
@@ -20,8 +21,8 @@ export default function ClientPage() {
         <GradeSelector />
         <div className="py-12 px-6 sm:px-10 lg:px-12">
           {match({ data, isLoading })
-            .with({ isLoading: true }, () => <Content.Loading />)
-            .with({ data: P.nullish, isLoading: false }, () => <Content.Empty />)
+            .with({ isLoading: true }, () => <StateLoading />)
+            .with({ data: P.nullish, isLoading: false }, () => <StateEmpty message="No modules found" />)
             .with({ data: P.select(P.nonNullable) }, (data) => <Content data={data} />)
             .exhaustive()
           }
@@ -51,7 +52,7 @@ function GradeSelector() {
   }
 
   return (
-    <div className="w-full bg-surface-slate flex-center justify-start h-16 gap-9 pl-52">
+    <div className="w-full bg-surface-slate flex-center justify-start h-16 gap-9 px-6 lg:pl-12 xl:pl-52">
       {options.map((tab) => (
         <button
           key={tab.value}
@@ -131,22 +132,6 @@ function Content(props: IContent) {
           href={PATHS.PLAY("module", item.id)}
         />
       ))}
-    </div>
-  )
-}
-
-Content.Loading = function Loading() {
-  return (
-    <div className="relative flex-1 flex flex-col items-center justify-center bg-surface-white size-full min-h-[300px] overflow-hidden py-10">
-      <Loader2Icon className="size-8 animate-spin text-primary-cta" />
-    </div>
-  )
-}
-
-Content.Empty = function Empty() {
-  return (
-    <div className="w-full py-10 flex-center">
-      No Modules
     </div>
   )
 }

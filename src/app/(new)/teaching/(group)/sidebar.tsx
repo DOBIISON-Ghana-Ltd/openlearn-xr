@@ -71,7 +71,7 @@ export function TeachingSidebar() {
   const pathname = usePathname();
 
   return (
-    <aside className="w-full max-w-sm shrink-0 bg-surface-slate pt-6 pb-12 pl-6 md:pl-20 pr-0 sticky top-20 h-[calc(100dvh-var(--spacing)*20)] flex flex-col justify-start gap-14 overflow-y-auto">
+    <aside className="w-full max-w-sm shrink-0 bg-surface-slate pt-6 pb-12 pl-6 md:pl-20 pr-0 sticky top-20 h-[calc(100dvh-var(--spacing)*20)] flex flex-col justify-start gap-14 overflow-y-auto overscroll-contain">
       <div className="flex flex-col gap-3 w-full">
         {SIDEBAR_NAV.map((item) => {
           const isActive =
