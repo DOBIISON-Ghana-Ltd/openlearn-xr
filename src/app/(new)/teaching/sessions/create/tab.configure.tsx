@@ -153,6 +153,7 @@ export default function ConfigureTab() {
                 className="w-full bg-primary-light border border-primary-cta/10 rounded-[12px] px-4 py-3 text-normal text-tertiary appearance-none focus:outline-none cursor-pointer pr-10"
               >
                 <option value={15}>15 students</option>
+                <option value={20}>25 students</option>
                 <option value={25}>25 students</option>
                 <option value={35}>35 students</option>
                 <option value={50}>50 students</option>
