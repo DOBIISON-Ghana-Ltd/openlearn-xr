@@ -87,7 +87,7 @@ export default function Header(props: IHeader) {
     }));
 
   return (
-    <header className="bg-surface-slate/70 backdrop-blur-[5px] border-b border-disable/20 px-8 lg:px-20 flex items-center justify-between shrink-0 h-18.25 z-20">
+    <header className="bg-surface-slate/70 backdrop-blur-[5px] border-b border-disable/20 px-2 lg:px-4 flex items-center justify-between shrink-0 h-16 z-20">
       {/* Left: Exit / Leave / End Action */}
       <button
         type="button"
@@ -100,13 +100,13 @@ export default function Header(props: IHeader) {
       </button>
 
       {/* Center/Right: Tab Navigation List */}
-      <nav className="flex items-center gap-6 lg:gap-10 h-full overflow-x-auto">
+      <nav className="flex items-center gap-2 lg:gap-4 h-full overflow-x-auto">
         {PLAY_TABS.map((label, idx) => {
           const isActive = currentTab === idx;
           return (
             <div
               key={label}
-              className={cn("h-full flex items-center relative text-normal font-medium transition-colors select-none shrink-0", {
+              className={cn("h-full flex items-center text-small! relative transition-colors select-none shrink-0", {
                 "text-primary-cta": isActive,
                 "text-secondary-text opacity-70": !isActive,
               })}

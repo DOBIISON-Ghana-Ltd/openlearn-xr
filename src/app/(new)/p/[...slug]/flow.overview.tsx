@@ -26,7 +26,7 @@ export default function OverviewFLow(props: IOverviewFlow) {
   });
 
   return (
-    <div className="flex-1 bg-primary-subtle overflow-y-auto w-full min-h-0">
+    <div className="flex-1 bg-primary-subtle overflow-y-auto overscroll-contain w-full min-h-0">
       {match({ data, isLoading })
         .with({ isLoading: true }, () => <StateLoading />)
         .with({ data: P.select(P.nonNullable) }, (data) => <Content data={data} progress={props.progress ?? 0} />)
@@ -46,7 +46,7 @@ function Content(props: IContent) {
   const { data, progress } = props;
 
   return (
-    <div className="w-full min-h-full pt-5 pb-12 px-8 lg:pl-60 lg:pr-8 flex flex-col">
+    <div className="w-full min-h-full pt-5 pb-12 px-6 md:px-12 xl:pl-60 xl:pr-8 flex flex-col">
       <div className="w-full max-w-5xl flex flex-col items-start gap-5">
         {/* Subject & Year Badge (Figma Node 10:28: w-[260px] h-[50px] left-[238px] top-[85px]) */}
         <div className="bg-primary-subtle/80 border border-primary-light rounded-[15px] h-12.5 px-5 flex-center justify-between gap-4">

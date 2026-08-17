@@ -27,7 +27,7 @@ export default function ExplainFLow(props: IExplainFlow) {
   });
 
   return (
-    <div className="flex-1 bg-surface-white py-8 px-6 overflow-y-auto w-full min-h-0">
+    <div className="flex-1 bg-surface-white py-8 px-6 overflow-y-auto overscroll-contain w-full min-h-0">
       <div className="w-full max-w-7xl mx-auto flex flex-col gap-6">
 
         <div className="flex flex-col gap-2 w-full max-w-5xl">
@@ -63,7 +63,7 @@ function Content(props: IContent) {
       </div>
 
       {/* GREEN BOX 2: Right Item - Key Takeaways Sidebar */}
-      <div className="w-full xl:w-75 shrink-0">
+      <div className="w-64 xl:w-75 shrink-0">
         <div className="bg-primary-subtle border border-primary-light rounded-[20px] p-5 flex flex-col gap-3.5 w-full min-h-110">
           <h3 className="text-button text-primary-text-dark px-1">Key Takeaways</h3>
           <div className="flex flex-col gap-3.5 w-full">

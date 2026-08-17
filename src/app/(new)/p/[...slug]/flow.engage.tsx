@@ -27,7 +27,7 @@ export default function EngageFLow(props: IEngageFlow) {
   });
 
   return (
-    <div className="flex-1 bg-surface-white pt-5 pb-8 px-6 lg:pl-86.25 lg:pr-8 overflow-y-auto w-full min-h-0">
+    <div className="flex-1 bg-surface-white pt-5 pb-8 px-6 md:px-12 xl:pl-86.25 xl:pr-8 overflow-y-auto overscroll-contain w-full min-h-0">
       {match({ data, isLoading })
         .with({ isLoading: true }, () => <StateLoading />)
         .with({ data: P.nullish, isLoading: false }, () => <StateError />)

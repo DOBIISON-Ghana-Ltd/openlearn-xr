@@ -19,7 +19,7 @@ export default function CheckpointFLow(props: ICheckpointFlow) {
   }, [isHost]);
 
   return (
-    <div className="flex-1 bg-surface-white pt-5 pb-8 px-6 lg:pl-86.25 lg:pr-8 overflow-y-auto w-full min-h-0">
+    <div className="flex-1 bg-surface-white pt-5 pb-8 px-6 md:px-12 xl:pl-86.25 xl:pr-8 overflow-y-auto overscroll-contain w-full min-h-0">
       <div className="w-full max-w-3xl flex flex-col items-start gap-4">
         {/* Main Title (Figma Node 1:1728) */}
         <h1 className="text-h2 text-primary-cta leading-tight">

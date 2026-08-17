@@ -52,7 +52,7 @@ function GradeSelector() {
   }
 
   return (
-    <div className="w-full bg-surface-slate flex-center justify-start h-16 gap-9 pl-52">
+    <div className="w-full bg-surface-slate flex-center justify-start h-16 gap-9 px-6 lg:pl-12 xl:pl-52">
       {options.map((tab) => (
         <button
           key={tab.value}

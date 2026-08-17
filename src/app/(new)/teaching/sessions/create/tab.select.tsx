@@ -21,7 +21,7 @@ export default function SelectTab() {
       <div className="flex-1 flex flex-col min-w-0">
         <GradeSelector />
 
-        <div className="flex-1 bg-surface-white p-6 lg:p-10 flex flex-col gap-8 overflow-y-auto">
+        <div className="flex-1 bg-surface-white p-6 lg:p-10 flex flex-col gap-8 overflow-y-auto overscroll-contain">
           <SearchInput />
 
           {match({ modules, isLoading })

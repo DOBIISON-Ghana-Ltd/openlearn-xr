@@ -8,7 +8,6 @@ import { LogOut, Loader2Icon } from "lucide-react";
 import { match, P } from "ts-pattern";
 import useApi from "@/data/hooks/use-api";
 import { Infer } from "@/data/types.base";
-import { QUERY_KEYS } from "@/data/key-factory";
 import { AVATARS } from "@/lib/constants/avatars";
 import { PATHS } from "@/lib/constants/paths";
 
@@ -45,7 +44,7 @@ function ProfileAvatar({ data }: IProfileAvatar) {
   const handleLogout = () => {
     logout(undefined as any, {
       onSuccess: () => {
-        queryClient.invalidateQueries({ queryKey: [...QUERY_KEYS["app:user:get:me"]] });
+        queryClient.removeQueries();
         router.refresh();
       },
     });
