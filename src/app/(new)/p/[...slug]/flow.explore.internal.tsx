@@ -25,11 +25,12 @@ export default function FlowExploreInternal({ config }: FlowExploreInternalProps
   }, [config, initializeControls, clearControls]);
 
   const Model = config.Model;
+  const Overlay = config.Overlay;
 
   return (
     <>
       {/* SIMULATION RENDERER */}
-      <Renderer>
+      <Renderer overlay={Overlay ? <Overlay /> : undefined}>
         <Model slug={config.slug} />
       </Renderer>
 
