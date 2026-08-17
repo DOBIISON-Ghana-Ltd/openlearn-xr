@@ -2,6 +2,7 @@ import { JSend } from "@/lib/utils/jsend";
 import prisma from "@/adapters/db/client";
 import ZSim from "@/data/api/sim/sim.schema";
 import { Infer } from "@/data/types.base";
+import { triggerSessionEvent } from "@/adapters/realtime/server";
 
 type IAnswerBody = Infer["SimCheckpointPostAnswer"]["body"];
 
@@ -69,6 +70,12 @@ export async function handlePostSessionAnswer(playId: string, body: IAnswerBody)
       score: finalScore,
       ...(nextCheckpointId ? {} : { completedAt: new Date() }),
     },
+  });
+
+  // 3. Broadcast player score update to live session participants & host
+  await triggerSessionEvent(playId, "player:updated", {
+    participantId: body.sessionPlayerId,
+    score: finalScore,
   });
 
 

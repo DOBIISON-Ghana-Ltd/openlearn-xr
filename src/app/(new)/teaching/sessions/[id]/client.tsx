@@ -12,6 +12,8 @@ import { AVATARS } from '@/lib/constants/avatars';
 import { match, P } from 'ts-pattern';
 import { useRealtime } from '@/adapters/realtime/client';
 import { QUERY_KEYS } from '@/data/key-factory';
+import StateLoading from '@/components/(new)/common/state.loading';
+import StateError from '@/components/(new)/common/state.error';
 
 type ClientPageProps = {
   id: string;
@@ -19,7 +21,6 @@ type ClientPageProps = {
 
 export default function ClientPage({ id }: ClientPageProps) {
   const router = useRouter();
-  const [mounted, setMounted] = useState(false);
   const socket = useRealtime();
   const { data: session, isLoading } = useApi.query("ses:session:get:one", { code: id });
   const { mutate: startSession, isPending: isStarting } = useApi.mutate("ses:session:post:start");
@@ -66,8 +67,8 @@ export default function ClientPage({ id }: ClientPageProps) {
         {/* RED ROW 2: MAIN CONTENT AREA WITH TS-PATTERN MATCHING */}
         <div className="flex-1 flex flex-col min-h-0 bg-surface-white">
           {match({ session, isLoading })
-            .with({ isLoading: true }, () => <Content.Loading />)
-            .with({ session: P.nullish, isLoading: false }, () => <Content.Error message="Session not found" />)
+            .with({ isLoading: true }, () => <StateLoading />)
+            .with({ session: P.nullish, isLoading: false }, () => <StateError message="Session not found" />)
             .with({ session: P.select(P.nonNullable) }, (data) =>
               match(data.status)
                 .with("STAGING", () => (
@@ -78,7 +79,7 @@ export default function ClientPage({ id }: ClientPageProps) {
                     isStarting={isStarting}
                   />
                 ))
-                .with("ACTIVE", () => <Content.Loading />)
+                .with("ACTIVE", () => <StateLoading />)
                 .with(P.union("COMPLETED", "CANCELLED"), () => <Content.Ended data={data} />)
                 .otherwise(() => <Content.Ended data={data} />)
             )
@@ -188,22 +189,6 @@ function Content({ id, data, onStart, isStarting }: ContentProps) {
   );
 }
 
-Content.Loading = function Loading() {
-  return (
-    <div className="flex-1 flex items-center justify-center py-20 text-tertiary text-normal">
-      Loading session details...
-    </div>
-  );
-};
-
-Content.Error = function ErrorView({ message }: { message: string }) {
-  return (
-    <div className="flex-1 flex items-center justify-center py-20 text-tertiary text-normal">
-      {message}
-    </div>
-  );
-};
-
 Content.Ended = function Ended({ data }: { data: Infer["SesSessionGetOne"]["res"] }) {
   const router = useRouter();
   return (
@@ -239,7 +224,7 @@ function PlayerCard({ data }: PlayerCardProps) {
       {/* Left: Avatar + Name */}
       <div className="flex items-center gap-3">
         <img
-          src={AVATARS[data.avatar]}
+          src={AVATARS[data.avatar].image}
           alt={data.name}
           className="size-8 rounded-full object-cover shrink-0"
         />

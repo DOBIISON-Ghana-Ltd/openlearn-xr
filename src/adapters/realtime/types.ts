@@ -4,6 +4,7 @@ export type RealtimeEventMap = {
   "session:ended": { joinCode: string };
   "player:joined": { participantId: string; name: string };
   "player:left": { participantId: string; name: string };
+  "player:updated": { participantId: string; score: number };
   "tab:change": { currentTab: number };
   // Add other events here as the app grows
 };

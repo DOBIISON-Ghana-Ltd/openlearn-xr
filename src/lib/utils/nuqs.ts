@@ -66,6 +66,13 @@ const parsers = {
     q: parseAsString.withDefault(''),
   },
 
+  // TEACHING SUITE
+  "teaching:library": {
+    search: parseAsString.withDefault(''),
+    subject: parseAsString.withDefault('all'),
+    grade: parseAsString.withDefault('all'),
+  },
+
   page: paginationPage,
 } as const
 

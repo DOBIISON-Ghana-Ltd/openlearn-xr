@@ -1,25 +1,24 @@
 'use client';
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Tabs } from '@base-ui/react/tabs';
-import { LogOut, Loader2Icon } from 'lucide-react';
 import OverviewFLow from './flow.overview';
 import EngageFLow from './flow.engage';
 import ExplainFLow from './flow.explain';
 import ExploreFLow from './flow.explore';
 import CheckpointFLow from './flow.checkpoint';
 import ResultFLow from './flow.result';
+import Header from '@/components/(new)/play/header';
+import Footer, { ITabFlowItem } from '@/components/(new)/play/footer';
 import useApi from '@/data/hooks/use-api';
 import { usePlayServerMode } from '@/hooks/use-play-mode';
 import { simStore } from '@/store/sim/store';
 import { useStore } from 'zustand';
-import { useQueryClient } from '@tanstack/react-query';
-import { QUERY_KEYS } from '@/data/key-factory';
 import { match, P } from 'ts-pattern';
 import { Infer } from '@/data/types.base';
-import { useRouter } from 'next/navigation';
 import { PATHS } from '@/lib/constants/paths';
-import { toastManager } from '@/components/(new)/common/toast';
+import StateLoading from '@/components/(new)/common/state.loading';
+import StateError from '@/components/(new)/common/state.error';
 
 export type IFlowContent = {
   id: string;
@@ -33,18 +32,6 @@ type IFlow = {
 };
 
 type INav = Infer["SimGeneralGetNavigate"]["res"];
-
-type ITabFlowItem = {
-  render: React.ComponentType<any>;
-  back: {
-    label: string;
-    goto: number | string;
-  };
-  next: {
-    label: string;
-    goto: number | string;
-  };
-};
 
 export default function FLow(props: IFlow) {
   const [mounted, setMounted] = useState(false);
@@ -69,8 +56,7 @@ export default function FLow(props: IFlow) {
     playerId,
   };
 
-  const { data: nav, isLoading: isNavQueryLoading } = useApi.query(
-    "sim:general:get:navigate", {
+  const { data: nav, isLoading: isNavQueryLoading } = useApi.query("sim:general:get:navigate", {
     params: navParams,
     query: { isHost },
   }, !isModeLoading);
@@ -80,7 +66,7 @@ export default function FLow(props: IFlow) {
   return (
     <div className="flex-1 bg-surface-white w-full h-dvh min-h-dvh flex flex-col overflow-hidden">
       {match({ nav, isLoading: isNavLoading })
-        .with({ isLoading: true }, () => <Content.Loading />)
+        .with({ isLoading: true }, () => <StateLoading />)
         .with({ nav: P.select(P.nonNullable) }, (navData) => (
           <Content
             nav={navData}
@@ -88,7 +74,7 @@ export default function FLow(props: IFlow) {
             mode={props.mode}
           />
         ))
-        .with({ nav: P.nullish, isLoading: false }, () => <Content.Error />)
+        .with({ nav: P.nullish, isLoading: false }, () => <StateError message="Failed to load navigation state" />)
         .exhaustive()}
     </div>
   );
@@ -108,7 +94,7 @@ function Content(props: IContent) {
   const isHost = sessionInfo?.isHost ?? false;
   const playerId = sessionInfo?.playerId || "";
 
-  const tutorLedPlayer = sessionInfo?.config.controlMode === "tutor-led" && !isHost
+  const tutorLedPlayer = sessionInfo?.config.controlMode === "tutor-led" && !isHost;
   const tabIndex = !started && !tutorLedPlayer ? 0 : nav.currentTab;
 
   const tabFlow: ITabFlowItem[] = [
@@ -148,12 +134,15 @@ function Content(props: IContent) {
     },
   ];
 
+  const isSessionEndPlayer = mode === "session" && !isHost && started && nav.currentTab === 5;
+  const hideFooter = tutorLedPlayer || isSessionEndPlayer;
+
   return (
     <Tabs.Root
       value={String(tabIndex)}
       className="relative h-dvh min-h-screen flex flex-col bg-surface-white overflow-hidden"
     >
-      <Header id={id} mode={mode} />
+      <Header id={id} mode={mode} currentTab={tabIndex} />
       <main className="flex-1 flex flex-col min-h-0 overflow-hidden">
         {tabFlow.map((content, idx) => (
           <Tabs.Panel key={idx} value={String(idx)} className="flex-1 flex flex-col min-h-0 overflow-hidden">
@@ -161,7 +150,7 @@ function Content(props: IContent) {
           </Tabs.Panel>
         ))}
       </main>
-      {!(tutorLedPlayer) && (
+      {!hideFooter && (
         <Footer
           id={id}
           mode={mode}
@@ -173,210 +162,5 @@ function Content(props: IContent) {
         />
       )}
     </Tabs.Root>
-  );
-}
-
-Content.Loading = function Loading() {
-  return (
-    <div className="relative h-dvh min-h-screen flex flex-col items-center justify-center bg-surface-white">
-      <Loader2Icon className="size-8 animate-spin text-primary-cta" />
-    </div>
-  );
-};
-
-Content.Error = function Error() {
-  return (
-    <div className="relative h-dvh min-h-screen flex flex-col items-center justify-center gap-4 bg-surface-white p-6 text-center">
-      <p className="text-normal text-secondary-text">Failed to load navigation state</p>
-      <button
-        type="button"
-        onClick={() => window.location.reload()}
-        className="bg-primary-cta text-button text-primary-text-light px-6 h-11 rounded-[10px] hover:bg-primary-hover transition-all cursor-pointer active:scale-98"
-      >
-        Retry
-      </button>
-    </div>
-  );
-};
-
-type IHeader = {
-  id: string;
-  mode: "session" | "module";
-};
-
-function Header(props: IHeader) {
-  const { id, mode } = props;
-  const router = useRouter();
-  const sessionInfo = useStore(simStore, (s) => s.getSessionInfo(id));
-  const isHost = sessionInfo?.isHost ?? false;
-  const playerId = useStore(simStore, (s) => s.getSessionPlayer(id)) || '';
-  const removeSession = useStore(simStore, (s) => s.removeSession);
-
-  const { mutate: leaveSession, isPending: isLeaving } = useApi.mutate("sim:session:post:leave");
-  const { mutate: endSession, isPending: isEnding } = useApi.mutate("sim:session:post:end");
-
-  const isPending = isLeaving || isEnding;
-
-  const handleEndSession = () => {
-    endSession({ params: { id } }, {
-      onSuccess: () => {
-        removeSession(id);
-        simStore.getState().resetPlayState(id);
-      },
-      onError: (err) => {
-        toastManager.add({ title: err.message || "Failed to end session. Please try again.", type: "error" });
-      },
-    });
-  };
-
-  const handleLeaveSession = () => {
-    if (!playerId) {
-      removeSession(id);
-      simStore.getState().resetPlayState(id);
-      return;
-    }
-
-    leaveSession({ params: { id }, body: { playerId } }, {
-      onSuccess: () => {
-        removeSession(id);
-        simStore.getState().resetPlayState(id);
-      },
-      onError: (err) => {
-        toastManager.add({ title: err.message || "Failed to leave session. Please try again.", type: "error" });
-      },
-    });
-  };
-
-  const handleExitLesson = () => {
-    router.push(PATHS.MODULES);
-  };
-
-  const exitConfig = match({ mode, isHost })
-    .with({ mode: "session", isHost: true }, () => ({
-      label: "End Session",
-      onClick: handleEndSession,
-    }))
-    .with({ mode: "session", isHost: false }, () => ({
-      label: "Leave Session",
-      onClick: handleLeaveSession,
-    }))
-    .otherwise(() => ({
-      label: "Exit Lesson",
-      onClick: handleExitLesson,
-    }));
-
-  return (
-    <header className="bg-surface-slate/70 backdrop-blur-[5px] border-b border-disable/20 px-8 lg:px-20 flex items-center justify-between shrink-0 h-18.25 z-20">
-      {/* Left: Exit / Leave / End Action */}
-      <button
-        type="button"
-        onClick={exitConfig.onClick}
-        disabled={isPending}
-        className="flex items-center gap-2.5 text-normal text-primary-text-dark hover:text-primary-cta transition-colors cursor-pointer disabled:opacity-50"
-      >
-        {match(isPending)
-          .with(true, () => <Loader2Icon className="size-5 animate-spin text-primary-cta" />)
-          .otherwise(() => (
-            <>
-              <LogOut className="size-5 rotate-180" />
-              <span>{exitConfig.label}</span>
-            </>
-          ))}
-      </button>
-    </header>
-  );
-}
-
-type IFooter = {
-  id: string;
-  mode: "session" | "module";
-  playerId: string;
-  isHost: boolean;
-  tabIndex: number;
-  navCurrentTab: number;
-  tabFlow: ITabFlowItem[];
-};
-
-function Footer(props: IFooter) {
-  const { id, mode, playerId, isHost, tabIndex, navCurrentTab, tabFlow } = props;
-  const router = useRouter();
-  const queryClient = useQueryClient();
-  const { serverMode } = usePlayServerMode(mode);
-  const { mutate: navigate, isPending: isNavPending } = useApi.mutate("sim:general:post:navigate");
-  const { mutate: retake, isPending: isRetakePending } = useApi.mutate("sim:general:post:retake");
-  const isPending = isNavPending || isRetakePending;
-  const started = useStore(simStore, (s) => s.started);
-  const setStarted = useStore(simStore, (s) => s.setStarted);
-  const disableNext = useStore(simStore, (s) => s.disableNext);
-  const disableBack = useStore(simStore, (s) => s.disableBack);
-
-  const activeTab = tabFlow[tabIndex] || tabFlow[0];
-  const { back, next } = activeTab;
-
-  const handleAction = (goto: number | string) => {
-    if (goto === "retake") {
-      retake({
-        params: { mode: serverMode, playId: id, playerId },
-      }, {
-        onSuccess: () => {
-          setStarted(false);
-          simStore.getState().resetPlayState(id);
-          queryClient.invalidateQueries({
-            queryKey: QUERY_KEYS["sim:general:get:navigate"](id),
-          });
-        },
-      });
-      return;
-    }
-
-    if (typeof goto === "string") {
-      router.push(goto);
-      return;
-    }
-
-    // If on Overview (0) and attempt is already in progress, resume locally without network mutation
-    if (tabIndex === 0 && navCurrentTab > 0) {
-      setStarted(true);
-      return;
-    }
-
-    if (!started) {
-      setStarted(true);
-    }
-
-    navigate({
-      params: { mode: serverMode, playId: id, playerId },
-      body: { nextTab: goto, isHost },
-    }, {
-      onSuccess: () => {
-        queryClient.invalidateQueries({
-          queryKey: QUERY_KEYS["sim:general:get:navigate"](id),
-        });
-      },
-    });
-  };
-
-  return (
-    <footer className="bg-primary-subtle px-8 lg:px-22 flex justify-between items-center z-20 shrink-0 h-24">
-      {/* Back / Left Action Button */}
-      <button
-        type="button"
-        onClick={() => handleAction(back.goto)}
-        disabled={isPending || tabIndex === 0 || disableBack}
-        className="bg-surface-slate text-tertiary text-button w-60 h-15 rounded-[10px] shadow-[0px_4px_4px_0px_rgba(69,157,159,0.3)] flex items-center justify-center transition-all cursor-pointer hover:bg-surface-white active:scale-98 disabled:opacity-40 disabled:cursor-not-allowed disabled:pointer-events-none"
-      >
-        {back.label}
-      </button>
-
-      {/* Primary / Right Action Button */}
-      <button
-        type="button"
-        onClick={() => handleAction(next.goto)}
-        disabled={isPending || disableNext}
-        className="bg-primary-cta text-button text-primary-text-light w-60 h-15 rounded-[10px] flex items-center justify-center hover:bg-primary-hover transition-all cursor-pointer active:scale-98 disabled:opacity-70 disabled:cursor-not-allowed disabled:pointer-events-none"
-      >
-        {next.label}
-      </button>
-    </footer>
   );
 }

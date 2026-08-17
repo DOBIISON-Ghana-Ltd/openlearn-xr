@@ -332,6 +332,29 @@ const SimModuleGetSlug = ZApi({
   }),
 });
 
+// ---------------------------------------------------------------------------
+// GET /api/sim/sessions/[id]/checkpoints — get all session checkpoints (host only)
+// ---------------------------------------------------------------------------
+const SimSessionGetCheckpoints = ZApi({
+  params: z.object({
+    id: z.string(),
+  }),
+  res: z.array(
+    z.object({
+      checkpoint: ZModuleCheckpoint.pick({
+        id: true,
+        question: true,
+        options: true,
+        correctAnswer: true,
+        explanation: true,
+        hint: true,
+        points: true,
+        orderIndex: true,
+      }),
+    })
+  ),
+});
+
 const schema = {
   SimModuleGetAll,
   SimModuleGetOne,
@@ -353,6 +376,7 @@ const schema = {
   SimSessionGetStats,
   SimSessionPostJoin,
   SimSessionGetPlayers,
+  SimSessionGetCheckpoints,
   SimSessionPostLeave,
   SimSessionPostEnd,
 };

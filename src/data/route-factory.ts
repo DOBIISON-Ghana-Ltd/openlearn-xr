@@ -31,6 +31,7 @@ const ROUTES = {
   "sim:collection:get:modules": ({ collectionId }: { collectionId: string }) => `/api/sim/collections/${collectionId}/modules`,
   "sim:session:get:stats": ({ id }: { id: string }) => `/api/sim/sessions/${id}/stats`,
   "sim:session:get:players": ({ id }: { id: string }) => `/api/sim/sessions/${id}/players`,
+  "sim:session:get:checkpoints": ({ id }: { id: string }) => `/api/sim/sessions/${id}/checkpoints`,
   "sim:module:get:stats": ({ id }: { id: string }) => `/api/sim/modules/${id}/stats`,
   "sim:module:get:slug": ({ id }: { id: string }) => `/api/sim/modules/${id}/slug`,
   "sim:session:post:join": () => `/api/sim/sessions/join`,

@@ -9,6 +9,8 @@ import { usePlayServerMode } from '@/hooks/use-play-mode';
 import { simStore } from '@/store/sim/store';
 import { useStore } from 'zustand';
 import Leaderboard from '@/components/(new)/play/leaderboard';
+import StateLoading from '@/components/(new)/common/state.loading';
+import StateError from '@/components/(new)/common/state.error';
 
 type IDetail = Infer["SimModuleGetOne"]["res"];
 type INormalResultFlow = {} & IFlowContent;
@@ -38,13 +40,13 @@ export default function NormalContent(props: INormalResultFlow) {
   const isResultLoading = ILDetails || ILPlayScore || isModeLoading;
 
   return (
-    <div className={cn("w-full max-w-7xl mx-auto min-h-full flex items-center justify-between gap-12 lg:gap-16", {
+    <div className={cn("w-full max-w-7xl mx-auto h-full flex items-center justify-between gap-6 xl:gap-16", {
       "flex-col lg:flex-row": props.mode === "session",
       "flex-col items-center justify-center": props.mode === "module",
     })}>
       <div className="flex-1 w-full">
         {match({ detail, playScore, isLoading: isResultLoading })
-          .with({ isLoading: true }, () => <NormalResult.Loading />)
+          .with({ isLoading: true }, () => <StateLoading />)
           .with({ detail: P.nonNullable, playScore: P.nonNullable }, ({ detail, playScore }) => (
             <NormalResult
               detail={detail}
@@ -52,12 +54,12 @@ export default function NormalContent(props: INormalResultFlow) {
               mode={props.mode}
             />
           ))
-          .otherwise(() => <NormalResult.Error />)
+          .otherwise(() => <StateError />)
         }
       </div>
 
       {props.mode === "session" && (
-        <div className="flex-1 w-full flex justify-center">
+        <div className="flex-1 size-full min-h-0 flex-center">
           <Leaderboard playId={props.id} />
         </div>
       )}
@@ -105,19 +107,3 @@ function NormalResult(props: IResult) {
     </div>
   );
 }
-
-NormalResult.Loading = function Loading() {
-  return (
-    <div className="w-full h-full flex-center">
-      <p className="text-small">Loading...</p>
-    </div>
-  );
-};
-
-NormalResult.Error = function Error() {
-  return (
-    <div className="w-full h-full flex-center">
-      <p className="text-small">An error occurred</p>
-    </div>
-  );
-};

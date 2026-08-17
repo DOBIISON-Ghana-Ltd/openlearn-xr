@@ -17,7 +17,10 @@ export const GET = apiHandler<{ id: string }>(async (req, ctx) => {
       score: true,
       completedAt: true,
     },
-    orderBy: { joinedAt: "asc" },
+    orderBy: [
+      { score: "desc" },
+      { joinedAt: "asc" },
+    ],
   });
 
   const parsedData = ZSim.SimSessionGetPlayers.shape.res.parse(players);

@@ -3,13 +3,14 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { match } from 'ts-pattern';
-import { Loader2Icon } from 'lucide-react';
 import useApi from '@/data/hooks/use-api';
 import { useStore } from 'zustand';
 import { simStore } from '@/store/sim/store';
 import { useRealtime } from '@/adapters/realtime/client';
 import { QUERY_KEYS } from '@/data/key-factory';
 import { PATHS } from '@/lib/constants/paths';
+import StateLoading from '@/components/(new)/common/state.loading';
+import StateError from '@/components/(new)/common/state.error';
 import Lobby from './lobby';
 import Entrance from './entrance';
 import FLow from './flow';
@@ -75,6 +76,7 @@ export default function ClientPage(props: IClientPage) {
         'session:ended': () => QUERY_KEYS['sim:session:get:stats'](id),
         'player:joined': () => QUERY_KEYS['sim:session:get:players'](id),
         'player:left': () => QUERY_KEYS['sim:session:get:players'](id),
+        'player:updated': () => QUERY_KEYS['sim:session:get:players'](id),
         'tab:change': () => QUERY_KEYS['sim:general:get:navigate'](id),
       });
 
@@ -99,9 +101,9 @@ export default function ClientPage(props: IClientPage) {
   return (
     <React.Fragment>
       {match(matchState)
-        .with({ isLoading: true }, () => <ClientPage.Loading />)
-        .with({ isError: true }, () => (<ClientPage.Error message={error?.message} />))
-        .with({ mode: 'session', isHost: true, status: 'STAGING' }, () => <ClientPage.Loading />)
+        .with({ isLoading: true }, () => <StateLoading />)
+        .with({ isError: true }, () => (<StateError message={error?.message} />))
+        .with({ mode: 'session', isHost: true, status: 'STAGING' }, () => <StateLoading />)
         .with(
           { mode: 'session', hasPlayer: true, status: 'ACTIVE' },
           { mode: 'session', isHost: true, status: 'ACTIVE' },
@@ -114,24 +116,3 @@ export default function ClientPage(props: IClientPage) {
     </React.Fragment>
   );
 }
-
-ClientPage.Loading = function Loading() {
-  return (
-    <div className="min-h-dvh w-full flex-center bg-surface-white">
-      <Loader2Icon className="size-8 text-primary-cta animate-spin stroke-[2.5]" />
-    </div>
-  );
-};
-
-type IError = {
-  message?: string;
-};
-ClientPage.Error = function Error({ message }: IError) {
-  return (
-    <div className="min-h-dvh w-full flex-center bg-surface-white p-6">
-      <p className="text-body font-medium text-error text-center">
-        {message || 'An error occurred while loading the session.'}
-      </p>
-    </div>
-  );
-};

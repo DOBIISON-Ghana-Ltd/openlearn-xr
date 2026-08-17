@@ -6,9 +6,10 @@ import { IFlowContent } from './flow';
 import { Infer } from '@/data/types.base';
 import useApi from '@/data/hooks/use-api';
 import { match, P } from 'ts-pattern';
-import { Loader2Icon } from 'lucide-react';
 import { simStore } from '@/store/sim/store';
 import { useStore } from 'zustand';
+import StateLoading from '@/components/(new)/common/state.loading';
+import StateError from '@/components/(new)/common/state.error';
 
 type IModuleDetail = Infer["SimModuleGetOne"]["res"];
 type IModuleNotes = NonNullable<IModuleDetail["notes"]>;
@@ -28,8 +29,8 @@ export default function EngageFLow(props: IEngageFlow) {
   return (
     <div className="flex-1 bg-surface-white pt-5 pb-8 px-6 lg:pl-86.25 lg:pr-8 overflow-y-auto w-full min-h-0">
       {match({ data, isLoading })
-        .with({ isLoading: true }, () => <Content.Loading />)
-        .with({ data: P.nullish, isLoading: false }, () => <Content.Error />)
+        .with({ isLoading: true }, () => <StateLoading />)
+        .with({ data: P.nullish, isLoading: false }, () => <StateError />)
         .with({ data: P.select(P.nonNullable) }, (data) => (
           <Content data={data} playId={props.id} />
         ))
@@ -57,22 +58,6 @@ function Content(props: IContent) {
       </p>
 
       <PreAssessment data={data.notes?.engage.preAssessment || []} playId={playId} />
-    </div>
-  );
-};
-
-Content.Loading = function Loading() {
-  return (
-    <div className="relative flex-1 flex flex-col items-center justify-center bg-surface-white size-full min-h-0 overflow-hidden">
-      <Loader2Icon className="size-8 animate-spin text-primary-cta" />
-    </div>
-  );
-};
-
-Content.Error = function Error() {
-  return (
-    <div className="w-full h-full flex-center">
-      <p className="text-small">An error occurred</p>
     </div>
   );
 };

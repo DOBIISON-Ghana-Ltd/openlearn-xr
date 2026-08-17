@@ -19,7 +19,7 @@ export default function ResultFLow(props: IResultFlow) {
   }, []);
 
   return (
-    <div className="relative flex-1 bg-surface-white p-6 lg:px-20 overflow-y-auto w-full min-h-0 flex flex-col justify-center">
+    <div className="relative flex-1 bg-surface-white p-6 xl:px-12 overflow-hidden w-full min-h-0 flex flex-col justify-center">
       {match(isHost)
         .with(true, () => <HostContent {...props} />)
         .with(false, () => <NormalContent {...props} />)
