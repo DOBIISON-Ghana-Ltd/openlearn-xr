@@ -5,7 +5,7 @@ import { useFrame } from '@react-three/fiber';
 import { Text } from '@react-three/drei';
 import * as THREE from 'three';
 import { useSimValue } from '../../resolver';
-import { IValueMap } from './index';
+import { IValueMap } from './config.v0';
 
 // Standard Regulated Benchtop DC Power Supply Voltage
 const SOURCE_VOLTAGE = 12.0;
