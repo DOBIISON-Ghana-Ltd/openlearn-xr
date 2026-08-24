@@ -4,9 +4,11 @@ import prisma from "@/adapters/db/client";
 import ZSim from "@/data/api/sim/sim.schema";
 import { triggerSessionEvent } from "@/adapters/realtime/server";
 
+const ZPostBody = ZSim.SimSessionPostLeave.shape.body;
+
 export const POST = apiHandler<{ id: string }>(async (req, ctx) => {
   const { id: playId } = await ctx.params;
-  const body = ZSim.SimSessionPostLeave.shape.body.parse(await req.json());
+  const body = ZPostBody.parse(await req.json());
 
   const liveSession = await prisma.liveSession.findUnique({
     where: { joinCode: playId },

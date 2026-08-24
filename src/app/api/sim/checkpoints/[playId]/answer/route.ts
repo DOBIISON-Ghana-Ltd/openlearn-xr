@@ -5,9 +5,12 @@ import { handlePostLocalAnswer } from "./handle-local";
 import { handlePostRemoteAnswer } from "./handle-remote";
 import { handlePostSessionAnswer } from "./handle-session";
 
+const ZPostParams = ZSim.SimCheckpointPostAnswer.shape.params;
+const ZPostBody = ZSim.SimCheckpointPostAnswer.shape.body;
+
 export const POST = apiHandler<{ playId: string }>(async (req, ctx) => {
-  const params = ZSim.SimCheckpointPostAnswer.shape.params.parse(await ctx.params);
-  const body = ZSim.SimCheckpointPostAnswer.shape.body.parse(await req.json());
+  const params = ZPostParams.parse(await ctx.params);
+  const body = ZPostBody.parse(await req.json());
 
   const { playId } = params;
   const { mode } = body;

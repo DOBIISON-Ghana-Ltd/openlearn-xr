@@ -3,8 +3,11 @@ import prisma from "@/adapters/db/client";
 import ZSes from "@/data/api/ses/ses.schema";
 import { apiHandler } from "@/lib/utils/api-handler";
 
+const ZGetQuery = ZSes.SesModuleGetAll.shape.query;
+const ZGetRes = ZSes.SesModuleGetAll.shape.res;
+
 export const GET = apiHandler(async (req) => {
-  const query = ZSes.SesModuleGetAll.shape.query.parse(
+  const query = ZGetQuery.parse(
     Object.fromEntries(req.nextUrl.searchParams)
   );
 
@@ -54,6 +57,6 @@ export const GET = apiHandler(async (req) => {
     },
   });
 
-  const parsedData = ZSes.SesModuleGetAll.shape.res.parse(modules);
+  const parsedData = ZGetRes.parse(modules);
   return JSend.success(parsedData);
 });

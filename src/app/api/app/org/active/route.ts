@@ -3,6 +3,8 @@ import { JSend } from "@/lib/utils/jsend";
 import prisma from "@/adapters/db/client";
 import ZApp from "@/data/api/app/app.schema";
 
+const ZGetRes = ZApp.AppOrgGetActive.shape.res;
+
 export const GET = secureApiRoute(async (req, ctx, user, session) => {
   if (!session.activeOrganizationId) {
     return JSend.error("No active organization found", 404);
@@ -23,7 +25,7 @@ export const GET = secureApiRoute(async (req, ctx, user, session) => {
     return JSend.error("Organization not found", 404);
   }
 
-  const parsedData = ZApp.AppOrgGetActive.shape.res.parse({
+  const parsedData = ZGetRes.parse({
     id: org.id,
     name: org.name,
     logo: org.logo,

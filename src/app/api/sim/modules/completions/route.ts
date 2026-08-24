@@ -3,6 +3,8 @@ import { JSend } from "@/lib/utils/jsend";
 import prisma from "@/adapters/db/client";
 import ZSim from "@/data/api/sim/sim.schema";
 
+const ZGetRes = ZSim.SimModuleCompletionGetAll.shape.res;
+
 export const GET = secureApiRoute(async (req, ctx, user) => {
   const completions = await prisma.moduleCompletion.findMany({
     where: { userId: user.id },
@@ -19,7 +21,7 @@ export const GET = secureApiRoute(async (req, ctx, user) => {
     },
   });
 
-  const parsedData = ZSim.SimModuleCompletionGetAll.shape.res.parse(completions);
+  const parsedData = ZGetRes.parse(completions);
 
   return JSend.success(parsedData);
 });

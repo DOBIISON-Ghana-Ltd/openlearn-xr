@@ -3,8 +3,11 @@ import prisma from "@/adapters/db/client";
 import ZSim from "@/data/api/sim/sim.schema";
 import { apiHandler } from "@/lib/utils/api-handler";
 
+const ZGetQuery = ZSim.SimModuleGetAll.shape.query;
+const ZGetRes = ZSim.SimModuleGetAll.shape.res;
+
 export const GET = apiHandler(async (req) => {
-  const query = ZSim.SimModuleGetAll.shape.query.parse(
+  const query = ZGetQuery.parse(
     Object.fromEntries(req.nextUrl.searchParams)
   );
 
@@ -60,6 +63,6 @@ export const GET = apiHandler(async (req) => {
     },
   });
 
-  const parsedData = ZSim.SimModuleGetAll.shape.res.parse(modules);
+  const parsedData = ZGetRes.parse(modules);
   return JSend.success(parsedData);
 });

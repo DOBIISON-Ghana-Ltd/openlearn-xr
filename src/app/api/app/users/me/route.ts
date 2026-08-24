@@ -3,12 +3,14 @@ import { JSend } from "@/lib/utils/jsend";
 import { secureApiRoute } from "@/lib/utils/secure-api-route";
 import { getActiveOrgSubscription } from "@/lib/actions/get-active-org-subscription";
 
+const ZGetRes = ZApp.AppUserGetMe.shape.res;
+
 export const GET = secureApiRoute(async (req, ctx, user, session) => {
   const subscriptionInfo = await getActiveOrgSubscription(
     session.activeOrganizationId
   );
 
-  const res = ZApp.AppUserGetMe.shape.res.parse({
+  const res = ZGetRes.parse({
     id: user.id,
     name: user.name,
     role: user.role,

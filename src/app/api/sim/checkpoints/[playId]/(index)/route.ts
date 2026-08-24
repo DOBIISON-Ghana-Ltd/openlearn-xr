@@ -5,9 +5,12 @@ import { handleGetLocalCheckpoint } from "./handle-local";
 import { handleGetRemoteCheckpoint } from "./handle-remote";
 import { handleGetSessionCheckpoint } from "./handle-session";
 
+const ZGetParams = ZSim.SimCheckpointGetOne.shape.params;
+const ZGetQuery = ZSim.SimCheckpointGetOne.shape.query;
+
 export const GET = apiHandler<{ playId: string }>(async (req, ctx) => {
-  const params = ZSim.SimCheckpointGetOne.shape.params.parse(await ctx.params);
-  const searchParams = ZSim.SimCheckpointGetOne.shape.query.parse(
+  const params = ZGetParams.parse(await ctx.params);
+  const searchParams = ZGetQuery.parse(
     Object.fromEntries(req.nextUrl.searchParams)
   );
 

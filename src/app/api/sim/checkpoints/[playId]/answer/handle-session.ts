@@ -4,6 +4,8 @@ import ZSim from "@/data/api/sim/sim.schema";
 import { Infer } from "@/data/types.base";
 import { triggerSessionEvent } from "@/adapters/realtime/server";
 
+const ZPostRes = ZSim.SimCheckpointPostAnswer.shape.res;
+
 type IAnswerBody = Infer["SimCheckpointPostAnswer"]["body"];
 
 export async function handlePostSessionAnswer(playId: string, body: IAnswerBody) {
@@ -88,5 +90,5 @@ export async function handlePostSessionAnswer(playId: string, body: IAnswerBody)
     moduleId,
   };
 
-  return JSend.success(ZSim.SimCheckpointPostAnswer.shape.res.parse(resData));
+  return JSend.success(ZPostRes.parse(resData));
 }

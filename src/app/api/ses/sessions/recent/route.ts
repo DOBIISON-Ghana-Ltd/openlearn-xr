@@ -3,6 +3,8 @@ import { JSend } from "@/lib/utils/jsend";
 import prisma from "@/adapters/db/client";
 import ZSes from "@/data/api/ses/ses.schema";
 
+const ZGetRes = ZSes.SesSessionGetRecent.shape.res;
+
 export const GET = secureApiRoute(async (req, ctx, user) => {
   const sessions = await prisma.liveSession.findMany({
     where: {
@@ -41,6 +43,6 @@ export const GET = secureApiRoute(async (req, ctx, user) => {
     },
   });
 
-  const parsed = ZSes.SesSessionGetRecent.shape.res.parse(sessions);
+  const parsed = ZGetRes.parse(sessions);
   return JSend.success(parsed);
 });

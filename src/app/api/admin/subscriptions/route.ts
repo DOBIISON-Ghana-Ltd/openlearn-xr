@@ -3,6 +3,8 @@ import ZAdmin from "@/data/api/admin/admin.schema";
 import { JSend } from "@/lib/utils/jsend";
 import { secureApiRoute } from "@/lib/utils/secure-api-route";
 
+const ZGetRes = ZAdmin.AdminSubscriptionGetAll.shape.res;
+
 export const GET = secureApiRoute(async (req, ctx, user) => {
   const subscriptions = await prisma.subscription.findMany({
     include: {
@@ -19,7 +21,7 @@ export const GET = secureApiRoute(async (req, ctx, user) => {
     },
   });
 
-  const parsed = ZAdmin.AdminSubscriptionGetAll.shape.res.parse(subscriptions);
+  const parsed = ZGetRes.parse(subscriptions);
 
   return JSend.success(parsed);
 });

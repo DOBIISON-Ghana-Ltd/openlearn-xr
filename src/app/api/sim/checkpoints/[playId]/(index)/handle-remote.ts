@@ -3,6 +3,8 @@ import { JSend } from "@/lib/utils/jsend";
 import prisma from "@/adapters/db/client";
 import ZSim from "@/data/api/sim/sim.schema";
 
+const ZGetRes = ZSim.SimCheckpointGetOne.shape.res;
+
 export function handleGetRemoteCheckpoint(playId: string) {
   return secureApiRoute<{ playId: string }>(async (req, ctx, user) => {
     const userId = user.id;
@@ -37,6 +39,6 @@ export function handleGetRemoteCheckpoint(playId: string) {
       },
     };
 
-    return JSend.success(ZSim.SimCheckpointGetOne.shape.res.parse(resData));
+    return JSend.success(ZGetRes.parse(resData));
   });
 }

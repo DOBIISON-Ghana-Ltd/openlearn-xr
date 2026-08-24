@@ -3,6 +3,8 @@ import { JSend } from "@/lib/utils/jsend";
 import ZSes from "@/data/api/ses/ses.schema";
 import prisma from "@/adapters/db/client";
 
+const ZGetRes = ZSes.SesSessionGetPlayers.shape.res;
+
 export const GET = secureApiRoute<{ id: string }>(async (req, ctx, user, session) => {
   const params = await ctx.params;
   const id = params?.id;
@@ -37,6 +39,6 @@ export const GET = secureApiRoute<{ id: string }>(async (req, ctx, user, session
     },
   });
 
-  const parsedData = ZSes.SesSessionGetPlayers.shape.res.parse(players);
+  const parsedData = ZGetRes.parse(players);
   return JSend.success(parsedData);
 });

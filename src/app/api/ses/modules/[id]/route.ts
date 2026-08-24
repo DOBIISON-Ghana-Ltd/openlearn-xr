@@ -3,6 +3,8 @@ import prisma from "@/adapters/db/client";
 import ZSes from "@/data/api/ses/ses.schema";
 import { apiHandler } from "@/lib/utils/api-handler";
 
+const ZGetRes = ZSes.SesModuleGetOne.shape.res;
+
 export const GET = apiHandler(async (req, ctx: { params: Promise<{ id: string }> }) => {
   const params = await ctx.params;
 
@@ -25,6 +27,6 @@ export const GET = apiHandler(async (req, ctx: { params: Promise<{ id: string }>
     return JSend.error("Module version not found", 404);
   }
 
-  const parsedData = ZSes.SesModuleGetOne.shape.res.parse(item);
+  const parsedData = ZGetRes.parse(item);
   return JSend.success(parsedData);
 });

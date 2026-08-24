@@ -6,10 +6,13 @@ import { handleGetSessionNav, handlePostSessionNav } from "./handle-session";
 import { handleGetRemoteNav, handlePostRemoteNav } from "./handle-remote";
 import { handleGetLocalNav, handlePostLocalNav } from "./handle-local";
 
+const ZGetParams = ZSim.SimGeneralGetNavigate.shape.params;
+const ZGetQuery = ZSim.SimGeneralGetNavigate.shape.query;
+
 export const GET = apiHandler<{ slug: string[] }>(async (req, ctx) => {
   const { slug } = await ctx.params;
-  const params = ZSim.SimGeneralGetNavigate.shape.params.parse(parsePlaySlug(slug));
-  const searchParams = ZSim.SimGeneralGetNavigate.shape.query.parse(
+  const params = ZGetParams.parse(parsePlaySlug(slug));
+  const searchParams = ZGetQuery.parse(
     Object.fromEntries(req.nextUrl.searchParams)
   );
 
@@ -28,12 +31,15 @@ export const GET = apiHandler<{ slug: string[] }>(async (req, ctx) => {
   }
 });
 
+const ZPostParams = ZSim.SimGeneralPostNavigate.shape.params;
+const ZPostBody = ZSim.SimGeneralPostNavigate.shape.body;
+
 export const POST = apiHandler<{ slug: string[] }>(async (req, ctx) => {
   const { slug } = await ctx.params;
-  const params = ZSim.SimGeneralPostNavigate.shape.params.parse(parsePlaySlug(slug));
+  const params = ZPostParams.parse(parsePlaySlug(slug));
 
   const rawBody = await req.json();
-  const { nextTab, isHost } = ZSim.SimGeneralPostNavigate.shape.body.parse(rawBody);
+  const { nextTab, isHost } = ZPostBody.parse(rawBody);
   const { mode, playId, playerId } = params;
 
   switch (mode) {

@@ -3,6 +3,8 @@ import prisma from "@/adapters/db/client";
 import ZSim from "@/data/api/sim/sim.schema";
 import { Infer } from "@/data/types.base";
 
+const ZPostRes = ZSim.SimCheckpointPostAnswer.shape.res;
+
 type IAnswerBody = Infer["SimCheckpointPostAnswer"]["body"];
 
 export async function handlePostLocalAnswer(playId: string, body: IAnswerBody) {
@@ -50,5 +52,5 @@ export async function handlePostLocalAnswer(playId: string, body: IAnswerBody) {
     moduleId,
   };
 
-  return JSend.success(ZSim.SimCheckpointPostAnswer.shape.res.parse(resData));
+  return JSend.success(ZPostRes.parse(resData));
 }

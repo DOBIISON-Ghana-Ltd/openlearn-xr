@@ -5,6 +5,8 @@ import ZEditor from "@/data/api/editor/editor.schema";
 import slugify from "@sindresorhus/slugify";
 import { nanoid } from "nanoid";
 
+const ZGetRes = ZEditor.EditorCollectionGetAll.shape.res;
+
 export const GET = secureApiRoute(async (req, ctx, user) => {
   const collections = await prisma.collection.findMany({
     select: {
@@ -25,13 +27,16 @@ export const GET = secureApiRoute(async (req, ctx, user) => {
     },
   });
 
-  const parsedData = ZEditor.EditorCollectionGetAll.shape.res.parse(collections);
+  const parsedData = ZGetRes.parse(collections);
   return JSend.success(parsedData);
 });
 
+const ZPostBody = ZEditor.EditorCollectionPostCreate.shape.body;
+const ZPostRes = ZEditor.EditorCollectionPostCreate.shape.res;
+
 export const POST = secureApiRoute(async (req, ctx, user) => {
   const rawBody = await req.json();
-  const body = ZEditor.EditorCollectionPostCreate.shape.body.parse(rawBody);
+  const body = ZPostBody.parse(rawBody);
 
   const baseSlug = slugify(body.name);
   const uniqueSlug = `${baseSlug}-${nanoid(6)}`;
@@ -48,6 +53,6 @@ export const POST = secureApiRoute(async (req, ctx, user) => {
     },
   });
 
-  const parsedData = ZEditor.EditorCollectionPostCreate.shape.res.parse(created);
+  const parsedData = ZPostRes.parse(created);
   return JSend.success(parsedData);
 });

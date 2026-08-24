@@ -3,6 +3,8 @@ import { JSend } from "@/lib/utils/jsend";
 import prisma from "@/adapters/db/client";
 import ZSim from "@/data/api/sim/sim.schema";
 
+const ZGetRes = ZSim.SimGeneralGetScore.shape.res;
+
 export function handleGetRemoteScore(playId: string) {
   return secureApiRoute<{ slug: string[] }>(async (req, ctx, user) => {
     let score = 0;
@@ -30,6 +32,6 @@ export function handleGetRemoteScore(playId: string) {
     }
 
     const resData = { score };
-    return JSend.success(ZSim.SimGeneralGetScore.shape.res.parse(resData));
+    return JSend.success(ZGetRes.parse(resData));
   });
 }

@@ -3,8 +3,10 @@ import { JSend } from "@/lib/utils/jsend";
 import { secureApiRoute } from "@/lib/utils/secure-api-route";
 import ZApp from "@/data/api/app/app.schema";
 
+const ZPostBody = ZApp.AppMediaPostOne.shape.body;
+
 export const POST = secureApiRoute(async (req, ctx, user) => {
-  const body = ZApp.AppMediaPostOne.shape.body.parse(await req.json());
+  const body = ZPostBody.parse(await req.json());
 
   const res = await prisma.media.create({
     data: {

@@ -3,6 +3,8 @@ import { JSend } from "@/lib/utils/jsend";
 import prisma from "@/adapters/db/client";
 import ZSes from "@/data/api/ses/ses.schema";
 
+const ZGetRes = ZSes.SesModuleVersionGetOptions.shape.res;
+
 export const GET = secureApiRoute(async () => {
   const versions = await prisma.moduleVersion.findMany({
     where: { status: "PUBLISHED" },
@@ -18,6 +20,6 @@ export const GET = secureApiRoute(async () => {
     orderBy: { createdAt: "desc" },
   });
 
-  const parsedData = ZSes.SesModuleVersionGetOptions.shape.res.parse(versions);
+  const parsedData = ZGetRes.parse(versions);
   return JSend.success(parsedData);
 });

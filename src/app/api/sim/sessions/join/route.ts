@@ -4,9 +4,12 @@ import ZSim from "@/data/api/sim/sim.schema";
 import prisma from "@/adapters/db/client";
 import { triggerSessionEvent } from "@/adapters/realtime/server";
 
+const ZPostBody = ZSim.SimSessionPostJoin.shape.body;
+const ZPostRes = ZSim.SimSessionPostJoin.shape.res;
+
 export const POST = apiHandler(async (req) => {
   const rawBody = await req.json();
-  const body = ZSim.SimSessionPostJoin.shape.body.parse(rawBody);
+  const body = ZPostBody.parse(rawBody);
 
   const liveSession = await prisma.liveSession.findFirst({
     where: { joinCode: body.joinCode },
@@ -40,7 +43,7 @@ export const POST = apiHandler(async (req) => {
     name: player.name,
   });
 
-  const parsedData = ZSim.SimSessionPostJoin.shape.res.parse({
+  const parsedData = ZPostRes.parse({
     playerId: player.id,
     sessionId: liveSession.id,
     joinCode: liveSession.joinCode,

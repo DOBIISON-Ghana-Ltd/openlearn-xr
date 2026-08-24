@@ -2,6 +2,8 @@ import { JSend } from "@/lib/utils/jsend";
 import prisma from "@/adapters/db/client";
 import ZSim from "@/data/api/sim/sim.schema";
 
+const ZGetRes = ZSim.SimGeneralGetNavigate.shape.res;
+
 export async function handleGetLocalNav(playId: string) {
   const [firstCheckpoint, totalCheckpoints] = await prisma.$transaction([
     prisma.moduleCheckpoint.findFirst({
@@ -22,7 +24,7 @@ export async function handleGetLocalNav(playId: string) {
     checkpointId: firstCheckpoint?.id ?? null,
   };
 
-  return JSend.success(ZSim.SimGeneralGetNavigate.shape.res.parse(resData));
+  return JSend.success(ZGetRes.parse(resData));
 }
 
 export async function handlePostLocalNav() {

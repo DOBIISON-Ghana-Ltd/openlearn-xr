@@ -2,6 +2,8 @@ import { JSend } from "@/lib/utils/jsend";
 import prisma from "@/adapters/db/client";
 import ZSim from "@/data/api/sim/sim.schema";
 
+const ZGetRes = ZSim.SimGeneralGetScore.shape.res;
+
 export async function handleGetSessionScore(playId: string, playerId: string) {
   if (!playerId) {
     return JSend.error("Player ID is required for session score", 400);
@@ -14,5 +16,5 @@ export async function handleGetSessionScore(playId: string, playerId: string) {
 
   const score = player?.score ?? 0;
   const resData = { score };
-  return JSend.success(ZSim.SimGeneralGetScore.shape.res.parse(resData));
+  return JSend.success(ZGetRes.parse(resData));
 }

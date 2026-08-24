@@ -6,9 +6,11 @@ import { handleGetSessionScore } from "./handle-session";
 import { handleGetRemoteScore } from "./handle-remote";
 import { handleGetLocalScore } from "./handle-local";
 
+const ZGetParams = ZSim.SimGeneralGetScore.shape.params;
+
 export const GET = apiHandler<{ slug: string[] }>(async (req, ctx) => {
   const { slug } = await ctx.params;
-  const params = ZSim.SimGeneralGetScore.shape.params.parse(parsePlaySlug(slug));
+  const params = ZGetParams.parse(parsePlaySlug(slug));
   const { mode, playId, playerId } = params;
 
   switch (mode) {

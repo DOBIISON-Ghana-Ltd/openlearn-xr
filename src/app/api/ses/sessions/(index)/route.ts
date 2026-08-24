@@ -4,6 +4,9 @@ import ZSes from "@/data/api/ses/ses.schema";
 import prisma from "@/adapters/db/client";
 import { joinCode } from "@/lib/utils/generate-join-code";
 
+const ZGetQuery = ZSes.SesSessionGetAll.shape.query;
+const ZGetRes = ZSes.SesSessionGetAll.shape.res;
+
 export const GET = secureApiRoute(async (req, ctx, user, session) => {
   if (!session.activeOrganizationId) {
     return JSend.error(
@@ -12,7 +15,7 @@ export const GET = secureApiRoute(async (req, ctx, user, session) => {
     );
   }
 
-  const query = ZSes.SesSessionGetAll.shape.query.parse(
+  const query = ZGetQuery.parse(
     { status: req.nextUrl.searchParams.getAll("status") }
   );
 
@@ -66,9 +69,11 @@ export const GET = secureApiRoute(async (req, ctx, user, session) => {
     },
   });
 
-  const parsedData = ZSes.SesSessionGetAll.shape.res.parse(sessions);
+  const parsedData = ZGetRes.parse(sessions);
   return JSend.success(parsedData);
 });
+
+const ZPostBody = ZSes.SesSessionPostCreate.shape.body;
 
 export const POST = secureApiRoute(async (req, ctx, user, session) => {
   if (!session.activeOrganizationId) {
@@ -76,7 +81,7 @@ export const POST = secureApiRoute(async (req, ctx, user, session) => {
   }
 
   const rawBody = await req.json();
-  const body = ZSes.SesSessionPostCreate.shape.body.parse(rawBody);
+  const body = ZPostBody.parse(rawBody);
 
   if (!joinCode.check(body.joinCode)) {
     return JSend.error("Invalid join code format. Expected format: xxxx-xxxx-xxxx", 400);
