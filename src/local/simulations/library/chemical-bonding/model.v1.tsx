@@ -525,73 +525,48 @@ export function ChemicalBondingOverlay() {
   const showHybridOrbitals = useSimValue<IValueMap, 'show_hybrid_orbitals'>('show_hybrid_orbitals', false);
 
   const MOLECULE_DATA: Record<string, { formula: string; geometry: string; hybridization: string; angles: string; color: string }> = {
-    'BeCl2 (Linear)':            { formula: 'BeCl₂', geometry: 'Linear',             hybridization: 'sp',    angles: '180°',      color: '#a855f7' },
-    'BCl3 (Trigonal Planar)':    { formula: 'BCl₃', geometry: 'Trigonal Planar',     hybridization: 'sp²',   angles: '120°',      color: '#06b6d4' },
-    'CH4 (Tetrahedral)':         { formula: 'CH₄',  geometry: 'Tetrahedral',         hybridization: 'sp³',   angles: '109.5°',    color: '#8b5cf6' },
-    'PCl5 (Trigonal Bipyramidal)':{ formula: 'PCl₅', geometry: 'Trigonal Bipyramidal',hybridization: 'sp³d',  angles: '90° / 120°', color: '#ec4899' },
-    'SF6 (Octahedral)':          { formula: 'SF₆',  geometry: 'Octahedral',          hybridization: 'sp³d²', angles: '90°',       color: '#e11d48' },
+    'BeCl2 (Linear)': { formula: 'BeCl₂', geometry: 'Linear', hybridization: 'sp', angles: '180°', color: '#a855f7' },
+    'BCl3 (Trigonal Planar)': { formula: 'BCl₃', geometry: 'Trigonal Planar', hybridization: 'sp²', angles: '120°', color: '#06b6d4' },
+    'CH4 (Tetrahedral)': { formula: 'CH₄', geometry: 'Tetrahedral', hybridization: 'sp³', angles: '109.5°', color: '#8b5cf6' },
+    'PCl5 (Trigonal Bipyramidal)': { formula: 'PCl₅', geometry: 'Trigonal Bipyramidal', hybridization: 'sp³d', angles: '90° / 120°', color: '#ec4899' },
+    'SF6 (Octahedral)': { formula: 'SF₆', geometry: 'Octahedral', hybridization: 'sp³d²', angles: '90°', color: '#e11d48' },
   };
 
   const mol = MOLECULE_DATA[selectedMolecule];
   if (!mol) return null;
 
   return (
-    <div
-      style={{
-        position: 'absolute',
-        left: 24,
-        top: '50%',
-        transform: 'translateY(-50%)',
-        zIndex: 50,
-        pointerEvents: 'none',
-        display: 'flex',
-        flexDirection: 'column',
-        gap: 10,
-        minWidth: 160,
-      }}
-    >
+    <div className="absolute left-6 bottom-6 z-50 pointer-events-none flex flex-col gap-2.5 w-56">
       {/* Formula + Geometry card */}
-      <div style={{
-        background: 'rgba(244, 248, 255, 0.94)',
-        border: '1px solid rgba(100, 160, 230, 0.35)',
-        borderRadius: 14,
-        padding: '14px 18px',
-        backdropFilter: 'blur(10px)',
-      }}>
-        <p style={{ margin: 0, fontSize: 10, color: '#7a9ec0', fontFamily: 'system-ui', fontWeight: 600, letterSpacing: '0.08em', textTransform: 'uppercase' }}>
+      <div className="bg-[#f4f8ff]/95 border border-[#64a0e6]/35 rounded-[14px] px-[18px] py-3.5 backdrop-blur-md">
+        <p className="m-0 text-[10px] text-[#7a9ec0] font-semibold tracking-[0.08em] uppercase">
           Molecule
         </p>
-        <p style={{ margin: '5px 0 2px', fontSize: 28, color: '#1e3a5f', fontFamily: 'system-ui', fontWeight: 800, lineHeight: 1 }}>
+        <p className="mt-1 mb-0.5 text-[28px] text-[#1e3a5f] font-extrabold leading-none">
           {mol.formula}
         </p>
-        <p style={{ margin: '4px 0 0', fontSize: 13, color: '#4a6fa5', fontFamily: 'system-ui', fontWeight: 600 }}>
+        <p className="mt-1 text-[13px] text-[#4a6fa5] font-semibold">
           {mol.geometry}
         </p>
       </div>
 
       {/* Hybridization + Angles card */}
-      <div style={{
-        background: 'rgba(244, 248, 255, 0.94)',
-        border: '1px solid rgba(100, 160, 230, 0.35)',
-        borderRadius: 14,
-        padding: '14px 18px',
-        backdropFilter: 'blur(10px)',
-      }}>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+      <div className="bg-[#f4f8ff]/95 border border-[#64a0e6]/35 rounded-[14px] px-[18px] py-3.5 backdrop-blur-md">
+        <div className="flex flex-col gap-2">
           <div>
-            <p style={{ margin: 0, fontSize: 10, color: '#7a9ec0', fontFamily: 'system-ui', fontWeight: 600, letterSpacing: '0.08em', textTransform: 'uppercase' }}>
+            <p className="m-0 text-[10px] text-[#7a9ec0] font-semibold tracking-[0.08em] uppercase">
               Hybridization
             </p>
-            <p style={{ margin: '4px 0 0', fontSize: 22, color: mol.color, fontFamily: 'system-ui', fontWeight: 800, lineHeight: 1 }}>
+            <p className="mt-1 text-[22px] font-extrabold leading-none" style={{ color: mol.color }}>
               {mol.hybridization}
             </p>
           </div>
-          <div style={{ width: '100%', height: 1, background: 'rgba(100, 160, 230, 0.2)' }} />
+          <div className="w-full h-px bg-[#64a0e6]/20" />
           <div>
-            <p style={{ margin: 0, fontSize: 10, color: '#7a9ec0', fontFamily: 'system-ui', fontWeight: 600, letterSpacing: '0.08em', textTransform: 'uppercase' }}>
+            <p className="m-0 text-[10px] text-[#7a9ec0] font-semibold tracking-[0.08em] uppercase">
               Bond Angle
             </p>
-            <p style={{ margin: '4px 0 0', fontSize: 18, color: '#1e3a5f', fontFamily: 'system-ui', fontWeight: 700 }}>
+            <p className="mt-1 text-lg text-[#1e3a5f] font-bold tabular-nums">
               {mol.angles}
             </p>
           </div>
@@ -600,14 +575,14 @@ export function ChemicalBondingOverlay() {
 
       {/* Hybrid orbitals indicator */}
       {showHybridOrbitals && (
-        <div style={{
-          background: `rgba(${mol.color === '#a855f7' ? '168,85,247' : mol.color === '#06b6d4' ? '6,182,212' : mol.color === '#8b5cf6' ? '139,92,246' : mol.color === '#ec4899' ? '236,72,153' : '225,29,72'},0.12)`,
-          border: `1px solid ${mol.color}40`,
-          borderRadius: 14,
-          padding: '10px 14px',
-          backdropFilter: 'blur(10px)',
-        }}>
-          <p style={{ margin: 0, fontSize: 11, color: mol.color, fontFamily: 'system-ui', fontWeight: 700 }}>
+        <div
+          className="border rounded-[14px] px-3.5 py-2.5 backdrop-blur-md"
+          style={{
+            backgroundColor: `${mol.color}1f`,
+            borderColor: `${mol.color}66`,
+          }}
+        >
+          <p className="m-0 text-[11px] font-bold" style={{ color: mol.color }}>
             ⬡ Hybrid orbitals visible
           </p>
         </div>

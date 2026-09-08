@@ -1,7 +1,7 @@
 import useApi from "@/data/hooks/use-api";
-import { ServerMode } from "@/data/schema.base";
+import { ServerMode, PlayMode } from "@/data/schema.base";
 
-export type IPlayMode = "module" | "session";
+export type IPlayMode = PlayMode;
 export type IServerMode = ServerMode;
 
 export function usePlayServerMode(flowMode: IPlayMode): {

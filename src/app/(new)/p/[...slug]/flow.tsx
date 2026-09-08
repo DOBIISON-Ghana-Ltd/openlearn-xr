@@ -47,8 +47,10 @@ export default function FLow(props: IFlow) {
   }, []);
 
   const { serverMode, isLoading: isModeLoading } = usePlayServerMode(props.mode);
-  const isHost = useStore(simStore, (s) => s.getSessionInfo(props.id)?.isHost) ?? false;
-  const playerId = useStore(simStore, (s) => s.getSessionPlayer(props.id)) || '';
+
+  const sessionInfo = useStore(simStore, (s) => s.getSessionInfo(props.id));
+  const isHost = sessionInfo?.isHost ?? false;
+  const playerId = sessionInfo?.playerId || '';
 
   const navParams = {
     mode: serverMode,
@@ -140,7 +142,7 @@ function Content(props: IContent) {
   return (
     <Tabs.Root
       value={String(tabIndex)}
-      className="relative h-dvh min-h-screen flex flex-col bg-surface-white overflow-hidden"
+      className="relative h-dvh min-h-dvh flex flex-col bg-surface-white overflow-hidden"
     >
       <Header id={id} mode={mode} currentTab={tabIndex} />
       <main className="flex-1 flex flex-col min-h-0 overflow-hidden">

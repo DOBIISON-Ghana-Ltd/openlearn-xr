@@ -30,7 +30,7 @@ export default function Header(props: IHeader) {
   const router = useRouter();
   const sessionInfo = useStore(simStore, (s) => s.getSessionInfo(id));
   const isHost = sessionInfo?.isHost ?? false;
-  const playerId = useStore(simStore, (s) => s.getSessionPlayer(id)) || '';
+  const playerId = sessionInfo?.playerId || '';
   const removeSession = useStore(simStore, (s) => s.removeSession);
 
   const { mutate: leaveSession, isPending: isLeaving } = useApi.mutate("sim:session:post:leave");
@@ -42,7 +42,7 @@ export default function Header(props: IHeader) {
     endSession({ params: { id } }, {
       onSuccess: () => {
         removeSession(id);
-        simStore.getState().resetPlayState(id);
+        simStore.getState().resetPlayState('session', id);
       },
       onError: (err) => {
         toastManager.add({ title: err.message || "Failed to end session. Please try again.", type: "error" });
@@ -53,14 +53,14 @@ export default function Header(props: IHeader) {
   const handleLeaveSession = () => {
     if (!playerId) {
       removeSession(id);
-      simStore.getState().resetPlayState(id);
+      simStore.getState().resetPlayState('session', id);
       return;
     }
 
     leaveSession({ params: { id }, body: { playerId } }, {
       onSuccess: () => {
         removeSession(id);
-        simStore.getState().resetPlayState(id);
+        simStore.getState().resetPlayState('session', id);
       },
       onError: (err) => {
         toastManager.add({ title: err.message || "Failed to leave session. Please try again.", type: "error" });

@@ -27,7 +27,7 @@ export default function ExplainFLow(props: IExplainFlow) {
   });
 
   return (
-    <div className="flex-1 bg-surface-white py-8 px-6 overflow-y-auto overscroll-contain w-full min-h-0">
+    <div className="flex-1 bg-surface-white py-8 pb-20 md:pb-24 px-6 overflow-y-auto overscroll-contain w-full min-h-0">
       <div className="w-full max-w-7xl mx-auto flex flex-col gap-6">
 
         <div className="flex flex-col gap-2 w-full max-w-5xl">

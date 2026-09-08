@@ -21,6 +21,9 @@ export async function upsertPlayAttempt(params: {
   currentCheckpointIndex?: number;
   totalCheckpoints?: number;
   accumulatedPoints?: number;
+  preAssessmentEarnedPoints?: number;
+  preAssessmentTotalPoints?: number;
+  totalCheckpointPoints?: number;
 }): Promise<PlayAttemptRecord | null> {
   try {
     const db = await getOpenLearnDB();
@@ -47,6 +50,18 @@ export async function upsertPlayAttempt(params: {
         params.accumulatedPoints !== undefined
           ? params.accumulatedPoints
           : (existing?.accumulatedPoints ?? 0),
+      preAssessmentEarnedPoints:
+        params.preAssessmentEarnedPoints !== undefined
+          ? params.preAssessmentEarnedPoints
+          : (existing?.preAssessmentEarnedPoints ?? 0),
+      preAssessmentTotalPoints:
+        params.preAssessmentTotalPoints !== undefined
+          ? params.preAssessmentTotalPoints
+          : (existing?.preAssessmentTotalPoints ?? 0),
+      totalCheckpointPoints:
+        params.totalCheckpointPoints !== undefined
+          ? params.totalCheckpointPoints
+          : (existing?.totalCheckpointPoints ?? 0),
       updatedAt: now,
     };
 

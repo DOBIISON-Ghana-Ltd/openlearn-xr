@@ -72,7 +72,7 @@ function HostResult({ id, detail, players, isTutorLedSession }: { id: string; de
     endSession({ params: { id } }, {
       onSuccess: () => {
         removeSession(id);
-        simStore.getState().resetPlayState(id);
+        simStore.getState().resetPlayState('session', id);
       },
       onError: (err) => {
         toastManager.add({

@@ -34,7 +34,7 @@ export default function ExploreFLow(props: IExploreFlow) {
   const config = slugData?.slug ? getSimulationConfig(slugData.slug) : undefined;
 
   return (
-    <div className="relative flex-1 flex flex-col bg-surface-white size-full min-h-0 overflow-hidden">
+    <div className="relative flex-1 flex flex-col size-full min-h-0 overflow-hidden">
       {match({ config, isLoading })
         .with({ isLoading: true }, () => <StateLoading />)
         .with({ config: P.select(P.nonNullable) }, (cfg) =>

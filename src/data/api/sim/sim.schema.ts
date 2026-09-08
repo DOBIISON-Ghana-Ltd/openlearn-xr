@@ -209,11 +209,10 @@ const SimModuleGetStats = ZApi({
 // POST /api/sim/sessions/[id]/join — join a session
 // ---------------------------------------------------------------------------
 const SimSessionPostJoin = ZApi({
-  body: ZLiveSession.pick({
-    joinCode: true,
-    name: true,
-  }).extend({
-    avatar: z.string().optional(),
+  body: z.object({
+    joinCode: ZLiveSession.shape.joinCode,
+    name: ZSessionPlayer.shape.name,
+    avatar: ZSessionPlayer.shape.avatar,
   }),
   res: z.object({
     playerId: ZSessionPlayer.shape.id,
@@ -273,6 +272,21 @@ const SimGeneralPostRetake = ZApi({
     checkpointId: z.string().nullable().optional(),
     totalCheckpoints: z.number().int().optional(),
   }),
+});
+
+// ---------------------------------------------------------------------------
+// POST /api/sim/play/[...slug]/test-score — record pre-assessment score
+// ---------------------------------------------------------------------------
+const SimGeneralPostTestScore = ZApi({
+  params: z.object({
+    mode: ServerModeEnum,
+    playId: z.string(),
+    playerId: z.string(),
+  }),
+  body: z.object({
+    preAssessmentEarnedPoints: z.number().int(),
+    preAssessmentTotalPoints: z.number().int(),
+  })
 });
 
 // ---------------------------------------------------------------------------
@@ -369,6 +383,7 @@ const schema = {
   SimGeneralGetNavigate,
   SimGeneralPostNavigate,
   SimGeneralPostRetake,
+  SimGeneralPostTestScore,
 
   SimCollectionGetAll,
   SimCollectionGetModules,

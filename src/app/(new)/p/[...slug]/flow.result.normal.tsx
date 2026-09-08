@@ -23,10 +23,9 @@ export default function NormalContent(props: INormalResultFlow) {
     query: { mode: props.mode },
   });
 
-  const playerId = useStore(simStore, (s) => s.getSessionPlayer(props.id)) || '';
   const sessionInfo = useStore(simStore, (s) => s.getSessionInfo(props.id));
-  const isTutorLedSession =
-    props.mode === "session" && sessionInfo?.config.controlMode === "tutor-led";
+  const playerId = sessionInfo?.playerId || '';
+  const isTutorLedSession = props.mode === "session" && sessionInfo?.config.controlMode === "tutor-led";
 
   const { data: playScore, isLoading: ILPlayScore } = useApi.query(
     "sim:general:get:score",

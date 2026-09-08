@@ -342,6 +342,27 @@ const simGeneralPostRetake = {
   },
 } satisfies MutationConfig;
 
+const simGeneralPostTestScore = {
+  type: "mutation",
+  mutationFn: async ({ params, body }: Pick<Infer["SimGeneralPostTestScore"], "params" | "body">) => {
+    if (params.mode === "local") {
+      await localDB.upsertPlayAttempt({
+        moduleVersionId: params.playId,
+        preAssessmentEarnedPoints: body.preAssessmentEarnedPoints,
+        preAssessmentTotalPoints: body.preAssessmentTotalPoints,
+      });
+
+      return "Pre-assessment score recorded successfully.";
+    }
+
+    const data = await fetcher(
+      () => axios.post(R["sim:general:post:test-score"](params), body),
+      ZSim.SimGeneralPostTestScore.shape.res
+    );
+    return data;
+  },
+} satisfies MutationConfig;
+
 const simModuleGetSlug = {
   type: "query",
   queryKey: ({ params }: Pick<Infer["SimModuleGetSlug"], "params">) => [...QUERY_KEYS["sim:module:get:slug"](params.id)],
@@ -367,6 +388,7 @@ export default {
   "sim:general:get:navigate": simGeneralGetNavigate,
   "sim:general:post:navigate": simGeneralPostNavigate,
   "sim:general:post:retake": simGeneralPostRetake,
+  "sim:general:post:test-score": simGeneralPostTestScore,
 
   "sim:module-completion:get:all": simModuleCompletionGetAll,
 

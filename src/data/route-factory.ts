@@ -26,6 +26,7 @@ const ROUTES = {
   "sim:general:get:navigate": (_: IPlaySlugs) => `/api/sim/play/navigate/${_.mode}/${_.playId}/${_.playerId}`,
   "sim:general:post:navigate": (_: IPlaySlugs) => `/api/sim/play/navigate/${_.mode}/${_.playId}/${_.playerId}`,
   "sim:general:post:retake": (_: IPlaySlugs) => `/api/sim/play/retake/${_.mode}/${_.playId}/${_.playerId}`,
+  "sim:general:post:test-score": (_: IPlaySlugs) => `/api/sim/play/test-score/${_.mode}/${_.playId}/${_.playerId}`,
   "sim:module-completion:get:all": () => `/api/sim/modules/completions`,
   "sim:collection:get:all": () => `/api/sim/collections`,
   "sim:collection:get:modules": ({ collectionId }: { collectionId: string }) => `/api/sim/collections/${collectionId}/modules`,

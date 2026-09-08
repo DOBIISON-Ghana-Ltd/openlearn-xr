@@ -54,7 +54,7 @@ export default function Footer(props: IFooter) {
       }, {
         onSuccess: () => {
           setStarted(false);
-          simStore.getState().resetPlayState(id);
+          simStore.getState().resetPlayState(serverMode, id);
           queryClient.invalidateQueries({
             queryKey: QUERY_KEYS["sim:general:get:navigate"](id),
           });

@@ -1,15 +1,18 @@
 "use client";
 
+import * as React from "react";
 import { Input } from "@base-ui/react/input";
 import { Control, FieldValues, Path, useController } from "react-hook-form";
 import { cn } from "@/lib/utils/cn";
+import { joinCode } from "@/lib/utils/generate-join-code";
+
 type Props<T extends FieldValues> = {
   control: Control<T>;
   name: Path<T>;
-} & Input.Props;
+} & Omit<Input.Props, "name">;
 
-export default function TextBlock<T extends FieldValues>(props: Props<T>) {
-  const { control, name, className, ...rest } = props;
+export default function JoinBlock<T extends FieldValues>(props: Props<T>) {
+  const { control, name, className, onChange: externalOnChange, ...rest } = props;
   const { field, fieldState } = useController({
     name,
     control,
@@ -17,14 +20,23 @@ export default function TextBlock<T extends FieldValues>(props: Props<T>) {
 
   const hasError = Boolean(fieldState.error);
 
+  const handleChange: Input.Props["onChange"] = (e) => {
+    const formatted = joinCode.format(e.target.value);
+    field.onChange(formatted);
+    externalOnChange?.(e);
+  };
+
   return (
     <div className="w-full flex flex-col gap-1.5">
       <Input
         id={name}
         ref={field.ref}
         onBlur={field.onBlur}
-        onChange={field.onChange}
+        onChange={handleChange}
         value={field.value ?? ""}
+        maxLength={14}
+        autoComplete="off"
+        spellCheck={false}
         aria-invalid={hasError}
         data-invalid={hasError ? "" : undefined}
         className={cn(
@@ -40,4 +52,3 @@ export default function TextBlock<T extends FieldValues>(props: Props<T>) {
     </div>
   );
 }
-

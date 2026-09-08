@@ -13,7 +13,7 @@ import StateLoading from '@/components/(new)/common/state.loading';
 import StateError from '@/components/(new)/common/state.error';
 import Lobby from './lobby';
 import Entrance from './entrance';
-import FLow from './flow';
+import Flow from './flow';
 
 export interface IClientPage {
   mode: 'session' | 'module';
@@ -26,49 +26,75 @@ export default function ClientPage(props: IClientPage) {
   const [mounted, setMounted] = useState(false);
   const socket = useRealtime();
 
+  const safeId = id ?? '';
+  const getRecentSession = useStore(simStore, (s) => s.getRecentSession);
   const addSession = useStore(simStore, (s) => s.addSession);
-  const playerId = useStore(simStore, (s) => s.getSessionPlayer(id || ''));
-  const sessionInfo = useStore(simStore, (s) => s.getSessionInfo(id || ''));
-  const hasPlayer = Boolean(playerId);
+  const sessionInfo = useStore(simStore, (s) => s.getSessionInfo(safeId));
+  const hasPlayer = Boolean(sessionInfo?.playerId);
 
   const { data: stats, isLoading, isError, error } = useApi.query(
     'sim:session:get:stats',
-    { id: id || '' }, mode === 'session' && Boolean(id)
+    { id: safeId },
+    mode === 'session' && Boolean(id)
   );
 
   const isHost = Boolean(stats?.isHost ?? sessionInfo?.isHost);
+  const isLive = stats?.status === 'STAGING' || stats?.status === 'ACTIVE';
 
   useEffect(() => {
     setMounted(true);
   }, []);
 
-  // Sync host session info & redirect if host visits in staging
+  // 1. Auto-redirect to recent active session if visiting /p/session without code
   useEffect(() => {
-    if (mode === 'session' && id && stats?.isHost && stats.sessionId) {
-      addSession(id, {
-        sessionId: stats.sessionId,
-        playerId: null,
-        isHost: true,
-        config: stats.config,
-      });
-
-      if (stats.status === 'STAGING') {
-        router.replace(PATHS.TEACHING.SESSIONS.DETAIL(id));
+    if (mode === 'session' && !id && mounted) {
+      const recentCode = getRecentSession();
+      if (recentCode) {
+        router.replace(PATHS.PLAY('session', recentCode));
       }
     }
-  }, [mode, id, stats, addSession, router]);
+  }, [mode, id, mounted, router, getRecentSession]);
 
-  // Clear session info and play state if session has ended/completed/cancelled
+  // 2. Host sync & routing (staging -> waiting room, inactive -> analytics)
   useEffect(() => {
-    if (mode === 'session' && id && stats?.status && stats.status !== 'STAGING' && stats.status !== 'ACTIVE') {
-      simStore.getState().removeSession(id);
-      simStore.getState().resetPlayState(id);
+    if (!stats || !stats.isHost || !stats.sessionId || !id) return;
+
+    if (!isLive) {
+      router.replace(PATHS.TEACHING.ANALYTICS.DETAIL(stats.sessionId));
+      return;
     }
-  }, [mode, id, stats?.status]);
 
-  const isLive = stats?.status === 'STAGING' || stats?.status === 'ACTIVE';
+    addSession(id, {
+      sessionId: stats.sessionId,
+      playerId: null,
+      isHost: true,
+      config: stats.config,
+    });
 
-  // Subscribe to realtime session events when joined & live (or host)
+    if (stats.status === 'STAGING') {
+      router.replace(PATHS.TEACHING.SESSIONS.DETAIL(id));
+    }
+  }, [stats, isLive, id, addSession, router]);
+
+  // 3. Clear session info and redirect player to clean entrance if session has ended/completed/cancelled
+  useEffect(() => {
+    if (mode === 'session' && id && stats?.status && !isLive) {
+      simStore.getState().removeSession(id);
+      simStore.getState().resetPlayState('session', id);
+      if (!isHost) {
+        router.replace(PATHS.PLAY('session'));
+      }
+    }
+  }, [mode, id, stats?.status, isLive, isHost, router]);
+
+  // 4. Purge invalid/deleted session from store on 404 to break zombie redirect loop
+  useEffect(() => {
+    if (isError && id) {
+      simStore.getState().removeSession(id);
+    }
+  }, [isError, id]);
+
+  // 5. Subscribe to realtime session events when joined & live (or host)
   useEffect(() => {
     if (mode === 'session' && (hasPlayer || isHost) && isLive && id) {
       const subscription = socket.subscribe(id, {
@@ -87,7 +113,9 @@ export default function ClientPage(props: IClientPage) {
     }
   }, [mode, hasPlayer, isHost, isLive, id, socket]);
 
-  const loading = !mounted || (mode === 'session' && Boolean(id) && isLoading);
+  // Prevent flash of entrance while redirecting to recent session
+  const isRedirectingRecent = mode === 'session' && !id && mounted && Boolean(getRecentSession());
+  const loading = !mounted || (mode === 'session' && Boolean(id) && isLoading) || isRedirectingRecent;
 
   const matchState = {
     isLoading: loading,
@@ -108,7 +136,7 @@ export default function ClientPage(props: IClientPage) {
           { mode: 'session', hasPlayer: true, status: 'ACTIVE' },
           { mode: 'session', isHost: true, status: 'ACTIVE' },
           { mode: 'module' },
-          () => (<FLow mode={mode} id={id || ''} />)
+          () => (<Flow mode={mode} id={safeId} />)
         )
         .with({ mode: 'session', hasPlayer: true, status: 'STAGING' }, () => (<Lobby />))
         .with({ mode: 'session' }, () => <Entrance {...props} />)

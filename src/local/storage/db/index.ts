@@ -24,6 +24,9 @@ export interface PlayAttemptRecord {
   currentCheckpointIndex?: number;
   totalCheckpoints?: number;
   accumulatedPoints: number;
+  preAssessmentEarnedPoints?: number;
+  preAssessmentTotalPoints?: number;
+  totalCheckpointPoints?: number;
   updatedAt: string;
 }
 

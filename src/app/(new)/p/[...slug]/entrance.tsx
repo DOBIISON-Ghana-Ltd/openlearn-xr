@@ -11,6 +11,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useStore } from "zustand";
 import { simStore } from '@/store/sim/store';
 import TextBlock from '@/components/(new)/form-blocks/text-block';
+import JoinBlock from '@/components/(new)/form-blocks/join-block';
 import { match } from 'ts-pattern';
 import { Loader2Icon } from 'lucide-react';
 import { useRouter } from 'next/navigation';
@@ -44,13 +45,18 @@ export default function Entrance(props: IEntrance) {
       { body: data },
       {
         onError: (err) => {
+          let title = err.message || "Failed to join session. Please try again.";
+
+          if (err.status === 409) {
+            title = "A player with this name has already joined the session.";
+          }
+
           toastManager.add({
-            title: err.message || "Failed to join session. Please try again.",
+            title: title,
             type: "error",
           });
         },
         onSettled(resData, error) {
-          reset(defaultValues);
           if (resData && !error) {
             addSession(resData.joinCode, {
               sessionId: resData.sessionId,
@@ -93,7 +99,7 @@ export default function Entrance(props: IEntrance) {
 
           <div className="w-full flex flex-col gap-6">
             <TextBlock name="name" control={control} placeholder="Enter your full name" />
-            <TextBlock name="joinCode" control={control} placeholder="Enter session code or link" />
+            <JoinBlock name="joinCode" control={control} placeholder="Enter session code" />
             <button
               type="submit"
               className="relative w-full h-12 bg-primary-cta hover:bg-primary-hover text-primary-text-light text-button rounded-lg flex-center transition-all cursor-pointer shadow-xs active:scale-98"

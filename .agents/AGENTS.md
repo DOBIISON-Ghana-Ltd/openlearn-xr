@@ -5,6 +5,8 @@
 
 - **Base UI Polymorphism (`render` vs `asChild`)**: This workspace uses `@base-ui/react` primitives. Do not use Radix's `asChild` prop on custom components like `Button`. Instead, use Base UI's `render` prop (e.g., `render={<a href={url} />}`) to customize element tags and prevent runtime layout/prop warnings.
 
+- **Base UI Documentation & `llms.txt` Rule**: Whenever implementing, querying, or troubleshooting Base UI components (`@base-ui/react`), treat `https://base-ui.com/llms.txt` and the component documentation at `https://base-ui.com/react/components/<component>.md` as the authoritative source of truth. Always follow Base UI component anatomies, portal requirements (`Dialog.Portal`), and data attributes.
+
 - **Figma Design Implementation & UI Component Rule**: When implementing Figma designs (or using the Figma MCP to build pages/components), DO NOT import or use pre-built components from `src/components/ui/`. You may take inspiration from their layout or logic, but components must be built directly using bare primitives from `@base-ui/react` (where necessary) and styled directly using the project's Figma design tokens.
 
 - **Deprecated Codebase Directories Rule**:

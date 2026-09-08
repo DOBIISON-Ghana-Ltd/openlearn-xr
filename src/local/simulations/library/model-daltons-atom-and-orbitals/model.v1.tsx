@@ -357,11 +357,11 @@ export function QuantumLabelOverlay() {
 
   const getQuantumText = () => {
     switch (orbitalView) {
-      case '1s Orbital':  return { n: 1, l: 0, ml: 0,  label: '1s' };
-      case '2s Orbital':  return { n: 2, l: 0, ml: 0,  label: '2s' };
+      case '1s Orbital': return { n: 1, l: 0, ml: 0, label: '1s' };
+      case '2s Orbital': return { n: 2, l: 0, ml: 0, label: '2s' };
       case '2px Orbital': return { n: 2, l: 1, ml: -1, label: '2pₓ' };
-      case '2py Orbital': return { n: 2, l: 1, ml: 0,  label: '2pᵧ' };
-      case '2pz Orbital': return { n: 2, l: 1, ml: 1,  label: '2pᵩ' };
+      case '2py Orbital': return { n: 2, l: 1, ml: 0, label: '2pᵧ' };
+      case '2pz Orbital': return { n: 2, l: 1, ml: 1, label: '2pᵩ' };
       default: return null;
     }
   };
@@ -369,61 +369,36 @@ export function QuantumLabelOverlay() {
   const qn = getQuantumText();
 
   return (
-    <div
-      style={{
-        position: 'absolute',
-        left: 24,
-        top: '50%',
-        transform: 'translateY(-50%)',
-        zIndex: 50,
-        pointerEvents: 'none',
-        display: 'flex',
-        flexDirection: 'column',
-        gap: 10,
-        minWidth: 160,
-      }}
-    >
+    <div className="absolute left-6 bottom-6 z-50 pointer-events-none flex flex-col gap-2.5 w-56">
       {/* Model badge */}
-      <div style={{
-        background: 'rgba(244, 248, 255, 0.94)',
-        border: '1px solid rgba(100, 160, 230, 0.35)',
-        borderRadius: 14,
-        padding: '14px 18px',
-        backdropFilter: 'blur(10px)',
-      }}>
-        <p style={{ margin: 0, fontSize: 10, color: '#7a9ec0', fontFamily: 'system-ui', fontWeight: 600, letterSpacing: '0.08em', textTransform: 'uppercase' }}>
+      <div className="bg-[#f4f8ff]/95 border border-[#64a0e6]/35 rounded-[14px] px-[18px] py-3.5 backdrop-blur-md">
+        <p className="m-0 text-[10px] text-[#7a9ec0] font-semibold tracking-[0.08em] uppercase">
           Atomic Model
         </p>
-        <p style={{ margin: '5px 0 0', fontSize: 17, color: '#1e3a5f', fontFamily: 'system-ui', fontWeight: 700, lineHeight: 1.2 }}>
+        <p className="mt-1.25 text-[17px] text-[#1e3a5f] font-bold leading-tight">
           {atomModel}
         </p>
       </div>
 
       {/* Quantum numbers badge */}
       {qn && (
-        <div style={{
-          background: 'rgba(244, 248, 255, 0.94)',
-          border: '1px solid rgba(100, 160, 230, 0.35)',
-          borderRadius: 14,
-          padding: '14px 18px',
-          backdropFilter: 'blur(10px)',
-        }}>
-          <p style={{ margin: 0, fontSize: 10, color: '#7a9ec0', fontFamily: 'system-ui', fontWeight: 600, letterSpacing: '0.08em', textTransform: 'uppercase' }}>
+        <div className="bg-[#f4f8ff]/95 border border-[#64a0e6]/35 rounded-[14px] px-[18px] py-3.5 backdrop-blur-md">
+          <p className="m-0 text-[10px] text-[#7a9ec0] font-semibold tracking-[0.08em] uppercase">
             Orbital
           </p>
-          <p style={{ margin: '5px 0 10px', fontSize: 28, color: '#1e3a5f', fontFamily: 'system-ui', fontWeight: 800, lineHeight: 1 }}>
+          <p className="mt-1.25 mb-2.5 text-[28px] text-[#1e3a5f] font-extrabold leading-none">
             {qn.label}
           </p>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+          <div className="flex flex-col gap-1.5">
             {[
-              { sym: 'n',  val: qn.n,  title: 'Principal' },
-              { sym: 'ℓ',  val: qn.l,  title: 'Azimuthal' },
+              { sym: 'n', val: qn.n, title: 'Principal' },
+              { sym: 'ℓ', val: qn.l, title: 'Azimuthal' },
               { sym: 'mℓ', val: qn.ml >= 0 ? `+${qn.ml}` : qn.ml, title: 'Magnetic' },
             ].map(({ sym, val, title }) => (
-              <div key={sym} style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-                <span style={{ fontSize: 14, color: '#8ab0d0', fontFamily: 'system-ui', fontWeight: 600, width: 24, flexShrink: 0 }}>{sym}</span>
-                <span style={{ fontSize: 16, color: '#1e3a5f', fontFamily: 'system-ui', fontWeight: 700, width: 22 }}>{val}</span>
-                <span style={{ fontSize: 11, color: '#94a3b8', fontFamily: 'system-ui' }}>{title}</span>
+              <div key={sym} className="flex items-center gap-2.5">
+                <span className="text-sm text-[#8ab0d0] font-semibold w-6 shrink-0">{sym}</span>
+                <span className="text-base text-[#1e3a5f] font-bold w-[22px] tabular-nums">{val}</span>
+                <span className="text-[11px] text-[#94a3b8]">{title}</span>
               </div>
             ))}
           </div>

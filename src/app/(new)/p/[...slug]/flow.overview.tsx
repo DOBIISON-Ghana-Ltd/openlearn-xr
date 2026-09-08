@@ -22,8 +22,7 @@ export default function OverviewFLow(props: IOverviewFlow) {
   }, []);
 
   const sessionInfo = useStore(simStore, (s) => s.getSessionInfo(props.id));
-  const isTutorLedSession =
-    props.mode === "session" && sessionInfo?.config.controlMode === "tutor-led";
+  const isTutorLedSession = props.mode === "session" && sessionInfo?.config.controlMode === "tutor-led";
 
   const { data, isLoading } = useApi.query("sim:module:get:one", {
     params: { id: props.id },

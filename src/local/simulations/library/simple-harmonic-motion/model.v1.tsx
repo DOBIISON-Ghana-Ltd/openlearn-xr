@@ -672,121 +672,68 @@ export function SimpleHarmonicMotionOverlay() {
   const statusText = isCompleted ? 'Target Complete' : !releasePendulum ? 'Ready / Displaced' : 'Oscillating (Active)';
 
   return (
-    <div
-      style={{
-        position: 'absolute',
-        left: 24,
-        top: '50%',
-        transform: 'translateY(-50%)',
-        zIndex: 50,
-        pointerEvents: 'none',
-        display: 'flex',
-        flexDirection: 'column',
-        gap: 10,
-        minWidth: 175,
-      }}
-    >
+    <div className="absolute left-6 bottom-6 z-50 pointer-events-none flex flex-col gap-2.5 w-60">
       {/* 1. Live Stopwatch & Period Card */}
-      <div
-        style={{
-          background: 'rgba(244, 248, 255, 0.94)',
-          border: '1px solid rgba(100, 160, 230, 0.35)',
-          borderRadius: 14,
-          padding: '14px 18px',
-          backdropFilter: 'blur(10px)',
-        }}
-      >
-        <p
-          style={{
-            margin: 0,
-            fontSize: 10,
-            color: '#7a9ec0',
-            fontFamily: 'system-ui',
-            fontWeight: 600,
-            letterSpacing: '0.08em',
-            textTransform: 'uppercase',
-          }}
-        >
+      <div className="bg-[#f4f8ff]/95 border border-[#64a0e6]/35 rounded-[14px] px-[18px] py-3.5 backdrop-blur-md">
+        <p className="m-0 text-[10px] text-[#7a9ec0] font-semibold tracking-[0.08em] uppercase">
           Lab Stopwatch & Telemetry
         </p>
-        <div style={{ display: 'flex', alignItems: 'baseline', gap: 10, margin: '6px 0 4px' }}>
-          <span style={{ fontSize: 30, color: '#1e3a5f', fontFamily: 'system-ui', fontWeight: 800, lineHeight: 1 }}>
+        <div className="flex flex-col gap-2.5 mt-1.5 mb-1">
+          <span className="text-[30px] text-[#1e3a5f] font-extrabold leading-none tabular-nums">
             {elapsedTime.toFixed(2)} s
           </span>
           <span
+            className="text-[11px] font-bold px-2 py-[3px] rounded-md"
             style={{
-              fontSize: 11,
               color: statusColor,
-              fontFamily: 'system-ui',
-              fontWeight: 700,
               backgroundColor: `${statusColor}18`,
-              padding: '3px 8px',
-              borderRadius: 6,
             }}
           >
             {statusText}
           </span>
         </div>
 
-        <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 6 }}>
-          <span style={{ fontSize: 11, color: '#8ab0d0', fontFamily: 'system-ui' }}>Swings (N)</span>
-          <span style={{ fontSize: 12, color: '#1e3a5f', fontFamily: 'system-ui', fontWeight: 700 }}>
+        <div className="flex justify-between mt-1.5">
+          <span className="text-[11px] text-[#8ab0d0]">Swings (N)</span>
+          <span className="text-xs text-[#1e3a5f] font-bold tabular-nums">
             {cyclesCount} {maxTargetCycles !== Infinity ? `/ ${maxTargetCycles}` : 'cycles'}
           </span>
         </div>
       </div>
 
       {/* 2. Motion & Period Calculations Card */}
-      <div
-        style={{
-          background: 'rgba(244, 248, 255, 0.94)',
-          border: '1px solid rgba(100, 160, 230, 0.35)',
-          borderRadius: 14,
-          padding: '14px 18px',
-          backdropFilter: 'blur(10px)',
-        }}
-      >
-        <p
-          style={{
-            margin: 0,
-            fontSize: 10,
-            color: '#7a9ec0',
-            fontFamily: 'system-ui',
-            fontWeight: 600,
-            letterSpacing: '0.08em',
-            textTransform: 'uppercase',
-          }}
-        >
+      <div className="bg-[#f4f8ff]/95 border border-[#64a0e6]/35 rounded-[14px] px-[18px] py-3.5 backdrop-blur-md">
+        <p className="m-0 text-[10px] text-[#7a9ec0] font-semibold tracking-[0.08em] uppercase">
           Period & Kinematics
         </p>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 5, marginTop: 6 }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', gap: 12 }}>
-            <span style={{ fontSize: 11, color: '#8ab0d0', fontFamily: 'system-ui' }}>Angle (θ)</span>
-            <span style={{ fontSize: 12, color: '#1e3a5f', fontFamily: 'system-ui', fontWeight: 700 }}>
+        <div className="flex flex-col gap-1.25 mt-1.5">
+          <div className="flex justify-between gap-3">
+            <span className="text-[11px] text-[#8ab0d0]">Angle (θ)</span>
+            <span className="text-xs text-[#1e3a5f] font-bold tabular-nums">
               {currentAngleDeg.toFixed(1)}°
             </span>
           </div>
-          <div style={{ display: 'flex', justifyContent: 'space-between', gap: 12 }}>
-            <span style={{ fontSize: 11, color: '#8ab0d0', fontFamily: 'system-ui' }}>Tangential Speed (v)</span>
-            <span style={{ fontSize: 12, color: '#1e3a5f', fontFamily: 'system-ui', fontWeight: 600 }}>
+          <div className="flex justify-between gap-3">
+            <span className="text-[11px] text-[#8ab0d0]">Tangential Speed (v)</span>
+            <span className="text-xs text-[#1e3a5f] font-semibold tabular-nums">
               {currentSpeed.toFixed(2)} m/s
             </span>
           </div>
-          <div style={{ display: 'flex', justifyContent: 'space-between', gap: 12 }}>
-            <span style={{ fontSize: 11, color: '#8ab0d0', fontFamily: 'system-ui' }}>Theoretical Period (T₀)</span>
-            <span style={{ fontSize: 12, color: '#0284c7', fontFamily: 'system-ui', fontWeight: 700 }}>
+          <div className="flex justify-between gap-3">
+            <span className="text-[11px] text-[#8ab0d0]">Theoretical Period (T₀)</span>
+            <span className="text-xs text-[#0284c7] font-bold tabular-nums">
               {theoreticalPeriod !== Infinity ? `${theoreticalPeriod.toFixed(3)} s` : '---'}
             </span>
           </div>
-          <div style={{ display: 'flex', justifyContent: 'space-between', gap: 12 }}>
-            <span style={{ fontSize: 11, color: '#8ab0d0', fontFamily: 'system-ui' }}>Measured Period (t/N)</span>
-            <span style={{ fontSize: 12, color: '#16a34a', fontFamily: 'system-ui', fontWeight: 700 }}>
+          <div className="flex justify-between gap-3">
+            <span className="text-[11px] text-[#8ab0d0]">Measured Period (t/N)</span>
+            <span className="text-xs text-[#16a34a] font-bold tabular-nums">
               {measuredPeriod !== null ? `${measuredPeriod.toFixed(3)} s` : '---'}
             </span>
           </div>
-          <div style={{ display: 'flex', justifyContent: 'space-between', gap: 12 }}>
-            <span style={{ fontSize: 11, color: '#8ab0d0', fontFamily: 'system-ui' }}>Gravity (g)</span>
-            <span style={{ fontSize: 12, color: '#7c3aed', fontFamily: 'system-ui', fontWeight: 600 }}>
+          <div className="flex justify-between gap-3">
+            <span className="text-[11px] text-[#8ab0d0]">Gravity (g)</span>
+            <span className="text-xs text-[#7c3aed] font-semibold tabular-nums">
               {g.toFixed(2)} m/s²
             </span>
           </div>
@@ -794,80 +741,46 @@ export function SimpleHarmonicMotionOverlay() {
       </div>
 
       {/* 3. Real-Time Energy Conservation Card */}
-      <div
-        style={{
-          background: 'rgba(244, 248, 255, 0.94)',
-          border: '1px solid rgba(100, 160, 230, 0.35)',
-          borderRadius: 14,
-          padding: '14px 18px',
-          backdropFilter: 'blur(10px)',
-        }}
-      >
-        <p
-          style={{
-            margin: 0,
-            fontSize: 10,
-            color: '#7a9ec0',
-            fontFamily: 'system-ui',
-            fontWeight: 600,
-            letterSpacing: '0.08em',
-            textTransform: 'uppercase',
-          }}
-        >
+      <div className="bg-[#f4f8ff]/95 border border-[#64a0e6]/35 rounded-[14px] px-[18px] py-3.5 backdrop-blur-md">
+        <p className="m-0 text-[10px] text-[#7a9ec0] font-semibold tracking-[0.08em] uppercase">
           Energy Conservation
         </p>
 
         {/* Dynamic Energy Bar */}
-        <div
-          style={{
-            display: 'flex',
-            width: '100%',
-            height: 6,
-            borderRadius: 3,
-            overflow: 'hidden',
-            backgroundColor: '#e2e8f0',
-            margin: '8px 0 6px',
-          }}
-        >
+        <div className="flex w-full h-1.5 rounded-full overflow-hidden bg-[#e2e8f0] my-2">
           <div
-            style={{
-              width: `${ekPct}%`,
-              backgroundColor: '#22c55e',
-              transition: 'width 0.05s linear',
-            }}
+            className="bg-[#22c55e] transition-[width] duration-50"
+            style={{ width: `${ekPct}%` }}
           />
           <div
-            style={{
-              width: `${epPct}%`,
-              backgroundColor: '#3b82f6',
-              transition: 'width 0.05s linear',
-            }}
+            className="bg-[#3b82f6] transition-[width] duration-50"
+            style={{ width: `${epPct}%` }}
           />
         </div>
 
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', gap: 12 }}>
-            <span style={{ fontSize: 11, color: '#3b82f6', fontFamily: 'system-ui', fontWeight: 600 }}>
+        <div className="flex flex-col gap-1">
+          <div className="flex justify-between gap-3">
+            <span className="text-[11px] text-[#3b82f6] font-semibold">
               ● Potential (Ep)
             </span>
-            <span style={{ fontSize: 12, color: '#1e3a5f', fontFamily: 'system-ui', fontWeight: 600 }}>
+            <span className="text-xs text-[#1e3a5f] font-semibold tabular-nums">
               {potentialEnergy.toFixed(3)} J
             </span>
           </div>
-          <div style={{ display: 'flex', justifyContent: 'space-between', gap: 12 }}>
-            <span style={{ fontSize: 11, color: '#22c55e', fontFamily: 'system-ui', fontWeight: 600 }}>
+          <div className="flex justify-between gap-3">
+            <span className="text-[11px] text-[#22c55e] font-semibold">
               ● Kinetic (Ek)
             </span>
-            <span style={{ fontSize: 12, color: '#1e3a5f', fontFamily: 'system-ui', fontWeight: 600 }}>
+            <span className="text-xs text-[#1e3a5f] font-semibold tabular-nums">
               {kineticEnergy.toFixed(3)} J
             </span>
           </div>
-          <div style={{ width: '100%', height: 1, background: 'rgba(100, 160, 230, 0.2)', margin: '2px 0' }} />
-          <div style={{ display: 'flex', justifyContent: 'space-between', gap: 12 }}>
-            <span style={{ fontSize: 11, color: '#7a9ec0', fontFamily: 'system-ui', fontWeight: 600 }}>
+          <div className="w-full h-px bg-[#64a0e6]/20 my-0.5" />
+          <div className="flex justify-between gap-3">
+            <span className="text-[11px] text-[#7a9ec0] font-semibold">
               Total Energy (E)
             </span>
-            <span style={{ fontSize: 12, color: '#1e3a5f', fontFamily: 'system-ui', fontWeight: 700 }}>
+            <span className="text-xs text-[#1e3a5f] font-bold tabular-nums">
               {totalEnergy.toFixed(3)} J
             </span>
           </div>

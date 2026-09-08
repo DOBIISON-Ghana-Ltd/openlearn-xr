@@ -667,109 +667,50 @@ export function ForcesFrictionOverlay() {
   const statusText = !initiatePull ? 'Ready / Stationary' : isSliding ? 'Sliding (Dynamic)' : 'Tensioning (Static)';
 
   return (
-    <div
-      style={{
-        position: 'absolute',
-        left: 24,
-        top: '50%',
-        transform: 'translateY(-50%)',
-        zIndex: 50,
-        pointerEvents: 'none',
-        display: 'flex',
-        flexDirection: 'column',
-        gap: 10,
-        minWidth: 175,
-      }}
-    >
+    <div className="absolute left-6 bottom-6 z-50 pointer-events-none flex flex-col gap-2.5 w-64">
       {/* Live Pull Force Card */}
-      <div
-        style={{
-          background: 'rgba(244, 248, 255, 0.94)',
-          border: '1px solid rgba(100, 160, 230, 0.35)',
-          borderRadius: 14,
-          padding: '14px 18px',
-          backdropFilter: 'blur(10px)',
-        }}
-      >
-        <p
-          style={{
-            margin: 0,
-            fontSize: 10,
-            color: '#7a9ec0',
-            fontFamily: 'system-ui',
-            fontWeight: 600,
-            letterSpacing: '0.08em',
-            textTransform: 'uppercase',
-          }}
-        >
+      <div className="bg-[#f4f8ff]/95 border border-[#64a0e6]/35 rounded-[14px] px-[18px] py-3.5 backdrop-blur-md">
+        <p className="m-0 text-[10px] text-[#7a9ec0] font-semibold tracking-[0.08em] uppercase">
           Spring Balance Force
         </p>
-        <div style={{ display: 'flex', alignItems: 'baseline', gap: 10, margin: '6px 0 4px' }}>
-          <span style={{ fontSize: 30, color: '#1e3a5f', fontFamily: 'system-ui', fontWeight: 800, lineHeight: 1 }}>
-            {currentForce.toFixed(1)} N
+        <div className="flex items-baseline gap-1 mt-2 mb-0.5">
+          <span className="text-[32px] text-[#1e3a5f] font-extrabold leading-none tabular-nums font-mono">
+            {currentForce.toFixed(1)}
           </span>
-          <span
-            style={{
-              fontSize: 11,
-              color: statusColor,
-              fontFamily: 'system-ui',
-              fontWeight: 700,
-              backgroundColor: `${statusColor}18`,
-              padding: '3px 8px',
-              borderRadius: 6,
-            }}
-          >
-            {statusText}
+          <span className="text-sm font-bold text-[#4a6fa5]">
+            N
           </span>
         </div>
+        <span
+          className="text-[10px] font-bold px-2 py-0.5 rounded-md whitespace-nowrap"
+          style={{
+            color: statusColor,
+            backgroundColor: `${statusColor}18`,
+          }}
+        >
+          {statusText}
+        </span>
       </div>
 
       {/* Surface Treatment & Friction Coefficients Card */}
-      <div
-        style={{
-          background: 'rgba(244, 248, 255, 0.94)',
-          border: '1px solid rgba(100, 160, 230, 0.35)',
-          borderRadius: 14,
-          padding: '14px 18px',
-          backdropFilter: 'blur(10px)',
-        }}
-      >
-        <p
-          style={{
-            margin: 0,
-            fontSize: 10,
-            color: '#7a9ec0',
-            fontFamily: 'system-ui',
-            fontWeight: 600,
-            letterSpacing: '0.08em',
-            textTransform: 'uppercase',
-          }}
-        >
+      <div className="bg-[#f4f8ff]/95 border border-[#64a0e6]/35 rounded-[14px] px-[18px] py-3.5 backdrop-blur-md">
+        <p className="m-0 text-[10px] text-[#7a9ec0] font-semibold tracking-[0.08em] uppercase">
           Surface Material
         </p>
-        <p
-          style={{
-            margin: '5px 0 6px',
-            fontSize: 18,
-            color: '#1e3a5f',
-            fontFamily: 'system-ui',
-            fontWeight: 800,
-            lineHeight: 1.2,
-          }}
-        >
+        <p className="mt-1.25 mb-1.5 text-lg text-[#1e3a5f] font-extrabold leading-tight">
           {surfaceCondition}
         </p>
-        <div style={{ display: 'flex', gap: 12 }}>
+        <div className="flex gap-3">
           <div>
-            <span style={{ fontSize: 10, color: '#8ab0d0', fontFamily: 'system-ui' }}>Static (μs)</span>
-            <p style={{ margin: '2px 0 0', fontSize: 16, color: '#1e3a5f', fontFamily: 'system-ui', fontWeight: 700 }}>
+            <span className="text-[10px] text-[#8ab0d0]">Static (μs)</span>
+            <p className="mt-0.5 text-base text-[#1e3a5f] font-bold tabular-nums font-mono">
               {surfaceCoeffs.muS.toFixed(2)}
             </p>
           </div>
-          <div style={{ width: 1, height: 28, background: 'rgba(100, 160, 230, 0.2)' }} />
+          <div className="w-px h-7 bg-[#64a0e6]/20" />
           <div>
-            <span style={{ fontSize: 10, color: '#8ab0d0', fontFamily: 'system-ui' }}>Kinetic (μk)</span>
-            <p style={{ margin: '2px 0 0', fontSize: 16, color: '#1e3a5f', fontFamily: 'system-ui', fontWeight: 700 }}>
+            <span className="text-[10px] text-[#8ab0d0]">Kinetic (μk)</span>
+            <p className="mt-0.5 text-base text-[#1e3a5f] font-bold tabular-nums font-mono">
               {surfaceCoeffs.muK.toFixed(2)}
             </p>
           </div>
@@ -777,50 +718,32 @@ export function ForcesFrictionOverlay() {
       </div>
 
       {/* Forces Breakdown Card */}
-      <div
-        style={{
-          background: 'rgba(244, 248, 255, 0.94)',
-          border: '1px solid rgba(100, 160, 230, 0.35)',
-          borderRadius: 14,
-          padding: '14px 18px',
-          backdropFilter: 'blur(10px)',
-        }}
-      >
-        <p
-          style={{
-            margin: 0,
-            fontSize: 10,
-            color: '#7a9ec0',
-            fontFamily: 'system-ui',
-            fontWeight: 600,
-            letterSpacing: '0.08em',
-            textTransform: 'uppercase',
-          }}
-        >
+      <div className="bg-[#f4f8ff]/95 border border-[#64a0e6]/35 rounded-[14px] px-[18px] py-3.5 backdrop-blur-md">
+        <p className="m-0 text-[10px] text-[#7a9ec0] font-semibold tracking-[0.08em] uppercase">
           Force Calculations
         </p>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 5, marginTop: 6 }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', gap: 12 }}>
-            <span style={{ fontSize: 11, color: '#8ab0d0', fontFamily: 'system-ui' }}>Normal Force (N = mg)</span>
-            <span style={{ fontSize: 12, color: '#1e3a5f', fontFamily: 'system-ui', fontWeight: 600 }}>
+        <div className="flex flex-col gap-1.25 mt-1.5">
+          <div className="flex justify-between items-baseline gap-3">
+            <span className="text-[11px] text-[#8ab0d0]">Normal Force (N = mg)</span>
+            <span className="text-xs text-[#1e3a5f] font-semibold tabular-nums font-mono">
               {normalForceN.toFixed(1)} N
             </span>
           </div>
-          <div style={{ display: 'flex', justifyContent: 'space-between', gap: 12 }}>
-            <span style={{ fontSize: 11, color: '#8ab0d0', fontFamily: 'system-ui' }}>Max Static Fs (μs·N)</span>
-            <span style={{ fontSize: 12, color: '#e05252', fontFamily: 'system-ui', fontWeight: 700 }}>
+          <div className="flex justify-between items-baseline gap-3">
+            <span className="text-[11px] text-[#8ab0d0]">Max Static Fs (μs·N)</span>
+            <span className="text-xs text-[#e05252] font-bold tabular-nums font-mono">
               {maxStaticFriction.toFixed(1)} N
             </span>
           </div>
-          <div style={{ display: 'flex', justifyContent: 'space-between', gap: 12 }}>
-            <span style={{ fontSize: 11, color: '#8ab0d0', fontFamily: 'system-ui' }}>Dynamic Fk (μk·N)</span>
-            <span style={{ fontSize: 12, color: '#0284c7', fontFamily: 'system-ui', fontWeight: 700 }}>
+          <div className="flex justify-between items-baseline gap-3">
+            <span className="text-[11px] text-[#8ab0d0]">Dynamic Fk (μk·N)</span>
+            <span className="text-xs text-[#0284c7] font-bold tabular-nums font-mono">
               {dynamicFriction.toFixed(1)} N
             </span>
           </div>
-          <div style={{ display: 'flex', justifyContent: 'space-between', gap: 12 }}>
-            <span style={{ fontSize: 11, color: '#8ab0d0', fontFamily: 'system-ui' }}>Block Mass (m)</span>
-            <span style={{ fontSize: 12, color: '#1e3a5f', fontFamily: 'system-ui', fontWeight: 600 }}>
+          <div className="flex justify-between items-baseline gap-3">
+            <span className="text-[11px] text-[#8ab0d0]">Block Mass (m)</span>
+            <span className="text-xs text-[#1e3a5f] font-semibold tabular-nums font-mono">
               {blockMass} kg
             </span>
           </div>

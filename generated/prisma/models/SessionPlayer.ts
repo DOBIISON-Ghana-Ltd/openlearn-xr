@@ -276,6 +276,7 @@ export type SessionPlayerOrderByWithRelationInput = {
 
 export type SessionPlayerWhereUniqueInput = Prisma.AtLeast<{
   id?: string
+  sessionId_name?: Prisma.SessionPlayerSessionIdNameCompoundUniqueInput
   AND?: Prisma.SessionPlayerWhereInput | Prisma.SessionPlayerWhereInput[]
   OR?: Prisma.SessionPlayerWhereInput[]
   NOT?: Prisma.SessionPlayerWhereInput | Prisma.SessionPlayerWhereInput[]
@@ -291,7 +292,7 @@ export type SessionPlayerWhereUniqueInput = Prisma.AtLeast<{
   user?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   analytics?: Prisma.SessionAnalyticListRelationFilter
   playAttempt?: Prisma.XOR<Prisma.PlayAttemptNullableScalarRelationFilter, Prisma.PlayAttemptWhereInput> | null
-}, "id">
+}, "id" | "sessionId_name">
 
 export type SessionPlayerOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
@@ -423,6 +424,11 @@ export type SessionPlayerListRelationFilter = {
 
 export type SessionPlayerOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
+}
+
+export type SessionPlayerSessionIdNameCompoundUniqueInput = {
+  sessionId: string
+  name: string
 }
 
 export type SessionPlayerCountOrderByAggregateInput = {

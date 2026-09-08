@@ -480,6 +480,9 @@ export const PlayAttemptScalarFieldEnum = {
   currentCheckpointIndex: 'currentCheckpointIndex',
   totalCheckpoints: 'totalCheckpoints',
   accumulatedPoints: 'accumulatedPoints',
+  totalCheckpointPoints: 'totalCheckpointPoints',
+  preAssessmentEarnedPoints: 'preAssessmentEarnedPoints',
+  preAssessmentTotalPoints: 'preAssessmentTotalPoints',
   sessionPlayerId: 'sessionPlayerId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'

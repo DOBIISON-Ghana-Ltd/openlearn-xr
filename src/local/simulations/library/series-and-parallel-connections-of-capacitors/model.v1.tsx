@@ -735,126 +735,56 @@ export function CapacitorsOverlay() {
   }, [probeTarget, multimeterMode, physics]);
 
   return (
-    <div
-      style={{
-        position: 'absolute',
-        left: 24,
-        top: '50%',
-        transform: 'translateY(-50%)',
-        zIndex: 50,
-        pointerEvents: 'none',
-        display: 'flex',
-        flexDirection: 'column',
-        gap: 10,
-        minWidth: 180,
-      }}
-    >
+    <div className="absolute left-6 bottom-6 z-50 pointer-events-none flex flex-col gap-2.5 w-60">
       {/* 1. Multimeter Live Telemetry Card */}
-      <div
-        style={{
-          background: 'rgba(244, 248, 255, 0.94)',
-          border: '1px solid rgba(100, 160, 230, 0.35)',
-          borderRadius: 14,
-          padding: '14px 18px',
-          backdropFilter: 'blur(10px)',
-        }}
-      >
-        <p
-          style={{
-            margin: 0,
-            fontSize: 10,
-            color: '#7a9ec0',
-            fontFamily: 'system-ui',
-            fontWeight: 600,
-            letterSpacing: '0.08em',
-            textTransform: 'uppercase',
-          }}
-        >
+      <div className="bg-[#f4f8ff]/95 border border-[#64a0e6]/35 rounded-[14px] px-[18px] py-3.5 backdrop-blur-md">
+        <p className="m-0 text-[10px] text-[#7a9ec0] font-semibold tracking-[0.08em] uppercase">
           Digital Multimeter Readout
         </p>
-        <div style={{ display: 'flex', alignItems: 'baseline', gap: 8, margin: '6px 0 4px' }}>
-          <span style={{ fontSize: 30, color: '#1e3a5f', fontFamily: 'system-ui', fontWeight: 800, lineHeight: 1 }}>
+        <div className="flex items-baseline gap-2 mt-1.5 mb-1">
+          <span className="text-[30px] text-[#1e3a5f] font-extrabold leading-none tabular-nums">
             {activeReadout.val}
           </span>
-          <span style={{ fontSize: 16, color: '#0284c7', fontFamily: 'system-ui', fontWeight: 700 }}>
+          <span className="text-base text-[#0284c7] font-bold">
             {activeReadout.unit}
           </span>
         </div>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: 4 }}>
-          <span style={{ fontSize: 11, color: '#8ab0d0', fontFamily: 'system-ui' }}>Probe Target</span>
-          <span
-            style={{
-              fontSize: 10,
-              color: '#0369a1',
-              fontFamily: 'system-ui',
-              fontWeight: 700,
-              backgroundColor: '#e0f2fe',
-              padding: '2px 7px',
-              borderRadius: 6,
-            }}
-          >
+        <div className="flex justify-between items-center mt-1">
+          <span className="text-[11px] text-[#8ab0d0]">Probe Target</span>
+          <span className="text-[10px] text-[#0369a1] font-bold bg-[#e0f2fe] px-1.75 py-0.5 rounded-md">
             {probeTarget.replace(/ \(.+\)/, '')}
           </span>
         </div>
       </div>
 
       {/* 2. Circuit Formulas & Equivalent Calculations Card */}
-      <div
-        style={{
-          background: 'rgba(244, 248, 255, 0.94)',
-          border: '1px solid rgba(100, 160, 230, 0.35)',
-          borderRadius: 14,
-          padding: '14px 18px',
-          backdropFilter: 'blur(10px)',
-        }}
-      >
-        <p
-          style={{
-            margin: 0,
-            fontSize: 10,
-            color: '#7a9ec0',
-            fontFamily: 'system-ui',
-            fontWeight: 600,
-            letterSpacing: '0.08em',
-            textTransform: 'uppercase',
-          }}
-        >
+      <div className="bg-[#f4f8ff]/95 border border-[#64a0e6]/35 rounded-[14px] px-[18px] py-3.5 backdrop-blur-md">
+        <p className="m-0 text-[10px] text-[#7a9ec0] font-semibold tracking-[0.08em] uppercase">
           {isSeries ? 'Series Equivalent Formula' : 'Parallel Equivalent Formula'}
         </p>
 
-        <div
-          style={{
-            margin: '6px 0',
-            padding: '6px 10px',
-            backgroundColor: '#f1f5f9',
-            borderRadius: 8,
-            fontSize: 12,
-            fontFamily: 'monospace',
-            fontWeight: 700,
-            color: '#1e293b',
-          }}
-        >
+        <div className="my-1.5 px-2.5 py-1.5 bg-[#f1f5f9] rounded-lg text-xs font-mono font-bold text-[#1e293b]">
           {isSeries
             ? `1/C_eq = 1/${c1Value} + 1/${c2Value}`
             : `C_eq = ${c1Value} + ${c2Value}`}
         </div>
 
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 5, marginTop: 4 }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', gap: 12 }}>
-            <span style={{ fontSize: 11, color: '#8ab0d0', fontFamily: 'system-ui' }}>Equivalent C_eq</span>
-            <span style={{ fontSize: 12, color: '#0284c7', fontFamily: 'system-ui', fontWeight: 700 }}>
+        <div className="flex flex-col gap-1.25 mt-1">
+          <div className="flex justify-between gap-3">
+            <span className="text-[11px] text-[#8ab0d0]">Equivalent C_eq</span>
+            <span className="text-xs text-[#0284c7] font-bold tabular-nums">
               {physics.Ceff.toFixed(2)} µF
             </span>
           </div>
-          <div style={{ display: 'flex', justifyContent: 'space-between', gap: 12 }}>
-            <span style={{ fontSize: 11, color: '#8ab0d0', fontFamily: 'system-ui' }}>Total Stored Q</span>
-            <span style={{ fontSize: 12, color: '#16a34a', fontFamily: 'system-ui', fontWeight: 700 }}>
+          <div className="flex justify-between gap-3">
+            <span className="text-[11px] text-[#8ab0d0]">Total Stored Q</span>
+            <span className="text-xs text-[#16a34a] font-bold tabular-nums">
               {physics.Qtotal.toFixed(1)} µC
             </span>
           </div>
-          <div style={{ display: 'flex', justifyContent: 'space-between', gap: 12 }}>
-            <span style={{ fontSize: 11, color: '#8ab0d0', fontFamily: 'system-ui' }}>Total Energy U</span>
-            <span style={{ fontSize: 12, color: '#7c3aed', fontFamily: 'system-ui', fontWeight: 700 }}>
+          <div className="flex justify-between gap-3">
+            <span className="text-[11px] text-[#8ab0d0]">Total Energy U</span>
+            <span className="text-xs text-[#7c3aed] font-bold tabular-nums">
               {physics.Utotal.toFixed(1)} µJ
             </span>
           </div>
@@ -862,62 +792,30 @@ export function CapacitorsOverlay() {
       </div>
 
       {/* 3. Individual Capacitor Breakdown Card */}
-      <div
-        style={{
-          background: 'rgba(244, 248, 255, 0.94)',
-          border: '1px solid rgba(100, 160, 230, 0.35)',
-          borderRadius: 14,
-          padding: '14px 18px',
-          backdropFilter: 'blur(10px)',
-        }}
-      >
-        <p
-          style={{
-            margin: 0,
-            fontSize: 10,
-            color: '#7a9ec0',
-            fontFamily: 'system-ui',
-            fontWeight: 600,
-            letterSpacing: '0.08em',
-            textTransform: 'uppercase',
-          }}
-        >
+      <div className="bg-[#f4f8ff]/95 border border-[#64a0e6]/35 rounded-[14px] px-[18px] py-3.5 backdrop-blur-md">
+        <p className="m-0 text-[10px] text-[#7a9ec0] font-semibold tracking-[0.08em] uppercase">
           Branch & Component Values
         </p>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 6, marginTop: 6 }}>
+        <div className="flex flex-col gap-1.5 mt-1.5">
           {/* C1 row */}
-          <div
-            style={{
-              padding: '6px 8px',
-              borderRadius: 8,
-              backgroundColor: 'rgba(59, 130, 246, 0.08)',
-              borderLeft: '3px solid #3b82f6',
-            }}
-          >
-            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-              <span style={{ fontSize: 11, color: '#1e3a5f', fontWeight: 700, fontFamily: 'system-ui' }}>
+          <div className="px-2 py-1.5 rounded-lg bg-[rgba(59,130,246,0.08)] border-l-[3px] border-l-[#3b82f6]">
+            <div className="flex justify-between">
+              <span className="text-[11px] text-[#1e3a5f] font-bold">
                 C₁ ({c1Value} µF)
               </span>
-              <span style={{ fontSize: 11, color: '#2563eb', fontWeight: 700, fontFamily: 'system-ui' }}>
+              <span className="text-[11px] text-[#2563eb] font-bold tabular-nums">
                 {physics.V1.toFixed(2)} V | {physics.Q1.toFixed(1)} µC
               </span>
             </div>
           </div>
 
           {/* C2 row */}
-          <div
-            style={{
-              padding: '6px 8px',
-              borderRadius: 8,
-              backgroundColor: 'rgba(245, 158, 11, 0.08)',
-              borderLeft: '3px solid #f59e0b',
-            }}
-          >
-            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-              <span style={{ fontSize: 11, color: '#1e3a5f', fontWeight: 700, fontFamily: 'system-ui' }}>
+          <div className="px-2 py-1.5 rounded-lg bg-[rgba(245,158,11,0.08)] border-l-[3px] border-l-[#f59e0b]">
+            <div className="flex justify-between">
+              <span className="text-[11px] text-[#1e3a5f] font-bold">
                 C₂ ({c2Value} µF)
               </span>
-              <span style={{ fontSize: 11, color: '#d97706', fontWeight: 700, fontFamily: 'system-ui' }}>
+              <span className="text-[11px] text-[#d97706] font-bold tabular-nums">
                 {physics.V2.toFixed(2)} V | {physics.Q2.toFixed(1)} µC
               </span>
             </div>

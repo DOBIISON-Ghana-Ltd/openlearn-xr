@@ -480,6 +480,7 @@ model SessionPlayer {
   analytics   SessionAnalytic[]
   playAttempt PlayAttempt?
 
+  @@unique([sessionId, name])
   @@index([sessionId])
   @@index([userId])
   @@map("session_player")
@@ -539,7 +540,7 @@ model PlayAttempt {
   userId          String? // Null for anonymous session players
   sessionId       String? // Null for solo (Library / Free) play
   moduleVersionId String
-  playMode        String // "session" | "library" | "free"
+  playMode        String // "module" | "session"
 
   // State
   currentTab             Int     @default(0) // Active tab index (0..5)
@@ -548,6 +549,11 @@ model PlayAttempt {
   currentCheckpointIndex Int     @default(0) // 0-based checkpoint index (0..totalCheckpoints-1)
   totalCheckpoints       Int     @default(0) // Cached total count of checkpoints for this attempt
   accumulatedPoints      Int     @default(0) // Staged points during this attempt
+  totalCheckpointPoints  Int     @default(0) // Total possible checkpoint points for this attempt
+
+  // Pre-Assessment Tracking
+  preAssessmentEarnedPoints Int  @default(0) // Points earned on pre-assessment
+  preAssessmentTotalPoints  Int  @default(0) // Total possible points on pre-assessment
 
   // Session details
   sessionPlayerId String? @unique // Links directly to the session leaderboard record
