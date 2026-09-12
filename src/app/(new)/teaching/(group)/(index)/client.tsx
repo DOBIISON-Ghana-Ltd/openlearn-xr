@@ -139,29 +139,40 @@ function RecentSessionCard(props: IRecentSessionCard) {
 };
 
 function QuickStats() {
+  const { data: stats } = useApi.query("ses:session:get:stats");
+
   return (
     <div className="bg-primary-subtle backdrop-blur-[6px] border border-surface-white/80 p-8 rounded-xl flex flex-col gap-5 shadow-xs mt-2">
       <h2 className="text-h5 text-secondary-text">Quick Stats</h2>
 
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-        <div className="bg-primary-light border border-primary-cta/10 p-4 rounded-lg flex flex-col gap-2">
-          <span className="text-h5 text-secondary-text">8</span>
-          <span className="text-caption text-secondary-text">Sessions This Week</span>
-        </div>
-
-        <div className="bg-primary-light border border-primary-cta/10 p-4 rounded-lg flex flex-col gap-2">
-          <span className="text-h5 text-secondary-text">142</span>
-          <span className="text-caption text-secondary-text">Students Engaged</span>
-        </div>
-
-        <div className="bg-primary-light border border-primary-cta/10 p-4 rounded-lg flex flex-col gap-2">
-          <span className="text-h5 text-secondary-text">85%</span>
-          <span className="text-caption text-secondary-text">Avg. Engagement</span>
-        </div>
+        {stats?.map((stat, index) => (
+          <StatCard
+            key={index}
+            value={stat.value}
+            label={stat.label}
+          />
+        ))}
       </div>
     </div>
-  )
+  );
+}
+
+type IStatCard = {
+  value: string;
+  label: string;
 };
+
+function StatCard(props: IStatCard) {
+  const { value, label } = props;
+
+  return (
+    <div className="bg-primary-light border border-primary-cta/10 p-4 rounded-lg flex flex-col gap-2">
+      <span className="text-h5 text-secondary-text">{value}</span>
+      <span className="text-caption text-secondary-text">{label}</span>
+    </div>
+  );
+}
 
 function TopSchedulesToday() {
   const items = [

@@ -27,12 +27,14 @@ export const ZSessionConfig = z.object({
   allowLateAdmissions: z.boolean().default(true),
   maxAdmissions: z.number().int().positive().default(50),
   controlMode: z.enum(["tutor-led", "self-paced"]).default("self-paced"),
-  allowHints: z.boolean().default(true)
+  allowHints: z.boolean().default(true),
+  allowScoreVisibility: z.boolean().default(true),
 }).catch({
   allowLateAdmissions: true,
   maxAdmissions: 50,
   controlMode: "self-paced",
-  allowHints: true
+  allowHints: true,
+  allowScoreVisibility: true,
 });
 
 export const ServerModeEnum = z.enum(["local", "remote", "session"]);
@@ -519,8 +521,6 @@ export const ZSessionPlayer = z.object({
     .min(1, { error: "Name is required" })
     .max(14, { error: "Name must be at most 14 characters" }),
   avatar: z.enum(avatarKeys).default("avatar-01"),
-  score: z.number().int().default(0),
-  completionRate: z.number().min(0).max(1).default(0.0),
   joinedAt: ZDate,
   completedAt: ZDate.nullable(),
 });
@@ -614,6 +614,7 @@ const baseSchema = {
   ZGamificationLog,
   // Live Sessions
   ZLiveSession,
+  ZSessionConfig,
   ZSessionCheckpoint,
   ZSessionPlayer,
   ZSessionAnalytic,

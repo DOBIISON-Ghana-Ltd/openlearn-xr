@@ -37,7 +37,7 @@ function ScrollArea({
         data-slot="scroll-area-viewport"
       >
         <ScrollAreaPrimitive.Content
-          className={cn({ "size-full": fill })}
+          className={cn({ "min-h-full flex flex-col": fill })}
           data-slot="scroll-area-content"
           style={clampContentMinWidth ? { minWidth: 0 } : undefined}
         >

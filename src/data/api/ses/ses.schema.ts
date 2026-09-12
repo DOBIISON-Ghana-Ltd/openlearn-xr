@@ -144,7 +144,6 @@ const SesSessionGetPlayerSummary = ZApi({
     ZSessionPlayer.pick({
       name: true,
       avatar: true,
-      score: true,
     }).extend({
       playAttempt: ZPlayAttempt.pick({
         accumulatedPoints: true,
@@ -247,6 +246,18 @@ const SesSessionGetOne = ZApi({
   }),
 });
 
+// ---------------------------------------------------------------------------
+// GET /api/ses/sessions/stats — session quick stats for teacher dashboard
+// ---------------------------------------------------------------------------
+const SesSessionGetStats = ZApi({
+  res: z.array(
+    z.object({
+      label: z.string(),
+      value: z.string(),
+    })
+  ),
+});
+
 const schema = {
   SesSessionGetAll,
   SesSessionPostCreate,
@@ -257,6 +268,7 @@ const schema = {
   SesSessionPostStart,
   SesSessionGetPlayerSummary,
   SesSessionGetRecent,
+  SesSessionGetStats,
   SesModuleGetAll,
   SesModuleGetOne,
   SesSessionGetOne,

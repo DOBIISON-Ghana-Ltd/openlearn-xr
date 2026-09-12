@@ -80,6 +80,7 @@ const simCheckpointPostAnswer = {
       );
 
       const updatedPoints = attempt.accumulatedPoints + (res.isCorrect ? res.pointsAwarded : 0);
+      const updatedTotalPoints = (attempt.totalCheckpointPoints ?? 0) + (res.checkpointPoints ?? 0);
       const nextCheckpointIndex = (attempt.currentCheckpointIndex ?? 0) + 1;
 
       // 1. Update PlayAttempt in IndexedDB
@@ -88,6 +89,7 @@ const simCheckpointPostAnswer = {
         currentCheckpointId: res.nextCheckpointId || attempt.currentCheckpointId,
         currentCheckpointIndex: nextCheckpointIndex,
         accumulatedPoints: updatedPoints,
+        totalCheckpointPoints: updatedTotalPoints,
       });
 
       // 2. If finished, save module completion
@@ -333,6 +335,9 @@ const simGeneralPostRetake = {
         progress: 0,
         currentCheckpointIndex: 0,
         accumulatedPoints: 0,
+        totalCheckpointPoints: 0,
+        preAssessmentEarnedPoints: 0,
+        preAssessmentTotalPoints: 0,
         currentCheckpointId: data.checkpointId ?? null,
         totalCheckpoints: data.totalCheckpoints ?? 0,
       });

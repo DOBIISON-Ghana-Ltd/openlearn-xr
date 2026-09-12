@@ -42,6 +42,7 @@ const ROUTES = {
   // SES SUITE
   "ses:session:get:all": () => `/api/ses/sessions`,
   "ses:session:get:recent": () => `/api/ses/sessions/recent`,
+  "ses:session:get:stats": () => `/api/ses/sessions/stats`,
   "ses:session:get:overview": (id: string) => `/api/ses/sessions/${id}/overview`,
   "ses:session:get:notes": (id: string) => `/api/ses/sessions/${id}/notes`,
   "ses:session:get:players": (id: string) => `/api/ses/sessions/${id}/players`,

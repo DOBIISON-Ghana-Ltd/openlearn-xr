@@ -20,20 +20,8 @@ export type SessionPlayerModel = runtime.Types.Result.DefaultSelection<Prisma.$S
 
 export type AggregateSessionPlayer = {
   _count: SessionPlayerCountAggregateOutputType | null
-  _avg: SessionPlayerAvgAggregateOutputType | null
-  _sum: SessionPlayerSumAggregateOutputType | null
   _min: SessionPlayerMinAggregateOutputType | null
   _max: SessionPlayerMaxAggregateOutputType | null
-}
-
-export type SessionPlayerAvgAggregateOutputType = {
-  score: number | null
-  completionRate: number | null
-}
-
-export type SessionPlayerSumAggregateOutputType = {
-  score: number | null
-  completionRate: number | null
 }
 
 export type SessionPlayerMinAggregateOutputType = {
@@ -42,8 +30,6 @@ export type SessionPlayerMinAggregateOutputType = {
   userId: string | null
   name: string | null
   avatar: string | null
-  score: number | null
-  completionRate: number | null
   joinedAt: Date | null
   completedAt: Date | null
 }
@@ -54,8 +40,6 @@ export type SessionPlayerMaxAggregateOutputType = {
   userId: string | null
   name: string | null
   avatar: string | null
-  score: number | null
-  completionRate: number | null
   joinedAt: Date | null
   completedAt: Date | null
 }
@@ -66,23 +50,11 @@ export type SessionPlayerCountAggregateOutputType = {
   userId: number
   name: number
   avatar: number
-  score: number
-  completionRate: number
   joinedAt: number
   completedAt: number
   _all: number
 }
 
-
-export type SessionPlayerAvgAggregateInputType = {
-  score?: true
-  completionRate?: true
-}
-
-export type SessionPlayerSumAggregateInputType = {
-  score?: true
-  completionRate?: true
-}
 
 export type SessionPlayerMinAggregateInputType = {
   id?: true
@@ -90,8 +62,6 @@ export type SessionPlayerMinAggregateInputType = {
   userId?: true
   name?: true
   avatar?: true
-  score?: true
-  completionRate?: true
   joinedAt?: true
   completedAt?: true
 }
@@ -102,8 +72,6 @@ export type SessionPlayerMaxAggregateInputType = {
   userId?: true
   name?: true
   avatar?: true
-  score?: true
-  completionRate?: true
   joinedAt?: true
   completedAt?: true
 }
@@ -114,8 +82,6 @@ export type SessionPlayerCountAggregateInputType = {
   userId?: true
   name?: true
   avatar?: true
-  score?: true
-  completionRate?: true
   joinedAt?: true
   completedAt?: true
   _all?: true
@@ -159,18 +125,6 @@ export type SessionPlayerAggregateArgs<ExtArgs extends runtime.Types.Extensions.
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
    * 
-   * Select which fields to average
-  **/
-  _avg?: SessionPlayerAvgAggregateInputType
-  /**
-   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-   * 
-   * Select which fields to sum
-  **/
-  _sum?: SessionPlayerSumAggregateInputType
-  /**
-   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-   * 
    * Select which fields to find the minimum value
   **/
   _min?: SessionPlayerMinAggregateInputType
@@ -201,8 +155,6 @@ export type SessionPlayerGroupByArgs<ExtArgs extends runtime.Types.Extensions.In
   take?: number
   skip?: number
   _count?: SessionPlayerCountAggregateInputType | true
-  _avg?: SessionPlayerAvgAggregateInputType
-  _sum?: SessionPlayerSumAggregateInputType
   _min?: SessionPlayerMinAggregateInputType
   _max?: SessionPlayerMaxAggregateInputType
 }
@@ -213,13 +165,9 @@ export type SessionPlayerGroupByOutputType = {
   userId: string | null
   name: string
   avatar: string
-  score: number
-  completionRate: number
   joinedAt: Date
   completedAt: Date | null
   _count: SessionPlayerCountAggregateOutputType | null
-  _avg: SessionPlayerAvgAggregateOutputType | null
-  _sum: SessionPlayerSumAggregateOutputType | null
   _min: SessionPlayerMinAggregateOutputType | null
   _max: SessionPlayerMaxAggregateOutputType | null
 }
@@ -248,8 +196,6 @@ export type SessionPlayerWhereInput = {
   userId?: Prisma.StringNullableFilter<"SessionPlayer"> | string | null
   name?: Prisma.StringFilter<"SessionPlayer"> | string
   avatar?: Prisma.StringFilter<"SessionPlayer"> | string
-  score?: Prisma.IntFilter<"SessionPlayer"> | number
-  completionRate?: Prisma.FloatFilter<"SessionPlayer"> | number
   joinedAt?: Prisma.DateTimeFilter<"SessionPlayer"> | Date | string
   completedAt?: Prisma.DateTimeNullableFilter<"SessionPlayer"> | Date | string | null
   session?: Prisma.XOR<Prisma.LiveSessionScalarRelationFilter, Prisma.LiveSessionWhereInput>
@@ -264,8 +210,6 @@ export type SessionPlayerOrderByWithRelationInput = {
   userId?: Prisma.SortOrderInput | Prisma.SortOrder
   name?: Prisma.SortOrder
   avatar?: Prisma.SortOrder
-  score?: Prisma.SortOrder
-  completionRate?: Prisma.SortOrder
   joinedAt?: Prisma.SortOrder
   completedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   session?: Prisma.LiveSessionOrderByWithRelationInput
@@ -284,8 +228,6 @@ export type SessionPlayerWhereUniqueInput = Prisma.AtLeast<{
   userId?: Prisma.StringNullableFilter<"SessionPlayer"> | string | null
   name?: Prisma.StringFilter<"SessionPlayer"> | string
   avatar?: Prisma.StringFilter<"SessionPlayer"> | string
-  score?: Prisma.IntFilter<"SessionPlayer"> | number
-  completionRate?: Prisma.FloatFilter<"SessionPlayer"> | number
   joinedAt?: Prisma.DateTimeFilter<"SessionPlayer"> | Date | string
   completedAt?: Prisma.DateTimeNullableFilter<"SessionPlayer"> | Date | string | null
   session?: Prisma.XOR<Prisma.LiveSessionScalarRelationFilter, Prisma.LiveSessionWhereInput>
@@ -300,15 +242,11 @@ export type SessionPlayerOrderByWithAggregationInput = {
   userId?: Prisma.SortOrderInput | Prisma.SortOrder
   name?: Prisma.SortOrder
   avatar?: Prisma.SortOrder
-  score?: Prisma.SortOrder
-  completionRate?: Prisma.SortOrder
   joinedAt?: Prisma.SortOrder
   completedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.SessionPlayerCountOrderByAggregateInput
-  _avg?: Prisma.SessionPlayerAvgOrderByAggregateInput
   _max?: Prisma.SessionPlayerMaxOrderByAggregateInput
   _min?: Prisma.SessionPlayerMinOrderByAggregateInput
-  _sum?: Prisma.SessionPlayerSumOrderByAggregateInput
 }
 
 export type SessionPlayerScalarWhereWithAggregatesInput = {
@@ -320,8 +258,6 @@ export type SessionPlayerScalarWhereWithAggregatesInput = {
   userId?: Prisma.StringNullableWithAggregatesFilter<"SessionPlayer"> | string | null
   name?: Prisma.StringWithAggregatesFilter<"SessionPlayer"> | string
   avatar?: Prisma.StringWithAggregatesFilter<"SessionPlayer"> | string
-  score?: Prisma.IntWithAggregatesFilter<"SessionPlayer"> | number
-  completionRate?: Prisma.FloatWithAggregatesFilter<"SessionPlayer"> | number
   joinedAt?: Prisma.DateTimeWithAggregatesFilter<"SessionPlayer"> | Date | string
   completedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"SessionPlayer"> | Date | string | null
 }
@@ -330,8 +266,6 @@ export type SessionPlayerCreateInput = {
   id?: string
   name: string
   avatar?: string
-  score?: number
-  completionRate?: number
   joinedAt?: Date | string
   completedAt?: Date | string | null
   session: Prisma.LiveSessionCreateNestedOneWithoutPlayersInput
@@ -346,8 +280,6 @@ export type SessionPlayerUncheckedCreateInput = {
   userId?: string | null
   name: string
   avatar?: string
-  score?: number
-  completionRate?: number
   joinedAt?: Date | string
   completedAt?: Date | string | null
   analytics?: Prisma.SessionAnalyticUncheckedCreateNestedManyWithoutPlayerInput
@@ -358,8 +290,6 @@ export type SessionPlayerUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   avatar?: Prisma.StringFieldUpdateOperationsInput | string
-  score?: Prisma.IntFieldUpdateOperationsInput | number
-  completionRate?: Prisma.FloatFieldUpdateOperationsInput | number
   joinedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   session?: Prisma.LiveSessionUpdateOneRequiredWithoutPlayersNestedInput
@@ -374,8 +304,6 @@ export type SessionPlayerUncheckedUpdateInput = {
   userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   name?: Prisma.StringFieldUpdateOperationsInput | string
   avatar?: Prisma.StringFieldUpdateOperationsInput | string
-  score?: Prisma.IntFieldUpdateOperationsInput | number
-  completionRate?: Prisma.FloatFieldUpdateOperationsInput | number
   joinedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   analytics?: Prisma.SessionAnalyticUncheckedUpdateManyWithoutPlayerNestedInput
@@ -388,8 +316,6 @@ export type SessionPlayerCreateManyInput = {
   userId?: string | null
   name: string
   avatar?: string
-  score?: number
-  completionRate?: number
   joinedAt?: Date | string
   completedAt?: Date | string | null
 }
@@ -398,8 +324,6 @@ export type SessionPlayerUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   avatar?: Prisma.StringFieldUpdateOperationsInput | string
-  score?: Prisma.IntFieldUpdateOperationsInput | number
-  completionRate?: Prisma.FloatFieldUpdateOperationsInput | number
   joinedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
@@ -410,8 +334,6 @@ export type SessionPlayerUncheckedUpdateManyInput = {
   userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   name?: Prisma.StringFieldUpdateOperationsInput | string
   avatar?: Prisma.StringFieldUpdateOperationsInput | string
-  score?: Prisma.IntFieldUpdateOperationsInput | number
-  completionRate?: Prisma.FloatFieldUpdateOperationsInput | number
   joinedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
@@ -437,15 +359,8 @@ export type SessionPlayerCountOrderByAggregateInput = {
   userId?: Prisma.SortOrder
   name?: Prisma.SortOrder
   avatar?: Prisma.SortOrder
-  score?: Prisma.SortOrder
-  completionRate?: Prisma.SortOrder
   joinedAt?: Prisma.SortOrder
   completedAt?: Prisma.SortOrder
-}
-
-export type SessionPlayerAvgOrderByAggregateInput = {
-  score?: Prisma.SortOrder
-  completionRate?: Prisma.SortOrder
 }
 
 export type SessionPlayerMaxOrderByAggregateInput = {
@@ -454,8 +369,6 @@ export type SessionPlayerMaxOrderByAggregateInput = {
   userId?: Prisma.SortOrder
   name?: Prisma.SortOrder
   avatar?: Prisma.SortOrder
-  score?: Prisma.SortOrder
-  completionRate?: Prisma.SortOrder
   joinedAt?: Prisma.SortOrder
   completedAt?: Prisma.SortOrder
 }
@@ -466,15 +379,8 @@ export type SessionPlayerMinOrderByAggregateInput = {
   userId?: Prisma.SortOrder
   name?: Prisma.SortOrder
   avatar?: Prisma.SortOrder
-  score?: Prisma.SortOrder
-  completionRate?: Prisma.SortOrder
   joinedAt?: Prisma.SortOrder
   completedAt?: Prisma.SortOrder
-}
-
-export type SessionPlayerSumOrderByAggregateInput = {
-  score?: Prisma.SortOrder
-  completionRate?: Prisma.SortOrder
 }
 
 export type SessionPlayerScalarRelationFilter = {
@@ -571,14 +477,6 @@ export type SessionPlayerUncheckedUpdateManyWithoutSessionNestedInput = {
   deleteMany?: Prisma.SessionPlayerScalarWhereInput | Prisma.SessionPlayerScalarWhereInput[]
 }
 
-export type FloatFieldUpdateOperationsInput = {
-  set?: number
-  increment?: number
-  decrement?: number
-  multiply?: number
-  divide?: number
-}
-
 export type SessionPlayerCreateNestedOneWithoutAnalyticsInput = {
   create?: Prisma.XOR<Prisma.SessionPlayerCreateWithoutAnalyticsInput, Prisma.SessionPlayerUncheckedCreateWithoutAnalyticsInput>
   connectOrCreate?: Prisma.SessionPlayerCreateOrConnectWithoutAnalyticsInput
@@ -613,8 +511,6 @@ export type SessionPlayerCreateWithoutUserInput = {
   id?: string
   name: string
   avatar?: string
-  score?: number
-  completionRate?: number
   joinedAt?: Date | string
   completedAt?: Date | string | null
   session: Prisma.LiveSessionCreateNestedOneWithoutPlayersInput
@@ -627,8 +523,6 @@ export type SessionPlayerUncheckedCreateWithoutUserInput = {
   sessionId: string
   name: string
   avatar?: string
-  score?: number
-  completionRate?: number
   joinedAt?: Date | string
   completedAt?: Date | string | null
   analytics?: Prisma.SessionAnalyticUncheckedCreateNestedManyWithoutPlayerInput
@@ -670,8 +564,6 @@ export type SessionPlayerScalarWhereInput = {
   userId?: Prisma.StringNullableFilter<"SessionPlayer"> | string | null
   name?: Prisma.StringFilter<"SessionPlayer"> | string
   avatar?: Prisma.StringFilter<"SessionPlayer"> | string
-  score?: Prisma.IntFilter<"SessionPlayer"> | number
-  completionRate?: Prisma.FloatFilter<"SessionPlayer"> | number
   joinedAt?: Prisma.DateTimeFilter<"SessionPlayer"> | Date | string
   completedAt?: Prisma.DateTimeNullableFilter<"SessionPlayer"> | Date | string | null
 }
@@ -680,8 +572,6 @@ export type SessionPlayerCreateWithoutSessionInput = {
   id?: string
   name: string
   avatar?: string
-  score?: number
-  completionRate?: number
   joinedAt?: Date | string
   completedAt?: Date | string | null
   user?: Prisma.UserCreateNestedOneWithoutSessionPlaysInput
@@ -694,8 +584,6 @@ export type SessionPlayerUncheckedCreateWithoutSessionInput = {
   userId?: string | null
   name: string
   avatar?: string
-  score?: number
-  completionRate?: number
   joinedAt?: Date | string
   completedAt?: Date | string | null
   analytics?: Prisma.SessionAnalyticUncheckedCreateNestedManyWithoutPlayerInput
@@ -732,8 +620,6 @@ export type SessionPlayerCreateWithoutAnalyticsInput = {
   id?: string
   name: string
   avatar?: string
-  score?: number
-  completionRate?: number
   joinedAt?: Date | string
   completedAt?: Date | string | null
   session: Prisma.LiveSessionCreateNestedOneWithoutPlayersInput
@@ -747,8 +633,6 @@ export type SessionPlayerUncheckedCreateWithoutAnalyticsInput = {
   userId?: string | null
   name: string
   avatar?: string
-  score?: number
-  completionRate?: number
   joinedAt?: Date | string
   completedAt?: Date | string | null
   playAttempt?: Prisma.PlayAttemptUncheckedCreateNestedOneWithoutSessionPlayerInput
@@ -774,8 +658,6 @@ export type SessionPlayerUpdateWithoutAnalyticsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   avatar?: Prisma.StringFieldUpdateOperationsInput | string
-  score?: Prisma.IntFieldUpdateOperationsInput | number
-  completionRate?: Prisma.FloatFieldUpdateOperationsInput | number
   joinedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   session?: Prisma.LiveSessionUpdateOneRequiredWithoutPlayersNestedInput
@@ -789,8 +671,6 @@ export type SessionPlayerUncheckedUpdateWithoutAnalyticsInput = {
   userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   name?: Prisma.StringFieldUpdateOperationsInput | string
   avatar?: Prisma.StringFieldUpdateOperationsInput | string
-  score?: Prisma.IntFieldUpdateOperationsInput | number
-  completionRate?: Prisma.FloatFieldUpdateOperationsInput | number
   joinedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   playAttempt?: Prisma.PlayAttemptUncheckedUpdateOneWithoutSessionPlayerNestedInput
@@ -800,8 +680,6 @@ export type SessionPlayerCreateWithoutPlayAttemptInput = {
   id?: string
   name: string
   avatar?: string
-  score?: number
-  completionRate?: number
   joinedAt?: Date | string
   completedAt?: Date | string | null
   session: Prisma.LiveSessionCreateNestedOneWithoutPlayersInput
@@ -815,8 +693,6 @@ export type SessionPlayerUncheckedCreateWithoutPlayAttemptInput = {
   userId?: string | null
   name: string
   avatar?: string
-  score?: number
-  completionRate?: number
   joinedAt?: Date | string
   completedAt?: Date | string | null
   analytics?: Prisma.SessionAnalyticUncheckedCreateNestedManyWithoutPlayerInput
@@ -842,8 +718,6 @@ export type SessionPlayerUpdateWithoutPlayAttemptInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   avatar?: Prisma.StringFieldUpdateOperationsInput | string
-  score?: Prisma.IntFieldUpdateOperationsInput | number
-  completionRate?: Prisma.FloatFieldUpdateOperationsInput | number
   joinedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   session?: Prisma.LiveSessionUpdateOneRequiredWithoutPlayersNestedInput
@@ -857,8 +731,6 @@ export type SessionPlayerUncheckedUpdateWithoutPlayAttemptInput = {
   userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   name?: Prisma.StringFieldUpdateOperationsInput | string
   avatar?: Prisma.StringFieldUpdateOperationsInput | string
-  score?: Prisma.IntFieldUpdateOperationsInput | number
-  completionRate?: Prisma.FloatFieldUpdateOperationsInput | number
   joinedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   analytics?: Prisma.SessionAnalyticUncheckedUpdateManyWithoutPlayerNestedInput
@@ -869,8 +741,6 @@ export type SessionPlayerCreateManyUserInput = {
   sessionId: string
   name: string
   avatar?: string
-  score?: number
-  completionRate?: number
   joinedAt?: Date | string
   completedAt?: Date | string | null
 }
@@ -879,8 +749,6 @@ export type SessionPlayerUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   avatar?: Prisma.StringFieldUpdateOperationsInput | string
-  score?: Prisma.IntFieldUpdateOperationsInput | number
-  completionRate?: Prisma.FloatFieldUpdateOperationsInput | number
   joinedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   session?: Prisma.LiveSessionUpdateOneRequiredWithoutPlayersNestedInput
@@ -893,8 +761,6 @@ export type SessionPlayerUncheckedUpdateWithoutUserInput = {
   sessionId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   avatar?: Prisma.StringFieldUpdateOperationsInput | string
-  score?: Prisma.IntFieldUpdateOperationsInput | number
-  completionRate?: Prisma.FloatFieldUpdateOperationsInput | number
   joinedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   analytics?: Prisma.SessionAnalyticUncheckedUpdateManyWithoutPlayerNestedInput
@@ -906,8 +772,6 @@ export type SessionPlayerUncheckedUpdateManyWithoutUserInput = {
   sessionId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   avatar?: Prisma.StringFieldUpdateOperationsInput | string
-  score?: Prisma.IntFieldUpdateOperationsInput | number
-  completionRate?: Prisma.FloatFieldUpdateOperationsInput | number
   joinedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
@@ -917,8 +781,6 @@ export type SessionPlayerCreateManySessionInput = {
   userId?: string | null
   name: string
   avatar?: string
-  score?: number
-  completionRate?: number
   joinedAt?: Date | string
   completedAt?: Date | string | null
 }
@@ -927,8 +789,6 @@ export type SessionPlayerUpdateWithoutSessionInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   avatar?: Prisma.StringFieldUpdateOperationsInput | string
-  score?: Prisma.IntFieldUpdateOperationsInput | number
-  completionRate?: Prisma.FloatFieldUpdateOperationsInput | number
   joinedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   user?: Prisma.UserUpdateOneWithoutSessionPlaysNestedInput
@@ -941,8 +801,6 @@ export type SessionPlayerUncheckedUpdateWithoutSessionInput = {
   userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   name?: Prisma.StringFieldUpdateOperationsInput | string
   avatar?: Prisma.StringFieldUpdateOperationsInput | string
-  score?: Prisma.IntFieldUpdateOperationsInput | number
-  completionRate?: Prisma.FloatFieldUpdateOperationsInput | number
   joinedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   analytics?: Prisma.SessionAnalyticUncheckedUpdateManyWithoutPlayerNestedInput
@@ -954,8 +812,6 @@ export type SessionPlayerUncheckedUpdateManyWithoutSessionInput = {
   userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   name?: Prisma.StringFieldUpdateOperationsInput | string
   avatar?: Prisma.StringFieldUpdateOperationsInput | string
-  score?: Prisma.IntFieldUpdateOperationsInput | number
-  completionRate?: Prisma.FloatFieldUpdateOperationsInput | number
   joinedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   completedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
@@ -997,8 +853,6 @@ export type SessionPlayerSelect<ExtArgs extends runtime.Types.Extensions.Interna
   userId?: boolean
   name?: boolean
   avatar?: boolean
-  score?: boolean
-  completionRate?: boolean
   joinedAt?: boolean
   completedAt?: boolean
   session?: boolean | Prisma.LiveSessionDefaultArgs<ExtArgs>
@@ -1014,8 +868,6 @@ export type SessionPlayerSelectCreateManyAndReturn<ExtArgs extends runtime.Types
   userId?: boolean
   name?: boolean
   avatar?: boolean
-  score?: boolean
-  completionRate?: boolean
   joinedAt?: boolean
   completedAt?: boolean
   session?: boolean | Prisma.LiveSessionDefaultArgs<ExtArgs>
@@ -1028,8 +880,6 @@ export type SessionPlayerSelectUpdateManyAndReturn<ExtArgs extends runtime.Types
   userId?: boolean
   name?: boolean
   avatar?: boolean
-  score?: boolean
-  completionRate?: boolean
   joinedAt?: boolean
   completedAt?: boolean
   session?: boolean | Prisma.LiveSessionDefaultArgs<ExtArgs>
@@ -1042,13 +892,11 @@ export type SessionPlayerSelectScalar = {
   userId?: boolean
   name?: boolean
   avatar?: boolean
-  score?: boolean
-  completionRate?: boolean
   joinedAt?: boolean
   completedAt?: boolean
 }
 
-export type SessionPlayerOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "sessionId" | "userId" | "name" | "avatar" | "score" | "completionRate" | "joinedAt" | "completedAt", ExtArgs["result"]["sessionPlayer"]>
+export type SessionPlayerOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "sessionId" | "userId" | "name" | "avatar" | "joinedAt" | "completedAt", ExtArgs["result"]["sessionPlayer"]>
 export type SessionPlayerInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   session?: boolean | Prisma.LiveSessionDefaultArgs<ExtArgs>
   user?: boolean | Prisma.SessionPlayer$userArgs<ExtArgs>
@@ -1079,8 +927,6 @@ export type $SessionPlayerPayload<ExtArgs extends runtime.Types.Extensions.Inter
     userId: string | null
     name: string
     avatar: string
-    score: number
-    completionRate: number
     joinedAt: Date
     completedAt: Date | null
   }, ExtArgs["result"]["sessionPlayer"]>
@@ -1515,8 +1361,6 @@ export interface SessionPlayerFieldRefs {
   readonly userId: Prisma.FieldRef<"SessionPlayer", 'String'>
   readonly name: Prisma.FieldRef<"SessionPlayer", 'String'>
   readonly avatar: Prisma.FieldRef<"SessionPlayer", 'String'>
-  readonly score: Prisma.FieldRef<"SessionPlayer", 'Int'>
-  readonly completionRate: Prisma.FieldRef<"SessionPlayer", 'Float'>
   readonly joinedAt: Prisma.FieldRef<"SessionPlayer", 'DateTime'>
   readonly completedAt: Prisma.FieldRef<"SessionPlayer", 'DateTime'>
 }

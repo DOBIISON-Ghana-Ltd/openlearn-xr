@@ -111,6 +111,18 @@ const sesSessionGetRecent = {
   },
 } satisfies QueryConfig;
 
+const sesSessionGetStats = {
+  type: "query",
+  queryKey: () => [...QUERY_KEYS["ses:session:get:stats"]],
+  queryFn: async () => {
+    const data = await fetcher(
+      () => axios.get(R["ses:session:get:stats"]()),
+      ZSes.SesSessionGetStats.shape.res
+    );
+    return data;
+  },
+} satisfies QueryConfig;
+
 const sesModuleGetAll = {
   type: "query",
   queryKey: (query?: Infer["SesModuleGetAll"]["query"]) => [...QUERY_KEYS["ses:module:get:all"](query)],
@@ -150,6 +162,7 @@ const sesSessionGetOne = {
 export default {
   "ses:session:get:all": sesSessionGetAll,
   "ses:session:get:recent": sesSessionGetRecent,
+  "ses:session:get:stats": sesSessionGetStats,
   "ses:session:post:create": sesSessionPostCreate,
   "ses:session:post:start": sesSessionPostStart,
   "ses:session:get:overview": sesSessionGetOverview,

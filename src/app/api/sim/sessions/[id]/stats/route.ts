@@ -2,6 +2,7 @@ import { apiHandler } from "@/lib/utils/api-handler";
 import { JSend } from "@/lib/utils/jsend";
 import prisma from "@/adapters/db/client";
 import ZSim from "@/data/api/sim/sim.schema";
+import { ZSessionConfig } from "@/data/schema.base";
 import { auth } from "@/adapters/auth/server";
 import { headers } from "next/headers";
 
@@ -30,11 +31,18 @@ export const GET = apiHandler<{ id: string }>(async (req, ctx) => {
   });
   const isHost = Boolean(userSession?.user && userSession.user.id === session.hostId);
 
+  const playerCount = await prisma.sessionPlayer.count({
+    where: { sessionId: session.id },
+  });
+  const config = ZSessionConfig.parse(session.config);
+  const isFull = playerCount >= config.maxAdmissions;
+
   const parsedData = ZGetRes.parse({
     status: session.status,
     config: session.config,
     sessionId: session.id,
     isHost,
+    isFull,
   });
 
   return JSend.success(parsedData);

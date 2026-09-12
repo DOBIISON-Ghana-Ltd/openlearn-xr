@@ -24,6 +24,7 @@ export const QUERY_KEYS = {
   // SES SUITE
   "ses:session:get:all": (query?: Record<string, any>) => ["ses", "session", "all", query] as const,
   "ses:session:get:recent": ["ses", "session", "recent"] as const,
+  "ses:session:get:stats": ["ses", "session", "stats"] as const,
   "ses:session:get:overview": (id: string) => ["ses", "session", id, "overview"] as const,
   "ses:session:get:notes": (id: string) => ["ses", "session", id, "notes"] as const,
   "ses:session:get:players": (id: string) => ["ses", "session", id, "players"] as const,

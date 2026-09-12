@@ -64,11 +64,10 @@ function SubjectSelector() {
             type="button"
             onClick={() => handleChange(sub.value)}
             className={cn(
-              "w-full h-[77px] px-8 rounded-[20px] flex items-center gap-3 text-h6 transition-all cursor-pointer text-left",
-              {
-                "bg-primary-cta text-primary-text-light shadow-sm": isActive,
-                "bg-primary-subtle text-primary-text-dark hover:bg-primary-light/60": !isActive,
-              }
+              "w-full h-[77px] px-8 rounded-[20px] flex items-center gap-3 text-h6 transition-all cursor-pointer text-left", {
+              "bg-primary-cta text-primary-text-light shadow-sm": isActive,
+              "bg-primary-subtle text-primary-text-dark hover:bg-primary-light/60": !isActive,
+            }
             )}
           >
             <div className="relative size-8 shrink-0 overflow-hidden flex items-center justify-center">

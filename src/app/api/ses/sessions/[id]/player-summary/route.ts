@@ -41,7 +41,6 @@ export const GET = secureApiRoute<{ id: string }>(async (req, ctx, user, session
     select: {
       name: true,
       avatar: true,
-      score: true,
       playAttempt: {
         select: {
           accumulatedPoints: true,

@@ -1,6 +1,9 @@
 import { connection } from 'next/server';
 import ClientPage from './client';
 import { verifyRouteGuard } from '@/lib/utils/route-guard';
+import { prefetchApi } from '@/data/hooks/use-prefetch-api';
+import { getQueryClient } from '@/lib/utils/get-query-client';
+import { dehydrate, HydrationBoundary } from '@tanstack/react-query';
 
 export const metadata = {
   title: 'Teaching Sessions',
@@ -11,5 +14,14 @@ export default async function Page() {
   await connection();
   await verifyRouteGuard();
 
-  return <ClientPage />;
+  const queryClient = getQueryClient();
+  await prefetchApi(queryClient, 'ses:session:get:all', {
+    status: ['ACTIVE', 'STAGING'],
+  });
+
+  return (
+    <HydrationBoundary state={dehydrate(queryClient)}>
+      <ClientPage />
+    </HydrationBoundary>
+  );
 }

@@ -42,7 +42,8 @@ export default function ClientPage() {
       allowHints: true,
       allowLateAdmissions: true,
       controlMode: "self-paced",
-      maxAdmissions: 50
+      maxAdmissions: 25,
+      allowScoreVisibility: true,
     }
   };
 
@@ -99,7 +100,7 @@ export default function ClientPage() {
         onValueChange={setTabIndex}
         className="relative min-h-[calc(100dvh-var(--spacing)*20)] flex flex-col bg-surface-slate"
       >
-        <div className="sticky left-0 top-20 z-10 bg-surface-slate px-8 py-3.5 flex items-center justify-between shrink-0 h-[47px]">
+        <div className="sticky left-0 top-20 z-10 bg-surface-slate px-8 py-3.5 flex items-center justify-between shrink-0 h-12">
           <h1 className="text-h6 text-secondary-text">
             {activeTab.title}
           </h1>

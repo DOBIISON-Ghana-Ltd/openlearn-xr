@@ -17,11 +17,18 @@ export const GET = apiHandler<{ id: string }>(async (req, ctx) => {
       name: true,
       avatar: true,
       joinedAt: true,
-      score: true,
       completedAt: true,
+      playAttempt: {
+        select: {
+          accumulatedPoints: true,
+          totalCheckpointPoints: true,
+          preAssessmentEarnedPoints: true,
+          preAssessmentTotalPoints: true,
+        },
+      },
     },
     orderBy: [
-      { score: "desc" },
+      { playAttempt: { accumulatedPoints: "desc" } },
       { joinedAt: "asc" },
     ],
   });

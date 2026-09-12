@@ -55,7 +55,7 @@ export const GET = secureApiRoute(async (req, ctx, user, session) => {
       players: {
         take: 2,
         orderBy: [
-          { score: "desc" },
+          { playAttempt: { accumulatedPoints: "desc" } },
           { joinedAt: "desc" },
         ],
         select: {

@@ -48,6 +48,7 @@ export async function handlePostLocalAnswer(playId: string, body: IAnswerBody) {
     correctAnswer: checkpoint.correctAnswer,
     explanation: checkpoint.explanation,
     pointsAwarded,
+    checkpointPoints: checkpoint.points,
     nextCheckpointId,
     moduleId,
   };

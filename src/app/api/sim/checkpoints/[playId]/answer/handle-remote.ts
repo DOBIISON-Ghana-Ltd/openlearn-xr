@@ -59,8 +59,9 @@ export function handlePostRemoteAnswer(playId: string, body: IAnswerBody) {
       where: { id: attemptIdToUpdate },
       data: {
         currentCheckpointId: nextCheckpointId || targetCheckpointId,
-        currentCheckpointIndex: attempt.currentCheckpointIndex + 1,
-        accumulatedPoints: finalScore,
+        currentCheckpointIndex: { increment: 1 },
+        accumulatedPoints: { increment: pointsAwarded },
+        totalCheckpointPoints: { increment: checkpoint.points },
       },
     });
 
@@ -101,6 +102,7 @@ export function handlePostRemoteAnswer(playId: string, body: IAnswerBody) {
       correctAnswer: checkpoint.correctAnswer,
       explanation: checkpoint.explanation,
       pointsAwarded,
+      checkpointPoints: checkpoint.points,
       nextCheckpointId,
       moduleId,
     };

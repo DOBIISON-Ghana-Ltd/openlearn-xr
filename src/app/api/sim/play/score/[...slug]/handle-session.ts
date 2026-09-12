@@ -9,12 +9,12 @@ export async function handleGetSessionScore(playId: string, playerId: string) {
     return JSend.error("Player ID is required for session score", 400);
   }
 
-  const player = await prisma.sessionPlayer.findUnique({
-    where: { id: playerId },
-    select: { score: true },
+  const attempt = await prisma.playAttempt.findUnique({
+    where: { sessionPlayerId: playerId },
+    select: { accumulatedPoints: true },
   });
 
-  const score = player?.score ?? 0;
+  const score = attempt?.accumulatedPoints ?? 0;
   const resData = { score };
   return JSend.success(ZGetRes.parse(resData));
 }

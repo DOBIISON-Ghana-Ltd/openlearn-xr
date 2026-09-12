@@ -15,6 +15,7 @@ const clientSchema = z.object({
   NEXT_PUBLIC_PUSHER_HOST: z.string().optional(),
   NEXT_PUBLIC_PUSHER_PORT: z.string().optional(),
   NEXT_PUBLIC_PUSHER_FORCE_TLS: z.string().optional(),
+  NEXT_PUBLIC_ENABLE_SURVEY: z.stringbool().default(false),
 })
 
 // Server-only variables + client variables (inherited)
@@ -60,6 +61,7 @@ const clientEnv = {
   NEXT_PUBLIC_PUSHER_HOST: process.env.NEXT_PUBLIC_PUSHER_HOST,
   NEXT_PUBLIC_PUSHER_PORT: process.env.NEXT_PUBLIC_PUSHER_PORT,
   NEXT_PUBLIC_PUSHER_FORCE_TLS: process.env.NEXT_PUBLIC_PUSHER_FORCE_TLS,
+  NEXT_PUBLIC_ENABLE_SURVEY: process.env.NEXT_PUBLIC_ENABLE_SURVEY,
 }
 
 // Build server inputs

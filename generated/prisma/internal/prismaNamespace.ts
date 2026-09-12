@@ -2729,8 +2729,6 @@ export const SessionPlayerScalarFieldEnum = {
   userId: 'userId',
   name: 'name',
   avatar: 'avatar',
-  score: 'score',
-  completionRate: 'completionRate',
   joinedAt: 'joinedAt',
   completedAt: 'completedAt'
 } as const

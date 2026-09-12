@@ -124,6 +124,7 @@ export default function ClientPage(props: IClientPage) {
     hasPlayer,
     isHost,
     status: stats?.status,
+    isFull: Boolean(stats?.isFull),
   };
 
   return (
@@ -131,6 +132,9 @@ export default function ClientPage(props: IClientPage) {
       {match(matchState)
         .with({ isLoading: true }, () => <StateLoading />)
         .with({ isError: true }, () => (<StateError message={error?.message} />))
+        .with({ mode: 'session', hasPlayer: false, isHost: false, isFull: true }, () => (
+          <StateError message="This session has reached its maximum participant limit." />
+        ))
         .with({ mode: 'session', isHost: true, status: 'STAGING' }, () => <StateLoading />)
         .with(
           { mode: 'session', hasPlayer: true, status: 'ACTIVE' },

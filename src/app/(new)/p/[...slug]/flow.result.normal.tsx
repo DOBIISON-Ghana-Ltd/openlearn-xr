@@ -25,7 +25,6 @@ export default function NormalContent(props: INormalResultFlow) {
 
   const sessionInfo = useStore(simStore, (s) => s.getSessionInfo(props.id));
   const playerId = sessionInfo?.playerId || '';
-  const isTutorLedSession = props.mode === "session" && sessionInfo?.config.controlMode === "tutor-led";
 
   const { data: playScore, isLoading: ILPlayScore } = useApi.query(
     "sim:general:get:score",
@@ -40,11 +39,11 @@ export default function NormalContent(props: INormalResultFlow) {
   );
 
   const isResultLoading = ILDetails || ILPlayScore || isModeLoading;
+  const showLeaderboard = props.mode === "session" && Boolean(sessionInfo?.config?.allowScoreVisibility);
 
   return (
-    <div className={cn("w-full max-w-7xl mx-auto h-full flex items-center justify-between gap-6 xl:gap-16", {
-      "flex-col lg:flex-row": props.mode === "session",
-      "flex-col items-center justify-center": props.mode === "module",
+    <div className={cn("w-full max-w-7xl mx-auto h-full flex-center justify-between gap-6 xl:gap-16 flex-col lg:flex-row", {
+      "flex-col lg:flex-col items-center justify-center": !showLeaderboard,
     })}>
       <div className="flex-1 w-full">
         {match({ detail, playScore, isLoading: isResultLoading })
@@ -53,19 +52,18 @@ export default function NormalContent(props: INormalResultFlow) {
             <NormalResult
               detail={detail}
               score={playScore.score}
-              mode={props.mode}
-              isTutorLedSession={isTutorLedSession}
+              showLeaderboard={showLeaderboard}
             />
           ))
           .otherwise(() => <StateError />)
         }
       </div>
 
-      {props.mode === "session" && (
+      {showLeaderboard ? (
         <div className="flex-1 size-full min-h-0 flex-center">
           <Leaderboard playId={props.id} />
         </div>
-      )}
+      ) : null}
     </div>
   );
 }
@@ -73,19 +71,17 @@ export default function NormalContent(props: INormalResultFlow) {
 type IResult = {
   detail: IDetail;
   score: number;
-  mode: "module" | "session";
-  isTutorLedSession: boolean;
+  showLeaderboard: boolean;
 };
-
 function NormalResult(props: IResult) {
-  const { detail, score, mode, isTutorLedSession } = props;
-  const isSession = mode === "session";
+  const { detail, score, showLeaderboard } = props;
 
   return (
-    <div className={cn("flex-1 flex flex-col gap-10 py-4", {
-      "items-center text-center lg:items-start lg:text-left": isSession,
-      "items-center text-center": !isSession,
-    })}>
+    <div
+      className={cn("flex-1 flex flex-col gap-10 py-4", {
+        "lg:items-start lg:text-left": showLeaderboard,
+      })}
+    >
       {/* Header Title & Subtitle */}
       <div className="flex flex-col gap-3">
         <h1 className="text-h2 text-primary-cta leading-tight">
@@ -97,10 +93,11 @@ function NormalResult(props: IResult) {
       </div>
 
       {/* Points Earned Box */}
-      <div className={cn("flex-1 flex flex-col gap-1 mt-4", {
-        "items-center lg:items-start": isSession,
-        "items-center": !isSession,
-      })}>
+      <div
+        className={cn("flex-1 flex flex-col gap-1 mt-4", {
+          "lg:items-start": showLeaderboard,
+        })}
+      >
         <span className="text-button text-primary-text-dark">
           Points Earned
         </span>
@@ -108,17 +105,6 @@ function NormalResult(props: IResult) {
           {score}
         </span>
       </div>
-
-      {isTutorLedSession && (
-        <a
-          href="https://forms.gle/QqXwsL9Xau1BxbMG8"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-normal text-primary-cta underline underline-offset-2 hover:text-primary-hover transition-colors"
-        >
-          Take Post-Session Survey
-        </a>
-      )}
     </div>
   );
 }

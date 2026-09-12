@@ -7,6 +7,7 @@ import {
   ZModuleVersion,
   ZLiveSession,
   ZSessionPlayer,
+  ZPlayAttempt,
   ZModuleCheckpoint,
   ServerModeEnum,
 } from "@/data/schema.base";
@@ -97,6 +98,7 @@ const SimCheckpointPostAnswer = ZApi({
     correctAnswer: z.number().int(),
     explanation: z.string(),
     pointsAwarded: z.number().int(),
+    checkpointPoints: z.number().int().optional(),
     nextCheckpointId: z.string(),
     moduleId: z.string().optional(),
   }),
@@ -185,6 +187,7 @@ const SimSessionGetStats = ZApi({
   }).extend({
     isHost: z.boolean().optional(),
     sessionId: ZLiveSession.shape.id.optional(),
+    isFull: z.boolean().optional(),
   }),
 });
 
@@ -302,8 +305,14 @@ const SimSessionGetPlayers = ZApi({
       name: true,
       avatar: true,
       joinedAt: true,
-      score: true,
-      completedAt: true
+      completedAt: true,
+    }).extend({
+      playAttempt: ZPlayAttempt.pick({
+        accumulatedPoints: true,
+        totalCheckpointPoints: true,
+        preAssessmentEarnedPoints: true,
+        preAssessmentTotalPoints: true,
+      }).nullable(),
     })
   ),
 });

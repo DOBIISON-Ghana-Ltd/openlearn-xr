@@ -8,6 +8,7 @@ import useApi from '@/data/hooks/use-api';
 import { simStore } from '@/store/sim/store';
 import { useStore } from 'zustand';
 import { QUERY_KEYS } from '@/data/key-factory';
+import SurveyLink from '@/components/(new)/common/survey-link';
 
 export type ITabFlowItem = {
   render: React.ComponentType<any>;
@@ -29,6 +30,11 @@ export type IFooter = {
   tabIndex: number;
   navCurrentTab: number;
   tabFlow: ITabFlowItem[];
+};
+
+const SURVEY_URLS: Record<number, string> = {
+  0: "https://forms.gle/VSg1JHokZGcdTZin9",
+  5: "https://forms.gle/QqXwsL9Xau1BxbMG8",
 };
 
 export default function Footer(props: IFooter) {
@@ -90,14 +96,7 @@ export default function Footer(props: IFooter) {
     });
   };
 
-  const surveyUrl =
-    tabIndex === 0 && !isHost
-      ? "https://forms.gle/VSg1JHokZGcdTZin9"
-      : tabIndex === 5 && !isHost
-        ? "https://forms.gle/QqXwsL9Xau1BxbMG8"
-        : tabIndex === 5 && isHost
-          ? "https://forms.gle/PKb4w6oCrZ1ekdZg9"
-          : null;
+  const surveyUrl = !isHost ? SURVEY_URLS[tabIndex] : null;
 
   return (
     <footer className="bg-primary-subtle px-8 lg:px-22 flex-center justify-between z-20 shrink-0 py-3">
@@ -112,16 +111,10 @@ export default function Footer(props: IFooter) {
       </button>
 
       {/* Survey Link */}
-      {surveyUrl && (
-        <a
-          href={surveyUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-small text-primary-cta underline underline-offset-2 hover:text-primary-hover transition-colors"
-        >
-          Take Survey
-        </a>
-      )}
+      <SurveyLink
+        label="Take Survey"
+        link={surveyUrl}
+      />
 
       {/* Primary / Right Action Button */}
       <button
