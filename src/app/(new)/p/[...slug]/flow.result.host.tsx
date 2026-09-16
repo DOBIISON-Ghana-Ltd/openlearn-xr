@@ -1,6 +1,5 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
 import { IFlowContent } from './flow';
 import { match, P } from 'ts-pattern';
 import { Infer } from '@/data/types.base';
@@ -11,10 +10,10 @@ import { toastManager } from '@/components/(new)/common/toast';
 import Leaderboard from '@/components/(new)/play/leaderboard';
 import StateLoading from '@/components/(new)/common/state.loading';
 import StateError from '@/components/(new)/common/state.error';
-import { cn } from '@/lib/utils/cn';
 import SurveyLink from '@/components/(new)/common/survey-link';
 import calculateSessionMetrics from '@/lib/utils/calculate-session-metrics';
-import { CheckCircle2Icon, Loader2Icon, XCircleIcon } from 'lucide-react';
+import { Loader2Icon } from 'lucide-react';
+import StatCard from '@/components/(new)/common/stats-card';
 
 type IDetail = Infer["SimModuleGetOne"]["res"];
 type IPlayers = Infer["SimSessionGetPlayers"]["res"];
@@ -99,23 +98,23 @@ function HostResult(props: IHostResult) {
 
       {/* Metrics Row (Students Joined, Pre/Post Scores, & Average Improvement) */}
       <div className="grid grid-cols-2 gap-4 w-full max-w-xl">
-        <Card
+        <StatCard
           label="STUDENTS JOINED"
           value={metrics.attendanceScore}
           comment={`${metrics.attendanceAverage}% Attendance`}
           range={metrics.attendanceAverage >= 50 ? "high" : "low"}
         />
-        <Card
+        <StatCard
           label="PRE-ASSESSMENT SCORE"
           value={`${metrics.preTestAverage}%`}
           comment="Class baseline"
         />
-        <Card
+        <StatCard
           label="POST-ASSESSMENT SCORE"
           value={`${metrics.postTestAverage}%`}
           comment="Class outcome"
         />
-        <Card
+        <StatCard
           label="AVERAGE IMPROVEMENT"
           value={metrics.scoreDifference}
           comment="Average score change"
@@ -140,38 +139,6 @@ function HostResult(props: IHostResult) {
           label="Take Post-Session Survey"
           link="https://forms.gle/PKb4w6oCrZ1ekdZg9"
         />
-      </div>
-    </div>
-  );
-}
-
-type ICard = {
-  label: string;
-  value: string;
-  comment: string;
-  range?: "low" | "high" | null;
-};
-function Card(props: ICard) {
-  const { label, value, comment, range = null } = props;
-
-  return (
-    <div className="bg-primary-subtle rounded-2xl p-6 border border-primary-light flex flex-col justify-between gap-3 shadow-xs text-left">
-      <span className="text-caption font-semibold uppercase tracking-wider text-tertiary">
-        {label}
-      </span>
-      <span className="text-h3 sm:text-h2 font-bold text-secondary-text leading-none">
-        {value}
-      </span>
-      <div className={cn("flex items-center gap-1.5 text-caption font-medium", {
-        "text-tertiary": !range,
-        "text-success": range === "high",
-        "text-error": range === "low",
-      })}>
-        {match(range)
-          .with("high", () => <CheckCircle2Icon className="size-4 shrink-0" />)
-          .with("low", () => <XCircleIcon className="size-4 shrink-0" />)
-          .otherwise(() => null)}
-        <span>{comment}</span>
       </div>
     </div>
   );

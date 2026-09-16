@@ -5,8 +5,11 @@ import {
   ZCollection,
   ZLiveSession,
   ZModule,
+  ZModuleCheckpoint,
   ZModuleVersion,
   ZPlayAttempt,
+  ZSessionAnalytic,
+  ZSessionCheckpoint,
   ZSessionPlayer,
   ZUser,
 } from "@/data/schema.base";
@@ -258,7 +261,125 @@ const SesSessionGetStats = ZApi({
   ),
 });
 
+// ---------------------------------------------------------------------------
+// GET /api/ses/analytics — get all user sessions analytics
+// ---------------------------------------------------------------------------
+const SesAnalyticsGetAll = ZApi({
+  res: z.array(
+    ZLiveSession.pick({
+      id: true,
+      name: true,
+      status: true,
+      config: true,
+    }).extend({
+      moduleVersion: z.object({
+        module: ZModule.pick({
+          title: true,
+        }).extend({
+          collection: ZCollection.pick({
+            name: true,
+            grade: true,
+          }),
+        }),
+      }),
+      _count: z.object({
+        players: z.number(),
+      }),
+    })
+  ),
+});
+
+// ---------------------------------------------------------------------------
+// GET /api/ses/analytics/[id]/info — session analytics info
+// ---------------------------------------------------------------------------
+const SesAnalyticsGetInfo = ZApi({
+  params: ZLiveSession.pick({ id: true }),
+  res: ZLiveSession.pick({}).extend({
+    moduleVersion: z.object({
+      module: ZModule.pick({
+        title: true,
+      }),
+    }),
+  }),
+});
+
+// ---------------------------------------------------------------------------
+// GET /api/ses/analytics/[id]/metrics — session analytics metrics
+// ---------------------------------------------------------------------------
+const SesAnalyticsGetMetrics = ZApi({
+  params: ZLiveSession.pick({ id: true }),
+  res: z.object({
+    attendanceScore: z.string(),
+    attendanceAverage: z.number(),
+    preTestAverage: z.number(),
+    postTestAverage: z.number(),
+    scoreDifference: z.string(),
+    rawScoreDifference: z.number(),
+  }),
+});
+
+// ---------------------------------------------------------------------------
+// GET /api/ses/analytics/[id]/players — session analytics players list
+// ---------------------------------------------------------------------------
+const SesAnalyticsGetPlayers = ZApi({
+  params: ZLiveSession.pick({ id: true }),
+  res: z.array(
+    ZSessionPlayer.pick({
+      id: true,
+      name: true,
+      avatar: true,
+    }).extend({
+      user: ZUser.pick({
+        image: true,
+      }).nullable(),
+      playAttempt: ZPlayAttempt.pick({
+        accumulatedPoints: true,
+        totalCheckpointPoints: true,
+        preAssessmentEarnedPoints: true,
+        preAssessmentTotalPoints: true,
+      }).nullable(),
+    })
+  ),
+});
+
+// ---------------------------------------------------------------------------
+// GET /api/ses/analytics/[id]/checkpoints — session analytics checkpoints
+// ---------------------------------------------------------------------------
+const SesAnalyticsGetCheckpoints = ZApi({
+  params: ZLiveSession.pick({ id: true }),
+  res: z.array(
+    ZSessionCheckpoint.pick({
+      id: true,
+      isEnabled: true,
+    }).extend({
+      checkpoint: ZModuleCheckpoint.pick({
+        id: true,
+        question: true,
+        options: true,
+        correctAnswer: true,
+        points: true,
+        explanation: true,
+        hint: true,
+      }),
+    })
+  ),
+});
+
+// ---------------------------------------------------------------------------
+// GET /api/ses/analytics/[id]/engagement — session analytics engagement events
+// ---------------------------------------------------------------------------
+const SesAnalyticsGetEngagement = ZApi({
+  params: ZLiveSession.pick({ id: true }),
+  res: z.array(ZSessionAnalytic),
+});
+
 const schema = {
+  SesAnalyticsGetAll,
+  SesAnalyticsGetInfo,
+  SesAnalyticsGetMetrics,
+  SesAnalyticsGetPlayers,
+  SesAnalyticsGetCheckpoints,
+  SesAnalyticsGetEngagement,
   SesSessionGetAll,
   SesSessionPostCreate,
   SesSessionGetOverview,

@@ -45,7 +45,7 @@ export default function NormalContent(props: INormalResultFlow) {
     <div className={cn("w-full max-w-7xl mx-auto h-full flex-center justify-between gap-6 xl:gap-16 flex-col lg:flex-row", {
       "flex-col lg:flex-col items-center justify-center": !showLeaderboard,
     })}>
-      <div className="flex-1 w-full">
+      <div className={cn("flex-1 w-full", { "flex justify-center": !showLeaderboard })}>
         {match({ detail, playScore, isLoading: isResultLoading })
           .with({ isLoading: true }, () => <StateLoading />)
           .with({ detail: P.nonNullable, playScore: P.nonNullable }, ({ detail, playScore }) => (
@@ -77,11 +77,10 @@ function NormalResult(props: IResult) {
   const { detail, score, showLeaderboard } = props;
 
   return (
-    <div
-      className={cn("flex-1 flex flex-col gap-10 py-4", {
-        "lg:items-start lg:text-left": showLeaderboard,
-      })}
-    >
+    <div className={cn("flex-1 flex flex-col gap-10 py-4", {
+      "lg:items-start lg:text-left": showLeaderboard,
+      "items-center text-center max-w-xl mx-auto": !showLeaderboard,
+    })}>
       {/* Header Title & Subtitle */}
       <div className="flex flex-col gap-3">
         <h1 className="text-h2 text-primary-cta leading-tight">
@@ -93,11 +92,10 @@ function NormalResult(props: IResult) {
       </div>
 
       {/* Points Earned Box */}
-      <div
-        className={cn("flex-1 flex flex-col gap-1 mt-4", {
-          "lg:items-start": showLeaderboard,
-        })}
-      >
+      <div className={cn("flex-1 flex flex-col gap-1 mt-4", {
+        "lg:items-start": showLeaderboard,
+        "items-center": !showLeaderboard,
+      })}>
         <span className="text-button text-primary-text-dark">
           Points Earned
         </span>

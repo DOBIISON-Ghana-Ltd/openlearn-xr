@@ -40,6 +40,12 @@ const ROUTES = {
   "sim:session:post:end": ({ id }: { id: string }) => `/api/sim/sessions/${id}/end`,
 
   // SES SUITE
+  "ses:analytics:get:all": () => `/api/ses/analytics`,
+  "ses:analytics:get:info": ({ id }: { id: string }) => `/api/ses/analytics/${id}/info`,
+  "ses:analytics:get:metrics": ({ id }: { id: string }) => `/api/ses/analytics/${id}/metrics`,
+  "ses:analytics:get:players": ({ id }: { id: string }) => `/api/ses/analytics/${id}/players`,
+  "ses:analytics:get:checkpoints": ({ id }: { id: string }) => `/api/ses/analytics/${id}/checkpoints`,
+  "ses:analytics:get:engagement": ({ id }: { id: string }) => `/api/ses/analytics/${id}/engagement`,
   "ses:session:get:all": () => `/api/ses/sessions`,
   "ses:session:get:recent": () => `/api/ses/sessions/recent`,
   "ses:session:get:stats": () => `/api/ses/sessions/stats`,

@@ -22,6 +22,12 @@ export const QUERY_KEYS = {
   "sim:module:get:slug": (id: string) => ["sim", "module", id, "slug"] as const,
 
   // SES SUITE
+  "ses:analytics:get:all": ["ses", "analytics", "all"] as const,
+  "ses:analytics:get:info": (id: string) => ["ses", "analytics", id, "info"] as const,
+  "ses:analytics:get:metrics": (id: string) => ["ses", "analytics", id, "metrics"] as const,
+  "ses:analytics:get:players": (id: string) => ["ses", "analytics", id, "players"] as const,
+  "ses:analytics:get:checkpoints": (id: string) => ["ses", "analytics", id, "checkpoints"] as const,
+  "ses:analytics:get:engagement": (id: string) => ["ses", "analytics", id, "engagement"] as const,
   "ses:session:get:all": (query?: Record<string, any>) => ["ses", "session", "all", query] as const,
   "ses:session:get:recent": ["ses", "session", "recent"] as const,
   "ses:session:get:stats": ["ses", "session", "stats"] as const,

@@ -159,8 +159,88 @@ const sesSessionGetOne = {
   },
 } satisfies QueryConfig;
 
+const sesAnalyticsGetAll = {
+  type: "query",
+  queryKey: () => [...QUERY_KEYS["ses:analytics:get:all"]],
+  queryFn: async () => {
+    const data = await fetcher(
+      () => axios.get(R["ses:analytics:get:all"]()),
+      ZSes.SesAnalyticsGetAll.shape.res
+    );
+    return data;
+  },
+} satisfies QueryConfig;
+
+const sesAnalyticsGetInfo = {
+  type: "query",
+  queryKey: (vars: Infer["SesAnalyticsGetInfo"]["params"]) => [...QUERY_KEYS["ses:analytics:get:info"](vars.id)],
+  queryFn: async (vars: Infer["SesAnalyticsGetInfo"]["params"]) => {
+    const data = await fetcher(
+      () => axios.get(R["ses:analytics:get:info"](vars)),
+      ZSes.SesAnalyticsGetInfo.shape.res
+    );
+    return data;
+  },
+} satisfies QueryConfig;
+
+const sesAnalyticsGetMetrics = {
+  type: "query",
+  queryKey: (vars: Infer["SesAnalyticsGetMetrics"]["params"]) => [...QUERY_KEYS["ses:analytics:get:metrics"](vars.id)],
+  queryFn: async (vars: Infer["SesAnalyticsGetMetrics"]["params"]) => {
+    const data = await fetcher(
+      () => axios.get(R["ses:analytics:get:metrics"](vars)),
+      ZSes.SesAnalyticsGetMetrics.shape.res
+    );
+    return data;
+  },
+} satisfies QueryConfig;
+
+const sesAnalyticsGetPlayers = {
+  type: "query",
+  queryKey: (vars: Infer["SesAnalyticsGetPlayers"]["params"]) => [...QUERY_KEYS["ses:analytics:get:players"](vars.id)],
+  queryFn: async (vars: Infer["SesAnalyticsGetPlayers"]["params"]) => {
+    const data = await fetcher(
+      () => axios.get(R["ses:analytics:get:players"](vars)),
+      ZSes.SesAnalyticsGetPlayers.shape.res
+    );
+    return data;
+  },
+} satisfies QueryConfig;
+
+const sesAnalyticsGetCheckpoints = {
+  type: "query",
+  queryKey: (vars: Infer["SesAnalyticsGetCheckpoints"]["params"]) => [...QUERY_KEYS["ses:analytics:get:checkpoints"](vars.id)],
+  queryFn: async (vars: Infer["SesAnalyticsGetCheckpoints"]["params"]) => {
+    const data = await fetcher(
+      () => axios.get(R["ses:analytics:get:checkpoints"](vars)),
+      ZSes.SesAnalyticsGetCheckpoints.shape.res
+    );
+    return data;
+  },
+} satisfies QueryConfig;
+
+const sesAnalyticsGetEngagement = {
+  type: "query",
+  queryKey: (vars: Infer["SesAnalyticsGetEngagement"]["params"]) => [...QUERY_KEYS["ses:analytics:get:engagement"](vars.id)],
+  queryFn: async (vars: Infer["SesAnalyticsGetEngagement"]["params"]) => {
+    const data = await fetcher(
+      () => axios.get(R["ses:analytics:get:engagement"](vars)),
+      ZSes.SesAnalyticsGetEngagement.shape.res
+    );
+    return data;
+  },
+} satisfies QueryConfig;
+
 export default {
+  "ses:analytics:get:all": sesAnalyticsGetAll,
+  "ses:analytics:get:info": sesAnalyticsGetInfo,
+  "ses:analytics:get:metrics": sesAnalyticsGetMetrics,
+  "ses:analytics:get:players": sesAnalyticsGetPlayers,
+  "ses:analytics:get:checkpoints": sesAnalyticsGetCheckpoints,
+  "ses:analytics:get:engagement": sesAnalyticsGetEngagement,
+
   "ses:session:get:all": sesSessionGetAll,
+  "ses:session:get:one": sesSessionGetOne,
   "ses:session:get:recent": sesSessionGetRecent,
   "ses:session:get:stats": sesSessionGetStats,
   "ses:session:post:create": sesSessionPostCreate,
@@ -169,8 +249,9 @@ export default {
   "ses:session:get:notes": sesSessionGetNotes,
   "ses:session:get:players": sesSessionGetPlayers,
   "ses:session:get:player-summary": sesSessionGetPlayerSummary,
+
   "ses:module-version:get:options": sesModuleVersionGetOptions,
+
   "ses:module:get:all": sesModuleGetAll,
   "ses:module:get:one": sesModuleGetOne,
-  "ses:session:get:one": sesSessionGetOne,
 };

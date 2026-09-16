@@ -118,17 +118,6 @@ function Content(props: IContent) {
 
           <Objectives data={props.data.notes?.overview.objectives || []} />
         </div>
-
-        {isTutorLedSession && (
-          <a
-            href="https://forms.gle/VSg1JHokZGcdTZin9"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="mt-2 text-normal text-primary-cta underline underline-offset-2 hover:text-primary-hover transition-colors self-start"
-          >
-            Take Pre-Session Survey
-          </a>
-        )}
       </div>
     </div>
   );

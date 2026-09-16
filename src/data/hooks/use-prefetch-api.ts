@@ -9,8 +9,8 @@ import { apiRegistry, ApiRegistry, QueryKeys } from '@/data/registry';
 export async function prefetchApi<K extends QueryKeys>(
   queryClient: QueryClient,
   key: K,
-  vars?: ApiRegistry[K] extends { type: 'query' } 
-    ? Parameters<ApiRegistry[K]['queryFn']>[0] 
+  vars?: ApiRegistry[K] extends { type: 'query' }
+    ? Parameters<ApiRegistry[K]['queryFn']>[0]
     : never
 ) {
   const config = apiRegistry[key] as any;

@@ -1,6 +1,9 @@
 import { connection } from 'next/server';
 import ClientPage from './client';
 import { verifyRouteGuard } from '@/lib/utils/route-guard';
+import { prefetchApi } from '@/data/hooks/use-prefetch-api';
+import { getQueryClient } from '@/lib/utils/get-query-client';
+import { dehydrate, HydrationBoundary } from '@tanstack/react-query';
 
 export const metadata = {
   title: 'Session Performance Analytics',
@@ -16,5 +19,17 @@ export default async function Page({ params }: PageProps) {
   await verifyRouteGuard();
   const { id } = await params;
 
-  return <ClientPage sessionId={id} />;
+  const queryClient = getQueryClient();
+  await Promise.all([
+    prefetchApi(queryClient, 'ses:analytics:get:info', { id }),
+    prefetchApi(queryClient, 'ses:analytics:get:metrics', { id }),
+    prefetchApi(queryClient, 'ses:analytics:get:players', { id }),
+    prefetchApi(queryClient, 'ses:analytics:get:checkpoints', { id }),
+  ]);
+
+  return (
+    <HydrationBoundary state={dehydrate(queryClient)}>
+      <ClientPage id={id} />
+    </HydrationBoundary>
+  );
 }
