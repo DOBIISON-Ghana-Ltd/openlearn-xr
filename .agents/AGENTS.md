@@ -33,6 +33,4 @@
   });
   ```
 
-
-
-
+- **No LaTeX / Math Formula Syntax in Chat**: NEVER use LaTeX delimiters (e.g. `$...$`, `$$...$$`, `\frac{}{}`) in chat responses because the UI does not render LaTeX. Always express mathematical formulas, equations, and calculations using plain text, standard code expressions (e.g., `(count / total) * 100`), or TypeScript code blocks.

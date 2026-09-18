@@ -11,7 +11,7 @@ export default function ClientPage() {
   const { data: sessions } = useApi.query("ses:analytics:get:all");
 
   return (
-    <div className="py-8 px-6 sm:px-10 lg:px-12 flex flex-col gap-6 max-w-[1084px]">
+    <div className="py-8 px-6 sm:px-10 lg:px-12 flex flex-col gap-6 max-w-5xl">
       {/* Full-width Section Title */}
       <h2 className="text-h5 text-secondary-text">Your Sessions</h2>
 
@@ -66,9 +66,8 @@ function AnalyticCard(props: IAnalyticCard) {
         </span>
         <span
           className={cn(
-            isLive
-              ? 'text-caption text-primary-cta'
-              : 'text-caption text-tertiary'
+            'text-caption text-tertiary',
+            { 'text-caption text-primary-cta': isLive }
           )}
         >
           {`${players} / ${config.maxAdmissions} Players`}
@@ -78,9 +77,8 @@ function AnalyticCard(props: IAnalyticCard) {
       <Link
         href={PATHS.TEACHING.ANALYTICS.DETAIL(id)}
         className={cn(
-          isLive
-            ? 'border border-primary-cta text-primary-cta hover:bg-primary-cta hover:text-primary-text-light px-6 py-2 rounded-lg text-normal transition-all cursor-pointer shrink-0'
-            : 'border border-tertiary text-tertiary hover:bg-tertiary hover:text-primary-text-light px-6 py-2 rounded-lg text-normal transition-all cursor-pointer shrink-0'
+          'border border-tertiary text-tertiary hover:bg-tertiary hover:text-primary-text-light px-6 py-2 rounded-lg text-normal transition-all cursor-pointer shrink-0',
+          { 'border-primary-cta text-primary-cta hover:bg-primary-cta': isLive }
         )}
       >
         View Analytics

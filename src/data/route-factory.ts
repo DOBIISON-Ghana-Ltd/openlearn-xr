@@ -38,6 +38,7 @@ const ROUTES = {
   "sim:session:post:join": () => `/api/sim/sessions/join`,
   "sim:session:post:leave": ({ id }: { id: string }) => `/api/sim/sessions/${id}/leave`,
   "sim:session:post:end": ({ id }: { id: string }) => `/api/sim/sessions/${id}/end`,
+  "sim:session-analytics:post:one": () => `/api/sim/session-analytics`,
 
   // SES SUITE
   "ses:analytics:get:all": () => `/api/ses/analytics`,

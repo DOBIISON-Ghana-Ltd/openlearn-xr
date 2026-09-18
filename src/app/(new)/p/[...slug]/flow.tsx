@@ -128,10 +128,10 @@ function Content(props: IContent) {
     {
       render: ResultFLow,
       back: isHost
-        ? { label: "Go to Dashboard", goto: PATHS.SESSION.DASHBOARD }
+        ? { label: "Go to Dashboard", goto: PATHS.TEACHING.SESSIONS.ROOT }
         : { label: "Retake Lesson", goto: "retake" },
       next: isHost
-        ? { label: "View Analytics", goto: PATHS.SESSION.ONE.ANALYTICS(sessionId) }
+        ? { label: "View Analytics", goto: PATHS.TEACHING.ANALYTICS.DETAIL(sessionId) }
         : { label: "Back to Modules", goto: PATHS.MODULES },
     },
   ];

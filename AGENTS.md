@@ -23,3 +23,6 @@ This version has breaking changes — APIs, conventions, and file structure may 
 
 # Project Structure Rules
 - **Keep the Root Clutter-Free**: Since this project uses a `src` directory, ALL application-related code (such as `utils`, `lib`, `components`, `hooks`, etc.) MUST be placed inside the `src/` directory. Do not create these folders in the root directory.
+
+# Chat Formatting Rules
+- **No LaTeX / Math Formula Delimiters in Chat**: NEVER use LaTeX delimiters (e.g. `$...$`, `$$...$$`, `\frac{}{}`) in chat responses. Always express formulas, mathematical equations, and ratios using plain text (e.g., `(correct / total) * 100`) or standard code blocks.

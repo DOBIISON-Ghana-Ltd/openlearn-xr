@@ -315,6 +315,13 @@ const SesAnalyticsGetMetrics = ZApi({
     postTestAverage: z.number(),
     scoreDifference: z.string(),
     rawScoreDifference: z.number(),
+    improvedCount: z.number(),
+    improvedPercent: z.number(),
+    noChangeCount: z.number(),
+    noChangePercent: z.number(),
+    declinedCount: z.number(),
+    declinedPercent: z.number(),
+    totalAssessedCount: z.number(),
   }),
 });
 
@@ -348,19 +355,18 @@ const SesAnalyticsGetPlayers = ZApi({
 const SesAnalyticsGetCheckpoints = ZApi({
   params: ZLiveSession.pick({ id: true }),
   res: z.array(
-    ZSessionCheckpoint.pick({
-      id: true,
-      isEnabled: true,
-    }).extend({
-      checkpoint: ZModuleCheckpoint.pick({
-        id: true,
-        question: true,
-        options: true,
-        correctAnswer: true,
-        points: true,
-        explanation: true,
-        hint: true,
-      }),
+    z.object({
+      id: z.string(),
+      questionNumber: z.int(),
+      question: z.string(),
+      correctAnswer: z.string(),
+      accuracy: z.number(),
+      commonErrors: z.array(
+        z.object({
+          count: z.int(),
+          option: z.string(),
+        })
+      ).optional(),
     })
   ),
 });

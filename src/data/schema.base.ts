@@ -152,6 +152,8 @@ export const GamificationLogActionEnum = z.enum(["XP_EARNED", "XP_DEDUCTED", "ST
 
 export const LiveSessionStatusEnum = z.enum(["STAGING", "ACTIVE", "COMPLETED", "CANCELLED"]);
 
+export const SessionAnalyticEventEnum = z.enum(["pre-test:changed", "post-test:changed", "tab:changed", "control:changed"]);
+
 export const EmailLogStatusEnum = z.enum(["QUEUED", "SENT", "FAILED", "BOUNCED"]);
 
 export const ZNote = z.object({
@@ -525,12 +527,22 @@ export const ZSessionPlayer = z.object({
   completedAt: ZDate.nullable(),
 });
 
+export const ZSessionAnalyticPayload = z.object({
+  checkpointId: z.string().optional(),
+  questionIndex: z.int().optional(),
+  selectedIndex: z.int().optional(),
+  isCorrect: z.boolean().optional(),
+  tabIndex: z.int().optional(),
+  controlKey: z.string().optional(),
+  controlValue: z.union([z.number(), z.string(), z.boolean()]).optional(),
+});
+
 export const ZSessionAnalytic = z.object({
   id: z.string(),
   sessionId: z.string(),
   playerId: z.string(),
-  event: z.string(),
-  payload: z.record(z.string(), z.any()).nullable(),
+  event: SessionAnalyticEventEnum,
+  payload: ZSessionAnalyticPayload.default({}),
   recordedAt: ZDate,
 });
 
@@ -585,6 +597,7 @@ const baseSchema = {
   ModuleProgressPlayModeEnum,
   GamificationLogActionEnum,
   LiveSessionStatusEnum,
+  SessionAnalyticEventEnum,
   EmailLogStatusEnum,
   // Better Auth Core
   ZUser,

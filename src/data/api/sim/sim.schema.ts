@@ -7,6 +7,7 @@ import {
   ZModuleVersion,
   ZLiveSession,
   ZSessionPlayer,
+  ZSessionAnalytic,
   ZPlayAttempt,
   ZModuleCheckpoint,
   ServerModeEnum,
@@ -378,6 +379,19 @@ const SimSessionGetCheckpoints = ZApi({
   ),
 });
 
+// ---------------------------------------------------------------------------
+// POST /api/sim/session-analytics — post a session analytic event
+// ---------------------------------------------------------------------------
+const SimSessionAnalyticsPostOne = ZApi({
+  body: ZSessionAnalytic.pick({
+    sessionId: true,
+    playerId: true,
+    event: true,
+    payload: true,
+  }),
+  res: ZSessionAnalytic,
+});
+
 const schema = {
   SimModuleGetAll,
   SimModuleGetOne,
@@ -403,6 +417,8 @@ const schema = {
   SimSessionGetCheckpoints,
   SimSessionPostLeave,
   SimSessionPostEnd,
+
+  SimSessionAnalyticsPostOne,
 };
 
 export default schema;

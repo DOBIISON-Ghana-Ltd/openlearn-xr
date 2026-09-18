@@ -380,6 +380,17 @@ const simModuleGetSlug = {
   },
 } satisfies QueryConfig;
 
+const simSessionAnalyticsPostOne = {
+  type: "mutation",
+  mutationFn: async (vars: Pick<Infer["SimSessionAnalyticsPostOne"], "body">) => {
+    const data = await fetcher(
+      () => axios.post(R["sim:session-analytics:post:one"](), vars.body),
+      ZSim.SimSessionAnalyticsPostOne.shape.res
+    );
+    return data;
+  },
+} satisfies MutationConfig;
+
 export default {
   "sim:module:get:all": simModuleGetAll,
   "sim:module:get:one": simModuleGetOne,
@@ -406,4 +417,6 @@ export default {
   "sim:session:post:join": simSessionPostJoin,
   "sim:session:post:leave": simSessionPostLeave,
   "sim:session:post:end": simSessionPostEnd,
+
+  "sim:session-analytics:post:one": simSessionAnalyticsPostOne,
 };

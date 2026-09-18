@@ -14,12 +14,8 @@ export interface IClientPage {
 }
 
 export default function ClientPage({ id }: IClientPage) {
-  // session info
   const { data: info } = useApi.query("ses:analytics:get:info", { id });
-  // session metrics
   const { data: metrics } = useApi.query("ses:analytics:get:metrics", { id });
-  // players list
-  // session questions list
 
   return (
     <div className="p-6 gap-4 max-w-6xl space-y-6">
@@ -63,7 +59,7 @@ export default function ClientPage({ id }: IClientPage) {
               <LearningImprovementCard {...data} />
               <QuestionPerformanceCard id={id} />
               <EngagementCard id={id} />
-              <ClassGlanceCard id={id} />
+              <ClassGlanceCard {...data} />
               <LeaderboardCard id={id} />
             </>
           ))

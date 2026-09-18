@@ -47,24 +47,49 @@ export const GET = secureApiRoute<{ id: string }>(async (req, ctx, user) => {
   let postSum = 0;
   let postCount = 0;
 
+  let improvedCount = 0;
+  let noChangeCount = 0;
+  let declinedCount = 0;
+  let totalAssessedCount = 0;
+
   session.players.forEach((p) => {
     const attempt = p.playAttempt;
     if (!attempt) return;
+
+    let studentPrePct: number | null = null;
+    let studentPostPct: number | null = null;
 
     // 1. Pre-Assessment calculation
     const preTotal = attempt.preAssessmentTotalPoints ?? 0;
     const preEarned = attempt.preAssessmentEarnedPoints ?? 0;
     if (preTotal > 0) {
-      preSum += (preEarned / preTotal) * 100;
+      const pct = (preEarned / preTotal) * 100;
+      preSum += pct;
       preCount++;
+      studentPrePct = Math.round(pct);
     }
 
     // 2. Post-Assessment calculation
     const postTotal = attempt.totalCheckpointPoints ?? 0;
     const postEarned = attempt.accumulatedPoints ?? 0;
     if (postTotal > 0) {
-      postSum += (postEarned / postTotal) * 100;
+      const pct = (postEarned / postTotal) * 100;
+      postSum += pct;
       postCount++;
+      studentPostPct = Math.round(pct);
+    }
+
+    // 3. Glance breakdown per student with both assessments
+    if (studentPrePct !== null && studentPostPct !== null) {
+      totalAssessedCount++;
+      const delta = studentPostPct - studentPrePct;
+      if (delta > 0) {
+        improvedCount++;
+      } else if (delta < 0) {
+        declinedCount++;
+      } else {
+        noChangeCount++;
+      }
     }
   });
 
@@ -73,15 +98,24 @@ export const GET = secureApiRoute<{ id: string }>(async (req, ctx, user) => {
   const rawScoreDifference = postTestAverage - preTestAverage;
   const scoreDifference = rawScoreDifference > 0 ? `+${rawScoreDifference}pts` : `${rawScoreDifference}pts`;
 
-  const metrics = {
+  const improvedPercent = totalAssessedCount > 0 ? Math.round((improvedCount / totalAssessedCount) * 100) : 0;
+  const noChangePercent = totalAssessedCount > 0 ? Math.round((noChangeCount / totalAssessedCount) * 100) : 0;
+  const declinedPercent = totalAssessedCount > 0 ? Math.round((declinedCount / totalAssessedCount) * 100) : 0;
+
+  const parsed = ZGetRes.parse({
     attendanceScore,
     attendanceAverage,
     preTestAverage,
     postTestAverage,
     scoreDifference,
     rawScoreDifference,
-  };
-
-  const parsed = ZGetRes.parse(metrics);
+    improvedCount,
+    improvedPercent,
+    noChangeCount,
+    noChangePercent,
+    declinedCount,
+    declinedPercent,
+    totalAssessedCount,
+  });
   return JSend.success(parsed);
 });

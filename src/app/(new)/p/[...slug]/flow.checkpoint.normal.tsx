@@ -35,7 +35,6 @@ export default function NormalContent(props: INormalCheckpointFlow) {
           <Content
             data={checkpointData}
             playId={props.id}
-            playerId={playerId}
             serverMode={serverMode}
             isRefetching={isFetching}
             refetch={refetch}
@@ -49,14 +48,15 @@ export default function NormalContent(props: INormalCheckpointFlow) {
 
 type IContent = {
   playId: INormalCheckpointFlow["id"];
-  playerId?: string;
   data: ICheckpoint;
   serverMode: IServerMode;
   isRefetching: boolean;
   refetch: () => void;
 };
 function Content(props: IContent) {
-  const { isRefetching, playId, serverMode, playerId, data: { checkpoint, meta }, refetch } = props;
+  const { isRefetching, playId, serverMode, data: { checkpoint, meta }, refetch } = props;
+  const sessionInfo = useStore(simStore, (s) => s.getSessionInfo(playId));
+  const playerId = sessionInfo?.playerId || '';
   const currentIdx = meta?.currentCheckpointIndex ?? 0;
   const totalCount = meta?.totalCheckpoints ?? 1;
 
@@ -66,6 +66,7 @@ function Content(props: IContent) {
   const [awardedPoints, setAwardedPoints] = useState<number>(0);
 
   const { mutate, isPending } = useApi.mutate("sim:checkpoint:post:answer");
+  const { mutate: logAnalytic } = useApi.mutate("sim:session-analytics:post:one");
 
   const isLastQuestion = currentIdx + 1 >= totalCount;
   const hasAnswered = Boolean(feedback);
@@ -99,6 +100,21 @@ function Content(props: IContent) {
         });
         setAwardedPoints(res.pointsAwarded);
         setLocalChosenAnswer(null);
+
+        if (serverMode === "session" && sessionInfo?.sessionId && playerId) {
+          logAnalytic({
+            body: {
+              sessionId: sessionInfo.sessionId,
+              playerId,
+              event: "post-test:changed",
+              payload: {
+                questionIndex: currentIdx,
+                selectedIndex: value,
+                isCorrect: res.isCorrect,
+              },
+            },
+          });
+        }
       },
       onError: () => {
         setLocalChosenAnswer(null);

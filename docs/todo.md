@@ -32,5 +32,24 @@ This document tracks features, refactors, and architectural improvements deferre
 
 ---
 
-### 5. Git Commit
-- [ ] **Task**: Create conventional commits for the teaching analytics endpoints and UI refactors once testing is completed.
+### 5. Project-Wide `cn()` Conditional Class Corrections
+- [ ] **Task**: Audit and update all `cn()` calls across the codebase to ensure the default/falsy styles are defined in the base string and truthy overrides are placed in the conditional object (e.g. `cn("base-style default-style", { "override-style": condition })`).
+
+---
+
+### 6. Migrate `(new)` Directory Contents to Root
+- [ ] **Task**: Move all routes, pages, and components from the `(new)` folder structure (e.g., `src/app/(new)/` and `src/components/(new)/`) directly to the root/standard directories since the new design is now the main implementation.
+
+---
+
+### 7. Project-Wide Migration to Tailwind CSS v3
+- [ ] **Task**: Perform a project-wide migration to Tailwind CSS v3 to ensure robust cross-browser compatibility and support for older browser versions.
+
+---
+
+### 8. Implement Remaining Play Route Analytic Event Logs
+- [ ] **Task**: Wire client-side `sim:session-analytics:post:one` event dispatches across the remaining simulation play tabs and interactions:
+  - **Pre-Test**: Dispatch `"pre-test:changed"` in [`flow.engage.tsx`](file:///d:/delmac/dobiison/projects/open-learn-xr/src/app/%28new%29/p/%5B...slug%5D/flow.engage.tsx) when a student answers a pre-assessment question (`{ questionIndex, selectedIndex, isCorrect }`).
+  - **Tab Navigation**: Dispatch `"tab:changed"` in [`flow.tsx`](file:///d:/delmac/dobiison/projects/open-learn-xr/src/app/%28new%29/p/%5B...slug%5D/flow.tsx) when transitioning between tabs (`{ tabIndex }`).
+  - **Simulation Controls**: Dispatch `"control:changed"` in [`dynamic-lab-panel.tsx`](file:///d:/delmac/dobiison/projects/open-learn-xr/src/components/%28new%29/control-blocks/dynamic-lab-panel.tsx) / [`flow.explore.internal.tsx`](file:///d:/delmac/dobiison/projects/open-learn-xr/src/app/%28new%29/p/%5B...slug%5D/flow.explore.internal.tsx) when learners adjust sliders, numbers, or toggles (`{ controlKey, controlValue }`).
+
