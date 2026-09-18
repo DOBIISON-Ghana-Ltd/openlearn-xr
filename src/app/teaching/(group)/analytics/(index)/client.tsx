@@ -65,10 +65,7 @@ function AnalyticCard(props: IAnalyticCard) {
           {`${module.collection.name} • ${module.collection.grade}`}
         </span>
         <span
-          className={cn(
-            'text-caption text-tertiary',
-            { 'text-caption text-primary-cta': isLive }
-          )}
+          className={cn('text-caption text-tertiary', { 'text-primary-cta': isLive })}
         >
           {`${players} / ${config.maxAdmissions} Players`}
         </span>

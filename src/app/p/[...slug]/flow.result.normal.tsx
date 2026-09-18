@@ -42,8 +42,8 @@ export default function NormalContent(props: INormalResultFlow) {
   const showLeaderboard = props.mode === "session" && Boolean(sessionInfo?.config?.allowScoreVisibility);
 
   return (
-    <div className={cn("w-full max-w-7xl mx-auto h-full flex-center justify-between gap-6 xl:gap-16 flex-col lg:flex-row", {
-      "flex-col lg:flex-col items-center justify-center": !showLeaderboard,
+    <div className={cn("w-full max-w-7xl mx-auto h-full flex-center justify-center gap-6 xl:gap-16 flex-col", {
+      "lg:flex-row lg:justify-between": showLeaderboard,
     })}>
       <div className={cn("flex-1 w-full", { "flex justify-center": !showLeaderboard })}>
         {match({ detail, playScore, isLoading: isResultLoading })
@@ -77,9 +77,8 @@ function NormalResult(props: IResult) {
   const { detail, score, showLeaderboard } = props;
 
   return (
-    <div className={cn("flex-1 flex flex-col gap-10 py-4", {
-      "lg:items-start lg:text-left": showLeaderboard,
-      "items-center text-center max-w-xl mx-auto": !showLeaderboard,
+    <div className={cn("flex-1 flex flex-col items-center text-center max-w-xl mx-auto gap-10 py-4", {
+      "lg:items-start lg:text-left lg:max-w-none lg:mx-0": showLeaderboard,
     })}>
       {/* Header Title & Subtitle */}
       <div className="flex flex-col gap-3">
@@ -92,9 +91,8 @@ function NormalResult(props: IResult) {
       </div>
 
       {/* Points Earned Box */}
-      <div className={cn("flex-1 flex flex-col gap-1 mt-4", {
+      <div className={cn("flex-1 flex flex-col items-center gap-1 mt-4", {
         "lg:items-start": showLeaderboard,
-        "items-center": !showLeaderboard,
       })}>
         <span className="text-button text-primary-text-dark">
           Points Earned

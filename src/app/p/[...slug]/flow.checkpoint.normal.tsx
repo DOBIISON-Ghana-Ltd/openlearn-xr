@@ -218,14 +218,12 @@ function ChoiceCard(props: IChoiceCard) {
     <div
       onClick={onClick}
       className={cn(
-        'w-full bg-primary-subtle rounded-[5.7px] px-4 py-3 flex items-center justify-between transition-colors duration-200 border',
+        'w-full bg-primary-subtle border border-transparent hover:bg-primary-light/40 cursor-pointer rounded-[5.7px] px-4 py-3 flex items-center justify-between transition-colors duration-200',
         {
-          'border-transparent hover:bg-primary-light/40 cursor-pointer': !isAnswered && !isPending,
-          'border-primary-cta ring-2 ring-primary-cta/20 bg-primary-light/60': isPending,
-          'border-success bg-success/10 ring-2 ring-success/20 font-medium': isAnswered && isChosen && isCorrect,
-          'border-error bg-error/10 ring-2 ring-error/20 font-medium': isAnswered && isChosen && !isCorrect,
-          'border-transparent opacity-50 cursor-default': isAnswered && !isChosen,
-          'pointer-events-none': isPending || isAnswered,
+          'border-primary-cta ring-2 ring-primary-cta/20 bg-primary-light/60 pointer-events-none': isPending,
+          'border-success bg-success/10 ring-2 ring-success/20 font-medium pointer-events-none': isAnswered && isChosen && isCorrect,
+          'border-error bg-error/10 ring-2 ring-error/20 font-medium pointer-events-none': isAnswered && isChosen && !isCorrect,
+          'opacity-50 cursor-default pointer-events-none hover:bg-primary-subtle': isAnswered && !isChosen,
         }
       )}
     >

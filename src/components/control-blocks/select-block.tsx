@@ -50,7 +50,7 @@ export default function SelectControlBlock(props: ISelectControlBlock) {
                   value={option}
                   className={cn(
                     "px-3 py-2 text-small! text-secondary-text cursor-pointer transition-colors outline-none data-highlighted:bg-primary-subtle/30 flex-center justify-between",
-                    { "border-b border-primary-light": !(index === (control.options.length - 1)) }
+                    { "border-b border-primary-light": index !== control.options.length - 1 }
                   )}
                 >
                   <SelectPrimitive.ItemText>

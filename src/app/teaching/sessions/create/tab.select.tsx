@@ -64,10 +64,8 @@ function SubjectSelector() {
             type="button"
             onClick={() => handleChange(sub.value)}
             className={cn(
-              "w-full h-[77px] px-8 rounded-[20px] flex items-center gap-3 text-h6 transition-all cursor-pointer text-left", {
-              "bg-primary-cta text-primary-text-light shadow-sm": isActive,
-              "bg-primary-subtle text-primary-text-dark hover:bg-primary-light/60": !isActive,
-            }
+              "w-full h-[77px] px-8 rounded-[20px] flex items-center gap-3 text-h6 bg-primary-subtle text-primary-text-dark hover:bg-primary-light/60 transition-all cursor-pointer text-left",
+              { "bg-primary-cta text-primary-text-light shadow-sm hover:bg-primary-cta": isActive }
             )}
           >
             <div className="relative size-8 shrink-0 overflow-hidden flex items-center justify-center">
@@ -107,11 +105,8 @@ function GradeSelector() {
           type="button"
           onClick={() => handleChange(y.value)}
           className={cn(
-            "h-full flex items-center text-large transition-all border-b-3 cursor-pointer",
-            {
-              "border-primary-cta text-primary-text-dark font-semibold": state.grade === y.value,
-              "border-transparent text-tertiary hover:text-primary-text-dark": state.grade !== y.value,
-            }
+            "h-full flex items-center text-large border-b-3 border-transparent text-tertiary hover:text-primary-text-dark transition-all cursor-pointer",
+            { "border-primary-cta text-primary-text-dark font-semibold": state.grade === y.value }
           )}
         >
           {y.label}

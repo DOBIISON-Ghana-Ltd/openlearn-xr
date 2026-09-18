@@ -33,7 +33,7 @@ This document tracks features, refactors, and architectural improvements deferre
 ---
 
 ### 5. Project-Wide `cn()` Conditional Class Corrections
-- [ ] **Task**: Audit and update all `cn()` calls across the codebase to ensure the default/falsy styles are defined in the base string and truthy overrides are placed in the conditional object (e.g. `cn("base-style default-style", { "override-style": condition })`).
+- [x] **Task**: Audit and update all `cn()` calls across the codebase to ensure the default/falsy styles are defined in the base string and truthy overrides are placed in the conditional object (e.g. `cn("base-style default-style", { "override-style": condition })`).
 
 ---
 

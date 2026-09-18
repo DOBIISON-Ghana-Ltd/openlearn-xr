@@ -1,7 +1,6 @@
 "use client";
 
 import { Switch as SwitchPrimitive } from "@base-ui/react/switch";
-import { cn } from "@/lib/utils/cn";
 import { ToggleControl } from "@/local/simulations/type";
 import ControlInfoTooltip from "./control-tooltip";
 
@@ -26,14 +25,10 @@ export default function ToggleControlBlock(props: IToggleControlBlock) {
       <SwitchPrimitive.Root
         checked={value ?? control.value}
         onCheckedChange={onChange}
-        className={cn(
-          "flex h-5 w-9 shrink-0 items-center rounded-full p-0.5 border border-primary-cta/20 bg-primary-subtle cursor-pointer outline-none transition-colors duration-150 data-checked:bg-primary-cta"
-        )}
+        className="flex h-5 w-9 shrink-0 items-center rounded-full p-0.5 border border-primary-cta/20 bg-primary-subtle cursor-pointer outline-none transition-colors duration-150 data-checked:bg-primary-cta"
       >
         <SwitchPrimitive.Thumb
-          className={cn(
-            "size-3.5 bg-surface-white rounded-full block shadow-xs transition-transform duration-150 data-checked:translate-x-4"
-          )}
+          className="size-3.5 bg-surface-white rounded-full block shadow-xs transition-transform duration-150 data-checked:translate-x-4"
         />
       </SwitchPrimitive.Root>
     </div>

@@ -133,15 +133,13 @@ function Content({ data }: { data: ICheckpoints }) {
 function HostChoiceCard({ label, isCorrect }: { label: string; isCorrect: boolean }) {
   return (
     <div
-      className={cn('w-full rounded-[5.7px] px-4 py-3 flex items-center justify-between border transition-all', {
-        'border-success bg-success/15': isCorrect,
-        'border-transparent bg-primary-subtle opacity-70': !isCorrect,
+      className={cn('w-full rounded-[5.7px] px-4 py-3 flex items-center justify-between border border-transparent bg-primary-subtle opacity-70 transition-all', {
+        'border-success bg-success/15 opacity-100': isCorrect,
       })}
     >
       <span
-        className={cn('text-h6 font-normal', {
+        className={cn('text-h6 font-normal text-secondary-text', {
           'text-success font-medium': isCorrect,
-          'text-secondary-text': !isCorrect,
         })}
       >
         {label}

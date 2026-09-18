@@ -94,11 +94,8 @@ export default function ModuleCard({
   );
 
   const containerClasses = cn(
-    "group bg-primary-subtle border-2 border-primary-light rounded-[20px] overflow-hidden flex flex-col relative transition-all duration-200 cursor-pointer",
-    {
-      "border-primary-cta ring-2 ring-primary-cta/20": isSelected,
-      "hover:border-primary-cta/40": !isSelected,
-    },
+    "group bg-primary-subtle border-2 border-primary-light hover:border-primary-cta/40 rounded-[20px] overflow-hidden flex flex-col relative transition-all duration-200 cursor-pointer",
+    { "border-primary-cta ring-2 ring-primary-cta/20 hover:border-primary-cta": isSelected },
     className
   );
 

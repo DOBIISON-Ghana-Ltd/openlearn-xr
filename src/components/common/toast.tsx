@@ -214,10 +214,8 @@ function AnchoredToasts({
             >
               <Toast.Root
                 className={cn(
-                  "relative text-balance border border-primary-cta/20 bg-surface-white text-primary-text-dark text-caption transition-[scale,opacity] data-ending-style:scale-98 data-starting-style:scale-98 data-ending-style:opacity-0 data-starting-style:opacity-0 shadow-lg shadow-black/5",
-                  tooltipStyle
-                    ? "rounded-md"
-                    : "rounded-xl",
+                  "relative text-balance border border-primary-cta/20 bg-surface-white text-primary-text-dark text-caption rounded-xl transition-[scale,opacity] data-ending-style:scale-98 data-starting-style:scale-98 data-ending-style:opacity-0 data-starting-style:opacity-0 shadow-lg shadow-black/5",
+                  { "rounded-md": tooltipStyle },
                   upsertReplayClassName(toast),
                 )}
                 {...toastData?.rootProps}

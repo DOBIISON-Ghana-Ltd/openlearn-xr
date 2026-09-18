@@ -106,9 +106,8 @@ export default function Header(props: IHeader) {
           return (
             <div
               key={label}
-              className={cn("h-full flex items-center text-small! relative transition-colors select-none shrink-0", {
-                "text-primary-cta": isActive,
-                "text-secondary-text opacity-70": !isActive,
+              className={cn("h-full flex items-center text-small! text-secondary-text opacity-70 relative transition-colors select-none shrink-0", {
+                "text-primary-cta opacity-100": isActive,
               })}
             >
               <span>{label}</span>

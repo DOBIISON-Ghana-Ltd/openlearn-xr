@@ -21,8 +21,7 @@ export default function StatCard(props: IStatCard) {
       <span className="text-h3 sm:text-h2 font-bold text-secondary-text leading-none">
         {value}
       </span>
-      <div className={cn("flex items-center gap-1.5 text-caption font-medium", {
-        "text-tertiary": !range,
+      <div className={cn("flex items-center gap-1.5 text-caption font-medium text-tertiary", {
         "text-success": range === "high",
         "text-error": range === "low",
       })}>

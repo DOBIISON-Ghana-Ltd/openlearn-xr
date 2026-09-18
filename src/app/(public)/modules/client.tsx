@@ -59,11 +59,8 @@ function GradeSelector() {
           type="button"
           onClick={() => handleChange(tab.value)}
           className={cn(
-            'h-full px-4 text-large text-primary-text-dark transition-all border-b-3 flex items-center justify-center cursor-pointer',
-            {
-              'border-primary-cta font-semibold': state.grade === tab.value,
-              'border-transparent text-tertiary hover:text-primary-text-dark': state.grade !== tab.value,
-            }
+            'h-full px-4 text-large border-b-3 border-transparent text-tertiary hover:text-primary-text-dark transition-all flex items-center justify-center cursor-pointer',
+            { 'border-primary-cta text-primary-text-dark font-semibold': state.grade === tab.value }
           )}
         >
           {tab.label}
@@ -101,11 +98,8 @@ function SubjectSelector() {
           type="button"
           onClick={() => handleChange(tab.value)}
           className={cn(
-            'w-full max-w-58 flex items-center gap-2 h-20 px-6 rounded-[20px] transition-all cursor-pointer text-left',
-            {
-              'bg-primary-cta text-primary-text-light shadow-md': state.subject === tab.value,
-              'bg-primary-subtle text-primary-text-dark hover:bg-primary-light/60': state.subject !== tab.value,
-            }
+            'w-full max-w-58 flex items-center gap-2 h-20 px-6 rounded-[20px] bg-primary-subtle text-primary-text-dark hover:bg-primary-light/60 transition-all cursor-pointer text-left',
+            { 'bg-primary-cta text-primary-text-light shadow-md hover:bg-primary-cta': state.subject === tab.value }
           )}
         >
           <div className="relative size-10 shrink-0 overflow-hidden flex items-center justify-center">

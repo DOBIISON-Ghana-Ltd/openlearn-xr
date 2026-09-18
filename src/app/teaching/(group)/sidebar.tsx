@@ -86,11 +86,8 @@ export function TeachingSidebar() {
               key={item.id}
               href={item.href}
               className={cn(
-                'w-full h-12 flex items-center gap-3 px-5 py-3 rounded-l-xl rounded-r-none text-normal transition-all',
-                {
-                  'bg-primary-cta text-primary-text-light shadow-sm font-semibold': isActive,
-                  'bg-primary-subtle text-secondary-text hover:bg-primary-light/60 hover:text-primary-text-dark': !isActive,
-                }
+                'w-full h-12 flex items-center gap-3 px-5 py-3 rounded-l-xl rounded-r-none text-normal bg-primary-subtle text-secondary-text hover:bg-primary-light/60 hover:text-primary-text-dark transition-all',
+                { 'bg-primary-cta text-primary-text-light shadow-sm font-semibold hover:bg-primary-cta hover:text-primary-text-light': isActive }
               )}
             >
               <Icon className="size-5 shrink-0" />

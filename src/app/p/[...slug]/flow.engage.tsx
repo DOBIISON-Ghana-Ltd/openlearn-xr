@@ -245,24 +245,12 @@ function PreAssessment(props: IPreAssessment) {
                 key={opt}
                 onClick={() => checkAnswer(index)}
                 className={cn(
-                  'w-full rounded-[5.7px] px-4 py-3 flex items-center justify-between transition-colors duration-200 border',
+                  'w-full rounded-[5.7px] px-4 py-3 flex items-center justify-between border border-transparent bg-primary-subtle hover:bg-primary-light/40 cursor-pointer transition-colors duration-200',
                   {
-                    // Default un-answered option styling
-                    'bg-primary-subtle border-transparent hover:bg-primary-light/40 cursor-pointer': !isAnswered && !isPendingOption,
-
-                    // Pending submission indicator styling
-                    'border-primary-cta ring-2 ring-primary-cta/20 bg-primary-light/60': isPendingOption,
-
-                    // Correct answer styling (only if user chose correctly)
-                    'border-success bg-success/10 ring-2 ring-success/20 font-medium': isAnswered && isCorrect,
-
-                    // Wrong answer styling (only on the option the user chose)
-                    'border-error bg-error/10 ring-2 ring-error/20 font-medium': isAnswered && isWrong,
-
-                    // Non-selected options once answered (neutral, does not reveal the correct answer)
-                    'bg-primary-subtle/40 border-transparent opacity-50 cursor-default': isAnswered && !isSelected,
-
-                    'pointer-events-none': isAnswered || isPending,
+                    'border-primary-cta ring-2 ring-primary-cta/20 bg-primary-light/60 pointer-events-none': isPendingOption,
+                    'border-success bg-success/10 ring-2 ring-success/20 font-medium pointer-events-none': isAnswered && isCorrect,
+                    'border-error bg-error/10 ring-2 ring-error/20 font-medium pointer-events-none': isAnswered && isWrong,
+                    'bg-primary-subtle/40 opacity-50 cursor-default pointer-events-none hover:bg-primary-subtle/40': isAnswered && !isSelected,
                   }
                 )}
               >

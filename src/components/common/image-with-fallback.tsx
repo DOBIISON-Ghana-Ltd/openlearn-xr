@@ -36,8 +36,8 @@ export const ImageWithFallback = ({
       {showFallback && (
         <div
           className={cn(
-            "size-full flex-center",
-            { "absolute inset-0 z-0": src && !hasError, relative: !src || hasError },
+            "size-full flex-center relative",
+            { "absolute inset-0 z-0": Boolean(src && !hasError) },
             fallbackClassName
           )}
         >
@@ -54,10 +54,9 @@ export const ImageWithFallback = ({
           {...rest}
           src={src}
           alt={alt}
-          className={cn(className, "transition-opacity duration-300 relative z-1", {
+          className={cn("transition-opacity duration-300 relative z-1 opacity-100", {
             "opacity-0": isLoading,
-            "opacity-100": !isLoading,
-          })}
+          }, className)}
           onLoad={(e) => {
             setIsLoading(false);
             onLoad?.(e);
