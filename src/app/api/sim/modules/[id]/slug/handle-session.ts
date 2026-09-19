@@ -2,6 +2,8 @@ import { JSend } from "@/lib/utils/jsend";
 import prisma from "@/adapters/db/client";
 import ZSim from "@/data/api/sim/sim.schema";
 
+const ZGetRes = ZSim.SimModuleGetSlug.shape.res;
+
 export async function handleGetSessionSlug(id: string) {
   const liveSession = await prisma.liveSession.findUnique({
     where: { joinCode: id },
@@ -25,5 +27,5 @@ export async function handleGetSessionSlug(id: string) {
     slug: liveSession.moduleVersion.module.slug,
   };
 
-  return JSend.success(ZSim.SimModuleGetSlug.shape.res.parse(resData));
+  return JSend.success(ZGetRes.parse(resData));
 }

@@ -4,6 +4,8 @@ import { secureApiRoute } from "@/lib/utils/secure-api-route";
 import prisma from "@/adapters/db/client";
 import ZApp from "@/data/api/app/app.schema";
 
+const ZGetRes = ZApp.AppOrgGetMembers.shape.res;
+
 export const GET = secureApiRoute(async (req: NextRequest, ctx, user) => {
   const { orgId } = (await ctx.params) as { orgId: string };
 
@@ -22,7 +24,7 @@ export const GET = secureApiRoute(async (req: NextRequest, ctx, user) => {
     orderBy: { createdAt: "asc" },
   });
 
-  const parsed = ZApp.AppOrgGetMembers.shape.res.parse(
+  const parsed = ZGetRes.parse(
     members.map((m) => ({
       id: m.id,
       role: m.role,
@@ -34,9 +36,11 @@ export const GET = secureApiRoute(async (req: NextRequest, ctx, user) => {
   return JSend.success(parsed);
 });
 
+const ZDeleteBody = ZApp.AppOrgDeleteMember.shape.body;
+
 export const DELETE = secureApiRoute(async (req: NextRequest, ctx, user) => {
   const { orgId } = (await ctx.params) as { orgId: string };
-  const body = ZApp.AppOrgDeleteMember.shape.body.parse(await req.json());
+  const body = ZDeleteBody.parse(await req.json());
 
   const callerMember = await prisma.member.findFirst({
     where: { userId: user.id, organizationId: orgId, role: "owner" },

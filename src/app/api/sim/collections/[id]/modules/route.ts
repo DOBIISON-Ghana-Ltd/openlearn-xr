@@ -3,6 +3,8 @@ import prisma from "@/adapters/db/client";
 import ZSim from "@/data/api/sim/sim.schema";
 import { apiHandler } from "@/lib/utils/api-handler";
 
+const ZGetRes = ZSim.SimCollectionGetModules.shape.res;
+
 export const GET = apiHandler(async (req, ctx: { params: Promise<{ id: string }> }) => {
   const { id } = await ctx.params;
 
@@ -48,7 +50,7 @@ export const GET = apiHandler(async (req, ctx: { params: Promise<{ id: string }>
     },
   });
 
-  const parsedData = ZSim.SimCollectionGetModules.shape.res.parse({
+  const parsedData = ZGetRes.parse({
     ...collection,
     modules: moduleVersions,
   });

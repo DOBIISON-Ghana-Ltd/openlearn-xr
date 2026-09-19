@@ -7,6 +7,8 @@ import {
   ZModuleVersion,
   ZLiveSession,
   ZSessionPlayer,
+  ZSessionAnalytic,
+  ZPlayAttempt,
   ZModuleCheckpoint,
   ServerModeEnum,
 } from "@/data/schema.base";
@@ -97,6 +99,7 @@ const SimCheckpointPostAnswer = ZApi({
     correctAnswer: z.number().int(),
     explanation: z.string(),
     pointsAwarded: z.number().int(),
+    checkpointPoints: z.number().int().optional(),
     nextCheckpointId: z.string(),
     moduleId: z.string().optional(),
   }),
@@ -185,6 +188,7 @@ const SimSessionGetStats = ZApi({
   }).extend({
     isHost: z.boolean().optional(),
     sessionId: ZLiveSession.shape.id.optional(),
+    isFull: z.boolean().optional(),
   }),
 });
 
@@ -209,11 +213,10 @@ const SimModuleGetStats = ZApi({
 // POST /api/sim/sessions/[id]/join — join a session
 // ---------------------------------------------------------------------------
 const SimSessionPostJoin = ZApi({
-  body: ZLiveSession.pick({
-    joinCode: true,
-    name: true,
-  }).extend({
-    avatar: z.string().optional(),
+  body: z.object({
+    joinCode: ZLiveSession.shape.joinCode,
+    name: ZSessionPlayer.shape.name,
+    avatar: ZSessionPlayer.shape.avatar,
   }),
   res: z.object({
     playerId: ZSessionPlayer.shape.id,
@@ -276,6 +279,21 @@ const SimGeneralPostRetake = ZApi({
 });
 
 // ---------------------------------------------------------------------------
+// POST /api/sim/play/[...slug]/test-score — record pre-assessment score
+// ---------------------------------------------------------------------------
+const SimGeneralPostTestScore = ZApi({
+  params: z.object({
+    mode: ServerModeEnum,
+    playId: z.string(),
+    playerId: z.string(),
+  }),
+  body: z.object({
+    preAssessmentEarnedPoints: z.number().int(),
+    preAssessmentTotalPoints: z.number().int(),
+  })
+});
+
+// ---------------------------------------------------------------------------
 // GET /api/sim/sessions/[id]/players — list of players in session
 // ---------------------------------------------------------------------------
 const SimSessionGetPlayers = ZApi({
@@ -288,8 +306,14 @@ const SimSessionGetPlayers = ZApi({
       name: true,
       avatar: true,
       joinedAt: true,
-      score: true,
-      completedAt: true
+      completedAt: true,
+    }).extend({
+      playAttempt: ZPlayAttempt.pick({
+        accumulatedPoints: true,
+        totalCheckpointPoints: true,
+        preAssessmentEarnedPoints: true,
+        preAssessmentTotalPoints: true,
+      }).nullable(),
     })
   ),
 });
@@ -355,6 +379,19 @@ const SimSessionGetCheckpoints = ZApi({
   ),
 });
 
+// ---------------------------------------------------------------------------
+// POST /api/sim/session-analytics — post a session analytic event
+// ---------------------------------------------------------------------------
+const SimSessionAnalyticsPostOne = ZApi({
+  body: ZSessionAnalytic.pick({
+    sessionId: true,
+    playerId: true,
+    event: true,
+    payload: true,
+  }),
+  res: ZSessionAnalytic,
+});
+
 const schema = {
   SimModuleGetAll,
   SimModuleGetOne,
@@ -369,6 +406,7 @@ const schema = {
   SimGeneralGetNavigate,
   SimGeneralPostNavigate,
   SimGeneralPostRetake,
+  SimGeneralPostTestScore,
 
   SimCollectionGetAll,
   SimCollectionGetModules,
@@ -379,6 +417,8 @@ const schema = {
   SimSessionGetCheckpoints,
   SimSessionPostLeave,
   SimSessionPostEnd,
+
+  SimSessionAnalyticsPostOne,
 };
 
 export default schema;

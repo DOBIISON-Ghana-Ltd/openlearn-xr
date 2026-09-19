@@ -4,9 +4,12 @@ import ZSim from "@/data/api/sim/sim.schema";
 import { handleGetSessionSlug } from "./handle-session";
 import { handleGetModuleSlug } from "./handle-module";
 
+const ZGetParams = ZSim.SimModuleGetSlug.shape.params;
+const ZGetQuery = ZSim.SimModuleGetSlug.shape.query;
+
 export const GET = apiHandler<{ id: string }>(async (req, ctx) => {
-  const params = ZSim.SimModuleGetSlug.shape.params.parse(await ctx.params);
-  const searchParams = ZSim.SimModuleGetSlug.shape.query.parse(
+  const params = ZGetParams.parse(await ctx.params);
+  const searchParams = ZGetQuery.parse(
     Object.fromEntries(req.nextUrl.searchParams)
   );
 

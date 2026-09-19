@@ -8,6 +8,17 @@ type RouteHandler<TParams = any> = (
   ctx: { params: Promise<TParams> }
 ) => Promise<NextResponse>;
 
+export class ApiError extends Error {
+  constructor(
+    public override message: string,
+    public statusCode: number = 400,
+    public code?: number
+  ) {
+    super(message);
+    this.name = "ApiError";
+  }
+}
+
 /**
  * Parses and handles errors globally, returning a standardized JSend response.
  */

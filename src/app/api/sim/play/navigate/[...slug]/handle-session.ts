@@ -3,6 +3,8 @@ import prisma from "@/adapters/db/client";
 import ZSim from "@/data/api/sim/sim.schema";
 import { triggerSessionEvent } from "@/adapters/realtime/server";
 
+const ZGetRes = ZSim.SimGeneralGetNavigate.shape.res;
+
 export async function handleGetSessionNav(playId: string, playerId: string, isHost?: boolean) {
   const liveSession = await prisma.liveSession.findUnique({
     where: { joinCode: playId },
@@ -56,7 +58,7 @@ export async function handleGetSessionNav(playId: string, playerId: string, isHo
   if (isHost || isTutorLed) {
     const currentTab = liveSession.currentTab;
     const progress = Math.round((currentTab / 5) * 100);
-    return JSend.success(ZSim.SimGeneralGetNavigate.shape.res.parse({ currentTab, progress }));
+    return JSend.success(ZGetRes.parse({ currentTab, progress }));
   };
 
   if (!attempt) return JSend.error("Error occured", 500);
@@ -66,11 +68,13 @@ export async function handleGetSessionNav(playId: string, playerId: string, isHo
     currentTab: attempt.currentTab,
     progress: attempt.progress,
   };
-  return JSend.success(ZSim.SimGeneralGetNavigate.shape.res.parse(resData));
+  return JSend.success(ZGetRes.parse(resData));
 }
 
+const ZPostRes = ZSim.SimGeneralPostNavigate.shape.res;
+
 export async function handlePostSessionNav(playId: string, playerId: string, nextTab: number, isHost?: boolean) {
-  const responseMsg = ZSim.SimGeneralPostNavigate.shape.res.parse("Navigation updated successfully.");
+  const responseMsg = ZPostRes.parse("Navigation updated successfully.");
   const progress = Math.round((nextTab / 5) * 100);
 
   const liveSession = await prisma.liveSession.findUnique({

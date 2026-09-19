@@ -3,6 +3,8 @@ import prisma from "@/adapters/db/client";
 import ZSim from "@/data/api/sim/sim.schema";
 import { apiHandler } from "@/lib/utils/api-handler";
 
+const ZGetRes = ZSim.SimCollectionGetAll.shape.res;
+
 export const GET = apiHandler(async (req) => {
   const collections = await prisma.collection.findMany({
     select: {
@@ -20,6 +22,6 @@ export const GET = apiHandler(async (req) => {
     },
   });
 
-  const parsedData = ZSim.SimCollectionGetAll.shape.res.parse(collections);
+  const parsedData = ZGetRes.parse(collections);
   return JSend.success(parsedData);
 });

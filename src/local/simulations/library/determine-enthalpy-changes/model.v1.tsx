@@ -835,56 +835,21 @@ export function EnthalpyChangesOverlay() {
     : 'Endothermic (ΔH > 0)';
 
   return (
-    <div
-      style={{
-        position: 'absolute',
-        left: 24,
-        top: '50%',
-        transform: 'translateY(-50%)',
-        zIndex: 50,
-        pointerEvents: 'none',
-        display: 'flex',
-        flexDirection: 'column',
-        gap: 10,
-        minWidth: 170,
-      }}
-    >
+    <div className="absolute left-6 bottom-6 z-50 pointer-events-none flex flex-col gap-2.5 w-60">
       {/* Live Temperature & Reaction State Card */}
-      <div
-        style={{
-          background: 'rgba(244, 248, 255, 0.94)',
-          border: '1px solid rgba(100, 160, 230, 0.35)',
-          borderRadius: 14,
-          padding: '14px 18px',
-          backdropFilter: 'blur(10px)',
-        }}
-      >
-        <p
-          style={{
-            margin: 0,
-            fontSize: 10,
-            color: '#7a9ec0',
-            fontFamily: 'system-ui',
-            fontWeight: 600,
-            letterSpacing: '0.08em',
-            textTransform: 'uppercase',
-          }}
-        >
+      <div className="bg-[#f4f8ff]/95 border border-[#64a0e6]/35 rounded-[14px] px-[18px] py-3.5 backdrop-blur-md">
+        <p className="m-0 text-[10px] text-[#7a9ec0] font-semibold tracking-[0.08em] uppercase">
           Calorimeter Temperature
         </p>
-        <div style={{ display: 'flex', alignItems: 'baseline', gap: 10, margin: '6px 0 4px' }}>
-          <span style={{ fontSize: 32, color: '#1e3a5f', fontFamily: 'system-ui', fontWeight: 800, lineHeight: 1 }}>
+        <div className="flex items-baseline gap-2.5 mt-1.5 mb-1">
+          <span className="text-[32px] text-[#1e3a5f] font-extrabold leading-none tabular-nums">
             {currentTemp.toFixed(1)}°C
           </span>
           <span
+            className="text-xs font-bold px-2 py-[3px] rounded-md tabular-nums"
             style={{
-              fontSize: 12,
               color: deltaT >= 0 ? '#e05252' : '#0284c7',
-              fontFamily: 'system-ui',
-              fontWeight: 700,
               backgroundColor: deltaT >= 0 ? 'rgba(224, 82, 82, 0.12)' : 'rgba(2, 132, 199, 0.12)',
-              padding: '3px 8px',
-              borderRadius: 6,
             }}
           >
             ΔT: {deltaT >= 0 ? '+' : ''}{deltaT.toFixed(1)}°C
@@ -893,109 +858,49 @@ export function EnthalpyChangesOverlay() {
       </div>
 
       {/* Reaction Title & Status Card */}
-      <div
-        style={{
-          background: 'rgba(244, 248, 255, 0.94)',
-          border: '1px solid rgba(100, 160, 230, 0.35)',
-          borderRadius: 14,
-          padding: '14px 18px',
-          backdropFilter: 'blur(10px)',
-        }}
-      >
-        <p
-          style={{
-            margin: 0,
-            fontSize: 10,
-            color: '#7a9ec0',
-            fontFamily: 'system-ui',
-            fontWeight: 600,
-            letterSpacing: '0.08em',
-            textTransform: 'uppercase',
-          }}
-        >
+      <div className="bg-[#f4f8ff]/95 border border-[#64a0e6]/35 rounded-[14px] px-[18px] py-3.5 backdrop-blur-md">
+        <p className="m-0 text-[10px] text-[#7a9ec0] font-semibold tracking-[0.08em] uppercase">
           Calorimetry
         </p>
-        <p
-          style={{
-            margin: '5px 0 2px',
-            fontSize: 18,
-            color: '#1e3a5f',
-            fontFamily: 'system-ui',
-            fontWeight: 800,
-            lineHeight: 1.2,
-          }}
-        >
+        <p className="mt-1 mb-0.5 text-lg text-[#1e3a5f] font-extrabold leading-tight">
           {shortTitle}
         </p>
         {equationFormula && (
-          <p style={{ margin: '2px 0 6px', fontSize: 12, color: '#64748b', fontFamily: 'system-ui', fontWeight: 500 }}>
+          <p className="mt-0.5 mb-1.5 text-xs text-[#64748b] font-medium">
             {equationFormula}
           </p>
         )}
-        <div style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }}>
+        <div className="inline-flex items-center gap-1.5">
           <span
-            style={{
-              display: 'inline-block',
-              width: 8,
-              height: 8,
-              borderRadius: '50%',
-              backgroundColor: statusColor,
-            }}
+            className="inline-block size-2 rounded-full"
+            style={{ backgroundColor: statusColor }}
           />
-          <span style={{ fontSize: 12, color: statusColor, fontFamily: 'system-ui', fontWeight: 700 }}>
+          <span className="text-xs font-bold" style={{ color: statusColor }}>
             {statusText}
           </span>
         </div>
       </div>
 
       {/* Thermodynamic Calculation Card */}
-      <div
-        style={{
-          background: 'rgba(244, 248, 255, 0.94)',
-          border: '1px solid rgba(100, 160, 230, 0.35)',
-          borderRadius: 14,
-          padding: '14px 18px',
-          backdropFilter: 'blur(10px)',
-        }}
-      >
-        <p
-          style={{
-            margin: 0,
-            fontSize: 10,
-            color: '#7a9ec0',
-            fontFamily: 'system-ui',
-            fontWeight: 600,
-            letterSpacing: '0.08em',
-            textTransform: 'uppercase',
-          }}
-        >
+      <div className="bg-[#f4f8ff]/95 border border-[#64a0e6]/35 rounded-[14px] px-[18px] py-3.5 backdrop-blur-md">
+        <p className="m-0 text-[10px] text-[#7a9ec0] font-semibold tracking-[0.08em] uppercase">
           Heat Transfer
         </p>
-        <p
-          style={{
-            margin: '4px 0 8px',
-            fontSize: 14,
-            color: '#334e82',
-            fontFamily: 'system-ui',
-            fontWeight: 700,
-          }}
-        >
+        <p className="mt-1 mb-2 text-sm text-[#334e82] font-bold">
           q = m · c · ΔT
         </p>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 5 }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', gap: 12 }}>
-            <span style={{ fontSize: 11, color: '#8ab0d0', fontFamily: 'system-ui' }}>Mass (m)</span>
-            <span style={{ fontSize: 12, color: '#1e3a5f', fontFamily: 'system-ui', fontWeight: 600 }}>{massGrams} g</span>
+        <div className="flex flex-col gap-1.25">
+          <div className="flex justify-between gap-3">
+            <span className="text-[11px] text-[#8ab0d0]">Mass (m)</span>
+            <span className="text-xs text-[#1e3a5f] font-semibold tabular-nums">{massGrams} g</span>
           </div>
-          <div style={{ width: '100%', height: 1, background: 'rgba(100, 160, 230, 0.2)', margin: '3px 0' }} />
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', gap: 12 }}>
-            <span style={{ fontSize: 12, color: '#7a9ec0', fontFamily: 'system-ui', fontWeight: 600 }}>q</span>
+          <div className="w-full h-px bg-[#64a0e6]/20 my-0.5" />
+          <div className="flex justify-between items-baseline gap-3">
+            <span className="text-xs text-[#7a9ec0] font-semibold">q</span>
             <span
+              className="text-lg font-extrabold tabular-nums"
               style={{
-                fontSize: 18,
                 color: !initiateReaction ? '#1e3a5f' : isExothermic ? '#e06060' : '#0ea5e9',
-                fontFamily: 'system-ui',
-                fontWeight: 800,
               }}
             >
               {heatKJ >= 0 ? '+' : ''}{heatKJ.toFixed(2)} kJ

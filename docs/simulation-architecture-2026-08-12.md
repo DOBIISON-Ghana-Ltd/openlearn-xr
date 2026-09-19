@@ -1,7 +1,7 @@
 # Interactive Simulation Pipeline & Exploration Architecture
 
 **Date**: August 12, 2026  
-**Target Path**: `src/local/simulations` & `src/app/(new)/p/[...slug]/flow.explore.tsx`  
+**Target Path**: `src/local/simulations` & `src/app/p/[...slug]/flow.explore.tsx`  
 **Status**: Proposal & Technical Specification  
 
 ---
@@ -240,7 +240,7 @@ export const useSimResolver = () => {
 
 ---
 
-## 🎛️ 3. Control Blocks Architecture (`src/components/(new)/control-blocks`)
+## 🎛️ 3. Control Blocks Architecture (`src/components/control-blocks`)
 
 Modular control UI components created for each input widget type:
 - `StepperControlBlock.tsx` (`type === "number"`)

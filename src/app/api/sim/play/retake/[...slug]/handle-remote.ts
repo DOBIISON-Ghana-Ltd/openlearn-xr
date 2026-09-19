@@ -3,6 +3,8 @@ import { JSend } from "@/lib/utils/jsend";
 import prisma from "@/adapters/db/client";
 import ZSim from "@/data/api/sim/sim.schema";
 
+const ZPostRes = ZSim.SimGeneralPostRetake.shape.res;
+
 export function handlePostRemoteRetake(playId: string) {
   return secureApiRoute<{ slug: string[] }>(async (req, ctx, user) => {
     const attempt = await prisma.playAttempt.findFirst({
@@ -35,6 +37,9 @@ export function handlePostRemoteRetake(playId: string) {
         progress: 0,
         currentCheckpointIndex: 0,
         accumulatedPoints: 0,
+        totalCheckpointPoints: 0,
+        preAssessmentEarnedPoints: 0,
+        preAssessmentTotalPoints: 0,
         currentCheckpointId: firstCheckpoint?.id ?? null,
         totalCheckpoints,
       },
@@ -45,6 +50,6 @@ export function handlePostRemoteRetake(playId: string) {
       totalCheckpoints,
     };
 
-    return JSend.success(ZSim.SimGeneralPostRetake.shape.res.parse(resData));
+    return JSend.success(ZPostRes.parse(resData));
   });
 }

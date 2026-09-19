@@ -4,6 +4,8 @@ import ZSim from "@/data/api/sim/sim.schema";
 import { Infer } from "@/data/types.base";
 import { triggerSessionEvent } from "@/adapters/realtime/server";
 
+const ZPostRes = ZSim.SimCheckpointPostAnswer.shape.res;
+
 type IAnswerBody = Infer["SimCheckpointPostAnswer"]["body"];
 
 export async function handlePostSessionAnswer(playId: string, body: IAnswerBody) {
@@ -58,19 +60,21 @@ export async function handlePostSessionAnswer(playId: string, body: IAnswerBody)
     where: { id: attempt.id },
     data: {
       currentCheckpointId: nextCheckpointId || targetCheckpointId,
-      currentCheckpointIndex: attempt.currentCheckpointIndex + 1,
-      accumulatedPoints: finalScore,
+      currentCheckpointIndex: { increment: 1 },
+      accumulatedPoints: { increment: pointsAwarded },
+      totalCheckpointPoints: { increment: checkpoint.points },
     },
   });
 
   // 2. If finished, mark SessionPlayer completed
-  await prisma.sessionPlayer.update({
-    where: { id: body.sessionPlayerId },
-    data: {
-      score: finalScore,
-      ...(nextCheckpointId ? {} : { completedAt: new Date() }),
-    },
-  });
+  if (!nextCheckpointId) {
+    await prisma.sessionPlayer.update({
+      where: { id: body.sessionPlayerId },
+      data: {
+        completedAt: new Date(),
+      },
+    });
+  }
 
   // 3. Broadcast player score update to live session participants & host
   await triggerSessionEvent(playId, "player:updated", {
@@ -84,9 +88,10 @@ export async function handlePostSessionAnswer(playId: string, body: IAnswerBody)
     correctAnswer: checkpoint.correctAnswer,
     explanation: checkpoint.explanation,
     pointsAwarded,
+    checkpointPoints: checkpoint.points,
     nextCheckpointId,
     moduleId,
   };
 
-  return JSend.success(ZSim.SimCheckpointPostAnswer.shape.res.parse(resData));
+  return JSend.success(ZPostRes.parse(resData));
 }

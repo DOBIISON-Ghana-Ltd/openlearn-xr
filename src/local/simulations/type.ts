@@ -7,6 +7,7 @@ export interface BaseControl {
   label: string;
   description: string;
   type: ControlType;
+  unit?: string;
 }
 
 export interface NumberControl extends BaseControl {

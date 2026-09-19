@@ -190,3 +190,11 @@
 @utility flex-center {
   @apply flex items-center justify-center;
 }
+
+@utility bg-grid-blueprint {
+  background-color: #f4f8ff;
+  background-image:
+    linear-gradient(rgba(100, 160, 230, 0.18) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(100, 160, 230, 0.18) 1px, transparent 1px);
+  background-size: 36px 36px;
+}

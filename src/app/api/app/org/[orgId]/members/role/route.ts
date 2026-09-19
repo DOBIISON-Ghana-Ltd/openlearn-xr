@@ -4,11 +4,11 @@ import { secureApiRoute } from "@/lib/utils/secure-api-route";
 import prisma from "@/adapters/db/client";
 import ZApp from "@/data/api/app/app.schema";
 
+const ZPatchBody = ZApp.AppOrgUpdateMemberRole.shape.body;
+
 export const PATCH = secureApiRoute(async (req: NextRequest, ctx, user) => {
   const { orgId } = (await ctx.params) as { orgId: string };
-  const body = ZApp.AppOrgUpdateMemberRole.shape.body.parse(
-    await req.json()
-  );
+  const body = ZPatchBody.parse(await req.json());
 
   const callerMember = await prisma.member.findFirst({
     where: { userId: user.id, organizationId: orgId, role: "owner" },

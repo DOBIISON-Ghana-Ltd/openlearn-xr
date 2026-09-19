@@ -1,7 +1,7 @@
 "use client";
 
-import { 
-  useQuery, 
+import {
+  useQuery,
   useMutation,
   UseQueryResult,
   UseMutationResult,

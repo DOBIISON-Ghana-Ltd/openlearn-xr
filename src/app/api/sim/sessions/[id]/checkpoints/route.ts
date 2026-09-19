@@ -3,6 +3,8 @@ import { JSend } from "@/lib/utils/jsend";
 import prisma from "@/adapters/db/client";
 import ZSim from "@/data/api/sim/sim.schema";
 
+const ZGetRes = ZSim.SimSessionGetCheckpoints.shape.res;
+
 export const GET = secureApiRoute<{ id: string }>(async (req, ctx, user, session) => {
   const { id: joinCode } = await ctx.params;
 
@@ -57,6 +59,6 @@ export const GET = secureApiRoute<{ id: string }>(async (req, ctx, user, session
     },
   });
 
-  const parsedData = ZSim.SimSessionGetCheckpoints.shape.res.parse(sessionCheckpoints);
+  const parsedData = ZGetRes.parse(sessionCheckpoints);
   return JSend.success(parsedData);
 });

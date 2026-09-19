@@ -1,64 +1,6 @@
-import { LocalSimulationConfig } from "../../type";
-import Model from "./model.v0";
+// Active version export (switch to ./config.v0, ./config.v1, etc.)
+export * from "./config.v0";
 
-export type IValueMap = {
-  circuit_config: "Series" | "Parallel";
-  c1_value: number;
-  c2_value: number;
-  multimeter_mode: "Effective Capacitance" | "Potential Difference" | "Total Charge";
-};
-
-export const config: LocalSimulationConfig = {
-  type: "internal",
-  slug: "series-and-parallel-connections-of-capacitors",
-  name: "Series and Parallel Connections of Capacitors",
-  Model,
-  controls: [
-    {
-      id: "circuit_config",
-      label: "Circuit Mode",
-      description: "Select how the two capacitors are wired together.",
-      type: "select",
-      options: [
-        "Series",
-        "Parallel"
-      ],
-      value: "Series",
-      defaultValue: "Series"
-    },
-    {
-      id: "c1_value",
-      label: "Capacitor 1 (μF)",
-      description: "Adjust the capacitance rating of the first capacitor.",
-      type: "slider",
-      value: 2,
-      defaultValue: 2,
-      min: 1,
-      max: 10
-    },
-    {
-      id: "c2_value",
-      label: "Capacitor 2 (μF)",
-      description: "Adjust the capacitance rating of the second capacitor.",
-      type: "slider",
-      value: 3,
-      defaultValue: 3,
-      min: 1,
-      max: 10
-    },
-    {
-      id: "multimeter_mode",
-      label: "Multimeter Mode",
-      description: "Choose which circuit property the digital meter should display.",
-      type: "select",
-      options: [
-        "Effective Capacitance",
-        "Potential Difference",
-        "Total Charge"
-      ],
-      value: "Effective Capacitance",
-      defaultValue: "Effective Capacitance"
-    }
-  ]
-};
-
+// Versioned exports
+export { config as configV0, type IValueMap as IValueMapV0 } from "./config.v0";
+export { config as configV1, type IValueMap as IValueMapV1 } from "./config.v1";

@@ -3,9 +3,12 @@ import { JSend } from "@/lib/utils/jsend";
 import prisma from "@/adapters/db/client";
 import ZSim from "@/data/api/sim/sim.schema";
 
+const ZGetParams = ZSim.SimSessionGetPlayers.shape.params;
+const ZGetRes = ZSim.SimSessionGetPlayers.shape.res;
+
 export const GET = apiHandler<{ id: string }>(async (req, ctx) => {
   const params = await ctx.params;
-  const { id: playId } = ZSim.SimSessionGetPlayers.shape.params.parse(params);
+  const { id: playId } = ZGetParams.parse(params);
 
   const players = await prisma.sessionPlayer.findMany({
     where: { session: { joinCode: playId } },
@@ -14,16 +17,23 @@ export const GET = apiHandler<{ id: string }>(async (req, ctx) => {
       name: true,
       avatar: true,
       joinedAt: true,
-      score: true,
       completedAt: true,
+      playAttempt: {
+        select: {
+          accumulatedPoints: true,
+          totalCheckpointPoints: true,
+          preAssessmentEarnedPoints: true,
+          preAssessmentTotalPoints: true,
+        },
+      },
     },
     orderBy: [
-      { score: "desc" },
+      { playAttempt: { accumulatedPoints: "desc" } },
       { joinedAt: "asc" },
     ],
   });
 
-  const parsedData = ZSim.SimSessionGetPlayers.shape.res.parse(players);
+  const parsedData = ZGetRes.parse(players);
 
   return JSend.success(parsedData);
 });

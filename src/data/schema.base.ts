@@ -1,5 +1,6 @@
 import z from "zod";
 import { AVATARS, ORG_LOGOS, avatarKeys, logoKeys } from "@/lib/constants/avatars";
+import { JOIN_CODE_REGEX } from "@/lib/utils/generate-join-code";
 
 // ==========================================
 // UTILITIES
@@ -26,16 +27,21 @@ export const ZSessionConfig = z.object({
   allowLateAdmissions: z.boolean().default(true),
   maxAdmissions: z.number().int().positive().default(50),
   controlMode: z.enum(["tutor-led", "self-paced"]).default("self-paced"),
-  allowHints: z.boolean().default(true)
+  allowHints: z.boolean().default(true),
+  allowScoreVisibility: z.boolean().default(true),
 }).catch({
   allowLateAdmissions: true,
   maxAdmissions: 50,
   controlMode: "self-paced",
-  allowHints: true
+  allowHints: true,
+  allowScoreVisibility: true,
 });
 
 export const ServerModeEnum = z.enum(["local", "remote", "session"]);
 export type ServerMode = z.infer<typeof ServerModeEnum>;
+
+export const PlayModeEnum = z.enum(["module", "session"]);
+export type PlayMode = z.infer<typeof PlayModeEnum>;
 
 export const ZBaseFilter = z.object({
   search: z.string().optional(),
@@ -146,6 +152,8 @@ export const GamificationLogActionEnum = z.enum(["XP_EARNED", "XP_DEDUCTED", "ST
 
 export const LiveSessionStatusEnum = z.enum(["STAGING", "ACTIVE", "COMPLETED", "CANCELLED"]);
 
+export const SessionAnalyticEventEnum = z.enum(["pre-test:changed", "post-test:changed", "tab:changed", "control:changed"]);
+
 export const EmailLogStatusEnum = z.enum(["QUEUED", "SENT", "FAILED", "BOUNCED"]);
 
 export const ZNote = z.object({
@@ -157,7 +165,8 @@ export const ZNote = z.object({
     preAssessment: z.object({
       question: z.string(),
       options: z.string().array(),
-      answer: z.number()
+      answer: z.number(),
+      points: z.number().int().optional(),
     }).array(),
   }),
   explanation: z.object({
@@ -445,11 +454,15 @@ export const ZPlayAttempt = z.object({
   userId: z.string().nullable(),
   sessionId: z.string().nullable(),
   moduleVersionId: z.string(),
-  playMode: z.enum(["session", "library", "free"]),
+  playMode: PlayModeEnum,
   currentTab: z.number().int().default(0),
   progress: z.number().int().default(0),
   currentCheckpointIndex: z.number().int().default(0),
+  totalCheckpoints: z.number().int().default(0),
   accumulatedPoints: z.number().int().default(0),
+  totalCheckpointPoints: z.number().int().default(0),
+  preAssessmentEarnedPoints: z.number().int().default(0),
+  preAssessmentTotalPoints: z.number().int().default(0),
   sessionPlayerId: z.string().nullable(),
   createdAt: ZDate,
   updatedAt: ZDate,
@@ -473,8 +486,15 @@ export const ZLiveSession = z.object({
   hostId: z.string(),
   organizationId: z.string().nullable(),
   moduleVersionId: z.string(),
-  joinCode: z.string(),
-  name: z.string(),
+  joinCode: z
+    .string()
+    .trim()
+    .toLowerCase()
+    .min(1, { error: "Session code is required" })
+    .regex(JOIN_CODE_REGEX, {
+      error: "Invalid session code format.",
+    }),
+  name: z.string().min(1),
   status: LiveSessionStatusEnum.default("STAGING"),
   config: ZSessionConfig,
   currentTab: z.number().int().default(0),
@@ -497,20 +517,32 @@ export const ZSessionPlayer = z.object({
   id: z.string(),
   sessionId: z.string(),
   userId: z.string().nullable(),
-  name: z.string(),
+  name: z
+    .string()
+    .trim()
+    .min(1, { error: "Name is required" })
+    .max(14, { error: "Name must be at most 14 characters" }),
   avatar: z.enum(avatarKeys).default("avatar-01"),
-  score: z.number().int().default(0),
-  completionRate: z.number().min(0).max(1).default(0.0),
   joinedAt: ZDate,
   completedAt: ZDate.nullable(),
+});
+
+export const ZSessionAnalyticPayload = z.object({
+  checkpointId: z.string().optional(),
+  questionIndex: z.int().optional(),
+  selectedIndex: z.int().optional(),
+  isCorrect: z.boolean().optional(),
+  tabIndex: z.int().optional(),
+  controlKey: z.string().optional(),
+  controlValue: z.union([z.number(), z.string(), z.boolean()]).optional(),
 });
 
 export const ZSessionAnalytic = z.object({
   id: z.string(),
   sessionId: z.string(),
   playerId: z.string(),
-  event: z.string(),
-  payload: z.record(z.string(), z.any()).nullable(),
+  event: SessionAnalyticEventEnum,
+  payload: ZSessionAnalyticPayload.default({}),
   recordedAt: ZDate,
 });
 
@@ -565,6 +597,7 @@ const baseSchema = {
   ModuleProgressPlayModeEnum,
   GamificationLogActionEnum,
   LiveSessionStatusEnum,
+  SessionAnalyticEventEnum,
   EmailLogStatusEnum,
   // Better Auth Core
   ZUser,
@@ -594,6 +627,7 @@ const baseSchema = {
   ZGamificationLog,
   // Live Sessions
   ZLiveSession,
+  ZSessionConfig,
   ZSessionCheckpoint,
   ZSessionPlayer,
   ZSessionAnalytic,

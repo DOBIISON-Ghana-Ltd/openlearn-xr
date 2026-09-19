@@ -4,7 +4,7 @@ import { Infer, QueryConfig, MutationConfig } from "@/data/types.base";
 import { QUERY_KEYS } from "@/data/key-factory";
 import R from "@/data/route-factory";
 import ZSim from "./sim.schema";
-import * as localDB from "@/local/storage";
+import { SimLocalService } from "@/local/services";
 
 const simModuleGetAll = {
   type: "query",
@@ -21,7 +21,8 @@ const simModuleGetAll = {
 const simModuleGetOne = {
   type: "query",
   queryKey: ({ params, query }: Pick<Infer["SimModuleGetOne"], "params" | "query">) => [...QUERY_KEYS["sim:module:get:one"](params.id, query)],
-  queryFn: async ({ params, query }: Pick<Infer["SimModuleGetOne"], "params" | "query">) => {
+  queryFn: async (vars: Pick<Infer["SimModuleGetOne"], "params" | "query">) => {
+    const { params, query } = vars;
     const data = await fetcher(
       () => axios.get(R["sim:module:get:one"](params), { params: query }),
       ZSim.SimModuleGetOne.shape.res
@@ -33,24 +34,10 @@ const simModuleGetOne = {
 const simCheckpointGetOne = {
   type: "query",
   queryKey: ({ params, query }: Pick<Infer["SimCheckpointGetOne"], "params" | "query">) => [...QUERY_KEYS["sim:checkpoint:get:one"](params.playId, query)],
-  queryFn: async ({ params, query }: Pick<Infer["SimCheckpointGetOne"], "params" | "query">) => {
+  queryFn: async (vars: Pick<Infer["SimCheckpointGetOne"], "params" | "query">) => {
+    const { params, query } = vars;
     if (query.mode === "local") {
-      const attempt = (await localDB.getPlayAttempt(params.playId))!;
-      query.checkpointId = attempt.currentCheckpointId || "";
-
-      const res = await fetcher(
-        () => axios.get(R["sim:checkpoint:get:one"](params), { params: query }),
-        ZSim.SimCheckpointGetOne.shape.res
-      );
-
-      return {
-        checkpoint: res.checkpoint,
-        meta: {
-          currentCheckpointIndex: attempt.currentCheckpointIndex ?? 0,
-          totalCheckpoints: attempt.totalCheckpoints ?? 0,
-          accumulatedPoints: attempt.accumulatedPoints ?? 0,
-        },
-      };
+      return SimLocalService.checkpointGetOne(vars);
     }
 
     const res = await fetcher(
@@ -69,42 +56,10 @@ const simCheckpointGetOne = {
 
 const simCheckpointPostAnswer = {
   type: "mutation",
-  mutationFn: async ({ params, body }: Pick<Infer["SimCheckpointPostAnswer"], "params" | "body">) => {
+  mutationFn: async (vars: Pick<Infer["SimCheckpointPostAnswer"], "params" | "body">) => {
+    const { params, body } = vars;
     if (body.mode === "local") {
-      const attempt = (await localDB.getPlayAttempt(params.playId))!;
-      body.checkpointId = attempt.currentCheckpointId || "";
-
-      const res = await fetcher(
-        () => axios.post(R["sim:checkpoint:post:answer"](params), body),
-        ZSim.SimCheckpointPostAnswer.shape.res
-      );
-
-      const updatedPoints = attempt.accumulatedPoints + (res.isCorrect ? res.pointsAwarded : 0);
-      const nextCheckpointIndex = (attempt.currentCheckpointIndex ?? 0) + 1;
-
-      // 1. Update PlayAttempt in IndexedDB
-      await localDB.upsertPlayAttempt({
-        moduleVersionId: params.playId,
-        currentCheckpointId: res.nextCheckpointId || attempt.currentCheckpointId,
-        currentCheckpointIndex: nextCheckpointIndex,
-        accumulatedPoints: updatedPoints,
-      });
-
-      // 2. If finished, save module completion
-      if (!res.nextCheckpointId && res.moduleId) {
-        const existingCompletion = await localDB.getModuleCompletion(res.moduleId);
-
-        await localDB.upsertModuleCompletion({
-          moduleId: res.moduleId,
-          lastPlayedVersionId: params.playId,
-          score: updatedPoints,
-          highScore: Math.max(existingCompletion?.highScore ?? 0, updatedPoints),
-          totalPlays: (existingCompletion?.totalPlays ?? 0) + 1,
-          lastPlayedAt: new Date().toISOString(),
-        });
-      }
-
-      return res;
+      return SimLocalService.checkpointPostAnswer(vars);
     }
 
     const data = await fetcher(
@@ -202,8 +157,9 @@ const simModuleGetStats = {
 const simSessionPostJoin = {
   type: "mutation",
   mutationFn: async (vars: Pick<Infer["SimSessionPostJoin"], "body">) => {
+    const { body } = vars;
     const data = await fetcher(
-      () => axios.post(R["sim:session:post:join"](), vars.body),
+      () => axios.post(R["sim:session:post:join"](), body),
       ZSim.SimSessionPostJoin.shape.res
     );
     return data;
@@ -213,8 +169,9 @@ const simSessionPostJoin = {
 const simSessionPostLeave = {
   type: "mutation",
   mutationFn: async (vars: Pick<Infer["SimSessionPostLeave"], "params" | "body">) => {
+    const { params, body } = vars;
     const data = await fetcher(
-      () => axios.post(R["sim:session:post:leave"]({ id: vars.params.id }), vars.body),
+      () => axios.post(R["sim:session:post:leave"]({ id: params.id }), body),
       ZSim.SimSessionPostLeave.shape.res
     );
     return data;
@@ -224,8 +181,9 @@ const simSessionPostLeave = {
 const simSessionPostEnd = {
   type: "mutation",
   mutationFn: async (vars: Pick<Infer["SimSessionPostEnd"], "params">) => {
+    const { params } = vars;
     const data = await fetcher(
-      () => axios.post(R["sim:session:post:end"]({ id: vars.params.id }), {}),
+      () => axios.post(R["sim:session:post:end"]({ id: params.id }), {}),
       ZSim.SimSessionPostEnd.shape.res
     );
     return data;
@@ -236,13 +194,10 @@ const simGeneralGetScore = {
   type: "query",
   queryKey: ({ params }: Pick<Infer["SimGeneralGetScore"], "params">) =>
     [...QUERY_KEYS["sim:general:get:score"](params.playId)],
-  queryFn: async ({ params }: Pick<Infer["SimGeneralGetScore"], "params">) => {
+  queryFn: async (vars: Pick<Infer["SimGeneralGetScore"], "params">) => {
+    const { params } = vars;
     if (params.mode === "local") {
-      const [completion, attempt] = await Promise.all([
-        localDB.getModuleCompletion(params.playId),
-        localDB.getPlayAttempt(params.playId),
-      ]);
-      return { score: completion?.lastScore ?? attempt?.accumulatedPoints ?? 0 };
+      return SimLocalService.generalGetScore(vars);
     }
 
     const data = await fetcher(
@@ -262,31 +217,10 @@ const simGeneralGetNavigate = {
   type: "query",
   queryKey: ({ params }: Pick<Infer["SimGeneralGetNavigate"], "params">) =>
     [...QUERY_KEYS["sim:general:get:navigate"](params.playId)],
-  queryFn: async ({ params, query }: Pick<Infer["SimGeneralGetNavigate"], "params" | "query">) => {
+  queryFn: async (vars: Pick<Infer["SimGeneralGetNavigate"], "params" | "query">) => {
+    const { params, query } = vars;
     if (params.mode === "local") {
-      let attempt = await localDB.getPlayAttempt(params.playId);
-      if (!attempt) {
-        const res = await fetcher(
-          () => axios.get(R["sim:general:get:navigate"](params), { params: query }),
-          ZSim.SimGeneralGetNavigate.shape.res
-        );
-
-        attempt = await localDB.upsertPlayAttempt({
-          moduleVersionId: params.playId,
-          currentTab: 0,
-          progress: 0,
-          accumulatedPoints: 0,
-          currentCheckpointIndex: 0,
-          currentCheckpointId: res.checkpointId ?? null,
-          totalCheckpoints: res.totalCheckpoints ?? 0,
-        });
-
-        return { currentTab: 0, progress: 0 };
-      }
-
-      const currentTab = attempt.currentTab ?? 0;
-      const progress = attempt.progress ?? Math.round((currentTab / 5) * 100);
-      return { currentTab, progress };
+      return SimLocalService.generalGetNavigate(vars);
     }
 
     const data = await fetcher(
@@ -299,15 +233,10 @@ const simGeneralGetNavigate = {
 
 const simGeneralPostNavigate = {
   type: "mutation",
-  mutationFn: async ({ params, body }: Pick<Infer["SimGeneralPostNavigate"], "params" | "body">) => {
+  mutationFn: async (vars: Pick<Infer["SimGeneralPostNavigate"], "params" | "body">) => {
+    const { params, body } = vars;
     if (params.mode === "local") {
-      await localDB.upsertPlayAttempt({
-        moduleVersionId: params.playId,
-        currentTab: body.nextTab,
-        progress: Math.round((body.nextTab / 5) * 100),
-      });
-
-      return "Navigation updated successfully.";
+      return SimLocalService.generalPostNavigate(vars);
     }
 
     const data = await fetcher(
@@ -321,23 +250,31 @@ const simGeneralPostNavigate = {
 const simGeneralPostRetake = {
   type: "mutation",
   mutationFn: async (vars: Pick<Infer["SimGeneralPostRetake"], "params">) => {
-    const data = await fetcher(
-      () => axios.post(R["sim:general:post:retake"](vars.params)),
-      ZSim.SimGeneralPostRetake.shape.res
-    );
-
-    if (vars.params.mode === "local") {
-      await localDB.upsertPlayAttempt({
-        moduleVersionId: vars.params.playId,
-        currentTab: 0,
-        progress: 0,
-        currentCheckpointIndex: 0,
-        accumulatedPoints: 0,
-        currentCheckpointId: data.checkpointId ?? null,
-        totalCheckpoints: data.totalCheckpoints ?? 0,
-      });
+    const { params } = vars;
+    if (params.mode === "local") {
+      return SimLocalService.generalPostRetake(vars);
     }
 
+    const data = await fetcher(
+      () => axios.post(R["sim:general:post:retake"](params)),
+      ZSim.SimGeneralPostRetake.shape.res
+    );
+    return data;
+  },
+} satisfies MutationConfig;
+
+const simGeneralPostTestScore = {
+  type: "mutation",
+  mutationFn: async (vars: Pick<Infer["SimGeneralPostTestScore"], "params" | "body">) => {
+    const { params, body } = vars;
+    if (params.mode === "local") {
+      return SimLocalService.generalPostTestScore(vars);
+    }
+
+    const data = await fetcher(
+      () => axios.post(R["sim:general:post:test-score"](params), body),
+      ZSim.SimGeneralPostTestScore.shape.res
+    );
     return data;
   },
 } satisfies MutationConfig;
@@ -345,7 +282,8 @@ const simGeneralPostRetake = {
 const simModuleGetSlug = {
   type: "query",
   queryKey: ({ params }: Pick<Infer["SimModuleGetSlug"], "params">) => [...QUERY_KEYS["sim:module:get:slug"](params.id)],
-  queryFn: async ({ params, query }: Pick<Infer["SimModuleGetSlug"], "params" | "query">) => {
+  queryFn: async (vars: Pick<Infer["SimModuleGetSlug"], "params" | "query">) => {
+    const { params, query } = vars;
     const data = await fetcher(
       () => axios.get(R["sim:module:get:slug"](params), { params: query }),
       ZSim.SimModuleGetSlug.shape.res
@@ -353,6 +291,18 @@ const simModuleGetSlug = {
     return data;
   },
 } satisfies QueryConfig;
+
+const simSessionAnalyticsPostOne = {
+  type: "mutation",
+  mutationFn: async (vars: Pick<Infer["SimSessionAnalyticsPostOne"], "body">) => {
+    const { body } = vars;
+    const data = await fetcher(
+      () => axios.post(R["sim:session-analytics:post:one"](), body),
+      ZSim.SimSessionAnalyticsPostOne.shape.res
+    );
+    return data;
+  },
+} satisfies MutationConfig;
 
 export default {
   "sim:module:get:all": simModuleGetAll,
@@ -367,6 +317,7 @@ export default {
   "sim:general:get:navigate": simGeneralGetNavigate,
   "sim:general:post:navigate": simGeneralPostNavigate,
   "sim:general:post:retake": simGeneralPostRetake,
+  "sim:general:post:test-score": simGeneralPostTestScore,
 
   "sim:module-completion:get:all": simModuleCompletionGetAll,
 
@@ -379,4 +330,6 @@ export default {
   "sim:session:post:join": simSessionPostJoin,
   "sim:session:post:leave": simSessionPostLeave,
   "sim:session:post:end": simSessionPostEnd,
+
+  "sim:session-analytics:post:one": simSessionAnalyticsPostOne,
 };

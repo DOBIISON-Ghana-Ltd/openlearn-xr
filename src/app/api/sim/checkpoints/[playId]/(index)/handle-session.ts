@@ -2,6 +2,8 @@ import { JSend } from "@/lib/utils/jsend";
 import prisma from "@/adapters/db/client";
 import ZSim from "@/data/api/sim/sim.schema";
 
+const ZGetRes = ZSim.SimCheckpointGetOne.shape.res;
+
 export async function handleGetSessionCheckpoint(playId: string, playerId: string) {
   const liveSession = await prisma.liveSession.findUnique({
     where: { joinCode: playId },
@@ -40,5 +42,5 @@ export async function handleGetSessionCheckpoint(playId: string, playerId: strin
     },
   };
 
-  return JSend.success(ZSim.SimCheckpointGetOne.shape.res.parse(resData));
+  return JSend.success(ZGetRes.parse(resData));
 }

@@ -2,11 +2,15 @@ import { apiHandler } from "@/lib/utils/api-handler";
 import { JSend } from "@/lib/utils/jsend";
 import prisma from "@/adapters/db/client";
 import ZSim from "@/data/api/sim/sim.schema";
+import { ZSessionConfig } from "@/data/schema.base";
 import { auth } from "@/adapters/auth/server";
 import { headers } from "next/headers";
 
+const ZGetParams = ZSim.SimSessionGetStats.shape.params;
+const ZGetRes = ZSim.SimSessionGetStats.shape.res;
+
 export const GET = apiHandler<{ id: string }>(async (req, ctx) => {
-  const { id } = ZSim.SimSessionGetStats.shape.params.parse(await ctx.params);
+  const { id } = ZGetParams.parse(await ctx.params);
 
   const session = await prisma.liveSession.findUnique({
     where: { joinCode: id },
@@ -27,11 +31,18 @@ export const GET = apiHandler<{ id: string }>(async (req, ctx) => {
   });
   const isHost = Boolean(userSession?.user && userSession.user.id === session.hostId);
 
-  const parsedData = ZSim.SimSessionGetStats.shape.res.parse({
+  const playerCount = await prisma.sessionPlayer.count({
+    where: { sessionId: session.id },
+  });
+  const config = ZSessionConfig.parse(session.config);
+  const isFull = playerCount >= config.maxAdmissions;
+
+  const parsedData = ZGetRes.parse({
     status: session.status,
     config: session.config,
     sessionId: session.id,
     isHost,
+    isFull,
   });
 
   return JSend.success(parsedData);

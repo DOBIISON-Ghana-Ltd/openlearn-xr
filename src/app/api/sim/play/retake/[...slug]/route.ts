@@ -5,9 +5,11 @@ import { parsePlaySlug } from "@/lib/utils/parse-play-slug";
 import { handlePostRemoteRetake } from "./handle-remote";
 import { handlePostLocalRetake } from "./handle-local";
 
+const ZPostParams = ZSim.SimGeneralPostRetake.shape.params;
+
 export const POST = apiHandler<{ slug: string[] }>(async (req, ctx) => {
   const { slug } = await ctx.params;
-  const params = ZSim.SimGeneralPostRetake.shape.params.parse(parsePlaySlug(slug));
+  const params = ZPostParams.parse(parsePlaySlug(slug));
   const { mode, playId } = params;
 
   switch (mode) {

@@ -1,3 +1,14 @@
+<!-- intent-skills:start -->
+## Skill Loading
+
+Before editing files for a substantial task:
+- Run `npx @tanstack/intent@latest list` from the workspace root to see available local skills.
+- If a listed skill matches the task, run `npx @tanstack/intent@latest load <package>#<skill>` before changing files.
+- Use the loaded `SKILL.md` guidance while making the change.
+- Monorepos: when working across packages, run the skill check from the workspace root and prefer the local skill for the package being changed.
+- Multiple matches: prefer the most specific local skill for the package or concern you are changing; load additional skills only when the task spans multiple packages or concerns.
+<!-- intent-skills:end -->
+
 <!-- BEGIN:nextjs-agent-rules -->
 # This is NOT the Next.js you know
 
@@ -12,3 +23,6 @@ This version has breaking changes — APIs, conventions, and file structure may 
 
 # Project Structure Rules
 - **Keep the Root Clutter-Free**: Since this project uses a `src` directory, ALL application-related code (such as `utils`, `lib`, `components`, `hooks`, etc.) MUST be placed inside the `src/` directory. Do not create these folders in the root directory.
+
+# Chat Formatting Rules
+- **No LaTeX / Math Formula Delimiters in Chat**: NEVER use LaTeX delimiters (e.g. `$...$`, `$$...$$`, `\frac{}{}`) in chat responses. Always express formulas, mathematical equations, and ratios using plain text (e.g., `(correct / total) * 100`) or standard code blocks.

@@ -3,6 +3,8 @@ import { JSend } from "@/lib/utils/jsend";
 import ZSes from "@/data/api/ses/ses.schema";
 import prisma from "@/adapters/db/client";
 
+const ZGetRes = ZSes.SesSessionGetNotes.shape.res;
+
 export const GET = secureApiRoute<{ id: string }>(async (req, ctx, user, session) => {
   const params = await ctx.params;
   const id = params?.id;
@@ -36,6 +38,6 @@ export const GET = secureApiRoute<{ id: string }>(async (req, ctx, user, session
     return JSend.error("Session not found.", 404);
   }
 
-  const parsedData = ZSes.SesSessionGetNotes.shape.res.parse(liveSession.moduleVersion);
+  const parsedData = ZGetRes.parse(liveSession.moduleVersion);
   return JSend.success(parsedData);
 });

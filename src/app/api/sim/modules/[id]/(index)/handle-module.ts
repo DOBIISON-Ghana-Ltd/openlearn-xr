@@ -2,6 +2,8 @@ import { JSend } from "@/lib/utils/jsend";
 import prisma from "@/adapters/db/client";
 import ZSim from "@/data/api/sim/sim.schema";
 
+const ZGetRes = ZSim.SimModuleGetOne.shape.res;
+
 export async function handleGetModuleVersion(id: string) {
   const moduleVersion = await prisma.moduleVersion.findUnique({
     where: { id },
@@ -28,6 +30,6 @@ export async function handleGetModuleVersion(id: string) {
     return JSend.error("Module version not found", 404);
   }
 
-  const parsedData = ZSim.SimModuleGetOne.shape.res.parse(moduleVersion);
+  const parsedData = ZGetRes.parse(moduleVersion);
   return JSend.success(parsedData);
 }

@@ -47,11 +47,12 @@ const editorCollectionPatchDetails = {
   mutationFn: async (
     vars: Pick<Infer["EditorCollectionPatchDetails"], "params" | "body">
   ) => {
+    const { params, body } = vars;
     const data = await fetcher(
       () =>
         axios.patch(
-          R["editor:collection:patch:details"]({ id: vars.params.id }),
-          vars.body
+          R["editor:collection:patch:details"]({ id: params.id }),
+          body
         ),
       ZEditor.EditorCollectionPatchDetails.shape.res
     );

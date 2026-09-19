@@ -3,6 +3,8 @@ import { JSend } from "@/lib/utils/jsend";
 import prisma from "@/adapters/db/client";
 import ZSim from "@/data/api/sim/sim.schema";
 
+const ZGetRes = ZSim.SimGeneralGetNavigate.shape.res;
+
 export function handleGetRemoteNav(playId: string) {
   return secureApiRoute<{ slug: string[] }>(async (req, ctx, user) => {
     let attempt = await prisma.playAttempt.findFirst({
@@ -44,9 +46,11 @@ export function handleGetRemoteNav(playId: string) {
       currentTab: attempt.currentTab,
       progress: attempt.progress,
     };
-    return JSend.success(ZSim.SimGeneralGetNavigate.shape.res.parse(resData));
+    return JSend.success(ZGetRes.parse(resData));
   });
 }
+
+const ZPostRes = ZSim.SimGeneralPostNavigate.shape.res;
 
 export function handlePostRemoteNav(playId: string, nextTab: number) {
   return secureApiRoute<{ slug: string[] }>(async (req, ctx, user) => {
@@ -69,7 +73,7 @@ export function handlePostRemoteNav(playId: string, nextTab: number) {
     });
 
     return JSend.success(
-      ZSim.SimGeneralPostNavigate.shape.res.parse("Navigation updated successfully.")
+      ZPostRes.parse("Navigation updated successfully.")
     );
   });
 }

@@ -6,6 +6,8 @@ import { Infer } from "@/data/types.base";
 
 type IAnswerBody = Infer["SimCheckpointPostAnswer"]["body"];
 
+const ZPostRes = ZSim.SimCheckpointPostAnswer.shape.res;
+
 export function handlePostRemoteAnswer(playId: string, body: IAnswerBody) {
   return secureApiRoute<{ playId: string }>(async (req, ctx, user) => {
     const userId = user.id;
@@ -57,8 +59,9 @@ export function handlePostRemoteAnswer(playId: string, body: IAnswerBody) {
       where: { id: attemptIdToUpdate },
       data: {
         currentCheckpointId: nextCheckpointId || targetCheckpointId,
-        currentCheckpointIndex: attempt.currentCheckpointIndex + 1,
-        accumulatedPoints: finalScore,
+        currentCheckpointIndex: { increment: 1 },
+        accumulatedPoints: { increment: pointsAwarded },
+        totalCheckpointPoints: { increment: checkpoint.points },
       },
     });
 
@@ -99,10 +102,11 @@ export function handlePostRemoteAnswer(playId: string, body: IAnswerBody) {
       correctAnswer: checkpoint.correctAnswer,
       explanation: checkpoint.explanation,
       pointsAwarded,
+      checkpointPoints: checkpoint.points,
       nextCheckpointId,
       moduleId,
     };
 
-    return JSend.success(ZSim.SimCheckpointPostAnswer.shape.res.parse(resData));
+    return JSend.success(ZPostRes.parse(resData));
   });
 }

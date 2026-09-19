@@ -3,6 +3,8 @@ import ZEditor from "@/data/api/editor/editor.schema";
 import { JSend } from "@/lib/utils/jsend";
 import { secureApiRoute } from "@/lib/utils/secure-api-route";
 
+const ZGetRes = ZEditor.EditorCollectionGetDocuments.shape.res;
+
 export const GET = secureApiRoute<{ id: string }>(async (req, ctx) => {
   const { id: collectionId } = await ctx.params;
 
@@ -26,8 +28,7 @@ export const GET = secureApiRoute<{ id: string }>(async (req, ctx) => {
     orderBy: { createdAt: "desc" },
   });
 
-  const parsed =
-    ZEditor.EditorCollectionGetDocuments.shape.res.parse(collectionMedia);
+  const parsed = ZGetRes.parse(collectionMedia);
 
   return JSend.success(parsed);
 });

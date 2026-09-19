@@ -321,10 +321,11 @@ const appOrgDeleteMember = {
   mutationFn: async (
     vars: Pick<Infer["AppOrgDeleteMember"], "params" | "body">
   ) => {
+    const { params, body } = vars;
     const data = await fetcher(
       () =>
-        axios.delete(R["app:org:delete:member"]({ orgId: vars.params.orgId }), {
-          data: vars.body,
+        axios.delete(R["app:org:delete:member"]({ orgId: params.orgId }), {
+          data: body,
         }),
       ZApp.AppOrgDeleteMember.shape.res
     );
@@ -337,11 +338,12 @@ const appOrgUpdateMemberRole = {
   mutationFn: async (
     vars: Pick<Infer["AppOrgUpdateMemberRole"], "params" | "body">
   ) => {
+    const { params, body } = vars;
     const data = await fetcher(
       () =>
         axios.patch(
-          R["app:org:patch:member-role"]({ orgId: vars.params.orgId }),
-          vars.body
+          R["app:org:patch:member-role"]({ orgId: params.orgId }),
+          body
         ),
       ZApp.AppOrgUpdateMemberRole.shape.res
     );
@@ -354,11 +356,12 @@ const appOrgInviteMember = {
   mutationFn: async (
     vars: Pick<Infer["AppOrgInviteMember"], "params" | "body">
   ) => {
+    const { params, body } = vars;
     const data = await fetcher(
       () =>
         axios.post(
-          R["app:org:post:invite"]({ orgId: vars.params.orgId }),
-          vars.body
+          R["app:org:post:invite"]({ orgId: params.orgId }),
+          body
         ),
       ZApp.AppOrgInviteMember.shape.res
     );

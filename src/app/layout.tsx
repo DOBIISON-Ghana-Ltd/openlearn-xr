@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import localFont from 'next/font/local';
 import { cn } from "@/lib/utils/cn";
 import "./globals.css";
-import Providers from "@/components/(new)/common/providers";
+import Providers from "@/components/common/providers";
 
 const sans = localFont({ src: './fonts/Sora.ttf', variable: '--font-sans' });
 

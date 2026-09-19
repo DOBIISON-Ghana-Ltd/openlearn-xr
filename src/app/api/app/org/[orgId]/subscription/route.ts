@@ -4,6 +4,8 @@ import { secureApiRoute } from "@/lib/utils/secure-api-route";
 import prisma from "@/adapters/db/client";
 import ZApp from "@/data/api/app/app.schema";
 
+const ZGetRes = ZApp.AppOrgGetSubscription.shape.res;
+
 export const GET = secureApiRoute(async (req: NextRequest, ctx, user) => {
   const { orgId } = (await ctx.params) as { orgId: string };
 
@@ -24,7 +26,7 @@ export const GET = secureApiRoute(async (req: NextRequest, ctx, user) => {
     return JSend.error("Subscription not found", 404);
   }
 
-  const parsed = ZApp.AppOrgGetSubscription.shape.res.parse({
+  const parsed = ZGetRes.parse({
     id: subscription.id,
     status: subscription.status,
     seats: subscription.seats,
