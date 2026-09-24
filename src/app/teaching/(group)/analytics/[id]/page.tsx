@@ -1,6 +1,4 @@
-import { connection } from 'next/server';
 import ClientPage from './client';
-import { verifyRouteGuard } from '@/lib/utils/route-guard';
 import { prefetchApi } from '@/data/hooks/use-prefetch-api';
 import { getQueryClient } from '@/lib/utils/get-query-client';
 import { dehydrate, HydrationBoundary } from '@tanstack/react-query';
@@ -15,8 +13,6 @@ interface PageProps {
 }
 
 export default async function Page({ params }: PageProps) {
-  await connection();
-  await verifyRouteGuard();
   const { id } = await params;
 
   const queryClient = getQueryClient();

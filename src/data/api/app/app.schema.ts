@@ -123,6 +123,50 @@ const AppUserUpdatePassword = ZApi({
     }),
 });
 
+const AppUserGetProfile = ZApi({
+  res: z.object({
+    name: z.string(),
+    role: z.string(),
+    email: z.string(),
+    phone: z.string(),
+    location: z.string(),
+    school: z.string(),
+    classLevel: z.string(),
+    memberSince: z.string(),
+    image: z.string().optional(),
+  }),
+});
+
+const AppUserGetProfileStats = ZApi({
+  res: z.object({
+    modulesCompleted: z.number(),
+    averageScore: z.number(),
+    bestScore: z.number(),
+    bestScoreTopic: z.string(),
+    currentStreak: z.number(),
+    badgesEarned: z.number(),
+  }),
+});
+
+const AppUserGetProfileSubscription = ZApi({
+  res: z.object({
+    currentPlan: z.string(),
+    accountType: z.string(),
+    memberSince: z.string(),
+  }),
+});
+
+const AppUserGetProfileHistory = ZApi({
+  res: z.array(
+    z.object({
+      id: z.string(),
+      title: z.string(),
+      score: z.number(),
+      completedAt: z.string(),
+    })
+  ),
+});
+
 // ---------------------------------------------------------------------------
 // ORGANIZATION SCHEMAS
 // ---------------------------------------------------------------------------
@@ -228,9 +272,14 @@ const schema = {
   AppUserVerifyEmailOtp,
   AppUserSendOtp,
   AppUserResetPassword,
+
   AppUserDeleteMe,
   AppUserUpdateAccount,
   AppUserUpdatePassword,
+  AppUserGetProfile,
+  AppUserGetProfileStats,
+  AppUserGetProfileSubscription,
+  AppUserGetProfileHistory,
   AppOrgGetSubscription,
   AppOrgGetList,
   AppOrgCreate,

@@ -37,6 +37,54 @@ const appUserGetMe = {
   },
 } satisfies QueryConfig;
 
+const appUserGetProfile = {
+  type: "query",
+  queryKey: () => [...QUERY_KEYS["app:user:get:profile"]],
+  queryFn: async () => {
+    const data = await fetcher(
+      () => axios.get(R["app:user:get:profile"]()),
+      ZApp.AppUserGetProfile.shape.res
+    );
+    return data;
+  },
+} satisfies QueryConfig;
+
+const appUserGetProfileStats = {
+  type: "query",
+  queryKey: () => [...QUERY_KEYS["app:user:get:profile-stats"]],
+  queryFn: async () => {
+    const data = await fetcher(
+      () => axios.get(R["app:user:get:profile-stats"]()),
+      ZApp.AppUserGetProfileStats.shape.res
+    );
+    return data;
+  },
+} satisfies QueryConfig;
+
+const appUserGetProfileSubscription = {
+  type: "query",
+  queryKey: () => [...QUERY_KEYS["app:user:get:profile-subscription"]],
+  queryFn: async () => {
+    const data = await fetcher(
+      () => axios.get(R["app:user:get:profile-subscription"]()),
+      ZApp.AppUserGetProfileSubscription.shape.res
+    );
+    return data;
+  },
+} satisfies QueryConfig;
+
+const appUserGetProfileHistory = {
+  type: "query",
+  queryKey: () => [...QUERY_KEYS["app:user:get:profile-history"]],
+  queryFn: async () => {
+    const data = await fetcher(
+      () => axios.get(R["app:user:get:profile-history"]()),
+      ZApp.AppUserGetProfileHistory.shape.res
+    );
+    return data;
+  },
+} satisfies QueryConfig;
+
 const appUserDeleteMe = {
   type: "mutation",
   mutationFn: async () => {
@@ -386,6 +434,10 @@ const appMediaPostOne = {
 
 export default {
   "app:user:get:me": appUserGetMe,
+  "app:user:get:profile": appUserGetProfile,
+  "app:user:get:profile-stats": appUserGetProfileStats,
+  "app:user:get:profile-subscription": appUserGetProfileSubscription,
+  "app:user:get:profile-history": appUserGetProfileHistory,
   "app:user:delete:me": appUserDeleteMe,
   "app:user:register": appUserRegister,
   "app:user:login": appUserLogin,

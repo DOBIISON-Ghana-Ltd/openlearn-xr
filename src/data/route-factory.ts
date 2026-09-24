@@ -6,9 +6,13 @@ type IPlaySlugs = {
 
 const ROUTES = {
   // APP SUITE
-  "app:user:get:me": () => `/api/app/users/me`,
-  "app:user:delete:me": () => `/api/app/users/me`,
-  "app:user:patch:onboarding": () => `/api/app/users/onboarding`,
+  "app:user:get:me": () => `/api/app/user/me`,
+  "app:user:get:profile": () => `/api/app/user/profile`,
+  "app:user:get:profile-history": () => `/api/app/user/profile/history`,
+  "app:user:get:profile-stats": () => `/api/app/user/profile/stats`,
+  "app:user:get:profile-subscription": () => `/api/app/user/profile/subscription`,
+  "app:user:delete:me": () => `/api/app/user/me`,
+  "app:user:patch:onboarding": () => `/api/app/user/onboarding`,
   "app:media:post:one": () => `/api/app/media`,
   "app:org:get:subscription": ({ orgId }: { orgId: string }) => `/api/app/org/${orgId}/subscription`,
   "app:org:get:active": () => `/api/app/org/active`,

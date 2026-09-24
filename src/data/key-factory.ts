@@ -1,6 +1,10 @@
 export const QUERY_KEYS = {
   // APP SUITE
   "app:user:get:me": ["app", "user", "me"] as const,
+  "app:user:get:profile": ["app", "user", "profile"] as const,
+  "app:user:get:profile-history": ["app", "user", "profile-history"] as const,
+  "app:user:get:profile-stats": ["app", "user", "profile-stats"] as const,
+  "app:user:get:profile-subscription": ["app", "user", "profile-subscription"] as const,
   "app:org:get:active": ["app", "org", "active"] as const,
   "app:org:get:all": ["app", "org", "all"] as const,
   "app:org:get:members": (orgId: string) => ["app", "org", orgId, "members"] as const,
