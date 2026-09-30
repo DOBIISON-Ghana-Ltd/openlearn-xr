@@ -11,7 +11,7 @@ const SUBJECTS = [
   {
     id: 'chemistry',
     title: 'Chemistry',
-    image: '/chemistry.png',
+    image: '/modules/showcase-chemistry.png',
     description: 'Experiment with chemical reactions, atomic structure, and molecular bonding safely.',
     href: `${PATHS.MODULES}?subject=chemistry`,
     imageStyle: 'scale-110 object-contain',
@@ -19,7 +19,7 @@ const SUBJECTS = [
   {
     id: 'physics',
     title: 'Physics',
-    image: '/physics-engineering.png',
+    image: '/modules/showcase-physics.png',
     description: 'Explore mechanics, optics, electricity, and wave physics in interactive 3D environments.',
     href: `${PATHS.MODULES}?subject=physics`,
     imageStyle: 'scale-125 object-center',
@@ -27,7 +27,7 @@ const SUBJECTS = [
   {
     id: 'engineering',
     title: 'Engineering',
-    image: '/physics-engineering.png',
+    image: '/modules/showcase-physics.png',
     description: 'Build circuit diagrams, test structural designs, and master applied technical concepts.',
     href: `${PATHS.MODULES}?subject=engineering`,
     imageStyle: 'scale-125 object-right',
@@ -57,7 +57,7 @@ export default function VirtualLabs({ className }: VirtualLabsProps) {
           >
             <div className="relative size-[192px] overflow-hidden flex items-center justify-center">
               <img
-                src="/chemistry.png"
+                src="/modules/showcase-chemistry.png"
                 alt="Chemistry"
                 className="size-full object-contain transition-transform duration-300 group-hover:scale-105"
               />
@@ -74,7 +74,7 @@ export default function VirtualLabs({ className }: VirtualLabsProps) {
           >
             <div className="relative w-[196px] h-[192px] overflow-hidden pointer-events-none flex items-center justify-center">
               <img
-                src="/physics-engineering.png"
+                src="/modules/showcase-physics.png"
                 alt="Physics"
                 className="absolute h-[205%] left-0 top-[-47%] w-[200%] max-w-none transition-transform duration-300 group-hover:scale-105"
               />
@@ -91,7 +91,7 @@ export default function VirtualLabs({ className }: VirtualLabsProps) {
           >
             <div className="relative w-[207px] h-[192px] overflow-hidden pointer-events-none flex items-center justify-center">
               <img
-                src="/physics-engineering.png"
+                src="/modules/showcase-physics.png"
                 alt="Engineering"
                 className="absolute h-[205%] left-[-90%] top-[-52%] w-[190%] max-w-none transition-transform duration-300 group-hover:scale-105"
               />

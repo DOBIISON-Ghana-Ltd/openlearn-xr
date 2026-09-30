@@ -37,7 +37,7 @@ export default function HowItWorks({ className }: HowItWorksProps) {
       {/* Background Decorative Vector Accents from Figma */}
       <div className="pointer-events-none absolute left-0 top-0 h-full w-56 opacity-60 hidden xl:block">
         <Image
-          src="/wave-left.svg"
+          src="/illustrations/wave-left.svg"
           alt=""
           fill
           sizes="224px"
@@ -46,7 +46,7 @@ export default function HowItWorks({ className }: HowItWorksProps) {
       </div>
       <div className="pointer-events-none absolute right-0 top-0 h-full w-56 opacity-60 hidden xl:block">
         <Image
-          src="/wave-right.svg"
+          src="/illustrations/wave-right.svg"
           alt=""
           fill
           sizes="224px"

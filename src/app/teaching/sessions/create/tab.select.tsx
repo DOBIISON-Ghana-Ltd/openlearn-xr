@@ -45,9 +45,9 @@ function SubjectSelector() {
   const [state, setState] = nuqs.getStates("ses:create", { history: "push" });
 
   const options: ISubjectOption[] = [
-    { label: "Chemistry", value: "chemistry", image: "/modules/chemistry.png" },
-    { label: "Physics", value: "physics", image: "/modules/physics.png" },
-    { label: "Engineering", value: "engineering", image: "/modules/engineering.png" },
+    { label: "Chemistry", value: "chemistry", image: "/subjects/chemistry.png" },
+    { label: "Physics", value: "physics", image: "/subjects/physics.png" },
+    { label: "Engineering", value: "engineering", image: "/subjects/engineering.png" },
   ];
 
   const handleChange = (value: string) => {

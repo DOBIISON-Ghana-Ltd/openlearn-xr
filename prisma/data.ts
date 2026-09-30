@@ -13,7 +13,7 @@ export const data: IData = [
       {
         title: "Series and Parallel Connections of Capacitors",
         slug: "series-and-parallel-connections-of-capacitors",
-        image: "/module/series-and-parallel-connections-of-capacitors/image.png",
+        image: "/modules/series-and-parallel-connections-of-capacitors/image.png",
         duration: "30 mins",
         difficulty: "MEDIUM",
         orderIndex: 3,
@@ -100,17 +100,17 @@ export const data: IData = [
                 items: [
                   {
                     name: "Science Kit",
-                    image: "/module/series-and-parallel-connections-of-capacitors/explanation-01.png",
+                    image: "/modules/series-and-parallel-connections-of-capacitors/explanation-01.png",
                     description: "A practical laboratory set used to safely arrange and securely connect capacitors in different circuit configurations."
                   },
                   {
                     name: "Capacitor Component",
-                    image: "/module/series-and-parallel-connections-of-capacitors/explanation-02.png",
+                    image: "/modules/series-and-parallel-connections-of-capacitors/explanation-02.png",
                     description: "An electronic component that stores electrical charge, which can be wired end-to-end (series) or side-by-side (parallel)."
                   },
                   {
                     name: "DC Power Source",
-                    image: "/module/series-and-parallel-connections-of-capacitors/explanation-03.png",
+                    image: "/modules/series-and-parallel-connections-of-capacitors/explanation-03.png",
                     description: "Provides the electrical potential difference necessary to push and store total charges across the capacitor network."
                   }
                 ],
@@ -183,7 +183,7 @@ export const data: IData = [
       {
         title: "Forces and Motion - Coefficient of Friction",
         slug: "forces-and-motion-coefficient-of-friction",
-        image: "/module/forces-and-motion-coefficient-of-friction/image.png",
+        image: "/modules/forces-and-motion-coefficient-of-friction/image.png",
         duration: "30 mins",
         difficulty: "MEDIUM",
         orderIndex: 4,
@@ -262,17 +262,17 @@ export const data: IData = [
                 items: [
                   {
                     name: "Spring Balance",
-                    image: "/module/forces-and-motion-coefficient-of-friction/explanation-01.png",
+                    image: "/modules/forces-and-motion-coefficient-of-friction/explanation-01.png",
                     description: "An instrument used to measure the pulling force required to move the wooden block across the plane."
                   },
                   {
                     name: "Wooden Block",
-                    image: "/module/forces-and-motion-coefficient-of-friction/explanation-02.png",
+                    image: "/modules/forces-and-motion-coefficient-of-friction/explanation-02.png",
                     description: "A mass with a hook attached, used to vary the normal reaction by stacking different masses on top."
                   },
                   {
                     name: "Horizontal Plane",
-                    image: "/module/forces-and-motion-coefficient-of-friction/explanation-03.png",
+                    image: "/modules/forces-and-motion-coefficient-of-friction/explanation-03.png",
                     description: "The surface (wooden, plastic, or metallic) on which the block slides. Can be modified with oil or powder to test different conditions."
                   }
                 ],
@@ -355,7 +355,7 @@ export const data: IData = [
       {
         title: "Simple Harmonic Motion",
         slug: "simple-harmonic-motion",
-        image: "/module/simple-harmonic-motion/image.png",
+        image: "/modules/simple-harmonic-motion/image.png",
         duration: "30 mins",
         difficulty: "HARD",
         orderIndex: 5,
@@ -433,17 +433,17 @@ export const data: IData = [
                 items: [
                   {
                     name: "Retort Stand and Pendulum Bob",
-                    image: "/module/simple-harmonic-motion/explanation-01.png",
+                    image: "/modules/simple-harmonic-motion/explanation-01.png",
                     description: "The basic laboratory setup for a simple pendulum, allowing the spherical bob to swing freely in simple harmonic motion."
                   },
                   {
                     name: "Stopwatch",
-                    image: "/module/simple-harmonic-motion/explanation-02.png",
+                    image: "/modules/simple-harmonic-motion/explanation-02.png",
                     description: "A timing device used to accurately measure the time taken for multiple oscillations to calculate the average period."
                   },
                   {
                     name: "Meter Rule",
-                    image: "/module/simple-harmonic-motion/explanation-03.png",
+                    image: "/modules/simple-harmonic-motion/explanation-03.png",
                     description: "Used to measure the exact length of the pendulum string from the suspension point to the center of the bob."
                   }
                 ],
@@ -531,7 +531,7 @@ export const data: IData = [
       {
         title: "Energy Forms and Changes",
         slug: "energy-forms-and-changes",
-        image: "/module/energy-forms-and-changes/image.png",
+        image: "/modules/energy-forms-and-changes/image.png",
         duration: "25 mins",
         difficulty: "EAZY",
         orderIndex: 6,
@@ -593,17 +593,17 @@ export const data: IData = [
                 items: [
                   {
                     name: "Energy Source (Bicyclist)",
-                    image: "/module/energy-forms-and-changes/explanation-01.png",
+                    image: "/modules/energy-forms-and-changes/explanation-01.png",
                     description: "Represents the input of chemical energy (from food) being converted into mechanical energy by pedaling."
                   },
                   {
                     name: "Generator",
-                    image: "/module/energy-forms-and-changes/explanation-02.png",
+                    image: "/modules/energy-forms-and-changes/explanation-02.png",
                     description: "A device that takes the mechanical energy from the turning wheel and transforms it into electrical energy."
                   },
                   {
                     name: "Energy Output (Fan/Bulb)",
-                    image: "/module/energy-forms-and-changes/explanation-03.png",
+                    image: "/modules/energy-forms-and-changes/explanation-03.png",
                     description: "Receives the electrical energy and converts it into the final useful form, such as mechanical motion (fan) or light (bulb)."
                   }
                 ],
@@ -696,7 +696,7 @@ export const data: IData = [
       {
         title: "Geometric Optics",
         slug: "geometric-optics",
-        image: "/module/geometric-optics/image.png",
+        image: "/modules/geometric-optics/image.png",
         duration: "30 mins",
         difficulty: "MEDIUM",
         orderIndex: 7,
@@ -758,17 +758,17 @@ export const data: IData = [
                 items: [
                   {
                     name: "Spherical Mirror/Lens",
-                    image: "/module/geometric-optics/explanation-01.png",
+                    image: "/modules/geometric-optics/explanation-01.png",
                     description: "Optical devices that reflect or refract light rays to form real or virtual images depending on their curvature."
                   },
                   {
                     name: "Object (Pencil)",
-                    image: "/module/geometric-optics/explanation-02.png",
+                    image: "/modules/geometric-optics/explanation-02.png",
                     description: "The source of light rays that are traced to determine the size, orientation, and position of the resulting image."
                   },
                   {
                     name: "Ray Tracing",
-                    image: "/module/geometric-optics/explanation-03.png",
+                    image: "/modules/geometric-optics/explanation-03.png",
                     description: "Lines showing the path of light, including principal and marginal rays, used to visually predict image formation."
                   }
                 ],
@@ -869,7 +869,7 @@ export const data: IData = [
       {
         title: "Model Dalton's Atom and Orbitals",
         slug: "model-daltons-atom-and-orbitals",
-        image: "/module/model-daltons-atom-and-orbitals/image.png",
+        image: "/modules/model-daltons-atom-and-orbitals/image.png",
         duration: "30 mins",
         difficulty: "MEDIUM",
         orderIndex: 1,
@@ -964,17 +964,17 @@ export const data: IData = [
                 items: [
                   {
                     name: "Dalton's Atom Model",
-                    image: "/module/model-daltons-atom-and-orbitals/explanation-01.png",
+                    image: "/modules/model-daltons-atom-and-orbitals/explanation-01.png",
                     description: "Constructed as a simple sphere with no internal structure, representing indivisible matter as initially proposed by Dalton."
                   },
                   {
                     name: "s-orbital",
-                    image: "/module/model-daltons-atom-and-orbitals/explanation-02.png",
+                    image: "/modules/model-daltons-atom-and-orbitals/explanation-02.png",
                     description: "A spherical region around the nucleus modelled using a single balloon, representing where an s-electron is likely found."
                   },
                   {
                     name: "p-orbital",
-                    image: "/module/model-daltons-atom-and-orbitals/explanation-03.png",
+                    image: "/modules/model-daltons-atom-and-orbitals/explanation-03.png",
                     description: "A dumbbell-shaped orbital aligned along an axis, modelled practically using two balloons joined at their knots."
                   }
                 ],
@@ -1067,7 +1067,7 @@ export const data: IData = [
       {
         title: "Chemical Bonding",
         slug: "chemical-bonding",
-        image: "/module/chemical-bonding/image.png",
+        image: "/modules/chemical-bonding/image.png",
         duration: "30 mins",
         difficulty: "HARD",
         orderIndex: 2,
@@ -1152,17 +1152,17 @@ export const data: IData = [
                 items: [
                   {
                     name: "Molecular Models",
-                    image: "/module/chemical-bonding/explanation-01.png",
+                    image: "/modules/chemical-bonding/explanation-01.png",
                     description: "Physical representations used to identify and explain various types of hybridization and molecular shapes."
                   },
                   {
                     name: "Sigma (σ) Bond",
-                    image: "/module/chemical-bonding/explanation-02.png",
+                    image: "/modules/chemical-bonding/explanation-02.png",
                     description: "A strong covalent bond formed by the direct, co-axial overlap of atomic orbitals."
                   },
                   {
                     name: "Pi (π) Bond",
-                    image: "/module/chemical-bonding/explanation-03.png",
+                    image: "/modules/chemical-bonding/explanation-03.png",
                     description: "A covalent bond formed by the lateral or sideway overlap of atomic orbitals."
                   }
                 ],
@@ -1245,7 +1245,7 @@ export const data: IData = [
       {
         title: "Determine Enthalpy Changes",
         slug: "determine-enthalpy-changes",
-        image: "/module/determine-enthalpy-changes/image.png",
+        image: "/modules/determine-enthalpy-changes/image.png",
         duration: "30 mins",
         difficulty: "HARD",
         orderIndex: 3,
@@ -1328,17 +1328,17 @@ export const data: IData = [
                 items: [
                   {
                     name: "Calorimetry Setup",
-                    image: "/module/determine-enthalpy-changes/explanation-01.png",
+                    image: "/modules/determine-enthalpy-changes/explanation-01.png",
                     description: "An insulated container used to measure the temperature change of a liquid during a chemical reaction, minimizing heat loss to the surroundings."
                   },
                   {
                     name: "Digital Thermometer",
-                    image: "/module/determine-enthalpy-changes/explanation-02.png",
+                    image: "/modules/determine-enthalpy-changes/explanation-02.png",
                     description: "Used to accurately measure the initial and final temperatures (ΔT) of the reacting system to determine energy changes."
                   },
                   {
                     name: "Chemical Reagents",
-                    image: "/module/determine-enthalpy-changes/explanation-03.png",
+                    image: "/modules/determine-enthalpy-changes/explanation-03.png",
                     description: "Reactants such as HCl and NaOH for neutralization, or NH4Cl for heat of solution, used to study specific enthalpy changes."
                   }
                 ],

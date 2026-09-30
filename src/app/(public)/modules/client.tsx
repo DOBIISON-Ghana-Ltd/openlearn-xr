@@ -79,9 +79,9 @@ function SubjectSelector() {
   const [state, setState] = nuqs.getStates("sim:modules", { history: "push" });
 
   const options: ISubjectOption[] = [
-    { label: "Chemistry", value: "chemistry", image: "/modules/chemistry.png" },
-    { label: "Physics", value: "physics", image: "/modules/physics.png" },
-    { label: "Engineering", value: "engineerig", image: "/modules/engineering.png" }
+    { label: "Chemistry", value: "chemistry", image: "/subjects/chemistry.png" },
+    { label: "Physics", value: "physics", image: "/subjects/physics.png" },
+    { label: "Engineering", value: "engineerig", image: "/subjects/engineering.png" }
   ];
 
   const handleChange = (value: string) => {

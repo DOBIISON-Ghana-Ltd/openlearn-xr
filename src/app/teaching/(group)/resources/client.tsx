@@ -20,13 +20,13 @@ const RESOURCES: ResourceItem[] = [
     id: '2',
     title: 'Advanced Cardiac Anatomy.obj',
     type: '3d',
-    image: '/module-thumbnail.png',
+    image: '/modules/default-thumbnail.png',
   },
   {
     id: '3',
     title: 'MarsBase_Environment.unitypackage',
     type: 'unity',
-    image: '/module-thumbnail.png',
+    image: '/modules/default-thumbnail.png',
   },
   {
     id: '4',

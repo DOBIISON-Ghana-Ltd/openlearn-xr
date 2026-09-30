@@ -12,6 +12,17 @@ export const metadata: Metadata = {
     template: "%s | OpenLearn",
   },
   description: "Experience virtual physics, chemistry, and biology experiments directly in your web browser.",
+  icons: {
+    icon: [
+      { url: "/favicon.ico" },
+      { url: "/icons/icon0.svg", type: "image/svg+xml" },
+      { url: "/icons/icon1.png", type: "image/png" },
+    ],
+    apple: [
+      { url: "/icons/apple-icon.png" },
+    ],
+  },
+  manifest: "/manifest.json",
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
