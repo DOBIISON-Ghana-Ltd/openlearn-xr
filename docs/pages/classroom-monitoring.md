@@ -1,48 +1,52 @@
-# Page Specification: Classroom Monitoring and Session Dashboard
+# Page Specification: Classroom Live Sessions & Teaching Dashboard
 
-## 1. Requirements & Scope
-- **Session Host Dashboard (`/dashboard/sessions/[code]`):**
-  - Real-time hub for teachers to monitor student participation and concept mastery during a live classroom session.
-  - Displays unique **Join Code** and **QR Code** at the top.
-  - **Participants List:** Shows students who have joined (display name or ID).
-  - **Live Progress Grid:** Tracks what checkpoints each participant has completed and their correctness (e.g., Green/Red/Gray grid).
-  - **Real-Time Leaderboard:** Ranks students based on correct responses.
-  - **End Session Button:** Closes the session, locking submissions and saving the final leaderboard history.
-- **Short-Polling System:**
-  - Standard React Query hook configured to poll `/api/sessions/[code]/status` every 2-3 seconds.
-  - Fetches participant counts, completion percentages, live scores, and checkpoint responses.
-  - Decoupled from WebSockets, facilitating offline-friendly local deployments for schools.
+## 1. Overview & Scope
+The Teaching & Classroom Monitoring suite allows teachers and session hosts to run interactive multiplayer lab sessions, monitor participant progress in real time, and inspect session analytics.
 
----
-
-## 2. UI & Design Guidelines
-- **Aesthetics:** High-impact status boards, clean grid lines, progress bar animations indicating average classroom completion.
-- **Grid Components:** Interactive table showing student names and checkpoint status. Hovering over a checkpoint shows the target question and selected choice.
+- **Teaching Hub (`/teaching`)**:
+  - Class management, session history, and quick-launch templates.
+- **Session Control Room & Host View (`/p/[...slug]` in host mode)**:
+  - Real-time hub for teachers while a live classroom experiment is active.
+  - Displays unique **Join Code** and **QR Code** for student admissions.
+  - **Live Progress Grid**: Tracks checkpoint completions and accuracy across connected students.
+  - **Real-Time Leaderboard**: Ranks students based on checkpoints passed and XP scored.
+  - **Host Session Flow**: Allows the host to advance stages (Engage -> Explore -> Checkpoints -> Results).
+- **Session Analytics Detail (`/teaching/(group)/analytics/[id]`)**:
+  - Post-session review showing average scores, question-by-question breakdown, and individual student attempt metrics.
 
 ---
 
-## 3. API & Data Layer
-- **Endpoints:**
-  - `GET /api/sessions/[code]/status` — Aggregates checkpoint responses and returns live session stats (participating count, average completion rate, scores, leaderboard).
-  - `POST /api/sessions/[code]/end` — Host-only action to set session status to `ended` and stamp the final `endedAt` time.
-- **Participants Endpoint:**
-  - `/api/sessions/[code]/submit` — Participant post route for checkpoint responses.
+## 2. Real-Time Synchronization Layer (Pusher)
+
+Session state is kept in sync across host and student devices using Pusher channels (`presence-` / `private-` / `public-` session channels):
+
+```mermaid
+sequenceDiagram
+    autonumber
+    actor Host as Teacher (Host)
+    actor Student as Student Client
+    participant API as Next.js API Route (/api/ses/*)
+    participant Pusher as Pusher Realtime Service
+    participant DB as PostgreSQL (Prisma)
+
+    Host->>API: POST /api/ses/sessions (Create Live Session)
+    API->>DB: Insert LiveSession (code, hostId, config)
+    Student->>API: POST /api/ses/sessions/join (Code + Nickname)
+    API->>DB: Insert SessionPlayer & PlayAttempt
+    API->>Pusher: Trigger "player-joined" event
+    Pusher-->>Host: Realtime Participant Update
+
+    Student->>API: POST /api/sim/play/[id]/checkpoint (Submit Answer)
+    API->>DB: Update PlayAttempt & SessionPlayer Score
+    API->>Pusher: Trigger "player-scored" event
+    Pusher-->>Host: Leaderboard & Checkpoint Grid Refresh
+```
 
 ---
 
-## 4. TDD / Test Cases (Playwright)
-- **Live Short-Polling Validation:**
-  1. Login as licensed host. Launch classroom session.
-  2. Load host dashboard page. Verify polling timer triggers call every 2.5 seconds.
-  3. Mock a student submitting a correct answer to Checkpoint 1 via `/api/sessions/[code]/submit`.
-  4. Verify the next polling cycle response updates the host's grid showing Checkpoint 1 as Green (correct) for that student.
-- **Average Progress Bar:**
-  1. Start a mock session with 10 students.
-  2. Mock 5 students completing 50% of the checkpoints.
-  3. Verify the host dashboard progress bar animates to exactly 25% average completion.
-- **End Session Lockout:**
-  1. Click "End Session" on the host dashboard.
-  2. Verify the session state database row switches `status` to `ended`.
-  3. Attempt to submit a checkpoint response from a mock student client.
-  4. Verify the student API returns a `400 Bad Request` stating the session has ended and rejects the answer.
-  5. Check that the final leaderboard ranks are locked and displayed on the ended session archive.
+## 3. Key API Endpoints (5-Suite Taxonomy: `ses` & `sim`)
+- `ses:session:post:create` (`POST /api/ses/sessions`) — Initializes a new live session with join code.
+- `ses:session:post:join` (`POST /api/ses/sessions/join`) — Registers a student into the session lobby.
+- `ses:session:post:end` (`POST /api/ses/sessions/[id]/end`) — Concludes session and locks leaderboard.
+- `ses:analytics:get:metrics` (`GET /api/ses/analytics/[id]/metrics`) — Computes average score, accuracy, completion percentage.
+- `ses:analytics:get:info` (`GET /api/ses/analytics/[id]/info`) — Fetches session metadata and configuration.

@@ -28,8 +28,8 @@ export const GET = secureApiRoute(async (req: NextRequest, ctx, user) => {
 
   const parsed = ZGetRes.parse({
     id: subscription.id,
+    tier: subscription.tier,
     status: subscription.status,
-    seats: subscription.seats,
     isUnlimited: subscription.isUnlimited,
     currentPeriodEnd: subscription.currentPeriodEnd?.toISOString() ?? null,
   });

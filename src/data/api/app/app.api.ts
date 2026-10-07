@@ -7,6 +7,7 @@ import { authClient } from "@/adapters/auth/client";
 import { PATHS } from "@/lib/constants/paths";
 import { QUERY_KEYS } from "@/data/key-factory";
 import { getUniqueSlug } from "@/lib/utils/get-unique-slug";
+import { getRandomAvatar } from "@/lib/utils/get-random-avatar";
 
 // ---------------------------------------------------------------------------
 // USER ENDPOINTS
@@ -103,6 +104,7 @@ const appUserRegister = {
       name: body.name,
       email: body.email,
       password: body.password,
+      image: getRandomAvatar()
     });
     if (error)
       throw new ApiError(
@@ -432,6 +434,102 @@ const appMediaPostOne = {
   },
 } satisfies MutationConfig;
 
+// ---------------------------------------------------------------------------
+// ONBOARDING ENDPOINTS
+// ---------------------------------------------------------------------------
+
+const appOnboardingGetType = {
+  type: "query",
+  queryKey: () => [...QUERY_KEYS["app:onboarding:get:type"]],
+  queryFn: async () => {
+    const data = await fetcher(
+      () => axios.get(R["app:onboarding:get:type"]()),
+      ZApp.AppOnboardingGetType.shape.res
+    );
+    return data;
+  },
+} satisfies QueryConfig;
+
+const appOnboardingPatchType = {
+  type: "mutation",
+  mutationFn: async (body: Infer["AppOnboardingPatchType"]["body"]) => {
+    const data = await fetcher(
+      () => axios.patch(R["app:onboarding:patch:type"](), body),
+      ZApp.AppOnboardingPatchType.shape.res
+    );
+    return data;
+  },
+} satisfies MutationConfig;
+
+const appOnboardingGetDetail = {
+  type: "query",
+  queryKey: () => [...QUERY_KEYS["app:onboarding:get:detail"]],
+  queryFn: async () => {
+    const data = await fetcher(
+      () => axios.get(R["app:onboarding:get:detail"]()),
+      ZApp.AppOnboardingGetDetail.shape.res
+    );
+    return data;
+  },
+} satisfies QueryConfig;
+
+const appOnboardingPatchDetail = {
+  type: "mutation",
+  mutationFn: async (body: Infer["AppOnboardingPatchDetail"]["body"]) => {
+    const data = await fetcher(
+      () => axios.patch(R["app:onboarding:patch:detail"](), body),
+      ZApp.AppOnboardingPatchDetail.shape.res
+    );
+    return data;
+  },
+} satisfies MutationConfig;
+
+const appOnboardingGetLicensing = {
+  type: "query",
+  queryKey: () => [...QUERY_KEYS["app:onboarding:get:licensing"]],
+  queryFn: async () => {
+    const data = await fetcher(
+      () => axios.get(R["app:onboarding:get:licensing"]()),
+      ZApp.AppOnboardingGetLicensing.shape.res
+    );
+    return data;
+  },
+} satisfies QueryConfig;
+
+const appOnboardingPatchLicensing = {
+  type: "mutation",
+  mutationFn: async (body: Infer["AppOnboardingPatchLicensing"]["body"]) => {
+    const data = await fetcher(
+      () => axios.patch(R["app:onboarding:patch:licensing"](), body),
+      ZApp.AppOnboardingPatchLicensing.shape.res
+    );
+    return data;
+  },
+} satisfies MutationConfig;
+
+const appOnboardingPatchJoin = {
+  type: "mutation",
+  mutationFn: async (body: Infer["AppOnboardingPatchJoin"]["body"]) => {
+    const data = await fetcher(
+      () => axios.patch(R["app:onboarding:patch:join"](), body),
+      ZApp.AppOnboardingPatchJoin.shape.res
+    );
+    return data;
+  },
+} satisfies MutationConfig;
+
+const appOnboardingGetHasLicense = {
+  type: "query",
+  queryKey: () => [...QUERY_KEYS["app:onboarding:get:has-license"]],
+  queryFn: async () => {
+    const data = await fetcher(
+      () => axios.get(R["app:onboarding:get:has-license"]()),
+      ZApp.AppOnboardingGetHasLicense.shape.res
+    );
+    return data;
+  },
+} satisfies QueryConfig;
+
 export default {
   "app:user:get:me": appUserGetMe,
   "app:user:get:profile": appUserGetProfile,
@@ -459,4 +557,14 @@ export default {
   "app:org:patch:member-role": appOrgUpdateMemberRole,
   "app:org:post:invite": appOrgInviteMember,
   "app:media:post:one": appMediaPostOne,
+
+  // Onboarding
+  "app:onboarding:get:type": appOnboardingGetType,
+  "app:onboarding:patch:type": appOnboardingPatchType,
+  "app:onboarding:get:detail": appOnboardingGetDetail,
+  "app:onboarding:patch:detail": appOnboardingPatchDetail,
+  "app:onboarding:get:licensing": appOnboardingGetLicensing,
+  "app:onboarding:patch:licensing": appOnboardingPatchLicensing,
+  "app:onboarding:patch:join": appOnboardingPatchJoin,
+  "app:onboarding:get:has-license": appOnboardingGetHasLicense,
 };

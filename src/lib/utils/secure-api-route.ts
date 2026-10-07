@@ -18,6 +18,8 @@ export function secureApiRoute<TParams>(handler: AuthenticatedHandler<TParams>) 
         headers: await headers(),
       });
 
+      console.log("IN SECURE API ", res);
+
       if (!res) {
         return JSend.error("Unauthorized", 401);
       }

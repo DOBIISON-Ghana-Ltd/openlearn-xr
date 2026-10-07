@@ -3,6 +3,7 @@ import localFont from 'next/font/local';
 import { cn } from "@/lib/utils/cn";
 import "./globals.css";
 import Providers from "@/components/common/providers";
+import { pageGuard } from "@/lib/utils/page-guard";
 
 const sans = localFont({ src: './fonts/Sora.ttf', variable: '--font-sans' });
 
@@ -25,7 +26,9 @@ export const metadata: Metadata = {
   manifest: "/manifest.json",
 };
 
-export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
+export default async function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
+  await pageGuard();
+
   return (
     <html
       lang="en"

@@ -1,79 +1,47 @@
-# Page Specification: Licensing and Billing
+# Page Specification: Licensing & Paystack Billing
 
-## 1. Requirements & Scope
-- **License Purchasing Page (`/billing`):**
-  - Displays three available subscription tiers:
-    1. **Solo Teacher:** Individual host subscription. Allows 1 user seat, max 3 concurrent active classroom sessions.
-    2. **Department Pack:** Pack of 5 to 10 user seats. Shared organization access.
-    3. **Institutional License:** School-wide unlimited teacher access. Domain wildcard configuration.
-  - Links to Stripe checkout for `openlearn.org` deployment.
-  - Decoupled from checkout flows for self-hosted instances (config toggles mock-purchases or grants admin licenses).
-- **Seat Management View (Inside Organization Settings):**
-  - Visible only to Organization owners of active **Department** or **Institutional** licenses.
-  - Allows inviting other teachers by email.
-  - Displays remaining seats out of the purchased limit.
-  - Institutional view shows the active wildcard domain parameter (e.g., `@achimotaschool.edu.gh`). Any teacher signing up with that domain is auto-added as a licensed host member in that school's organization workspace.
+## 1. Overview & Architecture
+OpenLearn XR uses **Paystack** as its primary payment processor for subscriptions and multi-seat licenses across Ghana and West Africa.
+- **Frontend Integration**: Inline popup checkout via `@paystack/inline-js` in `tab.student.lisense.tsx` and `tab.teacher.lisense.tsx`.
+- **Backend API**:
+  - `GET /api/app/onboarding/licensing` — Queries pending transactions, verifies status against Paystack API, and checks active subscriptions.
+  - `PATCH /api/app/onboarding/licensing` — Creates/updates the user's organization workspace, provisions Free tier subscriptions, or initiates Paystack transactions for paid plans.
+  - `POST /api/webhoooks/paystack` — Serverless webhook listener validating HMAC SHA512 signatures (`x-paystack-signature`) for background lifecycle events.
 
 ---
 
-## 2. UI & Design Guidelines
-- **Visuals:** Grid structure displaying tier cards. The active tier card has a highlighted glowing border.
-- **Form Controls:** Clean input fields for domain parameters, copyable email invitation links, and lists showing active seats with a "Revoke Member" button.
+## 2. Subscription Tiers & Billing Matrix
+
+| Tier | Target Audience | Seats / Host Access | Pricing (GHS) | Billing Provider |
+| :--- | :--- | :--- | :--- | :--- |
+| **Free** | Individual Students & Solo Explorers | 1 User (Solo) | Free | Direct DB provision |
+| **Pro / Solo Teacher** | Individual Teachers | 1 Host Seat, up to 3 active concurrent sessions | ~75 GHS / mo | Paystack Plan Subscription |
+| **Department** | Subject Teams / Small Departments | Up to 10 Host Seats, shared organization dashboard | ~300 GHS / mo | Paystack Plan Subscription |
+| **Enterprise / School** | Full School / Ministry Deployments | Unlimited Host Seats, Wildcard domain matching | Custom Invoice | Paystack / Enterprise Contract |
 
 ---
 
-## 3. API & Data Layer
-- **Endpoints:**
-  - `POST /api/billing/checkout` — Generates a Stripe checkout URL.
-  - `POST /api/billing/webhook` — Receives Stripe events to activate/renew/revoke database `License` records.
-  - `POST /api/organization/invite` — Invites a user to the organization.
-  - `POST /api/organization/wildcard` — Sets the email domain wildcard.
-- **Better Auth Integration:**
-  - Relies on the `organization` plugin's member invitation and membership status.
+## 3. Database & Data Model Layer (Prisma)
+
+```mermaid
+erDiagram
+    Organization ||--|| Subscription : "1-to-1"
+    Organization ||--o{ Transaction : "1-to-many"
+    Subscription ||--o{ Transaction : "1-to-many"
+    User ||--o{ Transaction : "initiator"
+```
+
+- **`Subscription`**: Enforces a strict 1-to-1 relation with `Organization` (`organizationId @unique`).
+  - Identifiers: `paystackSubCode` (`@unique`), `paystackEmailToken`, `paystackCustomerCode`.
+  - Status: `"ACTIVE" | "EXPIRED" | "CANCELLED" | "PAST_DUE"`.
+- **`Transaction`**: Tracks individual payment records linked to `subscriptionId` and `organizationId`.
+  - Identifiers: `reference` (`@unique`), `accessCode`, `amount` (in pesewas), `channel`, `status` (`"PENDING" | "SUCCESS" | "FAILED" | "ABANDONED"`).
 
 ---
 
-## 4. TDD / Test Cases (Playwright)
-- **Solo License Constraints:**
-  1. Login as a Solo Teacher.
-  2. Purchase a Solo License. Verify `License` model is active with `seatsLimit = 1` and `maxConcurrentSessions = 3`.
-  3. Spin up 3 active concurrent classroom sessions.
-  4. Attempt to create a 4th session. Verify API returns a `403 Forbidden` response limiting active sessions.
-- **Department Seat Limitations:**
-  1. Purchase a Department license with 5 seats.
-  2. Invite 4 teachers. Verify they can join.
-  3. Attempt to invite a 6th teacher. Verify system blocks invitation with a "Seat Limit Exceeded" warning.
-- **Wildcard Domain Auto-Onboarding:**
-  1. Admin sets wildcard domain to `@achimotaschool.edu.gh`.
-  2. Sign up a new user with email `teacher1@achimotaschool.edu.gh`.
-  3. Verify the signup workflow intercepts, matches the domain, adds the user to the organization, and instantly grants session-creation capabilities without manual invitations.
-
----
-
-## 5. Page Content & Copy Deck
-
-### Section 1: Subscription Selection
-- **Main Heading:** Select Your Classroom Plan
-- **Body Text:** Unlock advanced tracking, custom join links, and live classroom analytics. Select the plan that fits your teaching scale.
-- **Billing Period Toggle:** [ Monthly Billing ] / [ Annual Billing (Save 20%) ]
-
-### Section 2: Solo checkout Highlights
-- **Title:** Solo License Checkout
-- **Bullet Highlights:**
-  - Fast billing integration via Stripe.
-  - Grants instant session hosting access.
-  - Active session limit: 3 concurrent classrooms.
-  - Session reports saved indefinitely.
-
-### Section 3: Organization Invite Form (Department/School dashboard)
-- **Invite Panel Title:** Invite Collaborators
-- **Input Placeholder:** e.g., teacher@school.edu.gh
-- **Seat Status indicator text:** "Using {activeSeats} of {maxSeats} seats. Need more seats? [Upgrade Plan]"
-- **Invitation Alert Info:** "Invited teachers will receive an activation email linked to your organization workspace. They will automatically inherit session-creation permissions."
-
-### Section 4: Wildcard Domain Input Panel (Institutional only)
-- **Wildcard Domain Form Title:** Manage School Domain Access
-- **Instructions:** "Enter your school's email suffix domain below. Any registered user signing up with a matching domain will automatically bypass invitations and join this school workspace with licensed teacher privileges."
-- **Input Field Placeholder:** e.g., @achimotaschool.edu.gh
-- **Warning Notice:** "Warning: Changing this parameter immediately revokes wildcard access for any new signups under old domains. Active members will not be affected."
-
+## 4. Webhook Processing (`/api/webhoooks/paystack`)
+Handles automated asynchronous lifecycle events:
+1. `charge.success`: Verifies payment, marks `Transaction` status to `"SUCCESS"`, and updates/creates active `Subscription`.
+2. `subscription.create`: Stores `paystackSubCode`, `paystackEmailToken`, and `currentPeriodEnd`.
+3. `invoice.update`: Records subscription renewal transactions.
+4. `subscription.disable`: Marks `Subscription` status as `"CANCELLED"`.

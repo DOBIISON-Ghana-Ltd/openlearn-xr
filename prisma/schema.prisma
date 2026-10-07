@@ -24,8 +24,13 @@ model User {
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
 
-  onboarded Boolean @default(false)
-  metadata  Json?
+  onboarded  Boolean @default(false)
+  type       String? // "student" | "teacher"
+  phone      String?
+  location   String?
+  school     String?
+  classLevel String?
+  metadata   Json?
 
   // Gamification aggregate
   xp            Int      @default(0)
@@ -164,47 +169,55 @@ model Member {
 // ==========================================
 
 model Subscription {
-  id                   String    @id @default(cuid())
-  organizationId       String // Removed unique constraint to allow multiple subscriptions
-  transactionId        String?   @unique // Link to the exact payment that spawned/renewed this
-  tier                 String    @default("FREE") // "FREE" | "PRO" | "DEPARTMENT" | "ENTERPRISE" | "UNLIMITED"
-  status               String    @default("ACTIVE") // "ACTIVE" | "PAST_DUE" | "CANCELED" | "TRIALING"
-  seats                Int       @default(1)
-  isUnlimited          Boolean   @default(false) // true for self-hosted orgs (bypass all seat/feature checks)
-  paystackCustomerCode String?
-  paystackSubCode      String?
-  currentPeriodEnd     DateTime?
-  createdAt            DateTime  @default(now())
-  updatedAt            DateTime  @updatedAt
+  id             String  @id @default(cuid())
+  organizationId String  @unique // Enforces 1-to-1 relationship per organization
+  tier           String  @default("FREE") // "FREE" | "PRO" | "DEPARTMENT" | "ENTERPRISE" | "UNLIMITED"
+  status         String  @default("ACTIVE") // "ACTIVE" | "EXPIRED" | "CANCELLED" | "PAST_DUE"
+  isUnlimited    Boolean @default(false)
 
-  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
-  transaction  Transaction? @relation(fields: [transactionId], references: [id])
+  // Paystack Billing Identifiers
+  paystackCustomerCode String?
+  paystackSubCode      String? @unique // SUB_xxx from Paystack
+  paystackEmailToken   String? // Required to cancel/disable sub via API
+
+  currentPeriodEnd DateTime?
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
+
+  organization Organization  @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  transactions Transaction[]
 
   @@index([organizationId])
   @@index([status])
+  @@index([paystackSubCode])
   @@map("subscription")
 }
 
 model Transaction {
-  id             String   @id @default(cuid())
+  id             String  @id @default(cuid())
   organizationId String
-  userId         String? // The user who initiated the payment
-  reference      String   @unique // Paystack transaction reference
-  amount         Int // Amount in lowest currency unit (kobo/pesewas)
-  currency       String   @default("GHS")
-  status         String   @default("PENDING") // "PENDING" | "SUCCESS" | "FAILED" | "ABANDONED"
-  channel        String? // e.g., "card", "mobile_money"
-  metadata       Json? // Optional JSON payload from Paystack
-  createdAt      DateTime @default(now())
-  updatedAt      DateTime @updatedAt
+  userId         String? // The user who initiated the original payment
+  subscriptionId String? // Links renewal transactions back to the main Subscription record
+
+  reference  String  @unique // Paystack transaction reference
+  accessCode String? // Saved from transaction/initialize response
+  amount     Int // Amount in lowest currency unit (pesewas/kobo)
+  currency   String  @default("GHS")
+  status     String  @default("PENDING") // "ABANDONED" | "FAILED" | "ONGOING" | "PENDING" | "PROCESSING" | "SUCCESS" | "REVERSED"
+  channel    String? // e.g., "card", "mobile_money"
+  metadata   Json?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   organization Organization  @relation(fields: [organizationId], references: [id], onDelete: Cascade)
   user         User?         @relation(fields: [userId], references: [id], onDelete: SetNull)
-  subscription Subscription?
+  subscription Subscription? @relation(fields: [subscriptionId], references: [id], onDelete: SetNull)
 
   @@index([organizationId])
   @@index([userId])
   @@index([reference])
+  @@index([subscriptionId])
   @@map("transaction")
 }
 
@@ -550,8 +563,8 @@ model PlayAttempt {
   totalCheckpointPoints  Int     @default(0) // Total possible checkpoint points for this attempt
 
   // Pre-Assessment Tracking
-  preAssessmentEarnedPoints Int  @default(0) // Points earned on pre-assessment
-  preAssessmentTotalPoints  Int  @default(0) // Total possible points on pre-assessment
+  preAssessmentEarnedPoints Int @default(0) // Points earned on pre-assessment
+  preAssessmentTotalPoints  Int @default(0) // Total possible points on pre-assessment
 
   // Session details
   sessionPlayerId String? @unique // Links directly to the session leaderboard record

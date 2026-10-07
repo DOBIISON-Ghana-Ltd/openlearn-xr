@@ -1,56 +1,60 @@
-# Project Todo & Deferred Tasks
+# Project Todo & Immediate Handoff Backlog
 
-This document tracks features, refactors, and architectural improvements deferred for future implementation.
-
----
-
-## 📋 Backlog & Follow-ups
-
-### 1. Host Result Flow Metrics Migration
-- [x] **Task**: Replace the client-side utility `calculateSessionMetrics(players, sessionInfo?.config?.maxAdmissions)` in [`flow.result.host.tsx`](file:///d:/delmac/dobiison/projects/open-learn-xr/src/app/p/%5B...slug%5D/flow.result.host.tsx#L70) with the server-side API query `ses:analytics:get:metrics` (`/api/ses/analytics/[id]/metrics`).
-- [x] **Context**: Once verified, deprecate / clean up the client-side [`calculate-session-metrics.ts`](file:///d:/delmac/dobiison/projects/open-learn-xr/src/lib/utils/calculate-session-metrics.ts) utility.
+This document tracks completed tasks, active implementations, and deferred tasks for incoming developers.
 
 ---
 
-### 2. Session Analytics Info Schema Expansion
-- [ ] **Task**: Extend the currently empty `ZLiveSession.pick({})` in `SesAnalyticsGetInfo` ([`ses.schema.ts`](file:///d:/delmac/dobiison/projects/open-learn-xr/src/data/api/ses/ses.schema.ts)) as more session-level metadata fields are required for the analytics page.
-- [ ] **Target Endpoint**: `GET /api/ses/analytics/[id]/info` ([`route.ts`](file:///d:/delmac/dobiison/projects/open-learn-xr/src/app/api/ses/analytics/%5Bid%5D/info/route.ts)).
+## 🚀 Active Priority: Onboarding & Monetization Milestone
+
+### 1. Complete Onboarding Licensing Endpoints
+- [ ] **Task**: Finish the GET and PATCH implementation in `src/app/api/app/onboarding/licensing/route.ts`.
+- [ ] **GET Flow**:
+  - Verify if user owns an organization.
+  - Check for any pending transactions in DB, verify status with Paystack (`GET https://api.paystack.co/transaction/verify/:reference`), and update DB status.
+  - Return `organizationName`, `organizationId`, `shouldFinishTransaction`, `accessCode`, and `finishedSubscription`.
+- [ ] **PATCH Flow**:
+  - If no organization exists, create new `Organization`, add user as `owner`, and set `session.activeOrganizationId`.
+  - If `plan === "FREE"`, create/update `Subscription` record with `tier: "FREE"`, `status: "ACTIVE"`.
+  - If `plan !== "FREE"`, call Paystack initialize API with metadata (`organizationId`, `userId`) and record a pending `Transaction` with `accessCode` and `reference`.
+
+### 2. Wire Onboarding Frontend Tabs to Paystack
+- [ ] **Task**: Connect `src/app/auth/onboarding/tab.student.lisense.tsx` and `tab.teacher.lisense.tsx` with `@paystack/inline-js`.
+- [ ] **Context**: When user selects a paid plan, open the Paystack inline popup using the returned `accessCode`. On payment completion callback, advance to `tab.final.tsx` and mark `user.onboarded = true`.
+
+### 3. Implement Onboarding School Join by Code Logic
+- [ ] **Task**: Implement the school search, join code / invitation resolution, and organization membership association logic in `PATCH /api/app/onboarding/join`.
+- [ ] **Context**: Handle verifying join codes against pending invitations or active schools, creating/updating member roles, and setting active organization session context.
 
 ---
 
-### 3. Teaching Analytics Detail Page UI Implementation
-- [ ] **Task**: Connect [`src/app/teaching/(group)/analytics/[id]/client.tsx`](file:///d:/delmac/dobiison/projects/open-learn-xr/src/app/teaching/%28group%29/analytics/%5Bid%5D/client.tsx) to active endpoints:
+## 📋 General Backlog & Analytics
+
+### 4. Teaching Analytics Detail Page UI Implementation
+- [ ] **Task**: Connect `src/app/teaching/(group)/analytics/[id]/client.tsx` to active endpoints:
   - Session Info: `ses:analytics:get:info`
   - Session Metrics: `ses:analytics:get:metrics`
   - Session Players List
   - Session Checkpoint Questions List
 
----
+### 5. Session Analytics Info Schema Expansion
+- [ ] **Task**: Extend `ZLiveSession.pick({})` in `SesAnalyticsGetInfo` (`src/data/api/ses/ses.schema.ts`) as more session-level metadata fields are required for the analytics page.
+- [ ] **Target Endpoint**: `GET /api/ses/analytics/[id]/info` (`src/app/api/ses/analytics/[id]/info/route.ts`).
 
-### 4. Consolidate Repetitive Session Players Endpoints
-- [ ] **Task**: Consolidate repetitive session players endpoints ([`ses:session:get:players`](file:///d:/delmac/dobiison/projects/open-learn-xr/src/app/api/ses/sessions/%5Bid%5D/players/route.ts) and [`ses:analytics:get:players`](file:///d:/delmac/dobiison/projects/open-learn-xr/src/app/api/ses/analytics/%5Bid%5D/players/route.ts)) into a shared unified endpoint or service.
+### 6. Consolidate Repetitive Session Players Endpoints
+- [ ] **Task**: Consolidate repetitive session players endpoints (`ses:session:get:players` and `ses:analytics:get:players`) into a shared unified endpoint or service.
 
----
-
-### 5. Project-Wide `cn()` Conditional Class Corrections
-- [x] **Task**: Audit and update all `cn()` calls across the codebase to ensure the default/falsy styles are defined in the base string and truthy overrides are placed in the conditional object (e.g. `cn("base-style default-style", { "override-style": condition })`).
-
----
-
-### 6. Migrate `(new)` Directory Contents to Root
-- [x] **Task**: Move all routes, pages, and components from the `(new)` folder structure (e.g., `src/app/(new)/` and `src/components/(new)/`) directly to the root/standard directories since the new design is now the main implementation.
+### 7. Implement Remaining Play Route Analytic Event Logs
+- [ ] **Task**: Wire client-side `sim:session-analytics:post:one` event dispatches across remaining simulation play tabs:
+  - **Pre-Test**: Dispatch `"pre-test:changed"` in `src/app/p/[...slug]/flow.engage.tsx` when answering pre-assessment questions.
+  - **Tab Navigation**: Dispatch `"tab:changed"` in `src/app/p/[...slug]/flow.tsx` when transitioning between tabs.
+  - **Simulation Controls**: Dispatch `"control:changed"` in `src/components/control-blocks/dynamic-lab-panel.tsx` when adjusting sliders/toggles.
 
 ---
 
-### 7. Project-Wide Migration to Tailwind CSS v3
-- [ ] **Task**: Perform a project-wide migration to Tailwind CSS v3 to ensure robust cross-browser compatibility and support for older browser versions.
+## ✅ Completed Milestones
 
----
-
-### 8. Implement Remaining Play Route Analytic Event Logs
-- [ ] **Task**: Wire client-side `sim:session-analytics:post:one` event dispatches across the remaining simulation play tabs and interactions:
-  - **Pre-Test**: Dispatch `"pre-test:changed"` in [`flow.engage.tsx`](file:///d:/delmac/dobiison/projects/open-learn-xr/src/app/p/%5B...slug%5D/flow.engage.tsx) when a student answers a pre-assessment question (`{ questionIndex, selectedIndex, isCorrect }`).
-  - **Tab Navigation**: Dispatch `"tab:changed"` in [`flow.tsx`](file:///d:/delmac/dobiison/projects/open-learn-xr/src/app/p/%5B...slug%5D/flow.tsx) when transitioning between tabs (`{ tabIndex }`).
-  - **Simulation Controls**: Dispatch `"control:changed"` in [`dynamic-lab-panel.tsx`](file:///d:/delmac/dobiison/projects/open-learn-xr/src/components/control-blocks/dynamic-lab-panel.tsx) / [`flow.explore.internal.tsx`](file:///d:/delmac/dobiison/projects/open-learn-xr/src/app/p/%5B...slug%5D/flow.explore.internal.tsx) when learners adjust sliders, numbers, or toggles (`{ controlKey, controlValue }`).
-
-
+- [x] **Host Result Flow Metrics Migration**: Replaced client-side metric calculation with server query `ses:analytics:get:metrics`.
+- [x] **Project-Wide `cn()` Conditional Class Corrections**: Audited and normalized all `cn()` utility usage.
+- [x] **Migrate `(new)` Directory Contents to Root**: Consolidated all components and routes into standard directories.
+- [x] **Prisma Database Schema Refactoring**: Added User onboarding profile fields, 1-to-1 Organization-to-Subscription relation, and 1-to-many Transaction links.
+- [x] **Paystack Webhook Handler**: Implemented HMAC SHA512 signature validation and event routing in `/api/webhoooks/paystack`.

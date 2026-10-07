@@ -63,7 +63,6 @@ const AdminSubscriptionGetAll = ZApi({
       organizationId: true,
       tier: true,
       status: true,
-      seats: true,
       isUnlimited: true,
       currentPeriodEnd: true,
       createdAt: true,

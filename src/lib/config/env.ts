@@ -41,6 +41,8 @@ const serverSchema = clientSchema.extend({
   AWS_SECRET_ACCESS_KEY: z.string().optional(),
   S3_BUCKET_NAME: z.string().optional(),
 
+  PAYSTACK_SECRET_KEY: z.string().optional(),
+
   PUSHER_APP_ID: z.string().optional(),
   PUSHER_KEY: z.string().optional(),
   PUSHER_SECRET: z.string().optional(),
@@ -87,6 +89,8 @@ const serverEnv = {
   AWS_ACCESS_KEY_ID: process.env.AWS_ACCESS_KEY_ID,
   AWS_SECRET_ACCESS_KEY: process.env.AWS_SECRET_ACCESS_KEY,
   S3_BUCKET_NAME: process.env.S3_BUCKET_NAME,
+
+  PAYSTACK_SECRET_KEY: process.env.PAYSTACK_SECRET_KEY,
 
   PUSHER_APP_ID: process.env.PUSHER_APP_ID,
   PUSHER_KEY: process.env.PUSHER_KEY || process.env.NEXT_PUBLIC_PUSHER_KEY,
