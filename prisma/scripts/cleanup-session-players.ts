@@ -1,5 +1,5 @@
 import "dotenv/config";
-import prisma from "../src/adapters/db/client";
+import prisma from "../../src/adapters/db/client";
 
 async function cleanupSessionPlayers() {
   console.log("🔍 Fetching all session players from the database...");

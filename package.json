@@ -11,7 +11,8 @@
     "prisma:generate": "prisma generate",
     "prisma:migrate": "prisma migrate dev",
     "prisma:reset": "prisma db push --force-reset",
-    "prisma:seed": "npx tsx prisma/seed.ts",
+    "prisma:seed": "npx tsx prisma/scripts/seed.ts",
+    "prisma:cleanup-players": "npx tsx prisma/scripts/cleanup-session-players.ts",
     "prisma:studio": "prisma studio"
   },
   "dependencies": {

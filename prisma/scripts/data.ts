@@ -1,7 +1,7 @@
 import z from "zod";
-import schema from "../src/data/api/new.admin/schema";
+import { SeedModules } from "./schema";
 
-type IData = z.infer<typeof schema.SeedModules>;
+type IData = z.infer<typeof SeedModules>;
 
 export const data: IData = [
   {

@@ -1,10 +1,7 @@
 import z from "zod";
 import { ZCollection, ZModule, ZModuleCheckpoint, ZModuleVersion } from "@/data/schema.base";
 
-// ---------------------------------------------------------------------------
-// GET /api/ses/sessions/[id]/player-summary — session player summary
-// ---------------------------------------------------------------------------
-const SeedModules = z.object({
+export const SeedModules = z.object({
   name: ZCollection.shape.name,
   slug: ZCollection.shape.slug,
   description: ZCollection.shape.description,
@@ -30,14 +27,12 @@ const SeedModules = z.object({
         orderIndex: true,
         points: true,
         hint: true,
-        explanation: true
-      }).array()
-    }).array()
-  }).array()
+        explanation: true,
+      }).array(),
+    }).array(),
+  }).array(),
 }).array();
 
-const schema = {
+export default {
   SeedModules,
 };
-
-export default schema;

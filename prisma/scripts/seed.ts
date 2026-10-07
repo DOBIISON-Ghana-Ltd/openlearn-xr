@@ -1,7 +1,6 @@
 import "dotenv/config";
-import { auth } from "../src/adapters/auth/server";
-import prisma from "../src/adapters/db/client";
-import { getUniqueSlug } from "../src/lib/utils/get-unique-slug";
+import { auth } from "../../src/adapters/auth/server";
+import prisma from "../../src/adapters/db/client";
 import { data } from "./data";
 
 async function main() {
@@ -62,7 +61,6 @@ async function main() {
           tier: "UNLIMITED",
           status: "ACTIVE",
           isUnlimited: true,
-          seats: 0,
         },
       },
     },
