@@ -123,6 +123,50 @@ const AppUserUpdatePassword = ZApi({
     }),
 });
 
+const AppUserGetProfile = ZApi({
+  res: z.object({
+    name: z.string(),
+    role: z.string(),
+    email: z.string(),
+    phone: z.string(),
+    location: z.string(),
+    school: z.string(),
+    classLevel: z.string(),
+    memberSince: z.string(),
+    image: z.string().optional(),
+  }),
+});
+
+const AppUserGetProfileStats = ZApi({
+  res: z.object({
+    modulesCompleted: z.number(),
+    averageScore: z.number(),
+    bestScore: z.number(),
+    bestScoreTopic: z.string(),
+    currentStreak: z.number(),
+    badgesEarned: z.number(),
+  }),
+});
+
+const AppUserGetProfileSubscription = ZApi({
+  res: z.object({
+    currentPlan: z.string(),
+    accountType: z.string(),
+    memberSince: z.string(),
+  }),
+});
+
+const AppUserGetProfileHistory = ZApi({
+  res: z.array(
+    z.object({
+      id: z.string(),
+      title: z.string(),
+      score: z.number(),
+      completedAt: z.string(),
+    })
+  ),
+});
+
 // ---------------------------------------------------------------------------
 // ORGANIZATION SCHEMAS
 // ---------------------------------------------------------------------------
@@ -131,8 +175,8 @@ const AppOrgGetSubscription = ZApi({
   params: z.object({ orgId: z.string() }),
   res: ZSubscription.pick({
     id: true,
+    tier: true,
     status: true,
-    seats: true,
     isUnlimited: true,
     currentPeriodEnd: true,
   }),
@@ -220,6 +264,67 @@ const AppMediaPostOne = ZApi({
   }),
 });
 
+// ---------------------------------------------------------------------------
+// ONBOARDING SCHEMAS
+// ---------------------------------------------------------------------------
+
+const AppOnboardingGetType = ZApi({
+  res: ZUser.pick({
+    type: true,
+  }),
+});
+
+const AppOnboardingPatchType = ZApi({
+  body: z.object({
+    type: ZUser.shape.type.unwrap().unwrap(),
+  }),
+});
+
+const AppOnboardingGetDetail = ZApi({
+  res: ZUser.pick({
+    school: true,
+    classLevel: true,
+    location: true,
+    phone: true,
+  }),
+});
+
+const AppOnboardingPatchDetail = ZApi({
+  body: ZUser.pick({
+    school: true,
+    classLevel: true,
+    location: true,
+    phone: true,
+  }),
+});
+
+const AppOnboardingGetLicensing = ZApi({
+  res: z.object({
+    workspace: ZOrganization.shape.name.nullable(),
+    tier: ZSubscription.shape.tier,
+  }),
+});
+
+const AppOnboardingPatchLicensing = ZApi({
+  body: z.object({
+    workspace: ZOrganization.shape.name.optional(),
+    tier: ZSubscription.shape.tier,
+  }),
+});
+
+const AppOnboardingPatchJoin = ZApi({
+  body: z.object({
+    schoolId: z.string().optional(),
+    joinCode: z.string().min(1, "Join code is required"),
+  }),
+});
+
+const AppOnboardingGetHasLicense = ZApi({
+  res: z.object({
+    hasLicense: z.boolean(),
+  }),
+});
+
 const schema = {
   AppUserGetMe,
   AppUserLogin,
@@ -228,9 +333,14 @@ const schema = {
   AppUserVerifyEmailOtp,
   AppUserSendOtp,
   AppUserResetPassword,
+
   AppUserDeleteMe,
   AppUserUpdateAccount,
   AppUserUpdatePassword,
+  AppUserGetProfile,
+  AppUserGetProfileStats,
+  AppUserGetProfileSubscription,
+  AppUserGetProfileHistory,
   AppOrgGetSubscription,
   AppOrgGetList,
   AppOrgCreate,
@@ -242,6 +352,16 @@ const schema = {
   AppOrgUpdateMemberRole,
   AppOrgInviteMember,
   AppMediaPostOne,
+
+  // Onboarding
+  AppOnboardingGetType,
+  AppOnboardingPatchType,
+  AppOnboardingGetDetail,
+  AppOnboardingPatchDetail,
+  AppOnboardingGetLicensing,
+  AppOnboardingPatchLicensing,
+  AppOnboardingPatchJoin,
+  AppOnboardingGetHasLicense,
 };
 
 export default schema;

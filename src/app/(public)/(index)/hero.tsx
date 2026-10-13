@@ -18,7 +18,7 @@ export default function Hero({ className }: HeroProps) {
       {/* Background Photo Overlay from Figma */}
       <div className="pointer-events-none absolute inset-0 overflow-hidden">
         <Image
-          src="/hero-bg.png"
+          src="/bg/hero.png"
           alt="Science Lab Simulation Hero"
           fill
           priority

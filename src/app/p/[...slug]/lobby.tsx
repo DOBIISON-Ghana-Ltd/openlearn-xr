@@ -19,7 +19,7 @@ export default function Lobby() {
         </div>
         <div className="w-full max-w-xs relative h-60 flex-center">
           <Image
-            src="/waiting-student.svg"
+            src="/illustrations/waiting-student.svg"
             alt="Student waiting for host"
             fill
             sizes="340px"

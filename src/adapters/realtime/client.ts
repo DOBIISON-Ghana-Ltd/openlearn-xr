@@ -33,10 +33,6 @@ const getPusher = (): Pusher => {
     options.wssPort = port;
   }
 
-  if (env.NEXT_PUBLIC_PUSHER_FORCE_TLS) {
-    options.forceTLS = env.NEXT_PUBLIC_PUSHER_FORCE_TLS === "true";
-  }
-
   pusherInstance = new Pusher(key, options);
   return pusherInstance;
 };

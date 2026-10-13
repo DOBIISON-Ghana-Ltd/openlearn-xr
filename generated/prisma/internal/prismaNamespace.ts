@@ -80,12 +80,12 @@ export type PrismaVersion = {
 }
 
 /**
- * Prisma Client JS version: 7.9.1
- * Query Engine version: e922089b7d7502aff4249d5da3420f6fa55fc6ad
+ * Prisma Client JS version: 7.10.0
+ * Query Engine version: 0edf323efd1d98336f3f0a68684b56f689b900d3
  */
 export const prismaVersion: PrismaVersion = {
-  client: "7.9.1",
-  engine: "e922089b7d7502aff4249d5da3420f6fa55fc6ad"
+  client: "7.10.0",
+  engine: "0edf323efd1d98336f3f0a68684b56f689b900d3"
 }
 
 /**
@@ -2418,6 +2418,11 @@ export const UserScalarFieldEnum = {
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   onboarded: 'onboarded',
+  type: 'type',
+  phone: 'phone',
+  location: 'location',
+  school: 'school',
+  classLevel: 'classLevel',
   metadata: 'metadata',
   xp: 'xp',
   currentStreak: 'currentStreak',
@@ -2516,13 +2521,12 @@ export type MemberScalarFieldEnum = (typeof MemberScalarFieldEnum)[keyof typeof 
 export const SubscriptionScalarFieldEnum = {
   id: 'id',
   organizationId: 'organizationId',
-  transactionId: 'transactionId',
   tier: 'tier',
   status: 'status',
-  seats: 'seats',
   isUnlimited: 'isUnlimited',
   paystackCustomerCode: 'paystackCustomerCode',
   paystackSubCode: 'paystackSubCode',
+  paystackEmailToken: 'paystackEmailToken',
   currentPeriodEnd: 'currentPeriodEnd',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -2535,7 +2539,9 @@ export const TransactionScalarFieldEnum = {
   id: 'id',
   organizationId: 'organizationId',
   userId: 'userId',
+  subscriptionId: 'subscriptionId',
   reference: 'reference',
+  accessCode: 'accessCode',
   amount: 'amount',
   currency: 'currency',
   status: 'status',

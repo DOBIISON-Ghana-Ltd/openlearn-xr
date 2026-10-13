@@ -12,7 +12,7 @@ export const getPusherServer = (): Pusher => {
   if (pusherServerInstance) return pusherServerInstance;
 
   const appId = env.PUSHER_APP_ID;
-  const key = env.PUSHER_KEY || env.NEXT_PUBLIC_PUSHER_KEY;
+  const key = env.NEXT_PUBLIC_PUSHER_KEY;
   const secret = env.PUSHER_SECRET;
 
   if (!appId || !key || !secret) {
@@ -21,9 +21,6 @@ export const getPusherServer = (): Pusher => {
 
   const host = env.NEXT_PUBLIC_PUSHER_HOST;
   const portStr = env.NEXT_PUBLIC_PUSHER_PORT;
-  const forceTlsStr = env.NEXT_PUBLIC_PUSHER_FORCE_TLS;
-
-  const useTLS = forceTlsStr ? forceTlsStr === "true" : true;
 
   const config: Pusher.Options = host
     ? {
@@ -32,14 +29,14 @@ export const getPusherServer = (): Pusher => {
       secret,
       host,
       port: portStr || undefined,
-      useTLS,
+      useTLS: true,
     }
     : {
       appId,
       key,
       secret,
-      cluster: env.PUSHER_CLUSTER || "mt1",
-      useTLS,
+      cluster: env.NEXT_PUBLIC_PUSHER_CLUSTER,
+      useTLS: true,
     };
 
   pusherServerInstance = new Pusher(config);

@@ -1,0 +1,158 @@
+name: Build & Deploy to AWS
+
+on:
+  push:
+    branches: [main]
+
+env:
+  AWS_REGION: us-east-1
+  ECR_REPOSITORY: dobiison/openlearn-xr
+  EB_APP_NAME: openlearn-xr
+  EB_ENV_NAME: openlearn-xr-prod
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  deploy:
+    name: Build, Push & Deploy
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set version tag
+        id: version
+        run: |
+          SHORT_SHA=$(git rev-parse --short HEAD)
+          DATE=$(date +'%Y%m%d')
+          VERSION="prod-v${DATE}-${{ github.run_number }}-${SHORT_SHA}"
+          echo "tag=$VERSION" >> "$GITHUB_OUTPUT"
+          echo "🏷️ Version: $VERSION"
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Login to Amazon ECR
+        id: ecr-login
+        uses: aws-actions/amazon-ecr-login@v2
+
+      - name: Build, tag & push Docker image to ECR
+        env:
+          ECR_REGISTRY: ${{ steps.ecr-login.outputs.registry }}
+          IMAGE_TAG: ${{ steps.version.outputs.tag }}
+        run: |
+          FULL_IMAGE="$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
+          echo "📦 Building image: $FULL_IMAGE"
+
+          docker build \
+            --build-arg NEXT_PUBLIC_APP_URL="${{ secrets.NEXT_PUBLIC_APP_URL }}" \
+            --build-arg NEXT_PUBLIC_IMAGE_URL="${{ secrets.NEXT_PUBLIC_IMAGE_URL }}" \
+            --build-arg NEXT_PUBLIC_GA_MEASUREMENT_ID="${{ secrets.NEXT_PUBLIC_GA_MEASUREMENT_ID }}" \
+            --build-arg NEXT_PUBLIC_POSTHOG_KEY="${{ secrets.NEXT_PUBLIC_POSTHOG_KEY }}" \
+            --build-arg NEXT_PUBLIC_POSTHOG_HOST="${{ secrets.NEXT_PUBLIC_POSTHOG_HOST }}" \
+            --build-arg NEXT_PUBLIC_PUSHER_KEY="${{ secrets.NEXT_PUBLIC_PUSHER_KEY }}" \
+            --build-arg NEXT_PUBLIC_PUSHER_CLUSTER="${{ secrets.NEXT_PUBLIC_PUSHER_CLUSTER }}" \
+            --build-arg NEXT_PUBLIC_PUSHER_HOST="${{ secrets.NEXT_PUBLIC_PUSHER_HOST }}" \
+            --build-arg NEXT_PUBLIC_PUSHER_PORT="${{ secrets.NEXT_PUBLIC_PUSHER_PORT }}" \
+            --build-arg NEXT_PUBLIC_ENABLE_SURVEY="${{ secrets.NEXT_PUBLIC_ENABLE_SURVEY }}" \
+            --build-arg DATABASE_URL="${{ secrets.DATABASE_URL }}" \
+            --build-arg DIRECT_URL="${{ secrets.DIRECT_URL }}" \
+            --build-arg BETTER_AUTH_SECRET="${{ secrets.BETTER_AUTH_SECRET }}" \
+            -t "$FULL_IMAGE" .
+
+          echo "🚀 Pushing image to ECR..."
+          docker push "$FULL_IMAGE"
+          echo "image=$FULL_IMAGE" >> "$GITHUB_ENV"
+
+      - name: Create deployment bundle
+        env:
+          ECR_REGISTRY: ${{ steps.ecr-login.outputs.registry }}
+          IMAGE_TAG: ${{ steps.version.outputs.tag }}
+        run: |
+          mkdir -p deploy/.ebextensions
+
+          # Generate Dockerrun.aws.json
+          cat > deploy/Dockerrun.aws.json << EOF
+          {
+            "AWSEBDockerrunVersion": "1",
+            "Image": {
+              "Name": "$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG",
+              "Update": "true"
+            },
+            "Ports": [
+              {
+                "ContainerPort": 3000
+              }
+            ]
+          }
+          EOF
+
+          # Generate .ebextensions/env.config (runtime environment variables)
+          cat > deploy/.ebextensions/env.config << EBEOF
+          option_settings:
+            aws:elasticbeanstalk:application:environment:
+              NODE_ENV: "production"
+              DATABASE_URL: "${{ secrets.DATABASE_URL }}"
+              DIRECT_URL: "${{ secrets.DIRECT_URL }}"
+              NEXT_PUBLIC_APP_URL: "${{ secrets.NEXT_PUBLIC_APP_URL }}"
+              NEXT_PUBLIC_IMAGE_URL: "${{ secrets.NEXT_PUBLIC_IMAGE_URL }}"
+              NEXT_PUBLIC_GA_MEASUREMENT_ID: "${{ secrets.NEXT_PUBLIC_GA_MEASUREMENT_ID }}"
+              NEXT_PUBLIC_POSTHOG_KEY: "${{ secrets.NEXT_PUBLIC_POSTHOG_KEY }}"
+              NEXT_PUBLIC_POSTHOG_HOST: "${{ secrets.NEXT_PUBLIC_POSTHOG_HOST }}"
+              NEXT_PUBLIC_PUSHER_KEY: "${{ secrets.NEXT_PUBLIC_PUSHER_KEY }}"
+              NEXT_PUBLIC_PUSHER_CLUSTER: "${{ secrets.NEXT_PUBLIC_PUSHER_CLUSTER }}"
+              NEXT_PUBLIC_ENABLE_SURVEY: "${{ secrets.NEXT_PUBLIC_ENABLE_SURVEY }}"
+              BETTER_AUTH_SECRET: "${{ secrets.BETTER_AUTH_SECRET }}"
+              GOOGLE_CLIENT_ID: "${{ secrets.GOOGLE_CLIENT_ID }}"
+              GOOGLE_CLIENT_SECRET: "${{ secrets.GOOGLE_CLIENT_SECRET }}"
+              EMAIL_PROVIDER: "${{ secrets.EMAIL_PROVIDER }}"
+              RESEND_API_KEY: "${{ secrets.RESEND_API_KEY }}"
+              AWS_ACCESS_KEY_ID: "${{ secrets.AWS_ACCESS_KEY_ID }}"
+              AWS_SECRET_ACCESS_KEY: "${{ secrets.AWS_SECRET_ACCESS_KEY }}"
+              AWS_REGION: "${{ env.AWS_REGION }}"
+              S3_BUCKET_NAME: "${{ secrets.S3_BUCKET_NAME }}"
+              PAYSTACK_SECRET_KEY: "${{ secrets.PAYSTACK_SECRET_KEY }}"
+              PUSHER_APP_ID: "${{ secrets.PUSHER_APP_ID }}"
+              PUSHER_SECRET: "${{ secrets.PUSHER_SECRET }}"
+          EBEOF
+
+          # Create the zip for EB deployment
+          cd deploy
+          zip -r ../deploy-bundle.zip .
+          cd ..
+
+          echo "📦 Deployment bundle contents:"
+          unzip -l deploy-bundle.zip
+
+      - name: Deploy to Elastic Beanstalk
+        env:
+          IMAGE_TAG: ${{ steps.version.outputs.tag }}
+        run: |
+          BUCKET="elasticbeanstalk-${{ env.AWS_REGION }}-${{ secrets.AWS_ACCOUNT_ID }}"
+          KEY="$EB_APP_NAME/$IMAGE_TAG.zip"
+
+          echo "📤 Uploading bundle to s3://$BUCKET/$KEY"
+          aws s3 cp deploy-bundle.zip "s3://$BUCKET/$KEY"
+
+          echo "📋 Creating application version: $IMAGE_TAG"
+          aws elasticbeanstalk create-application-version \
+            --application-name "$EB_APP_NAME" \
+            --version-label "$IMAGE_TAG" \
+            --source-bundle S3Bucket="$BUCKET",S3Key="$KEY" \
+            --region "$AWS_REGION"
+
+          echo "🚀 Deploying $IMAGE_TAG to $EB_ENV_NAME"
+          aws elasticbeanstalk update-environment \
+            --application-name "$EB_APP_NAME" \
+            --environment-name "$EB_ENV_NAME" \
+            --version-label "$IMAGE_TAG" \
+            --region "$AWS_REGION"
+
+          echo "✅ Deployment of $IMAGE_TAG initiated!"

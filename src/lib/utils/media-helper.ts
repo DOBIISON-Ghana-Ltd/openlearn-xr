@@ -11,7 +11,6 @@ export const uploadFile = async (props: IUploadFile): Promise<Awaited<ReturnType
   return await uploadFilePrimitive({
     file: props.file,
     route: 'image',
-    api: env.NEXT_PUBLIC_STORAGE_URL,
     metadata: {
       key: props.key,
       msc: props.msc

@@ -1,7 +1,5 @@
 import type { Metadata } from 'next';
-import { connection } from 'next/server';
 import ClientPage from './client';
-import { verifyRouteGuard } from '@/lib/utils/route-guard';
 
 export const metadata: Metadata = {
   title: 'Create Session',
@@ -9,8 +7,6 @@ export const metadata: Metadata = {
 };
 
 export default async function Page() {
-  await connection();
-  await verifyRouteGuard();
 
   return <ClientPage />;
 }

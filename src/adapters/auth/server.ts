@@ -6,9 +6,6 @@ import prisma from '@/adapters/db/client'
 import { ac, admin as adminRole, editor, user } from './permissions'
 import { nextCookies } from 'better-auth/next-js'
 import { env } from '@/lib/config/env'
-import { getInitialOrganization } from '@/lib/actions/get-initial-organization'
-import { createDefaultSubscription } from '@/lib/actions/create-default-subscription'
-import { getRandomAvatar } from '@/lib/utils/get-random-avatar'
 
 export const auth = betterAuth({
   database: prismaAdapter(prisma, { provider: 'postgresql' }),
@@ -40,6 +37,36 @@ export const auth = betterAuth({
         defaultValue: false,
         input: false
       },
+      type: {
+        type: 'string',
+        required: false,
+        defaultValue: null,
+        input: false
+      },
+      phone: {
+        type: 'string',
+        required: false,
+        defaultValue: null,
+        input: false
+      },
+      location: {
+        type: 'string',
+        required: false,
+        defaultValue: null,
+        input: false
+      },
+      school: {
+        type: 'string',
+        required: false,
+        defaultValue: null,
+        input: false
+      },
+      classLevel: {
+        type: 'string',
+        required: false,
+        defaultValue: null,
+        input: false
+      },
       metadata: {
         type: "json",
         required: false,
@@ -47,33 +74,6 @@ export const auth = betterAuth({
         input: false
       }
     },
-  },
-  databaseHooks: {
-    user: {
-      create: {
-        before: async (user) => {
-          return {
-            data: {
-              ...user,
-              image: getRandomAvatar(),
-            },
-          };
-        },
-      },
-    },
-    session: {
-      create: {
-        before: async (session) => {
-          const orgId = await getInitialOrganization(session.userId);
-          return {
-            data: {
-              ...session,
-              activeOrganizationId: orgId,
-            },
-          };
-        }
-      }
-    }
   },
   plugins: [
     admin({
@@ -86,13 +86,7 @@ export const auth = betterAuth({
       defaultRole: 'user',
       adminRoles: ['admin']
     }),
-    organization({
-      organizationHooks: {
-        afterCreateOrganization: async ({ organization }) => {
-          await createDefaultSubscription(organization.id);
-        }
-      }
-    }),
+    organization(),
     emailOTP({
       overrideDefaultEmailVerification: true,
       sendVerificationOnSignUp: true,

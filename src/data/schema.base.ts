@@ -1,6 +1,7 @@
 import z from "zod";
 import { AVATARS, ORG_LOGOS, avatarKeys, logoKeys } from "@/lib/constants/avatars";
 import { JOIN_CODE_REGEX } from "@/lib/utils/generate-join-code";
+import { GHANA_PHONE_REGEX } from "@/lib/utils/phone";
 
 // ==========================================
 // UTILITIES
@@ -114,6 +115,12 @@ export const ZApi = <
 /** User role — users can hold multiple roles (e.g. "user,admin") */
 export const RoleEnum = z.enum(["user", "editor", "admin"]);
 
+/** UI User Type (student vs teacher) */
+export const UserTypeEnum = z.enum(["student", "teacher"]);
+
+/** Academic Class Level */
+export const ClassLevelEnum = z.enum(["SHS 1", "SHS 2", "SHS 3"]);
+
 /** Pre-processes a comma-separated string or array into a validated role array */
 export const ZRoleList = z.preprocess((value) => {
   if (Array.isArray(value)) {
@@ -138,7 +145,9 @@ export const MemberRoleEnum = z.enum(["owner", "member"]);
 
 export const SubscriptionTierEnum = z.enum(["FREE", "PRO", "DEPARTMENT", "ENTERPRISE", "UNLIMITED"]);
 
-export const SubscriptionStatusEnum = z.enum(["ACTIVE", "PAST_DUE", "CANCELED", "TRIALING"]);
+export const SubscriptionStatusEnum = z.enum(["ACTIVE", "EXPIRED", "CANCELLED", "PAST_DUE"]);
+
+export const TransactionStatusEnum = z.enum(["ABANDONED", "FAILED", "ONGOING", "PENDING", "PROCESSING", "SUCCESS", "REVERSED"]);
 
 export const MediaStatusEnum = z.enum(["active", "deleted", "uploading", "processing", "ready", "failed"]);
 
@@ -190,6 +199,7 @@ export const ZUser = z.object({
   id: z.string(),
   name: z.string().min(1, "Name is required"),
   role: ZRoleList.default(["user"]),
+  type: UserTypeEnum.nullable().default(null),
   email: z.string().email("Invalid email address"),
   emailVerified: z.boolean().default(false),
   image: z.enum(avatarKeys).default("avatar-01"),
@@ -197,6 +207,10 @@ export const ZUser = z.object({
   banReason: z.string().nullable(),
   banExpires: ZDate.nullable(),
   onboarded: z.boolean().default(false),
+  phone: z.string().regex(GHANA_PHONE_REGEX, "Invalid Ghanaian mobile number (e.g. +233 24 123 4567)").nullable(),
+  location: z.string().nullable(),
+  school: z.string().nullable(),
+  classLevel: z.string().nullable(),
   metadata: z.record(z.string(), z.any()).nullable(),
   // Gamification aggregate
   xp: z.number().int().default(0),
@@ -291,13 +305,12 @@ export const ZMember = z.object({
 export const ZSubscription = z.object({
   id: z.string(),
   organizationId: z.string(),
-  transactionId: z.string().nullable(),
-  tier: SubscriptionTierEnum.default("FREE"),
+  tier: SubscriptionTierEnum,
   status: SubscriptionStatusEnum.default("ACTIVE"),
-  seats: z.number().int().default(1),
   isUnlimited: z.boolean().default(false),
   paystackCustomerCode: z.string().nullable(),
   paystackSubCode: z.string().nullable(),
+  paystackEmailToken: z.string().nullable(),
   currentPeriodEnd: ZDate.nullable(),
   createdAt: ZDate,
   updatedAt: ZDate,
@@ -307,12 +320,13 @@ export const ZTransaction = z.object({
   id: z.string(),
   organizationId: z.string(),
   userId: z.string().nullable(),
+  subscriptionId: z.string().nullable(),
   reference: z.string(),
   amount: z.number().int(),
   currency: z.string().default("GHS"),
-  status: z.string().default("PENDING"),
+  status: TransactionStatusEnum.default("PENDING"),
   channel: z.string().nullable(),
-  metadata: z.any().nullable(),
+  metadata: z.record(z.string(), z.any()).nullable(),
   createdAt: ZDate,
   updatedAt: ZDate,
 });
@@ -587,11 +601,14 @@ const baseSchema = {
   ZMediaMetadata,
   // Enums
   RoleEnum,
+  UserTypeEnum,
+  ClassLevelEnum,
   ZRoleList,
   InvitationStatusEnum,
   MemberRoleEnum,
   SubscriptionTierEnum,
   SubscriptionStatusEnum,
+  TransactionStatusEnum,
   MediaStatusEnum,
   ModuleVersionStatusEnum,
   ModuleProgressPlayModeEnum,
@@ -611,6 +628,7 @@ const baseSchema = {
   ZMember,
   // SaaS & Licensing
   ZSubscription,
+  ZTransaction,
   // Editor Suite
   ZMedia,
   ZCollection,

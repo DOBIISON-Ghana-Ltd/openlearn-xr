@@ -51,6 +51,11 @@ export type UserMinAggregateOutputType = {
   createdAt: Date | null
   updatedAt: Date | null
   onboarded: boolean | null
+  type: string | null
+  phone: string | null
+  location: string | null
+  school: string | null
+  classLevel: string | null
   xp: number | null
   currentStreak: number | null
   longestStreak: number | null
@@ -69,6 +74,11 @@ export type UserMaxAggregateOutputType = {
   createdAt: Date | null
   updatedAt: Date | null
   onboarded: boolean | null
+  type: string | null
+  phone: string | null
+  location: string | null
+  school: string | null
+  classLevel: string | null
   xp: number | null
   currentStreak: number | null
   longestStreak: number | null
@@ -87,6 +97,11 @@ export type UserCountAggregateOutputType = {
   createdAt: number
   updatedAt: number
   onboarded: number
+  type: number
+  phone: number
+  location: number
+  school: number
+  classLevel: number
   metadata: number
   xp: number
   currentStreak: number
@@ -121,6 +136,11 @@ export type UserMinAggregateInputType = {
   createdAt?: true
   updatedAt?: true
   onboarded?: true
+  type?: true
+  phone?: true
+  location?: true
+  school?: true
+  classLevel?: true
   xp?: true
   currentStreak?: true
   longestStreak?: true
@@ -139,6 +159,11 @@ export type UserMaxAggregateInputType = {
   createdAt?: true
   updatedAt?: true
   onboarded?: true
+  type?: true
+  phone?: true
+  location?: true
+  school?: true
+  classLevel?: true
   xp?: true
   currentStreak?: true
   longestStreak?: true
@@ -157,6 +182,11 @@ export type UserCountAggregateInputType = {
   createdAt?: true
   updatedAt?: true
   onboarded?: true
+  type?: true
+  phone?: true
+  location?: true
+  school?: true
+  classLevel?: true
   metadata?: true
   xp?: true
   currentStreak?: true
@@ -264,6 +294,11 @@ export type UserGroupByOutputType = {
   createdAt: Date
   updatedAt: Date
   onboarded: boolean
+  type: string | null
+  phone: string | null
+  location: string | null
+  school: string | null
+  classLevel: string | null
   metadata: runtime.JsonValue | null
   xp: number
   currentStreak: number
@@ -307,6 +342,11 @@ export type UserWhereInput = {
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
   onboarded?: Prisma.BoolFilter<"User"> | boolean
+  type?: Prisma.StringNullableFilter<"User"> | string | null
+  phone?: Prisma.StringNullableFilter<"User"> | string | null
+  location?: Prisma.StringNullableFilter<"User"> | string | null
+  school?: Prisma.StringNullableFilter<"User"> | string | null
+  classLevel?: Prisma.StringNullableFilter<"User"> | string | null
   metadata?: Prisma.JsonNullableFilter<"User">
   xp?: Prisma.IntFilter<"User"> | number
   currentStreak?: Prisma.IntFilter<"User"> | number
@@ -339,6 +379,11 @@ export type UserOrderByWithRelationInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   onboarded?: Prisma.SortOrder
+  type?: Prisma.SortOrderInput | Prisma.SortOrder
+  phone?: Prisma.SortOrderInput | Prisma.SortOrder
+  location?: Prisma.SortOrderInput | Prisma.SortOrder
+  school?: Prisma.SortOrderInput | Prisma.SortOrder
+  classLevel?: Prisma.SortOrderInput | Prisma.SortOrder
   metadata?: Prisma.SortOrderInput | Prisma.SortOrder
   xp?: Prisma.SortOrder
   currentStreak?: Prisma.SortOrder
@@ -374,6 +419,11 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
   onboarded?: Prisma.BoolFilter<"User"> | boolean
+  type?: Prisma.StringNullableFilter<"User"> | string | null
+  phone?: Prisma.StringNullableFilter<"User"> | string | null
+  location?: Prisma.StringNullableFilter<"User"> | string | null
+  school?: Prisma.StringNullableFilter<"User"> | string | null
+  classLevel?: Prisma.StringNullableFilter<"User"> | string | null
   metadata?: Prisma.JsonNullableFilter<"User">
   xp?: Prisma.IntFilter<"User"> | number
   currentStreak?: Prisma.IntFilter<"User"> | number
@@ -406,6 +456,11 @@ export type UserOrderByWithAggregationInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   onboarded?: Prisma.SortOrder
+  type?: Prisma.SortOrderInput | Prisma.SortOrder
+  phone?: Prisma.SortOrderInput | Prisma.SortOrder
+  location?: Prisma.SortOrderInput | Prisma.SortOrder
+  school?: Prisma.SortOrderInput | Prisma.SortOrder
+  classLevel?: Prisma.SortOrderInput | Prisma.SortOrder
   metadata?: Prisma.SortOrderInput | Prisma.SortOrder
   xp?: Prisma.SortOrder
   currentStreak?: Prisma.SortOrder
@@ -434,6 +489,11 @@ export type UserScalarWhereWithAggregatesInput = {
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
   onboarded?: Prisma.BoolWithAggregatesFilter<"User"> | boolean
+  type?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
+  phone?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
+  location?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
+  school?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
+  classLevel?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   metadata?: Prisma.JsonNullableWithAggregatesFilter<"User">
   xp?: Prisma.IntWithAggregatesFilter<"User"> | number
   currentStreak?: Prisma.IntWithAggregatesFilter<"User"> | number
@@ -454,6 +514,11 @@ export type UserCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   onboarded?: boolean
+  type?: string | null
+  phone?: string | null
+  location?: string | null
+  school?: string | null
+  classLevel?: string | null
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   xp?: number
   currentStreak?: number
@@ -486,6 +551,11 @@ export type UserUncheckedCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   onboarded?: boolean
+  type?: string | null
+  phone?: string | null
+  location?: string | null
+  school?: string | null
+  classLevel?: string | null
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   xp?: number
   currentStreak?: number
@@ -518,6 +588,11 @@ export type UserUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   onboarded?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  school?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  classLevel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   xp?: Prisma.IntFieldUpdateOperationsInput | number
   currentStreak?: Prisma.IntFieldUpdateOperationsInput | number
@@ -550,6 +625,11 @@ export type UserUncheckedUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   onboarded?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  school?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  classLevel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   xp?: Prisma.IntFieldUpdateOperationsInput | number
   currentStreak?: Prisma.IntFieldUpdateOperationsInput | number
@@ -582,6 +662,11 @@ export type UserCreateManyInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   onboarded?: boolean
+  type?: string | null
+  phone?: string | null
+  location?: string | null
+  school?: string | null
+  classLevel?: string | null
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   xp?: number
   currentStreak?: number
@@ -602,6 +687,11 @@ export type UserUpdateManyMutationInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   onboarded?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  school?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  classLevel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   xp?: Prisma.IntFieldUpdateOperationsInput | number
   currentStreak?: Prisma.IntFieldUpdateOperationsInput | number
@@ -622,6 +712,11 @@ export type UserUncheckedUpdateManyInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   onboarded?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  school?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  classLevel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   xp?: Prisma.IntFieldUpdateOperationsInput | number
   currentStreak?: Prisma.IntFieldUpdateOperationsInput | number
@@ -650,6 +745,11 @@ export type UserCountOrderByAggregateInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   onboarded?: Prisma.SortOrder
+  type?: Prisma.SortOrder
+  phone?: Prisma.SortOrder
+  location?: Prisma.SortOrder
+  school?: Prisma.SortOrder
+  classLevel?: Prisma.SortOrder
   metadata?: Prisma.SortOrder
   xp?: Prisma.SortOrder
   currentStreak?: Prisma.SortOrder
@@ -676,6 +776,11 @@ export type UserMaxOrderByAggregateInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   onboarded?: Prisma.SortOrder
+  type?: Prisma.SortOrder
+  phone?: Prisma.SortOrder
+  location?: Prisma.SortOrder
+  school?: Prisma.SortOrder
+  classLevel?: Prisma.SortOrder
   xp?: Prisma.SortOrder
   currentStreak?: Prisma.SortOrder
   longestStreak?: Prisma.SortOrder
@@ -694,6 +799,11 @@ export type UserMinOrderByAggregateInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   onboarded?: Prisma.SortOrder
+  type?: Prisma.SortOrder
+  phone?: Prisma.SortOrder
+  location?: Prisma.SortOrder
+  school?: Prisma.SortOrder
+  classLevel?: Prisma.SortOrder
   xp?: Prisma.SortOrder
   currentStreak?: Prisma.SortOrder
   longestStreak?: Prisma.SortOrder
@@ -943,6 +1053,11 @@ export type UserCreateWithoutSessionsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   onboarded?: boolean
+  type?: string | null
+  phone?: string | null
+  location?: string | null
+  school?: string | null
+  classLevel?: string | null
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   xp?: number
   currentStreak?: number
@@ -974,6 +1089,11 @@ export type UserUncheckedCreateWithoutSessionsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   onboarded?: boolean
+  type?: string | null
+  phone?: string | null
+  location?: string | null
+  school?: string | null
+  classLevel?: string | null
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   xp?: number
   currentStreak?: number
@@ -1021,6 +1141,11 @@ export type UserUpdateWithoutSessionsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   onboarded?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  school?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  classLevel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   xp?: Prisma.IntFieldUpdateOperationsInput | number
   currentStreak?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1052,6 +1177,11 @@ export type UserUncheckedUpdateWithoutSessionsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   onboarded?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  school?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  classLevel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   xp?: Prisma.IntFieldUpdateOperationsInput | number
   currentStreak?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1083,6 +1213,11 @@ export type UserCreateWithoutAccountsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   onboarded?: boolean
+  type?: string | null
+  phone?: string | null
+  location?: string | null
+  school?: string | null
+  classLevel?: string | null
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   xp?: number
   currentStreak?: number
@@ -1114,6 +1249,11 @@ export type UserUncheckedCreateWithoutAccountsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   onboarded?: boolean
+  type?: string | null
+  phone?: string | null
+  location?: string | null
+  school?: string | null
+  classLevel?: string | null
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   xp?: number
   currentStreak?: number
@@ -1161,6 +1301,11 @@ export type UserUpdateWithoutAccountsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   onboarded?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  school?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  classLevel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   xp?: Prisma.IntFieldUpdateOperationsInput | number
   currentStreak?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1192,6 +1337,11 @@ export type UserUncheckedUpdateWithoutAccountsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   onboarded?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  school?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  classLevel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   xp?: Prisma.IntFieldUpdateOperationsInput | number
   currentStreak?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1223,6 +1373,11 @@ export type UserCreateWithoutMembershipsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   onboarded?: boolean
+  type?: string | null
+  phone?: string | null
+  location?: string | null
+  school?: string | null
+  classLevel?: string | null
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   xp?: number
   currentStreak?: number
@@ -1254,6 +1409,11 @@ export type UserUncheckedCreateWithoutMembershipsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   onboarded?: boolean
+  type?: string | null
+  phone?: string | null
+  location?: string | null
+  school?: string | null
+  classLevel?: string | null
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   xp?: number
   currentStreak?: number
@@ -1301,6 +1461,11 @@ export type UserUpdateWithoutMembershipsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   onboarded?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  school?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  classLevel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   xp?: Prisma.IntFieldUpdateOperationsInput | number
   currentStreak?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1332,6 +1497,11 @@ export type UserUncheckedUpdateWithoutMembershipsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   onboarded?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  school?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  classLevel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   xp?: Prisma.IntFieldUpdateOperationsInput | number
   currentStreak?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1363,6 +1533,11 @@ export type UserCreateWithoutTransactionsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   onboarded?: boolean
+  type?: string | null
+  phone?: string | null
+  location?: string | null
+  school?: string | null
+  classLevel?: string | null
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   xp?: number
   currentStreak?: number
@@ -1394,6 +1569,11 @@ export type UserUncheckedCreateWithoutTransactionsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   onboarded?: boolean
+  type?: string | null
+  phone?: string | null
+  location?: string | null
+  school?: string | null
+  classLevel?: string | null
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   xp?: number
   currentStreak?: number
@@ -1441,6 +1621,11 @@ export type UserUpdateWithoutTransactionsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   onboarded?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  school?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  classLevel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   xp?: Prisma.IntFieldUpdateOperationsInput | number
   currentStreak?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1472,6 +1657,11 @@ export type UserUncheckedUpdateWithoutTransactionsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   onboarded?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  school?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  classLevel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   xp?: Prisma.IntFieldUpdateOperationsInput | number
   currentStreak?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1503,6 +1693,11 @@ export type UserCreateWithoutMediaInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   onboarded?: boolean
+  type?: string | null
+  phone?: string | null
+  location?: string | null
+  school?: string | null
+  classLevel?: string | null
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   xp?: number
   currentStreak?: number
@@ -1534,6 +1729,11 @@ export type UserUncheckedCreateWithoutMediaInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   onboarded?: boolean
+  type?: string | null
+  phone?: string | null
+  location?: string | null
+  school?: string | null
+  classLevel?: string | null
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   xp?: number
   currentStreak?: number
@@ -1581,6 +1781,11 @@ export type UserUpdateWithoutMediaInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   onboarded?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  school?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  classLevel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   xp?: Prisma.IntFieldUpdateOperationsInput | number
   currentStreak?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1612,6 +1817,11 @@ export type UserUncheckedUpdateWithoutMediaInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   onboarded?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  school?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  classLevel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   xp?: Prisma.IntFieldUpdateOperationsInput | number
   currentStreak?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1643,6 +1853,11 @@ export type UserCreateWithoutEditorChatsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   onboarded?: boolean
+  type?: string | null
+  phone?: string | null
+  location?: string | null
+  school?: string | null
+  classLevel?: string | null
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   xp?: number
   currentStreak?: number
@@ -1674,6 +1889,11 @@ export type UserUncheckedCreateWithoutEditorChatsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   onboarded?: boolean
+  type?: string | null
+  phone?: string | null
+  location?: string | null
+  school?: string | null
+  classLevel?: string | null
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   xp?: number
   currentStreak?: number
@@ -1721,6 +1941,11 @@ export type UserUpdateWithoutEditorChatsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   onboarded?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  school?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  classLevel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   xp?: Prisma.IntFieldUpdateOperationsInput | number
   currentStreak?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1752,6 +1977,11 @@ export type UserUncheckedUpdateWithoutEditorChatsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   onboarded?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  school?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  classLevel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   xp?: Prisma.IntFieldUpdateOperationsInput | number
   currentStreak?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1783,6 +2013,11 @@ export type UserCreateWithoutCollectionProgressInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   onboarded?: boolean
+  type?: string | null
+  phone?: string | null
+  location?: string | null
+  school?: string | null
+  classLevel?: string | null
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   xp?: number
   currentStreak?: number
@@ -1814,6 +2049,11 @@ export type UserUncheckedCreateWithoutCollectionProgressInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   onboarded?: boolean
+  type?: string | null
+  phone?: string | null
+  location?: string | null
+  school?: string | null
+  classLevel?: string | null
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   xp?: number
   currentStreak?: number
@@ -1861,6 +2101,11 @@ export type UserUpdateWithoutCollectionProgressInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   onboarded?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  school?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  classLevel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   xp?: Prisma.IntFieldUpdateOperationsInput | number
   currentStreak?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1892,6 +2137,11 @@ export type UserUncheckedUpdateWithoutCollectionProgressInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   onboarded?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  school?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  classLevel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   xp?: Prisma.IntFieldUpdateOperationsInput | number
   currentStreak?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1923,6 +2173,11 @@ export type UserCreateWithoutModuleCompletionsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   onboarded?: boolean
+  type?: string | null
+  phone?: string | null
+  location?: string | null
+  school?: string | null
+  classLevel?: string | null
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   xp?: number
   currentStreak?: number
@@ -1954,6 +2209,11 @@ export type UserUncheckedCreateWithoutModuleCompletionsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   onboarded?: boolean
+  type?: string | null
+  phone?: string | null
+  location?: string | null
+  school?: string | null
+  classLevel?: string | null
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   xp?: number
   currentStreak?: number
@@ -2001,6 +2261,11 @@ export type UserUpdateWithoutModuleCompletionsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   onboarded?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  school?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  classLevel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   xp?: Prisma.IntFieldUpdateOperationsInput | number
   currentStreak?: Prisma.IntFieldUpdateOperationsInput | number
@@ -2032,6 +2297,11 @@ export type UserUncheckedUpdateWithoutModuleCompletionsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   onboarded?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  school?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  classLevel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   xp?: Prisma.IntFieldUpdateOperationsInput | number
   currentStreak?: Prisma.IntFieldUpdateOperationsInput | number
@@ -2063,6 +2333,11 @@ export type UserCreateWithoutGamificationLogsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   onboarded?: boolean
+  type?: string | null
+  phone?: string | null
+  location?: string | null
+  school?: string | null
+  classLevel?: string | null
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   xp?: number
   currentStreak?: number
@@ -2094,6 +2369,11 @@ export type UserUncheckedCreateWithoutGamificationLogsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   onboarded?: boolean
+  type?: string | null
+  phone?: string | null
+  location?: string | null
+  school?: string | null
+  classLevel?: string | null
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   xp?: number
   currentStreak?: number
@@ -2141,6 +2421,11 @@ export type UserUpdateWithoutGamificationLogsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   onboarded?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  school?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  classLevel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   xp?: Prisma.IntFieldUpdateOperationsInput | number
   currentStreak?: Prisma.IntFieldUpdateOperationsInput | number
@@ -2172,6 +2457,11 @@ export type UserUncheckedUpdateWithoutGamificationLogsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   onboarded?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  school?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  classLevel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   xp?: Prisma.IntFieldUpdateOperationsInput | number
   currentStreak?: Prisma.IntFieldUpdateOperationsInput | number
@@ -2203,6 +2493,11 @@ export type UserCreateWithoutHostedSessionsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   onboarded?: boolean
+  type?: string | null
+  phone?: string | null
+  location?: string | null
+  school?: string | null
+  classLevel?: string | null
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   xp?: number
   currentStreak?: number
@@ -2234,6 +2529,11 @@ export type UserUncheckedCreateWithoutHostedSessionsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   onboarded?: boolean
+  type?: string | null
+  phone?: string | null
+  location?: string | null
+  school?: string | null
+  classLevel?: string | null
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   xp?: number
   currentStreak?: number
@@ -2281,6 +2581,11 @@ export type UserUpdateWithoutHostedSessionsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   onboarded?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  school?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  classLevel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   xp?: Prisma.IntFieldUpdateOperationsInput | number
   currentStreak?: Prisma.IntFieldUpdateOperationsInput | number
@@ -2312,6 +2617,11 @@ export type UserUncheckedUpdateWithoutHostedSessionsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   onboarded?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  school?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  classLevel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   xp?: Prisma.IntFieldUpdateOperationsInput | number
   currentStreak?: Prisma.IntFieldUpdateOperationsInput | number
@@ -2343,6 +2653,11 @@ export type UserCreateWithoutSessionPlaysInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   onboarded?: boolean
+  type?: string | null
+  phone?: string | null
+  location?: string | null
+  school?: string | null
+  classLevel?: string | null
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   xp?: number
   currentStreak?: number
@@ -2374,6 +2689,11 @@ export type UserUncheckedCreateWithoutSessionPlaysInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   onboarded?: boolean
+  type?: string | null
+  phone?: string | null
+  location?: string | null
+  school?: string | null
+  classLevel?: string | null
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   xp?: number
   currentStreak?: number
@@ -2421,6 +2741,11 @@ export type UserUpdateWithoutSessionPlaysInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   onboarded?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  school?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  classLevel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   xp?: Prisma.IntFieldUpdateOperationsInput | number
   currentStreak?: Prisma.IntFieldUpdateOperationsInput | number
@@ -2452,6 +2777,11 @@ export type UserUncheckedUpdateWithoutSessionPlaysInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   onboarded?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  school?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  classLevel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   xp?: Prisma.IntFieldUpdateOperationsInput | number
   currentStreak?: Prisma.IntFieldUpdateOperationsInput | number
@@ -2483,6 +2813,11 @@ export type UserCreateWithoutPlayAttemptsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   onboarded?: boolean
+  type?: string | null
+  phone?: string | null
+  location?: string | null
+  school?: string | null
+  classLevel?: string | null
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   xp?: number
   currentStreak?: number
@@ -2514,6 +2849,11 @@ export type UserUncheckedCreateWithoutPlayAttemptsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   onboarded?: boolean
+  type?: string | null
+  phone?: string | null
+  location?: string | null
+  school?: string | null
+  classLevel?: string | null
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   xp?: number
   currentStreak?: number
@@ -2561,6 +2901,11 @@ export type UserUpdateWithoutPlayAttemptsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   onboarded?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  school?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  classLevel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   xp?: Prisma.IntFieldUpdateOperationsInput | number
   currentStreak?: Prisma.IntFieldUpdateOperationsInput | number
@@ -2592,6 +2937,11 @@ export type UserUncheckedUpdateWithoutPlayAttemptsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   onboarded?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  school?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  classLevel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   xp?: Prisma.IntFieldUpdateOperationsInput | number
   currentStreak?: Prisma.IntFieldUpdateOperationsInput | number
@@ -2753,6 +3103,11 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   createdAt?: boolean
   updatedAt?: boolean
   onboarded?: boolean
+  type?: boolean
+  phone?: boolean
+  location?: boolean
+  school?: boolean
+  classLevel?: boolean
   metadata?: boolean
   xp?: boolean
   currentStreak?: boolean
@@ -2786,6 +3141,11 @@ export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   createdAt?: boolean
   updatedAt?: boolean
   onboarded?: boolean
+  type?: boolean
+  phone?: boolean
+  location?: boolean
+  school?: boolean
+  classLevel?: boolean
   metadata?: boolean
   xp?: boolean
   currentStreak?: boolean
@@ -2806,6 +3166,11 @@ export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   createdAt?: boolean
   updatedAt?: boolean
   onboarded?: boolean
+  type?: boolean
+  phone?: boolean
+  location?: boolean
+  school?: boolean
+  classLevel?: boolean
   metadata?: boolean
   xp?: boolean
   currentStreak?: boolean
@@ -2826,6 +3191,11 @@ export type UserSelectScalar = {
   createdAt?: boolean
   updatedAt?: boolean
   onboarded?: boolean
+  type?: boolean
+  phone?: boolean
+  location?: boolean
+  school?: boolean
+  classLevel?: boolean
   metadata?: boolean
   xp?: boolean
   currentStreak?: boolean
@@ -2833,7 +3203,7 @@ export type UserSelectScalar = {
   badges?: boolean
 }
 
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "role" | "email" | "emailVerified" | "image" | "banned" | "banReason" | "banExpires" | "createdAt" | "updatedAt" | "onboarded" | "metadata" | "xp" | "currentStreak" | "longestStreak" | "badges", ExtArgs["result"]["user"]>
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "role" | "email" | "emailVerified" | "image" | "banned" | "banReason" | "banExpires" | "createdAt" | "updatedAt" | "onboarded" | "type" | "phone" | "location" | "school" | "classLevel" | "metadata" | "xp" | "currentStreak" | "longestStreak" | "badges", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   sessions?: boolean | Prisma.User$sessionsArgs<ExtArgs>
   accounts?: boolean | Prisma.User$accountsArgs<ExtArgs>
@@ -2881,6 +3251,11 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     createdAt: Date
     updatedAt: Date
     onboarded: boolean
+    type: string | null
+    phone: string | null
+    location: string | null
+    school: string | null
+    classLevel: string | null
     metadata: runtime.JsonValue | null
     xp: number
     currentStreak: number
@@ -3333,6 +3708,11 @@ export interface UserFieldRefs {
   readonly createdAt: Prisma.FieldRef<"User", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"User", 'DateTime'>
   readonly onboarded: Prisma.FieldRef<"User", 'Boolean'>
+  readonly type: Prisma.FieldRef<"User", 'String'>
+  readonly phone: Prisma.FieldRef<"User", 'String'>
+  readonly location: Prisma.FieldRef<"User", 'String'>
+  readonly school: Prisma.FieldRef<"User", 'String'>
+  readonly classLevel: Prisma.FieldRef<"User", 'String'>
   readonly metadata: Prisma.FieldRef<"User", 'Json'>
   readonly xp: Prisma.FieldRef<"User", 'Int'>
   readonly currentStreak: Prisma.FieldRef<"User", 'Int'>

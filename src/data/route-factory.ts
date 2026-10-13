@@ -6,9 +6,20 @@ type IPlaySlugs = {
 
 const ROUTES = {
   // APP SUITE
-  "app:user:get:me": () => `/api/app/users/me`,
-  "app:user:delete:me": () => `/api/app/users/me`,
-  "app:user:patch:onboarding": () => `/api/app/users/onboarding`,
+  "app:user:get:me": () => `/api/app/user/me`,
+  "app:user:get:profile": () => `/api/app/user/profile`,
+  "app:user:get:profile-history": () => `/api/app/user/profile/history`,
+  "app:user:get:profile-stats": () => `/api/app/user/profile/stats`,
+  "app:user:get:profile-subscription": () => `/api/app/user/profile/subscription`,
+  "app:user:delete:me": () => `/api/app/user/me`,
+  "app:onboarding:get:type": () => `/api/app/onboarding/type`,
+  "app:onboarding:patch:type": () => `/api/app/onboarding/type`,
+  "app:onboarding:get:detail": () => `/api/app/onboarding/detail`,
+  "app:onboarding:patch:detail": () => `/api/app/onboarding/detail`,
+  "app:onboarding:get:licensing": () => `/api/app/onboarding/licensing`,
+  "app:onboarding:patch:licensing": () => `/api/app/onboarding/licensing`,
+  "app:onboarding:patch:join": () => `/api/app/onboarding/join`,
+  "app:onboarding:get:has-license": () => `/api/app/onboarding/has-license`,
   "app:media:post:one": () => `/api/app/media`,
   "app:org:get:subscription": ({ orgId }: { orgId: string }) => `/api/app/org/${orgId}/subscription`,
   "app:org:get:active": () => `/api/app/org/active`,

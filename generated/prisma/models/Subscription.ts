@@ -20,30 +20,19 @@ export type SubscriptionModel = runtime.Types.Result.DefaultSelection<Prisma.$Su
 
 export type AggregateSubscription = {
   _count: SubscriptionCountAggregateOutputType | null
-  _avg: SubscriptionAvgAggregateOutputType | null
-  _sum: SubscriptionSumAggregateOutputType | null
   _min: SubscriptionMinAggregateOutputType | null
   _max: SubscriptionMaxAggregateOutputType | null
-}
-
-export type SubscriptionAvgAggregateOutputType = {
-  seats: number | null
-}
-
-export type SubscriptionSumAggregateOutputType = {
-  seats: number | null
 }
 
 export type SubscriptionMinAggregateOutputType = {
   id: string | null
   organizationId: string | null
-  transactionId: string | null
   tier: string | null
   status: string | null
-  seats: number | null
   isUnlimited: boolean | null
   paystackCustomerCode: string | null
   paystackSubCode: string | null
+  paystackEmailToken: string | null
   currentPeriodEnd: Date | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -52,13 +41,12 @@ export type SubscriptionMinAggregateOutputType = {
 export type SubscriptionMaxAggregateOutputType = {
   id: string | null
   organizationId: string | null
-  transactionId: string | null
   tier: string | null
   status: string | null
-  seats: number | null
   isUnlimited: boolean | null
   paystackCustomerCode: string | null
   paystackSubCode: string | null
+  paystackEmailToken: string | null
   currentPeriodEnd: Date | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -67,13 +55,12 @@ export type SubscriptionMaxAggregateOutputType = {
 export type SubscriptionCountAggregateOutputType = {
   id: number
   organizationId: number
-  transactionId: number
   tier: number
   status: number
-  seats: number
   isUnlimited: number
   paystackCustomerCode: number
   paystackSubCode: number
+  paystackEmailToken: number
   currentPeriodEnd: number
   createdAt: number
   updatedAt: number
@@ -81,24 +68,15 @@ export type SubscriptionCountAggregateOutputType = {
 }
 
 
-export type SubscriptionAvgAggregateInputType = {
-  seats?: true
-}
-
-export type SubscriptionSumAggregateInputType = {
-  seats?: true
-}
-
 export type SubscriptionMinAggregateInputType = {
   id?: true
   organizationId?: true
-  transactionId?: true
   tier?: true
   status?: true
-  seats?: true
   isUnlimited?: true
   paystackCustomerCode?: true
   paystackSubCode?: true
+  paystackEmailToken?: true
   currentPeriodEnd?: true
   createdAt?: true
   updatedAt?: true
@@ -107,13 +85,12 @@ export type SubscriptionMinAggregateInputType = {
 export type SubscriptionMaxAggregateInputType = {
   id?: true
   organizationId?: true
-  transactionId?: true
   tier?: true
   status?: true
-  seats?: true
   isUnlimited?: true
   paystackCustomerCode?: true
   paystackSubCode?: true
+  paystackEmailToken?: true
   currentPeriodEnd?: true
   createdAt?: true
   updatedAt?: true
@@ -122,13 +99,12 @@ export type SubscriptionMaxAggregateInputType = {
 export type SubscriptionCountAggregateInputType = {
   id?: true
   organizationId?: true
-  transactionId?: true
   tier?: true
   status?: true
-  seats?: true
   isUnlimited?: true
   paystackCustomerCode?: true
   paystackSubCode?: true
+  paystackEmailToken?: true
   currentPeriodEnd?: true
   createdAt?: true
   updatedAt?: true
@@ -173,18 +149,6 @@ export type SubscriptionAggregateArgs<ExtArgs extends runtime.Types.Extensions.I
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
    * 
-   * Select which fields to average
-  **/
-  _avg?: SubscriptionAvgAggregateInputType
-  /**
-   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-   * 
-   * Select which fields to sum
-  **/
-  _sum?: SubscriptionSumAggregateInputType
-  /**
-   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-   * 
    * Select which fields to find the minimum value
   **/
   _min?: SubscriptionMinAggregateInputType
@@ -215,8 +179,6 @@ export type SubscriptionGroupByArgs<ExtArgs extends runtime.Types.Extensions.Int
   take?: number
   skip?: number
   _count?: SubscriptionCountAggregateInputType | true
-  _avg?: SubscriptionAvgAggregateInputType
-  _sum?: SubscriptionSumAggregateInputType
   _min?: SubscriptionMinAggregateInputType
   _max?: SubscriptionMaxAggregateInputType
 }
@@ -224,19 +186,16 @@ export type SubscriptionGroupByArgs<ExtArgs extends runtime.Types.Extensions.Int
 export type SubscriptionGroupByOutputType = {
   id: string
   organizationId: string
-  transactionId: string | null
   tier: string
   status: string
-  seats: number
   isUnlimited: boolean
   paystackCustomerCode: string | null
   paystackSubCode: string | null
+  paystackEmailToken: string | null
   currentPeriodEnd: Date | null
   createdAt: Date
   updatedAt: Date
   _count: SubscriptionCountAggregateOutputType | null
-  _avg: SubscriptionAvgAggregateOutputType | null
-  _sum: SubscriptionSumAggregateOutputType | null
   _min: SubscriptionMinAggregateOutputType | null
   _max: SubscriptionMaxAggregateOutputType | null
 }
@@ -262,75 +221,69 @@ export type SubscriptionWhereInput = {
   NOT?: Prisma.SubscriptionWhereInput | Prisma.SubscriptionWhereInput[]
   id?: Prisma.StringFilter<"Subscription"> | string
   organizationId?: Prisma.StringFilter<"Subscription"> | string
-  transactionId?: Prisma.StringNullableFilter<"Subscription"> | string | null
   tier?: Prisma.StringFilter<"Subscription"> | string
   status?: Prisma.StringFilter<"Subscription"> | string
-  seats?: Prisma.IntFilter<"Subscription"> | number
   isUnlimited?: Prisma.BoolFilter<"Subscription"> | boolean
   paystackCustomerCode?: Prisma.StringNullableFilter<"Subscription"> | string | null
   paystackSubCode?: Prisma.StringNullableFilter<"Subscription"> | string | null
+  paystackEmailToken?: Prisma.StringNullableFilter<"Subscription"> | string | null
   currentPeriodEnd?: Prisma.DateTimeNullableFilter<"Subscription"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"Subscription"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Subscription"> | Date | string
   organization?: Prisma.XOR<Prisma.OrganizationScalarRelationFilter, Prisma.OrganizationWhereInput>
-  transaction?: Prisma.XOR<Prisma.TransactionNullableScalarRelationFilter, Prisma.TransactionWhereInput> | null
+  transactions?: Prisma.TransactionListRelationFilter
 }
 
 export type SubscriptionOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   organizationId?: Prisma.SortOrder
-  transactionId?: Prisma.SortOrderInput | Prisma.SortOrder
   tier?: Prisma.SortOrder
   status?: Prisma.SortOrder
-  seats?: Prisma.SortOrder
   isUnlimited?: Prisma.SortOrder
   paystackCustomerCode?: Prisma.SortOrderInput | Prisma.SortOrder
   paystackSubCode?: Prisma.SortOrderInput | Prisma.SortOrder
+  paystackEmailToken?: Prisma.SortOrderInput | Prisma.SortOrder
   currentPeriodEnd?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   organization?: Prisma.OrganizationOrderByWithRelationInput
-  transaction?: Prisma.TransactionOrderByWithRelationInput
+  transactions?: Prisma.TransactionOrderByRelationAggregateInput
 }
 
 export type SubscriptionWhereUniqueInput = Prisma.AtLeast<{
   id?: string
-  transactionId?: string
+  organizationId?: string
+  paystackSubCode?: string
   AND?: Prisma.SubscriptionWhereInput | Prisma.SubscriptionWhereInput[]
   OR?: Prisma.SubscriptionWhereInput[]
   NOT?: Prisma.SubscriptionWhereInput | Prisma.SubscriptionWhereInput[]
-  organizationId?: Prisma.StringFilter<"Subscription"> | string
   tier?: Prisma.StringFilter<"Subscription"> | string
   status?: Prisma.StringFilter<"Subscription"> | string
-  seats?: Prisma.IntFilter<"Subscription"> | number
   isUnlimited?: Prisma.BoolFilter<"Subscription"> | boolean
   paystackCustomerCode?: Prisma.StringNullableFilter<"Subscription"> | string | null
-  paystackSubCode?: Prisma.StringNullableFilter<"Subscription"> | string | null
+  paystackEmailToken?: Prisma.StringNullableFilter<"Subscription"> | string | null
   currentPeriodEnd?: Prisma.DateTimeNullableFilter<"Subscription"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"Subscription"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Subscription"> | Date | string
   organization?: Prisma.XOR<Prisma.OrganizationScalarRelationFilter, Prisma.OrganizationWhereInput>
-  transaction?: Prisma.XOR<Prisma.TransactionNullableScalarRelationFilter, Prisma.TransactionWhereInput> | null
-}, "id" | "transactionId">
+  transactions?: Prisma.TransactionListRelationFilter
+}, "id" | "organizationId" | "paystackSubCode">
 
 export type SubscriptionOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   organizationId?: Prisma.SortOrder
-  transactionId?: Prisma.SortOrderInput | Prisma.SortOrder
   tier?: Prisma.SortOrder
   status?: Prisma.SortOrder
-  seats?: Prisma.SortOrder
   isUnlimited?: Prisma.SortOrder
   paystackCustomerCode?: Prisma.SortOrderInput | Prisma.SortOrder
   paystackSubCode?: Prisma.SortOrderInput | Prisma.SortOrder
+  paystackEmailToken?: Prisma.SortOrderInput | Prisma.SortOrder
   currentPeriodEnd?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.SubscriptionCountOrderByAggregateInput
-  _avg?: Prisma.SubscriptionAvgOrderByAggregateInput
   _max?: Prisma.SubscriptionMaxOrderByAggregateInput
   _min?: Prisma.SubscriptionMinOrderByAggregateInput
-  _sum?: Prisma.SubscriptionSumOrderByAggregateInput
 }
 
 export type SubscriptionScalarWhereWithAggregatesInput = {
@@ -339,13 +292,12 @@ export type SubscriptionScalarWhereWithAggregatesInput = {
   NOT?: Prisma.SubscriptionScalarWhereWithAggregatesInput | Prisma.SubscriptionScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"Subscription"> | string
   organizationId?: Prisma.StringWithAggregatesFilter<"Subscription"> | string
-  transactionId?: Prisma.StringNullableWithAggregatesFilter<"Subscription"> | string | null
   tier?: Prisma.StringWithAggregatesFilter<"Subscription"> | string
   status?: Prisma.StringWithAggregatesFilter<"Subscription"> | string
-  seats?: Prisma.IntWithAggregatesFilter<"Subscription"> | number
   isUnlimited?: Prisma.BoolWithAggregatesFilter<"Subscription"> | boolean
   paystackCustomerCode?: Prisma.StringNullableWithAggregatesFilter<"Subscription"> | string | null
   paystackSubCode?: Prisma.StringNullableWithAggregatesFilter<"Subscription"> | string | null
+  paystackEmailToken?: Prisma.StringNullableWithAggregatesFilter<"Subscription"> | string | null
   currentPeriodEnd?: Prisma.DateTimeNullableWithAggregatesFilter<"Subscription"> | Date | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Subscription"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Subscription"> | Date | string
@@ -355,72 +307,71 @@ export type SubscriptionCreateInput = {
   id?: string
   tier?: string
   status?: string
-  seats?: number
   isUnlimited?: boolean
   paystackCustomerCode?: string | null
   paystackSubCode?: string | null
+  paystackEmailToken?: string | null
   currentPeriodEnd?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   organization: Prisma.OrganizationCreateNestedOneWithoutSubscriptionsInput
-  transaction?: Prisma.TransactionCreateNestedOneWithoutSubscriptionInput
+  transactions?: Prisma.TransactionCreateNestedManyWithoutSubscriptionInput
 }
 
 export type SubscriptionUncheckedCreateInput = {
   id?: string
   organizationId: string
-  transactionId?: string | null
   tier?: string
   status?: string
-  seats?: number
   isUnlimited?: boolean
   paystackCustomerCode?: string | null
   paystackSubCode?: string | null
+  paystackEmailToken?: string | null
   currentPeriodEnd?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutSubscriptionInput
 }
 
 export type SubscriptionUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   tier?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
-  seats?: Prisma.IntFieldUpdateOperationsInput | number
   isUnlimited?: Prisma.BoolFieldUpdateOperationsInput | boolean
   paystackCustomerCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   paystackSubCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paystackEmailToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   currentPeriodEnd?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   organization?: Prisma.OrganizationUpdateOneRequiredWithoutSubscriptionsNestedInput
-  transaction?: Prisma.TransactionUpdateOneWithoutSubscriptionNestedInput
+  transactions?: Prisma.TransactionUpdateManyWithoutSubscriptionNestedInput
 }
 
 export type SubscriptionUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   organizationId?: Prisma.StringFieldUpdateOperationsInput | string
-  transactionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tier?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
-  seats?: Prisma.IntFieldUpdateOperationsInput | number
   isUnlimited?: Prisma.BoolFieldUpdateOperationsInput | boolean
   paystackCustomerCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   paystackSubCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paystackEmailToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   currentPeriodEnd?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  transactions?: Prisma.TransactionUncheckedUpdateManyWithoutSubscriptionNestedInput
 }
 
 export type SubscriptionCreateManyInput = {
   id?: string
   organizationId: string
-  transactionId?: string | null
   tier?: string
   status?: string
-  seats?: number
   isUnlimited?: boolean
   paystackCustomerCode?: string | null
   paystackSubCode?: string | null
+  paystackEmailToken?: string | null
   currentPeriodEnd?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -430,10 +381,10 @@ export type SubscriptionUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   tier?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
-  seats?: Prisma.IntFieldUpdateOperationsInput | number
   isUnlimited?: Prisma.BoolFieldUpdateOperationsInput | boolean
   paystackCustomerCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   paystackSubCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paystackEmailToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   currentPeriodEnd?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -442,13 +393,12 @@ export type SubscriptionUpdateManyMutationInput = {
 export type SubscriptionUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   organizationId?: Prisma.StringFieldUpdateOperationsInput | string
-  transactionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tier?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
-  seats?: Prisma.IntFieldUpdateOperationsInput | number
   isUnlimited?: Prisma.BoolFieldUpdateOperationsInput | boolean
   paystackCustomerCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   paystackSubCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paystackEmailToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   currentPeriodEnd?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -467,32 +417,26 @@ export type SubscriptionOrderByRelationAggregateInput = {
 export type SubscriptionCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   organizationId?: Prisma.SortOrder
-  transactionId?: Prisma.SortOrder
   tier?: Prisma.SortOrder
   status?: Prisma.SortOrder
-  seats?: Prisma.SortOrder
   isUnlimited?: Prisma.SortOrder
   paystackCustomerCode?: Prisma.SortOrder
   paystackSubCode?: Prisma.SortOrder
+  paystackEmailToken?: Prisma.SortOrder
   currentPeriodEnd?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
 
-export type SubscriptionAvgOrderByAggregateInput = {
-  seats?: Prisma.SortOrder
-}
-
 export type SubscriptionMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   organizationId?: Prisma.SortOrder
-  transactionId?: Prisma.SortOrder
   tier?: Prisma.SortOrder
   status?: Prisma.SortOrder
-  seats?: Prisma.SortOrder
   isUnlimited?: Prisma.SortOrder
   paystackCustomerCode?: Prisma.SortOrder
   paystackSubCode?: Prisma.SortOrder
+  paystackEmailToken?: Prisma.SortOrder
   currentPeriodEnd?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -501,20 +445,15 @@ export type SubscriptionMaxOrderByAggregateInput = {
 export type SubscriptionMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   organizationId?: Prisma.SortOrder
-  transactionId?: Prisma.SortOrder
   tier?: Prisma.SortOrder
   status?: Prisma.SortOrder
-  seats?: Prisma.SortOrder
   isUnlimited?: Prisma.SortOrder
   paystackCustomerCode?: Prisma.SortOrder
   paystackSubCode?: Prisma.SortOrder
+  paystackEmailToken?: Prisma.SortOrder
   currentPeriodEnd?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-}
-
-export type SubscriptionSumOrderByAggregateInput = {
-  seats?: Prisma.SortOrder
 }
 
 export type SubscriptionNullableScalarRelationFilter = {
@@ -564,64 +503,48 @@ export type SubscriptionUncheckedUpdateManyWithoutOrganizationNestedInput = {
   deleteMany?: Prisma.SubscriptionScalarWhereInput | Prisma.SubscriptionScalarWhereInput[]
 }
 
-export type SubscriptionCreateNestedOneWithoutTransactionInput = {
-  create?: Prisma.XOR<Prisma.SubscriptionCreateWithoutTransactionInput, Prisma.SubscriptionUncheckedCreateWithoutTransactionInput>
-  connectOrCreate?: Prisma.SubscriptionCreateOrConnectWithoutTransactionInput
+export type SubscriptionCreateNestedOneWithoutTransactionsInput = {
+  create?: Prisma.XOR<Prisma.SubscriptionCreateWithoutTransactionsInput, Prisma.SubscriptionUncheckedCreateWithoutTransactionsInput>
+  connectOrCreate?: Prisma.SubscriptionCreateOrConnectWithoutTransactionsInput
   connect?: Prisma.SubscriptionWhereUniqueInput
 }
 
-export type SubscriptionUncheckedCreateNestedOneWithoutTransactionInput = {
-  create?: Prisma.XOR<Prisma.SubscriptionCreateWithoutTransactionInput, Prisma.SubscriptionUncheckedCreateWithoutTransactionInput>
-  connectOrCreate?: Prisma.SubscriptionCreateOrConnectWithoutTransactionInput
-  connect?: Prisma.SubscriptionWhereUniqueInput
-}
-
-export type SubscriptionUpdateOneWithoutTransactionNestedInput = {
-  create?: Prisma.XOR<Prisma.SubscriptionCreateWithoutTransactionInput, Prisma.SubscriptionUncheckedCreateWithoutTransactionInput>
-  connectOrCreate?: Prisma.SubscriptionCreateOrConnectWithoutTransactionInput
-  upsert?: Prisma.SubscriptionUpsertWithoutTransactionInput
+export type SubscriptionUpdateOneWithoutTransactionsNestedInput = {
+  create?: Prisma.XOR<Prisma.SubscriptionCreateWithoutTransactionsInput, Prisma.SubscriptionUncheckedCreateWithoutTransactionsInput>
+  connectOrCreate?: Prisma.SubscriptionCreateOrConnectWithoutTransactionsInput
+  upsert?: Prisma.SubscriptionUpsertWithoutTransactionsInput
   disconnect?: Prisma.SubscriptionWhereInput | boolean
   delete?: Prisma.SubscriptionWhereInput | boolean
   connect?: Prisma.SubscriptionWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.SubscriptionUpdateToOneWithWhereWithoutTransactionInput, Prisma.SubscriptionUpdateWithoutTransactionInput>, Prisma.SubscriptionUncheckedUpdateWithoutTransactionInput>
-}
-
-export type SubscriptionUncheckedUpdateOneWithoutTransactionNestedInput = {
-  create?: Prisma.XOR<Prisma.SubscriptionCreateWithoutTransactionInput, Prisma.SubscriptionUncheckedCreateWithoutTransactionInput>
-  connectOrCreate?: Prisma.SubscriptionCreateOrConnectWithoutTransactionInput
-  upsert?: Prisma.SubscriptionUpsertWithoutTransactionInput
-  disconnect?: Prisma.SubscriptionWhereInput | boolean
-  delete?: Prisma.SubscriptionWhereInput | boolean
-  connect?: Prisma.SubscriptionWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.SubscriptionUpdateToOneWithWhereWithoutTransactionInput, Prisma.SubscriptionUpdateWithoutTransactionInput>, Prisma.SubscriptionUncheckedUpdateWithoutTransactionInput>
+  update?: Prisma.XOR<Prisma.XOR<Prisma.SubscriptionUpdateToOneWithWhereWithoutTransactionsInput, Prisma.SubscriptionUpdateWithoutTransactionsInput>, Prisma.SubscriptionUncheckedUpdateWithoutTransactionsInput>
 }
 
 export type SubscriptionCreateWithoutOrganizationInput = {
   id?: string
   tier?: string
   status?: string
-  seats?: number
   isUnlimited?: boolean
   paystackCustomerCode?: string | null
   paystackSubCode?: string | null
+  paystackEmailToken?: string | null
   currentPeriodEnd?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  transaction?: Prisma.TransactionCreateNestedOneWithoutSubscriptionInput
+  transactions?: Prisma.TransactionCreateNestedManyWithoutSubscriptionInput
 }
 
 export type SubscriptionUncheckedCreateWithoutOrganizationInput = {
   id?: string
-  transactionId?: string | null
   tier?: string
   status?: string
-  seats?: number
   isUnlimited?: boolean
   paystackCustomerCode?: string | null
   paystackSubCode?: string | null
+  paystackEmailToken?: string | null
   currentPeriodEnd?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutSubscriptionInput
 }
 
 export type SubscriptionCreateOrConnectWithoutOrganizationInput = {
@@ -656,85 +579,84 @@ export type SubscriptionScalarWhereInput = {
   NOT?: Prisma.SubscriptionScalarWhereInput | Prisma.SubscriptionScalarWhereInput[]
   id?: Prisma.StringFilter<"Subscription"> | string
   organizationId?: Prisma.StringFilter<"Subscription"> | string
-  transactionId?: Prisma.StringNullableFilter<"Subscription"> | string | null
   tier?: Prisma.StringFilter<"Subscription"> | string
   status?: Prisma.StringFilter<"Subscription"> | string
-  seats?: Prisma.IntFilter<"Subscription"> | number
   isUnlimited?: Prisma.BoolFilter<"Subscription"> | boolean
   paystackCustomerCode?: Prisma.StringNullableFilter<"Subscription"> | string | null
   paystackSubCode?: Prisma.StringNullableFilter<"Subscription"> | string | null
+  paystackEmailToken?: Prisma.StringNullableFilter<"Subscription"> | string | null
   currentPeriodEnd?: Prisma.DateTimeNullableFilter<"Subscription"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"Subscription"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Subscription"> | Date | string
 }
 
-export type SubscriptionCreateWithoutTransactionInput = {
+export type SubscriptionCreateWithoutTransactionsInput = {
   id?: string
   tier?: string
   status?: string
-  seats?: number
   isUnlimited?: boolean
   paystackCustomerCode?: string | null
   paystackSubCode?: string | null
+  paystackEmailToken?: string | null
   currentPeriodEnd?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   organization: Prisma.OrganizationCreateNestedOneWithoutSubscriptionsInput
 }
 
-export type SubscriptionUncheckedCreateWithoutTransactionInput = {
+export type SubscriptionUncheckedCreateWithoutTransactionsInput = {
   id?: string
   organizationId: string
   tier?: string
   status?: string
-  seats?: number
   isUnlimited?: boolean
   paystackCustomerCode?: string | null
   paystackSubCode?: string | null
+  paystackEmailToken?: string | null
   currentPeriodEnd?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
 
-export type SubscriptionCreateOrConnectWithoutTransactionInput = {
+export type SubscriptionCreateOrConnectWithoutTransactionsInput = {
   where: Prisma.SubscriptionWhereUniqueInput
-  create: Prisma.XOR<Prisma.SubscriptionCreateWithoutTransactionInput, Prisma.SubscriptionUncheckedCreateWithoutTransactionInput>
+  create: Prisma.XOR<Prisma.SubscriptionCreateWithoutTransactionsInput, Prisma.SubscriptionUncheckedCreateWithoutTransactionsInput>
 }
 
-export type SubscriptionUpsertWithoutTransactionInput = {
-  update: Prisma.XOR<Prisma.SubscriptionUpdateWithoutTransactionInput, Prisma.SubscriptionUncheckedUpdateWithoutTransactionInput>
-  create: Prisma.XOR<Prisma.SubscriptionCreateWithoutTransactionInput, Prisma.SubscriptionUncheckedCreateWithoutTransactionInput>
+export type SubscriptionUpsertWithoutTransactionsInput = {
+  update: Prisma.XOR<Prisma.SubscriptionUpdateWithoutTransactionsInput, Prisma.SubscriptionUncheckedUpdateWithoutTransactionsInput>
+  create: Prisma.XOR<Prisma.SubscriptionCreateWithoutTransactionsInput, Prisma.SubscriptionUncheckedCreateWithoutTransactionsInput>
   where?: Prisma.SubscriptionWhereInput
 }
 
-export type SubscriptionUpdateToOneWithWhereWithoutTransactionInput = {
+export type SubscriptionUpdateToOneWithWhereWithoutTransactionsInput = {
   where?: Prisma.SubscriptionWhereInput
-  data: Prisma.XOR<Prisma.SubscriptionUpdateWithoutTransactionInput, Prisma.SubscriptionUncheckedUpdateWithoutTransactionInput>
+  data: Prisma.XOR<Prisma.SubscriptionUpdateWithoutTransactionsInput, Prisma.SubscriptionUncheckedUpdateWithoutTransactionsInput>
 }
 
-export type SubscriptionUpdateWithoutTransactionInput = {
+export type SubscriptionUpdateWithoutTransactionsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   tier?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
-  seats?: Prisma.IntFieldUpdateOperationsInput | number
   isUnlimited?: Prisma.BoolFieldUpdateOperationsInput | boolean
   paystackCustomerCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   paystackSubCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paystackEmailToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   currentPeriodEnd?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   organization?: Prisma.OrganizationUpdateOneRequiredWithoutSubscriptionsNestedInput
 }
 
-export type SubscriptionUncheckedUpdateWithoutTransactionInput = {
+export type SubscriptionUncheckedUpdateWithoutTransactionsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   organizationId?: Prisma.StringFieldUpdateOperationsInput | string
   tier?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
-  seats?: Prisma.IntFieldUpdateOperationsInput | number
   isUnlimited?: Prisma.BoolFieldUpdateOperationsInput | boolean
   paystackCustomerCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   paystackSubCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paystackEmailToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   currentPeriodEnd?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -742,13 +664,12 @@ export type SubscriptionUncheckedUpdateWithoutTransactionInput = {
 
 export type SubscriptionCreateManyOrganizationInput = {
   id?: string
-  transactionId?: string | null
   tier?: string
   status?: string
-  seats?: number
   isUnlimited?: boolean
   paystackCustomerCode?: string | null
   paystackSubCode?: string | null
+  paystackEmailToken?: string | null
   currentPeriodEnd?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -758,142 +679,163 @@ export type SubscriptionUpdateWithoutOrganizationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   tier?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
-  seats?: Prisma.IntFieldUpdateOperationsInput | number
   isUnlimited?: Prisma.BoolFieldUpdateOperationsInput | boolean
   paystackCustomerCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   paystackSubCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paystackEmailToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   currentPeriodEnd?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  transaction?: Prisma.TransactionUpdateOneWithoutSubscriptionNestedInput
+  transactions?: Prisma.TransactionUpdateManyWithoutSubscriptionNestedInput
 }
 
 export type SubscriptionUncheckedUpdateWithoutOrganizationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  transactionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tier?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
-  seats?: Prisma.IntFieldUpdateOperationsInput | number
   isUnlimited?: Prisma.BoolFieldUpdateOperationsInput | boolean
   paystackCustomerCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   paystackSubCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paystackEmailToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   currentPeriodEnd?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  transactions?: Prisma.TransactionUncheckedUpdateManyWithoutSubscriptionNestedInput
 }
 
 export type SubscriptionUncheckedUpdateManyWithoutOrganizationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  transactionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tier?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.StringFieldUpdateOperationsInput | string
-  seats?: Prisma.IntFieldUpdateOperationsInput | number
   isUnlimited?: Prisma.BoolFieldUpdateOperationsInput | boolean
   paystackCustomerCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   paystackSubCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paystackEmailToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   currentPeriodEnd?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
+
+/**
+ * Count Type SubscriptionCountOutputType
+ */
+
+export type SubscriptionCountOutputType = {
+  transactions: number
+}
+
+export type SubscriptionCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  transactions?: boolean | SubscriptionCountOutputTypeCountTransactionsArgs
+}
+
+/**
+ * SubscriptionCountOutputType without action
+ */
+export type SubscriptionCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the SubscriptionCountOutputType
+   */
+  select?: Prisma.SubscriptionCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * SubscriptionCountOutputType without action
+ */
+export type SubscriptionCountOutputTypeCountTransactionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.TransactionWhereInput
+}
 
 
 export type SubscriptionSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   organizationId?: boolean
-  transactionId?: boolean
   tier?: boolean
   status?: boolean
-  seats?: boolean
   isUnlimited?: boolean
   paystackCustomerCode?: boolean
   paystackSubCode?: boolean
+  paystackEmailToken?: boolean
   currentPeriodEnd?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   organization?: boolean | Prisma.OrganizationDefaultArgs<ExtArgs>
-  transaction?: boolean | Prisma.Subscription$transactionArgs<ExtArgs>
+  transactions?: boolean | Prisma.Subscription$transactionsArgs<ExtArgs>
+  _count?: boolean | Prisma.SubscriptionCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["subscription"]>
 
 export type SubscriptionSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   organizationId?: boolean
-  transactionId?: boolean
   tier?: boolean
   status?: boolean
-  seats?: boolean
   isUnlimited?: boolean
   paystackCustomerCode?: boolean
   paystackSubCode?: boolean
+  paystackEmailToken?: boolean
   currentPeriodEnd?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   organization?: boolean | Prisma.OrganizationDefaultArgs<ExtArgs>
-  transaction?: boolean | Prisma.Subscription$transactionArgs<ExtArgs>
 }, ExtArgs["result"]["subscription"]>
 
 export type SubscriptionSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   organizationId?: boolean
-  transactionId?: boolean
   tier?: boolean
   status?: boolean
-  seats?: boolean
   isUnlimited?: boolean
   paystackCustomerCode?: boolean
   paystackSubCode?: boolean
+  paystackEmailToken?: boolean
   currentPeriodEnd?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   organization?: boolean | Prisma.OrganizationDefaultArgs<ExtArgs>
-  transaction?: boolean | Prisma.Subscription$transactionArgs<ExtArgs>
 }, ExtArgs["result"]["subscription"]>
 
 export type SubscriptionSelectScalar = {
   id?: boolean
   organizationId?: boolean
-  transactionId?: boolean
   tier?: boolean
   status?: boolean
-  seats?: boolean
   isUnlimited?: boolean
   paystackCustomerCode?: boolean
   paystackSubCode?: boolean
+  paystackEmailToken?: boolean
   currentPeriodEnd?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type SubscriptionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "organizationId" | "transactionId" | "tier" | "status" | "seats" | "isUnlimited" | "paystackCustomerCode" | "paystackSubCode" | "currentPeriodEnd" | "createdAt" | "updatedAt", ExtArgs["result"]["subscription"]>
+export type SubscriptionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "organizationId" | "tier" | "status" | "isUnlimited" | "paystackCustomerCode" | "paystackSubCode" | "paystackEmailToken" | "currentPeriodEnd" | "createdAt" | "updatedAt", ExtArgs["result"]["subscription"]>
 export type SubscriptionInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   organization?: boolean | Prisma.OrganizationDefaultArgs<ExtArgs>
-  transaction?: boolean | Prisma.Subscription$transactionArgs<ExtArgs>
+  transactions?: boolean | Prisma.Subscription$transactionsArgs<ExtArgs>
+  _count?: boolean | Prisma.SubscriptionCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type SubscriptionIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   organization?: boolean | Prisma.OrganizationDefaultArgs<ExtArgs>
-  transaction?: boolean | Prisma.Subscription$transactionArgs<ExtArgs>
 }
 export type SubscriptionIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   organization?: boolean | Prisma.OrganizationDefaultArgs<ExtArgs>
-  transaction?: boolean | Prisma.Subscription$transactionArgs<ExtArgs>
 }
 
 export type $SubscriptionPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Subscription"
   objects: {
     organization: Prisma.$OrganizationPayload<ExtArgs>
-    transaction: Prisma.$TransactionPayload<ExtArgs> | null
+    transactions: Prisma.$TransactionPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     organizationId: string
-    transactionId: string | null
     tier: string
     status: string
-    seats: number
     isUnlimited: boolean
     paystackCustomerCode: string | null
     paystackSubCode: string | null
+    paystackEmailToken: string | null
     currentPeriodEnd: Date | null
     createdAt: Date
     updatedAt: Date
@@ -1292,7 +1234,7 @@ readonly fields: SubscriptionFieldRefs;
 export interface Prisma__SubscriptionClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   organization<T extends Prisma.OrganizationDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.OrganizationDefaultArgs<ExtArgs>>): Prisma.Prisma__OrganizationClient<runtime.Types.Result.GetResult<Prisma.$OrganizationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-  transaction<T extends Prisma.Subscription$transactionArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Subscription$transactionArgs<ExtArgs>>): Prisma.Prisma__TransactionClient<runtime.Types.Result.GetResult<Prisma.$TransactionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  transactions<T extends Prisma.Subscription$transactionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Subscription$transactionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TransactionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1324,13 +1266,12 @@ export interface Prisma__SubscriptionClient<T, Null = never, ExtArgs extends run
 export interface SubscriptionFieldRefs {
   readonly id: Prisma.FieldRef<"Subscription", 'String'>
   readonly organizationId: Prisma.FieldRef<"Subscription", 'String'>
-  readonly transactionId: Prisma.FieldRef<"Subscription", 'String'>
   readonly tier: Prisma.FieldRef<"Subscription", 'String'>
   readonly status: Prisma.FieldRef<"Subscription", 'String'>
-  readonly seats: Prisma.FieldRef<"Subscription", 'Int'>
   readonly isUnlimited: Prisma.FieldRef<"Subscription", 'Boolean'>
   readonly paystackCustomerCode: Prisma.FieldRef<"Subscription", 'String'>
   readonly paystackSubCode: Prisma.FieldRef<"Subscription", 'String'>
+  readonly paystackEmailToken: Prisma.FieldRef<"Subscription", 'String'>
   readonly currentPeriodEnd: Prisma.FieldRef<"Subscription", 'DateTime'>
   readonly createdAt: Prisma.FieldRef<"Subscription", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Subscription", 'DateTime'>
@@ -1735,9 +1676,9 @@ export type SubscriptionDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.
 }
 
 /**
- * Subscription.transaction
+ * Subscription.transactions
  */
-export type Subscription$transactionArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type Subscription$transactionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
    * Select specific fields to fetch from the Transaction
    */
@@ -1751,6 +1692,11 @@ export type Subscription$transactionArgs<ExtArgs extends runtime.Types.Extension
    */
   include?: Prisma.TransactionInclude<ExtArgs> | null
   where?: Prisma.TransactionWhereInput
+  orderBy?: Prisma.TransactionOrderByWithRelationInput | Prisma.TransactionOrderByWithRelationInput[]
+  cursor?: Prisma.TransactionWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.TransactionScalarFieldEnum | Prisma.TransactionScalarFieldEnum[]
 }
 
 /**
