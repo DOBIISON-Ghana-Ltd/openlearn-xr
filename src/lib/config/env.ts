@@ -92,6 +92,11 @@ const serverEnv = {
 // Select schema based on execution context.
 // Safe type-assertion allows client code to import env and see the full type signature,
 // though only client-safe keys will actually be populated.
+const shouldSkipValidation = process.env.SKIP_ENV_VALIDATION === 'true'
+
+const activeServerSchema = shouldSkipValidation ? serverSchema.partial() : serverSchema
+const activeClientSchema = shouldSkipValidation ? clientSchema.partial() : clientSchema
+
 export const env = typeof window === 'undefined'
-  ? serverSchema.parse(serverEnv)
-  : clientSchema.parse(clientEnv) as z.infer<typeof serverSchema>
+  ? (activeServerSchema.parse(serverEnv) as z.infer<typeof serverSchema>)
+  : (activeClientSchema.parse(clientEnv) as z.infer<typeof serverSchema>)
