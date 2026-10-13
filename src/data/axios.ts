@@ -5,7 +5,7 @@ import { env } from '@/lib/config/env';
 const isServer = environmentManager.isServer();
 
 export const axios = primitiveAxios.create({
-  baseURL: env.NEXT_PUBLIC_API_URL!,
+  baseURL: env.NEXT_PUBLIC_APP_URL,
   withCredentials: true, // Equivalent to credentials: 'include' for the client
   paramsSerializer: {
     indexes: null,
@@ -33,7 +33,7 @@ axios.interceptors.request.use(async (config) => {
 });
 
 export const axiosPublic = primitiveAxios.create({
-  baseURL: env.NEXT_PUBLIC_API_URL!,
+  baseURL: env.NEXT_PUBLIC_APP_URL,
   withCredentials: false, // No credentials for public instance
 });
 

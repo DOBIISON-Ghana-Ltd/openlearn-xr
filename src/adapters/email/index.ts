@@ -6,6 +6,7 @@ import { ResendEmailAdapter } from './resend-adapter'
 import { SesEmailAdapter } from './ses-adapter'
 import { ConsoleEmailAdapter } from './console-adapter'
 import { env } from '@/lib/config/env'
+import { DEFAULT_EMAIL_FROM } from '@/lib/constants/email'
 
 export * from './types'
 export * from './resend-adapter'
@@ -20,7 +21,7 @@ function createTypedElement<P extends {}>(Component: FC<P>, props: P) {
 
 export function createEmailAdapter(): EmailAdapter {
   const provider = env.EMAIL_PROVIDER
-  const defaultFrom = env.EMAIL_FROM
+  const defaultFrom = DEFAULT_EMAIL_FROM
 
   if (provider === 'ses' && env.AWS_ACCESS_KEY_ID) {
     return new SesEmailAdapter({
@@ -85,7 +86,6 @@ class EmailService {
     sender?: string
   }) {
     const { template, props, recipient, sender, subject } = options
-    const isDev = env.NODE_ENV !== 'production'
 
     if (!this.initialized) {
       await this.initialize()
@@ -99,11 +99,8 @@ class EmailService {
     const htmlContent = await render(createTypedElement(Component, props))
     const textContent = toPlainText(htmlContent)
 
-    const devRecipient = env.EMAIL_DEV_TO
-    const to = isDev && devRecipient ? devRecipient : recipient
-
     const info = await this.adapter.sendEmail({
-      to,
+      to: recipient,
       subject: subject || 'OpenLearn',
       html: htmlContent,
       text: textContent,
