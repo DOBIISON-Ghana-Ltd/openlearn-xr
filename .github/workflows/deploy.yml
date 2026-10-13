@@ -62,9 +62,6 @@ jobs:
             --build-arg NEXT_PUBLIC_PUSHER_HOST="${{ secrets.NEXT_PUBLIC_PUSHER_HOST }}" \
             --build-arg NEXT_PUBLIC_PUSHER_PORT="${{ secrets.NEXT_PUBLIC_PUSHER_PORT }}" \
             --build-arg NEXT_PUBLIC_ENABLE_SURVEY="${{ secrets.NEXT_PUBLIC_ENABLE_SURVEY }}" \
-            --build-arg DATABASE_URL="${{ secrets.DATABASE_URL }}" \
-            --build-arg DIRECT_URL="${{ secrets.DIRECT_URL }}" \
-            --build-arg BETTER_AUTH_SECRET="${{ secrets.BETTER_AUTH_SECRET }}" \
             -t "$FULL_IMAGE" .
 
           echo "🚀 Pushing image to ECR..."

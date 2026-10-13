@@ -1,18 +1,18 @@
 # --- STAGE 1: Install dependencies ---
-FROM node:22-alpine AS deps
+FROM node:24-alpine AS deps
 RUN apk add --no-cache libc6-compat
 WORKDIR /app
 COPY package*.json ./
 RUN npm ci --verbose
 
 # Stage 2: Build
-FROM node:22-alpine AS builder
+FROM node:24-alpine AS builder
 RUN apk add --no-cache libc6-compat
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
-# 1. Define Build Arguments
+# 1. Define Build Arguments (Client-side variables baked into JS bundles)
 ARG NEXT_PUBLIC_APP_URL
 ARG NEXT_PUBLIC_IMAGE_URL
 ARG NEXT_PUBLIC_GA_MEASUREMENT_ID
@@ -23,9 +23,6 @@ ARG NEXT_PUBLIC_PUSHER_CLUSTER
 ARG NEXT_PUBLIC_PUSHER_HOST
 ARG NEXT_PUBLIC_PUSHER_PORT
 ARG NEXT_PUBLIC_ENABLE_SURVEY
-ARG DATABASE_URL
-ARG DIRECT_URL
-ARG BETTER_AUTH_SECRET
 
 # 2. Make them available to the 'npm run build' process
 ENV NEXT_PUBLIC_APP_URL=$NEXT_PUBLIC_APP_URL
@@ -38,18 +35,16 @@ ENV NEXT_PUBLIC_PUSHER_CLUSTER=$NEXT_PUBLIC_PUSHER_CLUSTER
 ENV NEXT_PUBLIC_PUSHER_HOST=$NEXT_PUBLIC_PUSHER_HOST
 ENV NEXT_PUBLIC_PUSHER_PORT=$NEXT_PUBLIC_PUSHER_PORT
 ENV NEXT_PUBLIC_ENABLE_SURVEY=$NEXT_PUBLIC_ENABLE_SURVEY
-ENV DATABASE_URL=$DATABASE_URL
-ENV DIRECT_URL=$DIRECT_URL
-ENV BETTER_AUTH_SECRET=$BETTER_AUTH_SECRET
 ENV NODE_ENV=production
 
 RUN npx prisma generate
 
 ENV NEXT_TELEMETRY_DISABLED=1
+ENV SKIP_ENV_VALIDATION=true
 RUN npm run build
 
 # --- STAGE 3: Production Runner (The Slim Image) ---
-FROM node:22-alpine AS runner
+FROM node:24-alpine AS runner
 WORKDIR /app
 
 ENV NODE_ENV=production
