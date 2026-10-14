@@ -8,6 +8,7 @@ import { nextCookies } from 'better-auth/next-js'
 import { env } from '@/lib/config/env'
 
 export const auth = betterAuth({
+  baseURL: env.NEXT_PUBLIC_APP_URL,
   database: prismaAdapter(prisma, { provider: 'postgresql' }),
   session: {
     cookieCache: {
